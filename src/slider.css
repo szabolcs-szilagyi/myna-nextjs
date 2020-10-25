@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+.slide-container {
+  width: 100%;
+  margin: auto;
+}
+
+.textcontainer {
+  position: relative;
+  width: 100%;
+  height: inherit;
+}
+
+h3 {
+  font-family: 'Freeland', cursive;
+  font-size: 64px;
+  color: white;
+  position: absolute;
+  display: block;
+  top: 42%;
+  left: 16%;
+}
+
+.button {
+  position: absolute;
+  display: block;
+  font-family: 'Lato', sans-serif;
+	margin: auto;
+	border: 2px solid white;
+  color: white;
+  outline:0px;
+  font-size: 16px;
+  padding: 5px;
+  text-align: center;
+  font-weight: normal;
+  width: 200px;
+  top: 53%;
+  left: 19.5%;
+}
+.button2 {
+  position: absolute;
+  display: block;
+  font-family: 'Lato', sans-serif;
+	margin: auto;
+	border: 2px solid white;
+  color: white;
+  outline:0px;
+  font-size: 16px;
+  padding: 5px;
+  text-align: center;
+  font-weight: normal;
+  width: 200px;
+  top: 53%;
+  left: 16.5%;
+}
+.button:hover, .button2:hover {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.each-slide > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  height: 800px;
+}
+
+.each-slide span {
+  padding: 20px;
+  font-size: 20px;
+  background: #efefef;
+  text-align: center;
+}
+
+.each-fade {
+  display: flex;
+}
+
+.each-fade .image-container {
+  width: 75%;
+  overflow: hidden;
+}
+
+.each-fade .image-container img {
+  width: 100%;
+}
+
+.each-fade h2 {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  background: #adceed;
+}
+
+.noPadding {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.react-slideshow-container .nav {
+  background: none !important;
+}
+.react-slideshow-container .nav span {
+  border-color: #fff !important;
+}
+
+@media only screen and (max-width: 1440px) {
+  .each-slide > div {
+    height: 700px;
+  }
+  .textcontainer h3 {
+    font-size: 30px;
+    left: 21%;
+  }
+  .textcontainer a {
+    font-size: 16px;
+  }
+}
+@media only screen and (max-width: 1340px) {
+  .each-slide > div {
+    height: 600px;
+  }
+}
+@media only screen and (max-width: 1240px) {
+  .each-slide > div {
+    height: 500px;
+  }
+}
+@media only screen and (max-width: 1140px) {
+  .each-slide > div {
+    height: 400px;
+  }
+  .textcontainer h3 {
+    left: 23%;
+  }
+}
+@media only screen and (max-width: 720px) {
+  .each-slide > div {
+    height: 250px;
+  }
+  .textcontainer h3 {
+    font-size: 24px;
+    left: 23%;
+  }
+  .textcontainer a {
+    font-size: 12px;
+  }
+}
