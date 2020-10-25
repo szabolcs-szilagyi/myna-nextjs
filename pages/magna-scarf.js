@@ -25,6 +25,8 @@ const cookies = new Cookies();
 const hash = cookies.get('hash');
 const session = cookies.get('session');
 
+const DEFAULT_AVAILABLE = 'Available for pre-order';
+
 export default class Index extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +37,7 @@ export default class Index extends React.Component {
       productIdToCart: '',
       idName: 'magna-scarf',
       currency: '',
-      avby: 'Available for pre-order',
+      avby: DEFAULT_AVAILABLE,
       productName: '',
       productColor: '',
       productPrice: '',
@@ -81,14 +83,18 @@ export default class Index extends React.Component {
   }
   checkAvailability() {
     let size = this.state.selectedSize;
+    if (size === '0') return;
+
     let idName = this.state.idName;
     fetch(API_SERVER + 'listen.php?part=availabilityexact&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
-      let data = output;
-      let tmp = data['availability'];
-      if (tmp == "1") { this.setState({ avby: 'Available', cartButtonVisibility: 'visible' }); }
-      if (tmp == "0") { this.setState({ avby: 'Pre-Order/Contact Us', cartButtonVisibility: 'invisible' }); }
+      const isAvialable = output && output.availability && output.availability === 1;
+      if (isAvialable) {
+        this.setState({ avby: DEFAULT_AVAILABLE, cartButtonVisibility: 'visible' });
+      } else {
+        this.setState({ avby: 'Pre-Order/Contact Us', cartButtonVisibility: 'invisible' });
+      }
     })
     .catch(error => console.log(error.message));
   }
@@ -320,7 +326,7 @@ export default class Index extends React.Component {
                   </div>
                   <div className="col-md-4">
                     <div className="capitalLetters pad8px">
-                      Available for pre-order
+                      {this.state.avby}
                     </div>
                   </div>
                   <div className="col-md-1" />
