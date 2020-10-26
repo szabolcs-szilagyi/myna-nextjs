@@ -56,7 +56,7 @@ export default class Index extends React.Component {
       photo8: '',
       photo9: '',
       productInfo: '',
-      selectedSize: '0'
+      selectedSize: 'xs'
     };
 
     this.defaultButton = this.defaultButton.bind(this);
@@ -67,7 +67,6 @@ export default class Index extends React.Component {
     this.handleCart = this.handleCart.bind(this);
     this.loadCurrency = this.loadCurrency.bind(this);
     this.loadData = this.loadData.bind(this);
-    this.handleSizeChange = this.handleSizeChange.bind(this);
     this.productInfoHandling = this.productInfoHandling.bind(this);
     this.productPhotoHandling = this.productPhotoHandling.bind(this);
     this.fadeOut = this.fadeOut.bind(this);
@@ -176,9 +175,6 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
-  handleSizeChange (e) {
-    this.setState({ selectedSize: e.target.value }, () => { this.checkAvailability(); });
-  }
   productInfoHandling(e) {
     let desc = this.state.description;
     let compCare = this.state.compCare;
@@ -243,8 +239,9 @@ export default class Index extends React.Component {
   componentDidUpdate() {
   }
   componentDidMount() {
-    this.loadCurrency ();
-    this.loadData ();
+    this.loadCurrency();
+    this.loadData();
+    this.checkAvailability();
   }
   render() {
 		return (
@@ -313,15 +310,6 @@ export default class Index extends React.Component {
                 <div className="row">
                   <div className="col-md-1" />
                   <div className="col-md-6 left">
-                    <select id="chooseSize" className="sizeButton" value={this.state.selectedSize} onChange={this.handleSizeChange}>
-                      <option value="0">CHOOSE SIZE</option>
-											<option value="xs">XS</option>
-											<option value="s">S</option>
-											<option value="m">M</option>
-                      <option value="ml">ML</option>
-                      <option value="l">L</option>
-										</select>
-                    <div className="spacer25px" />
                     <div className={this.state.cartButtonVisibility}><div className="noBorder mediumFont"><button type="button" className="cartButton" onClick={this.addToCart}>{this.state.addToCart}</button></div></div>
                   </div>
                   <div className="col-md-4">
