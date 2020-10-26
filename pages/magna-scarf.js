@@ -25,6 +25,8 @@ const cookies = new Cookies();
 const hash = cookies.get('hash');
 const session = cookies.get('session');
 
+const DEFAULT_AVAILABLE = 'Available for pre-order';
+
 export default class Index extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +37,7 @@ export default class Index extends React.Component {
       productIdToCart: '',
       idName: 'magna-scarf',
       currency: '',
-      avby: 'Available for pre-order',
+      avby: DEFAULT_AVAILABLE,
       productName: '',
       productColor: '',
       productPrice: '',
@@ -54,7 +56,7 @@ export default class Index extends React.Component {
       photo8: '',
       photo9: '',
       productInfo: '',
-      selectedSize: '0'
+      selectedSize: 'xs'
     };
 
     this.defaultButton = this.defaultButton.bind(this);
@@ -65,7 +67,6 @@ export default class Index extends React.Component {
     this.handleCart = this.handleCart.bind(this);
     this.loadCurrency = this.loadCurrency.bind(this);
     this.loadData = this.loadData.bind(this);
-    this.handleSizeChange = this.handleSizeChange.bind(this);
     this.productInfoHandling = this.productInfoHandling.bind(this);
     this.productPhotoHandling = this.productPhotoHandling.bind(this);
     this.fadeOut = this.fadeOut.bind(this);
@@ -81,14 +82,18 @@ export default class Index extends React.Component {
   }
   checkAvailability() {
     let size = this.state.selectedSize;
+    if (size === '0') return;
+
     let idName = this.state.idName;
     fetch(API_SERVER + 'listen.php?part=availabilityexact&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
-      let data = output;
-      let tmp = data['availability'];
-      if (tmp == "1") { this.setState({ avby: 'Available', cartButtonVisibility: 'visible' }); }
-      if (tmp == "0") { this.setState({ avby: 'Pre-Order/Contact Us', cartButtonVisibility: 'invisible' }); }
+      const isAvialable = output && output.availability && output.availability === 1;
+      if (isAvialable) {
+        this.setState({ avby: DEFAULT_AVAILABLE, cartButtonVisibility: 'visible' });
+      } else {
+        this.setState({ avby: 'Pre-Order/Contact Us', cartButtonVisibility: 'invisible' });
+      }
     })
     .catch(error => console.log(error.message));
   }
@@ -170,9 +175,6 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
-  handleSizeChange (e) {
-    this.setState({ selectedSize: e.target.value }, () => { this.checkAvailability(); });
-  }
   productInfoHandling(e) {
     let desc = this.state.description;
     let compCare = this.state.compCare;
@@ -237,8 +239,9 @@ export default class Index extends React.Component {
   componentDidUpdate() {
   }
   componentDidMount() {
-    this.loadCurrency ();
-    this.loadData ();
+    this.loadCurrency();
+    this.loadData();
+    this.checkAvailability();
   }
   render() {
 		return (
@@ -307,20 +310,11 @@ export default class Index extends React.Component {
                 <div className="row">
                   <div className="col-md-1" />
                   <div className="col-md-6 left">
-                    <select id="chooseSize" className="sizeButton" value={this.state.selectedSize} onChange={this.handleSizeChange}>
-                      <option value="0">CHOOSE SIZE</option>
-											<option value="xs">XS</option>
-											<option value="s">S</option>
-											<option value="m">M</option>
-                      <option value="ml">ML</option>
-                      <option value="l">L</option>
-										</select>
-                    <div className="spacer25px" />
                     <div className={this.state.cartButtonVisibility}><div className="noBorder mediumFont"><button type="button" className="cartButton" onClick={this.addToCart}>{this.state.addToCart}</button></div></div>
                   </div>
                   <div className="col-md-4">
                     <div className="capitalLetters pad8px">
-                      Available for pre-order
+                      {this.state.avby}
                     </div>
                   </div>
                   <div className="col-md-1" />

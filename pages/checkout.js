@@ -136,7 +136,7 @@ export default class Index extends React.Component {
 		.then(output => {
       let data = output;
       let tmp = data['nr'];
-      if (tmp == '0') { this.setState({ emptyCartAlert: <div><div className='spacer25px' /><p><i>Your cart is empty.</i> <br /><br /><a href="/love-and-light"><button className="startshoppingButton">START SHOPPING HERE</button></a></p></div> }); }
+      if (tmp == '0') { this.setState({ emptyCartAlert: <div><div className='spacer25px' /><p><i>Your cart is empty.</i> <br /><br /><a href="/autumn-collection"><button className="startshoppingButton">START SHOPPING HERE</button></a></p></div> }); }
       this.setState({ inCart: tmp });
     })
     .catch(error => console.log(error.message));
@@ -214,13 +214,16 @@ export default class Index extends React.Component {
       if (size == 'ml') { t4 = <option value="ml" selected>ML</option>; } else { t4 = <option value="ml">ML</option>; }
       if (size == 'l') { t5 = <option value="l" selected>L</option>; } else { t5 = <option value="l">L</option>; }
       */
-      if (idName == 'nolia-dustpink') { imageName = 'mynawebshop-pinkdress-1.jpg'; pricc = '170'; }
-      if (idName == 'lotus-sand') { imageName = 'mynawebshop-whitedress-1.jpg'; pricc = '160'; }
-      if (idName == 'aster-sand') { imageName = 'mynawebshop-linenpants-1.jpg'; pricc = '120'; }
+      if (idName == 'alyss-dress') { imageName = 'mynawebshop-alyssdress-1.jpg'; pricc = '120'; }
       if (idName == 'aster-green') { imageName = 'mynawebshop-greenpants-1.jpg'; pricc = '120'; }
+      if (idName == 'aster-sand') { imageName = 'mynawebshop-linenpants-1.jpg'; pricc = '120'; }
       if (idName == 'calla-cream') { imageName = 'mynawebshop-whitejeans-1.jpg'; pricc = '140'; }
-      if (idName == 'ivy-cream') { imageName = 'mynawebshop-whitetshirt-1.jpg'; pricc = '40'; }
       if (idName == 'gea-cream') { imageName = 'mynawebshop-whitetop-1.jpg'; pricc = '40'; }
+      if (idName == 'ivy-cream') { imageName = 'mynawebshop-whitetshirt-1.jpg'; pricc = '40'; }
+      if (idName == 'lotus-sand') { imageName = 'mynawebshop-whitedress-1.jpg'; pricc = '160'; }
+      if (idName == 'magna-scarf') { imageName = 'mynawebshop-magnascarf-1.jpg'; pricc = '160'; }
+      if (idName == 'nolia-dustpink') { imageName = 'mynawebshop-pinkdress-1.jpg'; pricc = '170'; }
+      if (idName == 'tilja-top') { imageName = 'mynawebshop-tiljatop-1.jpg'; pricc = '170'; }
       //pricc = prices[i];
       imgtmp = images[i];
       imgsrc = API_SERVER + 'productphotos/' + imageName;
@@ -390,7 +393,7 @@ export default class Index extends React.Component {
             <div className="spacer50px" />
             <div className="row">
               <div className="col-md-4">
-                <div className="noBorder mediumFont ceMob"><a href="/love-and-light"><button className="startshoppingButton">CONTINUE SHOPPING</button></a></div>
+                <div className="noBorder mediumFont ceMob"><a href="/autumn-collection"><button className="startshoppingButton">CONTINUE SHOPPING</button></a></div>
               </div>
               <div className="col-md-4 ce">
                 <p className="capitalLetters">Total: €{this.state.price}</p>

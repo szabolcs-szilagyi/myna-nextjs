@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev-local": "DEV_PORT=3030 next dev",
     "build": "next build",
     "start": "next start"
   },

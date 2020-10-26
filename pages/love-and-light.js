@@ -62,27 +62,11 @@ export default class Index extends React.Component {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/lotus-sand"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-whitedress-1.jpg" alt="Lotus Woven Dress" /><p>Lotus Woven Dress <br /><span>€160</span></p></div></a>
+                <a href="/lotus-sand"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitedress-1.jpg`} alt="Lotus Woven Dress" /><p>Lotus Woven Dress <br /><span>€160</span></p></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-6 ce">
-                <a href="/ivy-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-whitetshirt-1.jpg" alt="Ivy Knitted Jersey Top" /><p>Ivy Knitted Jersey Top <br /><span>€40</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-2" />
-        </div>
-        <div className="row">
-          <div className="col-md-2" />
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/aster-green"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-greenpants-1.jpg" alt="Aster Green" /><p>Aster Woven Culotte Pants <br /><span>€120</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/aster-sand"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-linenpants-1.jpg" alt="Aster Sand" /><p>Aster Woven Culotte Pants <br /><span>€120</span></p></div></a>
+                <a href="/ivy-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitetshirt-1.jpg`} alt="Ivy Knitted Jersey Top" /><p>Ivy Knitted Jersey Top <br /><span>€40</span></p></div></a>
                 <div className="spacer25px" />
               </div>
             </div>
@@ -94,11 +78,27 @@ export default class Index extends React.Component {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/gea-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-whitetop-1.jpg" alt="Gea Knitted Jersey Top" /><p>Gea Knitted Jersey Top <br /><span>€40</span></p></div></a>
+                <a href="/aster-green"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-greenpants-1.jpg`} alt="Aster Green" /><p>Aster Woven Culotte Pants <br /><span>€120</span></p></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-6 ce">
-                <a href="/nolia-dustpink"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-pinkdress-1.jpg" alt="Nolia Woven Dress" /><p>Nolia Woven Dress <br /><span>€170</span></p></div></a>
+                <a href="/aster-sand"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-linenpants-1.jpg`} alt="Aster Sand" /><p>Aster Woven Culotte Pants <br /><span>€120</span></p></div></a>
+                <div className="spacer25px" />
+              </div>
+            </div>
+          </div>
+          <div className="col-md-2" />
+        </div>
+        <div className="row">
+          <div className="col-md-2" />
+          <div className="col-md-8">
+            <div className="row">
+              <div className="col-md-6 ce">
+                <a href="/gea-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitetop-1.jpg`} alt="Gea Knitted Jersey Top" /><p>Gea Knitted Jersey Top <br /><span>€40</span></p></div></a>
+                <div className="spacer25px" />
+              </div>
+              <div className="col-md-6 ce">
+                <a href="/nolia-dustpink"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-pinkdress-1.jpg`} alt="Nolia Woven Dress" /><p>Nolia Woven Dress <br /><span>€170</span></p></div></a>
                 <div className="spacer25px" />
               </div>
             </div>
@@ -111,7 +111,7 @@ export default class Index extends React.Component {
             <div className="row">
               <div className="col-md-3" />
               <div className="col-md-6 ce">
-                <a href="/calla-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-whitejeans-1.jpg" alt="Calla Denim Pants" /><p>Calla Denim Pants <br /><span>€140</span></p></div></a>
+                <a href="/calla-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitejeans-1.jpg`} alt="Calla Denim Pants" /><p>Calla Denim Pants <br /><span>€140</span></p></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-3" />

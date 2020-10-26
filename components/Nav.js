@@ -45,7 +45,7 @@ export default class Nav extends Component {
 		.then(output => {
       let data = output;
       let tmp = data['nr'];
-      this.setState({ inCart: tmp });
+      if (this.state.inCart !== tmp) this.setState({ inCart: tmp });
     })
     .catch(error => console.log(error.message));
   }

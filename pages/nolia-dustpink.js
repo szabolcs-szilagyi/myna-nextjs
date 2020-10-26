@@ -25,6 +25,8 @@ const cookies = new Cookies();
 const hash = cookies.get('hash');
 const session = cookies.get('session');
 
+const DEFAULT_AVAILABLE = 'Available for pre-order';
+
 export default class Index extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +37,7 @@ export default class Index extends React.Component {
       productIdToCart: '',
       idName: 'nolia-dustpink',
       currency: '',
-      avby: 'Available',
+      avby: DEFAULT_AVAILABLE,
       productName: '',
       productColor: '',
       productPrice: '',
@@ -85,10 +87,12 @@ export default class Index extends React.Component {
     fetch(API_SERVER + 'listen.php?part=availabilityexact&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
-      let data = output;
-      let tmp = data['availability'];
-      if (tmp == "1") { this.setState({ avby: 'Available', cartButtonVisibility: 'visible' }); }
-      if (tmp == "0") { this.setState({ avby: 'Pre-Order/Contact Us', cartButtonVisibility: 'invisible' }); }
+      const isAvialable = output && output.availability && output.availability === 1;
+      if (isAvialable) {
+        this.setState({ avby: DEFAULT_AVAILABLE, cartButtonVisibility: 'visible' });
+      } else {
+        this.setState({ avby: 'Pre-Order/Contact Us', cartButtonVisibility: 'invisible' });
+      }
     })
     .catch(error => console.log(error.message));
   }

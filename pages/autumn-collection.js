@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 //import { useRouter } from 'next/router';
-import {API_SERVER as API_SERVER} from '../src/constants';
+import { API_SERVER } from '../src/constants';
 import Cookies from 'universal-cookie';
 //import UserMenu from '../components/UserMenu';
 import Header from '../components/Header';
@@ -62,27 +62,11 @@ export default class Index extends React.Component {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/alyss-dress"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-alyssdress-1.jpg" alt="Alyss Dress" /><p>ALYSS dress <br /><span>€215</span></p></div></a>
+                <a href="/alyss-dress"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-alyssdress-1.jpg`} alt="Alyss Dress" /><p>ALYSS dress <br /><span>€215</span></p></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-6 ce">
-                <a href="/calla-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-whitejeans-1.jpg" alt="Calla Denim Pants" /><p>Calla Denim Pants <br /><span>€140</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-2" />
-        </div>
-        <div className="row">
-          <div className="col-md-2" />
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/tilja-top"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-tiljatop-1.jpg" alt="Tilia Top" /><p>TILIA top <br /><span>€115</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/magna-scarf"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-magnascarf-1.jpg" alt="Magna Scarf" /><p>MAGNA scarf <br /><span>€79</span></p></div></a>
+                <a href="/calla-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitejeans-1.jpg`} alt="Calla Denim Pants" /><p>Calla Denim Pants <br /><span>€140</span></p></div></a>
                 <div className="spacer25px" />
               </div>
             </div>
@@ -94,11 +78,27 @@ export default class Index extends React.Component {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/nolia-dustpink"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-pinkdress-1.jpg" alt="Nolia Woven Dress" /><p>Nolia Woven Dress <br /><span>€170</span></p></div></a>
+                <a href="/tilja-top"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-tiljatop-1.jpg`} alt="Tilia Top" /><p>TILIA top <br /><span>€115</span></p></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-6 ce">
-                <a href="/aster-green"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="https://myca.hende.org/productphotos/mynawebshop-greenpants-1.jpg" alt="Aster Green" /><p>Aster Woven Culotte Pants <br /><span>€120</span></p></div></a>
+                <a href="/magna-scarf"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-magnascarf-1.jpg`} alt="Magna Scarf" /><p>MAGNA scarf <br /><span>€79</span></p></div></a>
+                <div className="spacer25px" />
+              </div>
+            </div>
+          </div>
+          <div className="col-md-2" />
+        </div>
+        <div className="row">
+          <div className="col-md-2" />
+          <div className="col-md-8">
+            <div className="row">
+              <div className="col-md-6 ce">
+                <a href="/nolia-dustpink"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-pinkdress-1.jpg`} alt="Nolia Woven Dress" /><p>Nolia Woven Dress <br /><span>€170</span></p></div></a>
+                <div className="spacer25px" />
+              </div>
+              <div className="col-md-6 ce">
+                <a href="/aster-green"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-greenpants-1.jpg`} alt="Aster Green" /><p>Aster Woven Culotte Pants <br /><span>€120</span></p></div></a>
                 <div className="spacer25px" />
               </div>
             </div>
