@@ -214,16 +214,16 @@ export default class Index extends React.Component {
       if (size == 'ml') { t4 = <option value="ml" selected>ML</option>; } else { t4 = <option value="ml">ML</option>; }
       if (size == 'l') { t5 = <option value="l" selected>L</option>; } else { t5 = <option value="l">L</option>; }
       */
-      if (idName == 'alyss-dress') { imageName = 'mynawebshop-alyssdress-1.jpg'; pricc = '120'; }
+      if (idName == 'alyss-dress') { imageName = 'mynawebshop-alyssdress-1.jpg'; pricc = '215'; }
       if (idName == 'aster-green') { imageName = 'mynawebshop-greenpants-1.jpg'; pricc = '120'; }
       if (idName == 'aster-sand') { imageName = 'mynawebshop-linenpants-1.jpg'; pricc = '120'; }
       if (idName == 'calla-cream') { imageName = 'mynawebshop-whitejeans-1.jpg'; pricc = '140'; }
       if (idName == 'gea-cream') { imageName = 'mynawebshop-whitetop-1.jpg'; pricc = '40'; }
       if (idName == 'ivy-cream') { imageName = 'mynawebshop-whitetshirt-1.jpg'; pricc = '40'; }
       if (idName == 'lotus-sand') { imageName = 'mynawebshop-whitedress-1.jpg'; pricc = '160'; }
-      if (idName == 'magna-scarf') { imageName = 'mynawebshop-magnascarf-1.jpg'; pricc = '160'; }
+      if (idName == 'magna-scarf') { imageName = 'mynawebshop-magnascarf-1.jpg'; pricc = '79'; }
       if (idName == 'nolia-dustpink') { imageName = 'mynawebshop-pinkdress-1.jpg'; pricc = '170'; }
-      if (idName == 'tilja-top') { imageName = 'mynawebshop-tiljatop-1.jpg'; pricc = '170'; }
+      if (idName == 'tilja-top') { imageName = 'mynawebshop-tiljatop-1.jpg'; pricc = '115'; }
       //pricc = prices[i];
       imgtmp = images[i];
       imgsrc = API_SERVER + 'productphotos/' + imageName;
