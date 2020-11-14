@@ -331,6 +331,7 @@ export default class Index extends React.Component {
     let text = tmp.toLowerCase();
     this.setState({priceModifier: 1}, () => { });
     this.setState({coupon: text}, () => { if (text == 'mynafriend10') { this.setState({priceModifier: 0.9}, () => { }); } });
+    this.setState({coupon: text}, () => { if (text == 'mynagift15') { this.setState({priceModifier: 0.85}, () => { }); } });
   }
   getUserAddress () {
     fetch(API_SERVER + 'listen.php?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
