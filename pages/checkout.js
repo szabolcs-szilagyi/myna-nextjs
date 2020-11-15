@@ -70,8 +70,10 @@ export default class Index extends React.Component {
 		.then(output => {
       let data = output;
       let tmp = data['topay'];
+      let delivery = data['delivery'];
+      let products = data['products'];
       let modifier = this.state.priceModifier;
-      let ovr = tmp * modifier;
+      let ovr = Number(products) * modifier + Number(delivery);
       this.setState({ price: ovr });
     })
     .catch(error => console.log(error.message));
