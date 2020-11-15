@@ -73,7 +73,7 @@ export default class Index extends React.Component {
       let delivery = data['delivery'];
       let products = data['products'];
       let modifier = this.state.priceModifier;
-      let ovr = Number(products) * modifier + Number(delivery);
+      let ovr = tmp * modifier;
       this.setState({ price: ovr });
     })
     .catch(error => console.log(error.message));
