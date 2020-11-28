@@ -74,7 +74,8 @@ export default class Index extends React.Component {
       let products = data['products'];
       let modifier = this.state.priceModifier;
       let ovr = tmp * modifier;
-      this.setState({ price: ovr });
+      let ovr2 = Math.floor(ovr);
+      this.setState({ price: ovr2 });
     })
     .catch(error => console.log(error.message));
   }
@@ -334,6 +335,7 @@ export default class Index extends React.Component {
     this.setState({priceModifier: 1}, () => { });
     this.setState({coupon: text}, () => { if (text == 'mynafriend10') { this.setState({priceModifier: 0.9}, () => { }); } });
     this.setState({coupon: text}, () => { if (text == 'mynagift15') { this.setState({priceModifier: 0.85}, () => { }); } });
+    setTimeout(this.getPrice, 200);
   }
   getUserAddress () {
     fetch(API_SERVER + 'listen.php?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
