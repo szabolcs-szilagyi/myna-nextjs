@@ -7,7 +7,7 @@ const session = cookies.get('session');
 
 class Banner extends Component {
   render() {
-    if (Date.now() >= new Date('2021-01-01')) return (<div></div>);
+    if (Date.now() > new Date('2021-01-01')) return (<div></div>);
 
     return (
       <div id="banner" className="row">
