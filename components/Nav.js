@@ -5,6 +5,18 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 const session = cookies.get('session');
 
+class Banner extends Component {
+  render() {
+    if (Date.now() >= new Date('2021-01-01')) return (<div></div>);
+
+    return (
+      <div id="banner" className="row">
+        Enjoy FREE delivery in December
+      </div>
+    );
+  }
+}
+
 export default class Nav extends Component {
   constructor(props) {
     super(props);
@@ -83,6 +95,7 @@ export default class Nav extends Component {
               </div>
             </div>
           </div>
+          <Banner />
         </div>
         <div className="tabNav">
           <div className="row">

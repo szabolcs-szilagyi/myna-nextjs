@@ -512,3 +512,10 @@ select.sizeButton::-ms-expand {
     padding-bottom: 30px;
   }
 }
+
+#banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+}
