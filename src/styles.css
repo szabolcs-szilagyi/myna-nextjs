@@ -400,6 +400,12 @@ select.sizeButton::-ms-expand {
 .desktopNav {
   display: block;
 }
+#banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2em;
+}
 .tabNav {
   display: none;
 }
@@ -511,11 +517,10 @@ select.sizeButton::-ms-expand {
     padding-top: 30px;
     padding-bottom: 30px;
   }
+
+  #banner {
+    font-size: 1em;
+    font-weight: bold;
+  }
 }
 
-#banner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2em;
-}
