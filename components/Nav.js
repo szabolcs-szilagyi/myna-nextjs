@@ -125,6 +125,7 @@ export default class Nav extends Component {
               <div className="padtop43px blackFont"><a href="/our-story">Our Story</a></div>
             </div>
           </div>
+          <Banner />
         </div>
         <div className="mobileNav">
           <div className="row">
@@ -142,6 +143,7 @@ export default class Nav extends Component {
               <div className="blackFont padtop10px"><a href="/our-story">Our Story</a></div>
             </div>
           </div>
+          <Banner />
         </div>
       </div>
     );
