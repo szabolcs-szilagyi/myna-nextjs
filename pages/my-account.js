@@ -28,7 +28,7 @@ export default class Index extends React.Component {
       inputEmail: '',
       loginEmail: '',
       loginToken: '',
-      textOnLoginButton: 'SEND THE LOGIN LINK',
+      textOnLoginButton: 'SUBMIT',
       textOnSaveButton: 'SAVE & CHECKOUT',
       firstName: '',
       lastName: '',
@@ -145,8 +145,10 @@ export default class Index extends React.Component {
     .catch(error => console.log(error.message));
   }
   sendMail () {
-    fetch(API_SERVER + 'amazon-ses-smtp.php?part=login&email=' + this.state.loginEmail + '&token=' + this.state.loginToken, {mode: 'no-cors'});
-    this.setState({ textOnLoginButton: 'SENT' });
+    //fetch(API_SERVER + 'amazon-ses-smtp.php?part=login&email=' + this.state.loginEmail + '&token=' + this.state.loginToken, {mode: 'no-cors'});
+    //this.setState({ textOnLoginButton: 'SENT' });
+    let url = "/autologin?part=login&token=" + this.state.loginToken + "&email=" + this.state.loginEmail;
+    window.location.href = url;
   }
   saveDetails () {
     let crossRoad;
@@ -278,7 +280,7 @@ export default class Index extends React.Component {
             <div className="row">
               <div className="col-md-12 ce capitalLetters">
                 <h2><strong>Login to your account</strong></h2>
-                <p>We send an auto-login link to your email address.</p>
+                <p>Please give your email address to continue</p>
                 <div className="spacer50px" />
                 <input className="loginEmail" type="text" value={this.state.inputEmail} onChange={this.handleChange} maxLength="128" placeholder="enter your email here" />
                 <div className="spacer50px" />
