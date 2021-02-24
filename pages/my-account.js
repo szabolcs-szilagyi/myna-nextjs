@@ -266,8 +266,8 @@ export default class Index extends React.Component {
   componentDidMount() {
     setTimeout(this.amILoggedIn, 100);
     setTimeout(this.checkEmail, 300);
-    setTimeout(this.loadUserData, 900);
-    setTimeout(this.loadAddressData, 1000);
+    //setTimeout(this.loadUserData, 900);
+    //setTimeout(this.loadAddressData, 1000);
   }
   render() {
     if (this.state.loginOrEdit == 'login') {
