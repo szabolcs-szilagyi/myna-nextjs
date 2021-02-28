@@ -285,11 +285,15 @@ export default class Index extends React.Component {
     this.setState({ trash: './trash.png' });
   }
   pressedCheckout () {
-    let loggedIn = this.state.loggedIn;
-    if (loggedIn == 'no') {
-      this.myAccount ();
+    if (this.state.checked == '0') {
+      this.amILoggedIn();
     } else {
-      this.setState({ showPaypal: 'showPaypal' });
+      let loggedIn = this.state.loggedIn;
+      if (loggedIn == 'no') {
+        this.myAccount ();
+      } else {
+        this.setState({ showPaypal: 'showPaypal' });
+      }
     }
   }
   getAmount () {
@@ -354,19 +358,21 @@ export default class Index extends React.Component {
       let zip = tmp['zip'];
       let country = tmp['country'];
       let comment = tmp['comment'];
-      if (valid == '0') { this.myAccount (); }
-      if (type == '0') { this.myAccount (); }
-      if (address1 == '0') { this.myAccount (); }
-      if (city == '0') { this.myAccount (); }
-      if (country == '0') { this.myAccount (); }
-      if (zip == '0') { this.myAccount (); }
+      if (this.state.loggedIn == 'yes') {
+        if (valid == '0') { this.myAccount (); }
+        if (type == '0') { this.myAccount (); }
+        if (address1 == '0') { this.myAccount (); }
+        if (city == '0') { this.myAccount (); }
+        if (country == '0') { this.myAccount (); }
+        if (zip == '0') { this.myAccount (); }
+      }
     })
     .catch(error => console.log(error.message));
     this.getAmount ();
   }
 
   componentDidMount() {
-    if (this.state.checked == '0') { this.amILoggedIn(); }
+    //if (this.state.checked == '0') { this.amILoggedIn(); }
     this.getProductsInCart();
     this.getInCart();
     this.getPrice ();
