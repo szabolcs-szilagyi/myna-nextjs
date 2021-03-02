@@ -166,7 +166,7 @@ export default class Example extends Component {
                 }}
                 options={{
                     //live -Justyna
-                    clientId: "AUAnkA60Bv7KnWOrphpA_emIw0Y46hH0jI70RpGtOncJLavA0teYVWypiB4b3cVpFBoesI0mYBJntLPM",
+                    clientId: "Aet-UX8Rj1rBuMbuaNKBUOqyTdWiaJpkN-EEwkPphiZcREn3aeP_b7EhqMDzcidzJxX5Y-jMNogmfJGc",
                     //live -Magdalena
                     //clientId: "AV1VNTxZpawgLCFPTo1p06zUI1EICb62IbkrxqScFq-rQdKdyBqp07UlybT2hSgmKYsd4X-ciMfS8nkZ",
                     //sandbox -Magdalena
