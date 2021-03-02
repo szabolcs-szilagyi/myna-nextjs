@@ -165,9 +165,11 @@ export default class Example extends Component {
                 //    });
                 }}
                 options={{
-                    //live
-                    clientId: "AV1VNTxZpawgLCFPTo1p06zUI1EICb62IbkrxqScFq-rQdKdyBqp07UlybT2hSgmKYsd4X-ciMfS8nkZ",
-                    //sandbox
+                    //live -Justyna
+                    clientId: "AUAnkA60Bv7KnWOrphpA_emIw0Y46hH0jI70RpGtOncJLavA0teYVWypiB4b3cVpFBoesI0mYBJntLPM",
+                    //live -Magdalena
+                    //clientId: "AV1VNTxZpawgLCFPTo1p06zUI1EICb62IbkrxqScFq-rQdKdyBqp07UlybT2hSgmKYsd4X-ciMfS8nkZ",
+                    //sandbox -Magdalena
                     //clientId: "AQIX4lwiUlCsoo671-JWES0SJ7BNGhkM7MpIwBRiUn4Xzk-4oXPjhpDWVyaxrReLfH5XYcTLorzlPTAu",
                     currency: "EUR"
                 }}
