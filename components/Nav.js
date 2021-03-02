@@ -138,7 +138,7 @@ export default class Nav extends Component {
           <div className="row">
             <div className="col-md-12 ce menu">
               <div className="blackFont padtop10px"><a href="/lookbook">Lookbook</a></div>
-              <div className="blackFont padtop10px"><a href="/autumn-collection">Shop Collections</a></div>
+              <div className="blackFont padtop10px"><a href="/shop-collections">Shop Collections</a></div>
               <div className="blackFont padtop10px"><a href="/sustainability">Sustainability</a></div>
               <div className="blackFont padtop10px"><a href="/our-story">Our Story</a></div>
             </div>
