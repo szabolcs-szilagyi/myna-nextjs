@@ -30,7 +30,7 @@ class HeadElement extends React.Component {
       if (cpn == '/calla-cream') { title = 'MYNA | Calla Cream'; }
       if (cpn == '/ivy-cream') { title = 'MYNA | Ivy Cream'; }
       if (cpn == '/gea-cream') { title = 'MYNA | Gea Cream'; }
-      if (cpn == '/autumn-collection') { title = 'MYNA Autumn Collection'; }
+      if (cpn == '/shop-collections') { title = 'MYNA Shop Collections'; }
       if (cpn == '/alyss-dress') { title = 'MYNA | Alyss Dress'; }
       if (cpn == '/tilja-top') { title = 'MYNA | Tilia Top'; }
       if (cpn == '/magna-scarf') { title = 'MYNA | Magna Scarf'; }

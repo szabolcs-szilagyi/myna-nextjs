@@ -218,15 +218,29 @@ export default class Index extends React.Component {
       if (size == 'l') { t5 = <option value="l" selected>L</option>; } else { t5 = <option value="l">L</option>; }
       */
       if (idName == 'alyss-dress') { imageName = 'mynawebshop-alyssdress-1.jpg'; pricc = '215'; }
-      if (idName == 'aster-green') { imageName = 'mynawebshop-greenpants-1.jpg'; pricc = '120'; }
-      if (idName == 'aster-sand') { imageName = 'mynawebshop-linenpants-1.jpg'; pricc = '120'; }
-      if (idName == 'calla-cream') { imageName = 'mynawebshop-whitejeans-1.jpg'; pricc = '140'; }
-      if (idName == 'gea-cream') { imageName = 'mynawebshop-whitetop-1.jpg'; pricc = '40'; }
-      if (idName == 'ivy-cream') { imageName = 'mynawebshop-whitetshirt-1.jpg'; pricc = '40'; }
-      if (idName == 'lotus-sand') { imageName = 'mynawebshop-whitedress-1.jpg'; pricc = '160'; }
-      if (idName == 'magna-scarf') { imageName = 'mynawebshop-magnascarf-1.jpg'; pricc = '79'; }
-      if (idName == 'nolia-dustpink') { imageName = 'mynawebshop-pinkdress-1.jpg'; pricc = '170'; }
+      if (idName == 'aster-green') { imageName = 'mynawebshop-greenpants-1.jpg'; pricc = '139'; }
+      if (idName == 'aster-sand') { imageName = 'mynawebshop-linenpants-1.jpg'; pricc = '139'; }
+      if (idName == 'calla-cream') { imageName = 'mynawebshop-whitejeans-1.jpg'; pricc = '155'; }
+      if (idName == 'gea-cream') { imageName = 'mynawebshop-whitetop-1.jpg'; pricc = '75'; }
+      if (idName == 'ivy-cream') { imageName = 'mynawebshop-whitetshirt-1.jpg'; pricc = '75'; }
+      if (idName == 'lotus-sand') { imageName = 'mynawebshop-whitedress-1.jpg'; pricc = '225'; }
+      if (idName == 'magna-scarf') { imageName = 'mynawebshop-magnascarf-1.jpg'; pricc = '99'; }
+      if (idName == 'nolia-dustpink') { imageName = 'mynawebshop-pinkdress-1.jpg'; pricc = '215'; }
       if (idName == 'tilja-top') { imageName = 'mynawebshop-tiljatop-1.jpg'; pricc = '115'; }
+      if (idName == 'senna-skirt') { imageName = 'senna-skirt-01.jpg'; pricc = '135'; }
+      if (idName == 'tuli-dress') { imageName = 'tuli-dress-01.jpg'; pricc = '169'; }
+      if (idName == 'leya-wrap-dress') { imageName = 'leya-wrap-dress-01.jpg'; pricc = '319'; }
+      if (idName == 'dalhia-blouse') { imageName = 'dalhia-blouse-01.jpg'; pricc = '105'; }
+      if (idName == 'delphi-culottes') { imageName = 'delphi-culottes-01.jpg'; pricc = '95'; }
+      if (idName == 'bella-hand-painted-blouse') { imageName = 'bella-print-01.jpg'; pricc = '129'; }
+      if (idName == 'bella-blouse') { imageName = 'bella-blouse-01.jpg'; pricc = '79'; }
+      if (idName == 'senna-skirt') { imageName = 'senna-skirt-01.jpg'; pricc = '135'; }
+      if (idName == 'reeva-denim-jacket') { imageName = 'reeva-denim-jacket-01.jpg'; pricc = '159'; }
+      if (idName == 'iris-vest') { imageName = 'iris-vest-01.jpg'; pricc = '75'; }
+      if (idName == 'lili-top') { imageName = 'lili-top-shadow-01.jpg'; pricc = '69'; }
+      if (idName == 'lili-top-satin') { imageName = 'lili-top-satin-01.jpg'; pricc = '69'; }
+      if (idName == 'lisia-dress') { imageName = 'lisia-dress-01.jpg'; pricc = '179'; }
+
       //pricc = prices[i];
       imgtmp = images[i];
       imgsrc = API_SERVER + 'productphotos/' + imageName;

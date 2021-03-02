@@ -54,15 +54,15 @@ export default class Slider extends Component {
             <div className="each-slide">
               <div style={{'backgroundImage': `url(${slideImages[0]})`}}>
                 <div className="textcontainer">
-                  <h3>autumn collection</h3>
-                  <a href="/autumn-collection" className="button">SHOP THE LOOK</a>
+                  <h3>shop collection</h3>
+                  <a href="/shop-collections" className="button">SHOP THE LOOK</a>
                 </div>
               </div>
             </div>
             <div className="each-slide">
               <div style={{'backgroundImage': `url(${slideImages[1]})`}}>
                 <div className="textcontainer">
-                  <h3>autumn collection</h3>
+                  <h3>shop collections</h3>
                   <a href="/lookbook" className="button">LOOKBOOK</a>
                 </div>
               </div>

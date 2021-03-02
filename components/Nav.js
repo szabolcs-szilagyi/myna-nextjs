@@ -79,7 +79,7 @@ export default class Nav extends Component {
             <div className="col-md-7 capitalLetters">
               <ul className="navMenu">
                 <li><a href="/lookbook">Lookbook</a></li>
-                <li><a href="/autumn-collection">Shop Collections</a></li>
+                <li><a href="/shop-collections">Shop Collections</a></li>
                 <li><a href="/sustainability">Sustainability</a></li>
                 <li><a href="/our-story">Our Story</a></li>
               </ul>

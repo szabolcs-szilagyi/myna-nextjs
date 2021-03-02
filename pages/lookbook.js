@@ -64,12 +64,12 @@ export default class Index extends React.Component {
               <div className="col-md-7 ce">
                 <div className="lbtxtContainer">
                   <div className="lbtxt">
-                    Presenting MYNA <br />autumn collection <br /><br />Sustainably made with love.
+                    Presenting MYNA <br /><br />Sustainably made with love.
                   </div>
                 </div>
               </div>
               <div className="col-md-4 ce">
-                <a href="/autumn-collection"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook01.jpg" alt="" /></div></a>
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook01.jpg" alt="" /></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-1 ce" />
@@ -82,11 +82,11 @@ export default class Index extends React.Component {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/autumn-collection"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook02.jpg" alt="" /></div></a>
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook02.jpg" alt="" /></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-6 ce">
-                <a href="/autumn-collection"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook03.jpg" alt="" /></div></a>
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook03.jpg" alt="" /></div></a>
                 <div className="spacer25px" />
               </div>
             </div>
@@ -99,7 +99,7 @@ export default class Index extends React.Component {
             <div className="row">
               <div className="col-md-3" />
               <div className="col-md-8 ce">
-                <a href="/autumn-collection"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook04.jpg" alt="" /></div></a>
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook04.jpg" alt="" /></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-1" />
@@ -113,11 +113,11 @@ export default class Index extends React.Component {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-8 ce">
-                <a href="/autumn-collection"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook05.jpg" alt="" /></div></a>
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook05.jpg" alt="" /></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-4 ce">
-                <a href="/autumn-collection"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook06.jpg" alt="" /></div></a>
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook06.jpg" alt="" /></div></a>
                 <div className="spacer25px" />
               </div>
             </div>
@@ -131,7 +131,7 @@ export default class Index extends React.Component {
             <div className="row">
               <div className="col-md-2" />
               <div className="col-md-8 ce">
-                <a href="/autumn-collection"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook07.jpg" alt="" /></div></a>
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook07.jpg" alt="" /></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-2" />
@@ -145,11 +145,11 @@ export default class Index extends React.Component {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/autumn-collection"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook08.jpg" alt="" /></div></a>
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook08.jpg" alt="" /></div></a>
                 <div className="spacer25px" />
               </div>
               <div className="col-md-6 ce">
-                <a href="/autumn-collection"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook09.jpg" alt="" /></div></a>
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook09.jpg" alt="" /></div></a>
                 <div className="spacer25px" />
               </div>
             </div>
