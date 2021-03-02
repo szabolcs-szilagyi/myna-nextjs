@@ -116,7 +116,7 @@ export default class Nav extends Component {
               <div className="padtop43px blackFont"><a href="/lookbook">Lookbook</a></div>
             </div>
             <div className="col-md-3 ce menu">
-              <div className="padtop43px blackFont"><a href="/autumn-collection">Shop Collections</a></div>
+              <div className="padtop43px blackFont"><a href="/shop-collections">Shop Collections</a></div>
             </div>
             <div className="col-md-3 ce menu">
               <div className="padtop43px blackFont"><a href="/sustainability">Sustainability</a></div>
