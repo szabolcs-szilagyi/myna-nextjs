@@ -165,6 +165,7 @@ export default class Example extends Component {
                 //    });
                 }}
                 options={{
+                    disableFunding: "card",
                     //live -Justyna
                     clientId: "Aet-UX8Rj1rBuMbuaNKBUOqyTdWiaJpkN-EEwkPphiZcREn3aeP_b7EhqMDzcidzJxX5Y-jMNogmfJGc",
                     //live -Magdalena
