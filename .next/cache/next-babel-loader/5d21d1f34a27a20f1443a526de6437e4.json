@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var API_SERVER = \"https://myca.hende.org/\";","map":{"version":3,"sources":["/home/balazs/ReactJs/myna/src/constants.js"],"names":["API_SERVER"],"mappings":"AAAA,OAAO,IAAMA,UAAU,GAAG,yBAAnB","sourcesContent":["export const API_SERVER = \"https://myca.hende.org/\";\n"]},"metadata":{},"sourceType":"module"}
