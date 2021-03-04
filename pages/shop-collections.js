@@ -211,20 +211,6 @@ export default class Index extends React.Component {
           </div>
           <div className="col-md-2" />
         </div>
-        <div className="row">
-          <div className="col-md-2" />
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-3" />
-              <div className="col-md-6 ce">
-                <a href="/calla-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitejeans-1.jpg`} alt="Calla Denim Pants" /><p>Calla Denim Pants <br /><span>€155</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-3" />
-            </div>
-          </div>
-          <div className="col-md-2" />
-        </div>
 
         <div className="spacer50px" />
         <div className="row">
