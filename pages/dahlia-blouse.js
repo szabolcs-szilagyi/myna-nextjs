@@ -35,7 +35,7 @@ export default class Index extends React.Component {
       cartButtonVisibility: 'visible',
       addToCart: 'ADD TO CART',
       productIdToCart: '',
-      idName: 'dalhia-blouse',
+      idName: 'dahlia-blouse',
       currency: '',
       avby: DEFAULT_AVAILABLE,
       productName: '',
