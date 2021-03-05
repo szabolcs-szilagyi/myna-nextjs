@@ -69,12 +69,6 @@ export default class Footer extends Component {
                     <div className="col-md-12 ce">
                       <img className="logo" src="./logo.png" alt="MYNA logo" />
                     </div>
-                    <div className="col-6 text-right">
-                      <a href="https://www.facebook.com/mynalabel" target="fb-mynalabel"><img src="./facebook.svg" alt="facebook" /></a>
-                    </div>
-                    <div className="col-6">
-                      <a href="https://www.instagram.com/mynalabel/" target="insta-mynalabel"><img src="./instagram.svg" alt="instagram" /></a>
-                    </div>
                   </div>
                 </div>
               </div>

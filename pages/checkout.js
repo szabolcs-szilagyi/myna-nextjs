@@ -230,7 +230,7 @@ export default class Index extends React.Component {
       if (idName == 'senna-skirt') { imageName = 'senna-skirt-01.jpg'; pricc = '135'; }
       if (idName == 'tuli-dress') { imageName = 'tuli-dress-01.jpg'; pricc = '169'; }
       if (idName == 'leya-wrap-dress') { imageName = 'leya-wrap-dress-01.jpg'; pricc = '319'; }
-      if (idName == 'dahlia-blouse') { imageName = 'dahlia-blouse-01.jpg'; pricc = '105'; }
+      if (idName == 'dalhia-blouse') { imageName = 'dalhia-blouse-01.jpg'; pricc = '105'; }
       if (idName == 'delphi-culottes') { imageName = 'delphi-culottes-01.jpg'; pricc = '95'; }
       if (idName == 'bella-hand-painted-blouse') { imageName = 'bella-print-01.jpg'; pricc = '129'; }
       if (idName == 'bella-blouse') { imageName = 'bella-blouse-01.jpg'; pricc = '79'; }
