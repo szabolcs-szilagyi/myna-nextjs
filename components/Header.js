@@ -12,7 +12,7 @@ class HeadElement extends React.Component {
   }
 
   pathToTitle(pathStr) {
-    const kebabTitle = pathStr.split('/')[1];
+    const kebabTitle = pathStr.split('/').pop();
     if (!kebabTitle) return 'MYNA Home';
 
     const title = 'MYNA | ' + kebabTitle
