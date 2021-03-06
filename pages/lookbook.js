@@ -29,21 +29,22 @@ export default class Index extends React.Component {
     this.hoverPhotoOut = this.hoverPhotoOut.bind(this);
   }
 
-  connectionAlive() {
+  connectionAlive() {}
 
-  }
   hoverPhotoIn (e) {
     e.currentTarget.classList.add('cImageHovered');
   }
+
   hoverPhotoOut (e) {
     e.currentTarget.classList.remove('cImageHovered');
   }
 
-  componentDidUpdate() {
-  }
+  componentDidUpdate() {}
+
   componentDidMount() {
-    console.log (window.location.pathname);
+    console.log(window.location.pathname);
   }
+
   render() {
 		return (
 			<Container fluid>
