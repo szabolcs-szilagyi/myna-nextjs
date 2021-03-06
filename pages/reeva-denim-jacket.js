@@ -62,9 +62,6 @@ export default class Index extends React.Component {
     this.defaultButton = this.defaultButton.bind(this);
     this.checkAvailability = this.checkAvailability.bind(this);
     this.addToCart = this.addToCart.bind(this);
-    this.checkSession = this.checkSession.bind(this);
-    this.startSession = this.startSession.bind(this);
-    this.handleCart = this.handleCart.bind(this);
     this.loadCurrency = this.loadCurrency.bind(this);
     this.loadData = this.loadData.bind(this);
     this.handleSizeChange = this.handleSizeChange.bind(this);
@@ -81,6 +78,7 @@ export default class Index extends React.Component {
     this.setState({ addToCart: 'ADD TO CART' });
     this.checkAvailability();
   }
+
   checkAvailability() {
     let size = this.state.selectedSize;
     if (size === '0') return;
@@ -98,6 +96,7 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
+
   addToCart () {
     if (this.state.addToCart == 'ADD TO CART') {
       let size = this.state.selectedSize;
@@ -115,15 +114,7 @@ export default class Index extends React.Component {
       }
     }
   }
-  checkSession () {
 
-  }
-  startSession () {
-
-  }
-  handleCart () {
-
-  }
   loadCurrency () {
     fetch(API_SERVER + 'listen.php?part=getcurrency')
     .then(response => response.json())
@@ -134,6 +125,7 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
+
   loadData () {
     fetch(API_SERVER + 'listen.php?part=getproductdata&productname=' + this.state.idName)
     .then(response => response.json())
@@ -155,30 +147,33 @@ export default class Index extends React.Component {
       let photo7 = data['productdetails']['pic7'];
       let photo8 = data['productdetails']['pic8'];
       let photo9 = data['productdetails']['pic9'];
-      this.setState({ productIdToCart: id,
-                      productName: productName,
-                      productColor: productColor,
-                      productPrice: productPrice,
-                      description: description,
-                      compCare: compCare,
-                      productInfo: description,
-                      availability: 0,
-                      photo1: API_SERVER + 'productphotos/' + photo1,
-                      photo2: API_SERVER + 'productphotos/' + photo2,
-                      photo3: API_SERVER + 'productphotos/' + photo3,
-                      photo4: API_SERVER + 'productphotos/' + photo4,
-                      photo5: API_SERVER + 'productphotos/' + photo5,
-                      photo6: API_SERVER + 'productphotos/' + photo6,
-                      photo7: API_SERVER + 'productphotos/' + photo7,
-                      photo8: API_SERVER + 'productphotos/' + photo8,
-                      photo9: API_SERVER + 'productphotos/' + photo9
+      this.setState({
+        productIdToCart: id,
+        productName: productName,
+        productColor: productColor,
+        productPrice: productPrice,
+        description: description,
+        compCare: compCare,
+        productInfo: description,
+        availability: 0,
+        photo1: 'product_photos/' + photo1,
+        photo2: 'product_photos/' + photo2,
+        photo3: 'product_photos/' + photo3,
+        photo4: 'product_photos/' + photo4,
+        photo5: 'product_photos/' + photo5,
+        photo6: 'product_photos/' + photo6,
+        photo7: 'product_photos/' + photo7,
+        photo8: 'product_photos/' + photo8,
+        photo9: 'product_photos/' + photo9
       });
     })
     .catch(error => console.log(error.message));
   }
+
   handleSizeChange (e) {
     this.setState({ selectedSize: e.target.value }, () => { this.checkAvailability(); });
   }
+
   productInfoHandling(e) {
     let desc = this.state.description;
     let compCare = this.state.compCare;
@@ -205,6 +200,7 @@ export default class Index extends React.Component {
   		});
     }
   }
+
   productPhotoHandling(e) {
     let currentId = e.currentTarget.id;
     let tmp1 = this.state.photo1;
@@ -223,38 +219,41 @@ export default class Index extends React.Component {
       this.setState({ photo1: tmp2, photo4: tmp1 });
     }
   }
+
   fadeOut () {
     this.setState({ fade: 'fadeNone' });
   }
+
   fadeIn () {
     this.setState({ fade: 'fadeIn' });
   }
+
   openModal() {
 		this.setState({
 			visible : true
 		});
 	}
+
 	closeModal() {
 		this.setState({
 			visible : false
 		});
 	}
 
-  componentDidUpdate() {
-  }
   componentDidMount() {
-    this.loadCurrency ();
-    this.loadData ();
+    this.loadCurrency();
+    this.loadData();
   }
+
   render() {
 		return (
 			<Container fluid>
       <Header />
         <Nav />
         <Ping />
-        <div className="spacer50px" />
+        <div className="spacer50px"></div>
         <div className="row">
-          <div className="col-md-1" />
+          <div className="col-md-1"></div>
           <div className="col-md-10">
             <div className="row" id="productContainer">
               <div className="col-md-6 ce">
@@ -263,7 +262,7 @@ export default class Index extends React.Component {
                     <img src={ this.state.photo1 } onClick={this.productPhotoHandling} className="pointer bigProductPhoto" id="photo1" width="450" height="450" />
                   </div>
                 </div>
-                <div className="spacer50px" />
+                <div className="spacer50px"></div>
                 <div className="row">
                   <div className="col-md-12">
                   <div className="w500 marginAuto">
@@ -288,7 +287,7 @@ export default class Index extends React.Component {
                     <h2 className="capitalLetters">{this.state.productName} | {this.state.productColor} | {this.state.currency}{this.state.productPrice}</h2>
                   </div>
                 </div>
-                <div className="spacer50px" />
+                <div className="spacer50px"></div>
                 <div className="row">
                   <div className="col-md-3">
                     <a href="#" onClick={this.productInfoHandling} className="capitalLetters mediumFont blackFont" id="productDesc">{prod_descB}</a>
@@ -303,15 +302,15 @@ export default class Index extends React.Component {
                     <a href="#" onClick={this.productInfoHandling} className="capitalLetters mediumFont blackFont" id="productDeli">{prod_deliB}</a>
                   </div>
                 </div>
-                <div className="spacer50px" />
+                <div className="spacer50px"></div>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="productInfoContainer" dangerouslySetInnerHTML={{ __html: this.state.productInfo }}></div>
                   </div>
                 </div>
-                <div className="spacer50px" />
+                <div className="spacer50px"></div>
                 <div className="row">
-                  <div className="col-md-1" />
+                  <div className="col-md-1"></div>
                   <div className="col-md-6 left">
                     <select id="chooseSize" className="sizeButton" value={this.state.selectedSize} onChange={this.handleSizeChange}>
                       <option value="0">CHOOSE SIZE</option>
@@ -321,7 +320,7 @@ export default class Index extends React.Component {
                       <option value="ml">ML</option>
                       <option value="l">L</option>
 										</select>
-                    <div className="spacer25px" />
+                    <div className="spacer25px"></div>
                     <div className={this.state.cartButtonVisibility}><div className="noBorder mediumFont"><button type="button" className="cartButton" onClick={this.addToCart}>{this.state.addToCart}</button></div></div>
                   </div>
                   <div className="col-md-4">
@@ -329,9 +328,9 @@ export default class Index extends React.Component {
                       {this.state.avby}
                     </div>
                   </div>
-                  <div className="col-md-1" />
+                  <div className="col-md-1"></div>
                 </div>
-                <div className="spacer25px" />
+                <div className="spacer25px"></div>
                 <div className="row">
                   <div className="col-md-12">
                     <div className="productInfoContainer noBorder mediumFont" dangerouslySetInnerHTML={{ __html: desc_cont }}></div>
@@ -340,22 +339,22 @@ export default class Index extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-md-1" />
+          <div className="col-md-1"></div>
         </div>
-        <div className="spacer50px" />
+        <div className="spacer50px"></div>
         <Footer />
-          <Modal
-              visible={this.state.visible}
-              width="800"
-              height="800"
-              effect="fadeInUp"
-              onClickAway={() => this.closeModal()}
-            >
-            <div>
-              <img src={ this.state.photo1 } width="800" height="800" />
-            </div>
-          </Modal>
+        <Modal
+          visible={this.state.visible}
+          width="800"
+          height="800"
+          effect="fadeInUp"
+          onClickAway={() => this.closeModal()}
+        >
+          <div>
+            <img src={ this.state.photo1 } width="800" height="800" />
+          </div>
+        </Modal>
       </Container>
-		);
-	}
+    );
+  }
 }
