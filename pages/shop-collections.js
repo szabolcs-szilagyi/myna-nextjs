@@ -136,13 +136,13 @@ export default class Index extends React.Component {
             <div className="row">
               <SingleProduct
                 productPageLink="/reeva-denim-jacket"
-                productImageLink={`${API_SERVER}productphotos/reeva-denim-jacket-01.jpg`}
+                productImageLink="product_photos/reeva-denim-jacket-01.jpg"
                 productName="REEVA Denim Jacket"
                 price="€159"
               />
               <SingleProduct
                 productPageLink="/senna-skirt"
-                productImageLink={`${API_SERVER}productphotos/senna-skirt-01.jpg`}
+                productImageLink="product_photos/senna-skirt-01.jpg"
                 productName="SENNA Skirt"
                 price="€135"
               />
@@ -157,13 +157,13 @@ export default class Index extends React.Component {
             <div className="row">
               <SingleProduct
                 productPageLink="/tuli-dress"
-                productImageLink={`${API_SERVER}productphotos/tuli-dress-01.jpg`}
+                productImageLink="product_photos/tuli-dress-01.jpg"
                 productName="TULI Dress"
                 price="€169"
               />
               <SingleProduct
                 productPageLink="/leya-wrap-dress"
-                productImageLink={`${API_SERVER}productphotos/leya-wrap-dress-01.jpg`}
+                productImageLink="product_photos/leya-wrap-dress-01.jpg"
                 productName="LEYA Wrap Dress"
                 price="€319"
               />
@@ -178,13 +178,13 @@ export default class Index extends React.Component {
             <div className="row">
               <SingleProduct
                 productPageLink="/dahlia-blouse"
-                productImageLink={`${API_SERVER}productphotos/dahlia-blouse-01.jpg`}
+                productImageLink="product_photos/dahlia-blouse-01.jpg"
                 productName="DAHLIA Blouse"
                 price="€105"
               />
               <SingleProduct
                 productPageLink="/bella-hand-painted-blouse"
-                productImageLink={`${API_SERVER}productphotos/bella-print-01.jpg`}
+                productImageLink="product_photos/bella-print-01.jpg"
                 productName="BELLA Hand Painted Blouse"
                 price="€129"
               />
@@ -198,13 +198,13 @@ export default class Index extends React.Component {
             <div className="row">
               <SingleProduct
                 productPageLink="/bella-blouse"
-                productImageLink={`${API_SERVER}productphotos/bella-blouse-01.jpg`}
+                productImageLink="product_photos/bella-blouse-01.jpg"
                 productName="BELLA Blouse"
                 price="€79"
               />
               <SingleProduct
                 productPageLink="/delphi-culottes"
-                productImageLink={`${API_SERVER}productphotos/delphi-culottes-01.jpg`}
+                productImageLink="product_photos/delphi-culottes-01.jpg"
                 productName="DELPHI Culottes"
                 price="€95"
               />
@@ -225,13 +225,13 @@ export default class Index extends React.Component {
             <div className="row">
               <SingleProduct
                 productPageLink="/lotus-sand"
-                productImageLink={`${API_SERVER}productphotos/mynawebshop-whitedress-1.jpg`}
+                productImageLink="product_photos/mynawebshop-whitedress-1.jpg"
                 productName="Lotus Woven Dress"
                 price="€225"
               />
               <SingleProduct
                 productPageLink="/ivy-cream"
-                productImageLink={`${API_SERVER}productphotos/mynawebshop-whitetshirt-1.jpg`}
+                productImageLink="product_photos/mynawebshop-whitetshirt-1.jpg"
                 productName="Ivy Knitted Jersey Top"
                 price="€75"
               />
@@ -245,13 +245,13 @@ export default class Index extends React.Component {
             <div className="row">
               <SingleProduct
                 productPageLink="/aster-green"
-                productImageLink={`${API_SERVER}productphotos/mynawebshop-greenpants-1.jpg`}
+                productImageLink="product_photos/mynawebshop-greenpants-1.jpg"
                 productName="Aster Green"
                 price="€139"
               />
               <SingleProduct
                 productPageLink="/aster-sand"
-                productImageLink={`${API_SERVER}productphotos/mynawebshop-linenpants-1.jpg`}
+                productImageLink="product_photos/mynawebshop-linenpants-1.jpg"
                 productName="Aster Sand"
                 price="€139"
               />
@@ -265,13 +265,13 @@ export default class Index extends React.Component {
             <div className="row">
               <SingleProduct
                 productPageLink="/gea-cream"
-                productImageLink={`${API_SERVER}productphotos/mynawebshop-whitetop-1.jpg`}
+                productImageLink="product_photos/mynawebshop-whitetop-1.jpg"
                 productName="Gea Knitted Jersey Top"
                 price="€75"
               />
               <SingleProduct
                 productPageLink="/nolia-dustpink"
-                productImageLink={`${API_SERVER}productphotos/mynawebshop-pinkdress-1.jpg`}
+                productImageLink="product_photos/mynawebshop-pinkdress-1.jpg"
                 productName="Nolia Woven Dress"
                 price="€215"
               />
@@ -292,13 +292,13 @@ export default class Index extends React.Component {
             <div className="row">
               <SingleProduct
                 productPageLink="/alyss-dress"
-                productImageLink={`${API_SERVER}productphotos/mynawebshop-alyssdress-1.jpg`}
+                productImageLink="product_photos/mynawebshop-alyssdress-1.jpg"
                 productName="Alyss Dress"
                 price="€215"
               />
               <SingleProduct
                 productPageLink="/calla-cream"
-                productImageLink={`${API_SERVER}productphotos/mynawebshop-whitejeans-1.jpg`}
+                productImageLink="product_photos/mynawebshop-whitejeans-1.jpg"
                 productName="Calla Denim Pants"
                 price="€155"
               />
@@ -312,13 +312,13 @@ export default class Index extends React.Component {
             <div className="row">
               <SingleProduct
                 productPageLink="/tilja-top"
-                productImageLink={`${API_SERVER}productphotos/mynawebshop-tiljatop-1.jpg`}
+                productImageLink="product_photos/mynawebshop-tiljatop-1.jpg"
                 productName="Tilia Top"
                 price="€115"
               />
               <SingleProduct
                 productPageLink="/magna-scarf"
-                productImageLink={`${API_SERVER}productphotos/mynawebshop-magnascarf-1.jpg`}
+                productImageLink="product_photos/mynawebshop-magnascarf-1.jpg"
                 productName="Magna Scarf"
                 price="€99"
               />
