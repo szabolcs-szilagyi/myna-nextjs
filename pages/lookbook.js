@@ -70,7 +70,13 @@ export default class Index extends React.Component {
                 </div>
               </div>
               <div className="col-md-4 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/01.jpg" alt="" /></div></a>
+                <div
+                  className={this.state.divClass}
+                  onMouseOver={this.hoverPhotoIn}
+                  onMouseOut={this.hoverPhotoOut}
+                >
+                  <a href="/shop-collections"><img className="dyn" src="./lookbook/01.jpg" alt="" /></a>
+                </div>
                 <div className="spacer25px"></div>
               </div>
               <div className="col-md-1 ce"></div>
@@ -78,16 +84,29 @@ export default class Index extends React.Component {
           </div>
           <div className="col-md-2"></div>
         </div>
+
         <div className="row">
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/02.jpg" alt="" /></div></a>
+                <div
+                  className={this.state.divClass}
+                  onMouseOver={this.hoverPhotoIn}
+                  onMouseOut={this.hoverPhotoOut}
+                >
+                  <a href="/shop-collections"><img className="dyn" src="./lookbook/02.jpg" alt="" /></a>
+                </div>
                 <div className="spacer25px"></div>
               </div>
               <div className="col-md-6 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/03.jpg" alt="" /></div></a>
+                <div
+                  className={this.state.divClass}
+                  onMouseOver={this.hoverPhotoIn}
+                  onMouseOut={this.hoverPhotoOut}
+                >
+                  <a href="/shop-collections"><img className="dyn" src="./lookbook/03.jpg" alt="" /></a>
+                </div>
                 <div className="spacer25px"></div>
               </div>
             </div>
@@ -100,7 +119,13 @@ export default class Index extends React.Component {
             <div className="row">
               <div className="col-md-3"></div>
               <div className="col-md-8 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/04.jpg" alt="" /></div></a>
+                <div
+                  className={this.state.divClass}
+                  onMouseOver={this.hoverPhotoIn}
+                  onMouseOut={this.hoverPhotoOut}
+                >
+                  <a href="/shop-collections"><img className="dyn" src="./lookbook/04.jpg" alt="" /></a>
+                </div>
                 <div className="spacer25px"></div>
               </div>
               <div className="col-md-1"></div>
@@ -114,11 +139,23 @@ export default class Index extends React.Component {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-8 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/05.jpg" alt="" /></div></a>
+                <div
+                  className={this.state.divClass}
+                  onMouseOver={this.hoverPhotoIn}
+                  onMouseOut={this.hoverPhotoOut}
+                >
+                  <a href="/shop-collections"><img className="dyn" src="./lookbook/05.jpg" alt="" /></a>
+                </div>
                 <div className="spacer25px"></div>
               </div>
               <div className="col-md-4 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/06.jpg" alt="" /></div></a>
+                <div
+                  className={this.state.divClass}
+                  onMouseOver={this.hoverPhotoIn}
+                  onMouseOut={this.hoverPhotoOut}
+                >
+                  <a href="/shop-collections"><img className="dyn" src="./lookbook/06.jpg" alt="" /></a>
+                </div>
                 <div className="spacer25px"></div>
               </div>
             </div>
@@ -132,7 +169,13 @@ export default class Index extends React.Component {
             <div className="row">
               <div className="col-md-2"></div>
               <div className="col-md-8 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/07.jpg" alt="" /></div></a>
+                <div
+                  className={this.state.divClass}
+                  onMouseOver={this.hoverPhotoIn}
+                  onMouseOut={this.hoverPhotoOut}
+                >
+                  <a href="/shop-collections"><img className="dyn" src="./lookbook/07.jpg" alt="" /></a>
+                </div>
                 <div className="spacer25px"></div>
               </div>
               <div className="col-md-2"></div>
@@ -146,9 +189,16 @@ export default class Index extends React.Component {
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/08.jpg" alt="" /></div></a>
+                <div
+                  className={this.state.divClass}
+                  onMouseOver={this.hoverPhotoIn}
+                  onMouseOut={this.hoverPhotoOut}
+                >
+                  <a href="/shop-collections"><img className="dyn" src="./lookbook/08.jpg" alt="" /></a>
+                </div>
                 <div className="spacer25px"></div>
               </div>
+              <div className="col-md-6 ce"></div>
             </div>
           </div>
           <div className="col-md-2"></div>
