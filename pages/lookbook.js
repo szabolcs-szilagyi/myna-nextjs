@@ -16,6 +16,18 @@ const cookies = new Cookies();
 const hash = cookies.get('hash');
 
 export default class Index extends React.Component {
+  landscapeStyle = {
+    '--aspect-ratio': '1280/853'
+  };
+
+  portraitStyle = {
+    '--aspect-ratio': '853/1280'
+  }
+
+  squareStyle = {
+    '--aspect-ratio': '1'
+  }
+
   constructor(props) {
     super(props);
 
@@ -75,6 +87,7 @@ export default class Index extends React.Component {
                   className={this.state.divClass}
                   onMouseOver={this.hoverPhotoIn}
                   onMouseOut={this.hoverPhotoOut}
+                  style={this.landscapeStyle}
                 >
                   <a href="/shop-collections"><img className="dyn" src="./lookbook/01.jpg" alt="" /></a>
                 </div>
@@ -95,6 +108,7 @@ export default class Index extends React.Component {
                   className={this.state.divClass}
                   onMouseOver={this.hoverPhotoIn}
                   onMouseOut={this.hoverPhotoOut}
+                  style={this.landscapeStyle}
                 >
                   <a href="/shop-collections"><img className="dyn" src="./lookbook/02.jpg" alt="" /></a>
                 </div>
@@ -105,6 +119,7 @@ export default class Index extends React.Component {
                   className={this.state.divClass}
                   onMouseOver={this.hoverPhotoIn}
                   onMouseOut={this.hoverPhotoOut}
+                  style={this.portraitStyle}
                 >
                   <a href="/shop-collections"><img className="dyn" src="./lookbook/03.jpg" alt="" /></a>
                 </div>
@@ -124,6 +139,7 @@ export default class Index extends React.Component {
                   className={this.state.divClass}
                   onMouseOver={this.hoverPhotoIn}
                   onMouseOut={this.hoverPhotoOut}
+                  style={this.squareStyle}
                 >
                   <a href="/shop-collections"><img className="dyn" src="./lookbook/04.jpg" alt="" /></a>
                 </div>
@@ -144,6 +160,7 @@ export default class Index extends React.Component {
                   className={this.state.divClass}
                   onMouseOver={this.hoverPhotoIn}
                   onMouseOut={this.hoverPhotoOut}
+                  style={this.landscapeStyle}
                 >
                   <a href="/shop-collections"><img className="dyn" src="./lookbook/05.jpg" alt="" /></a>
                 </div>
@@ -154,6 +171,7 @@ export default class Index extends React.Component {
                   className={this.state.divClass}
                   onMouseOver={this.hoverPhotoIn}
                   onMouseOut={this.hoverPhotoOut}
+                  style={this.landscapeStyle}
                 >
                   <a href="/shop-collections"><img className="dyn" src="./lookbook/06.jpg" alt="" /></a>
                 </div>
@@ -174,6 +192,7 @@ export default class Index extends React.Component {
                   className={this.state.divClass}
                   onMouseOver={this.hoverPhotoIn}
                   onMouseOut={this.hoverPhotoOut}
+                  style={this.landscapeStyle}
                 >
                   <a href="/shop-collections"><img className="dyn" src="./lookbook/07.jpg" alt="" /></a>
                 </div>
@@ -194,6 +213,7 @@ export default class Index extends React.Component {
                   className={this.state.divClass}
                   onMouseOver={this.hoverPhotoIn}
                   onMouseOut={this.hoverPhotoOut}
+                  style={this.landscapeStyle}
                 >
                   <a href="/shop-collections"><img className="dyn" src="./lookbook/08.jpg" alt="" /></a>
                 </div>
