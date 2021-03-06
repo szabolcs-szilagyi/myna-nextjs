@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-//import { useRouter } from 'next/router';
 import { API_SERVER } from '../src/constants';
 import Cookies from 'universal-cookie';
-//import UserMenu from '../components/UserMenu';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import "../src/styles.css";
 const cookies = new Cookies();
 const hash = cookies.get('hash');
@@ -69,34 +66,6 @@ class SingleProduct extends React.Component {
 }
 
 export default class Index extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      nextPage: '',
-      divClass: 'cImage'
-    };
-
-    this.connectionAlive = this.connectionAlive.bind(this);
-    this.hoverPhotoIn = this.hoverPhotoIn.bind(this);
-    this.hoverPhotoOut = this.hoverPhotoOut.bind(this);
-  }
-
-  connectionAlive() {
-
-  }
-  hoverPhotoIn (e) {
-    e.currentTarget.classList.add('cImageHovered');
-  }
-  hoverPhotoOut (e) {
-    e.currentTarget.classList.remove('cImageHovered');
-  }
-
-  componentDidUpdate() {
-  }
-  componentDidMount() {
-    console.log (window.location.pathname);
-  }
   render() {
 		return (
 			<Container fluid>
