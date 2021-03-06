@@ -50,111 +50,108 @@ export default class Index extends React.Component {
       <Header />
         <Nav />
         <Ping />
-        <div className="spacer50px" />
+        <div className="spacer50px"></div>
         <div className="row">
           <div className="col-md-12 ce capitalLetters">
             <h2><strong>Lookbook</strong></h2>
           </div>
         </div>
-        <div className="spacer50px" />
+        <div className="spacer50px"></div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-7 ce">
                 <div className="lbtxtContainer">
                   <div className="lbtxt">
-                    Presenting MYNA <br /><br />Sustainably made with love.
+                    She's matured and grown, this time she reflects a balanced elegance of a different summer glow.
+                    She's nurturing and perceptive, but every now and then she shows her romantic and spontanous side.
                   </div>
                 </div>
               </div>
               <div className="col-md-4 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook01.jpg" alt="" /></div></a>
-                <div className="spacer25px" />
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/01.jpg" alt="" /></div></a>
+                <div className="spacer25px"></div>
               </div>
-              <div className="col-md-1 ce" />
+              <div className="col-md-1 ce"></div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook02.jpg" alt="" /></div></a>
-                <div className="spacer25px" />
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/02.jpg" alt="" /></div></a>
+                <div className="spacer25px"></div>
               </div>
               <div className="col-md-6 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook03.jpg" alt="" /></div></a>
-                <div className="spacer25px" />
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/03.jpg" alt="" /></div></a>
+                <div className="spacer25px"></div>
               </div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-3" />
+              <div className="col-md-3"></div>
               <div className="col-md-8 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook04.jpg" alt="" /></div></a>
-                <div className="spacer25px" />
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/04.jpg" alt="" /></div></a>
+                <div className="spacer25px"></div>
               </div>
-              <div className="col-md-1" />
+              <div className="col-md-1"></div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
 
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-8 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook05.jpg" alt="" /></div></a>
-                <div className="spacer25px" />
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/05.jpg" alt="" /></div></a>
+                <div className="spacer25px"></div>
               </div>
               <div className="col-md-4 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook06.jpg" alt="" /></div></a>
-                <div className="spacer25px" />
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/06.jpg" alt="" /></div></a>
+                <div className="spacer25px"></div>
               </div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
 
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-2" />
+              <div className="col-md-2"></div>
               <div className="col-md-8 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook07.jpg" alt="" /></div></a>
-                <div className="spacer25px" />
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/07.jpg" alt="" /></div></a>
+                <div className="spacer25px"></div>
               </div>
-              <div className="col-md-2" />
+              <div className="col-md-2"></div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
 
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook08.jpg" alt="" /></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook09.jpg" alt="" /></div></a>
-                <div className="spacer25px" />
+                <a href="/shop-collections"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src="./lookbook/08.jpg" alt="" /></div></a>
+                <div className="spacer25px"></div>
               </div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
 
         <Footer />
