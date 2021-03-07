@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 //import { useRouter } from 'next/router';
 import {API_SERVER as API_SERVER} from '../src/constants';
 import Cookies from 'universal-cookie';
-//import UserMenu from '../components/UserMenu';
 import Header from '../components/Header';
 import PayPal from '../components/Paypal';
 import Nav from '../components/Nav';
@@ -11,10 +10,34 @@ import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import "../src/styles.css";
 const cookies = new Cookies();
 const session = cookies.get('session');
+
+const productDetailHash = {
+  'alyss-dress': { imageName: 'mynawebshop-alyssdress-1.jpg', pricc: '215' },
+  'aster-green': { imageName: 'mynawebshop-greenpants-1.jpg', pricc: '139' },
+  'aster-sand': { imageName: 'mynawebshop-linenpants-1.jpg', pricc: '139' },
+  'bella-blouse': { imageName: 'bella-blouse-01.jpg', pricc: '79' },
+  'bella-hand-painted-blouse': { imageName: 'bella-print-01.jpg', pricc: '129' },
+  'calla-cream': { imageName: 'mynawebshop-whitejeans-1.jpg', pricc: '155' },
+  'dahlia-blouse': { imageName: 'dahlia-blouse-01.jpg', pricc: '105' },
+  'delphi-culottes': { imageName: 'delphi-culottes-01.jpg', pricc: '95' },
+  'gea-cream': { imageName: 'mynawebshop-whitetop-1.jpg', pricc: '75' },
+  'iris-vest': { imageName: 'iris-vest-01.jpg', pricc: '75' },
+  'ivy-cream': { imageName: 'mynawebshop-whitetshirt-1.jpg', pricc: '75' },
+  'leya-wrap-dress': { imageName: 'leya-wrap-dress-01.jpg', pricc: '319' },
+  'lili-top': { imageName: 'lili-top-shadow-01.jpg', pricc: '69' },
+  'lili-top-satin': { imageName: 'lili-top-satin-01.jpg', pricc: '69' },
+  'lisia-dress': { imageName: 'lisia-dress-01.jpg', pricc: '179' },
+  'lotus-sand': { imageName: 'mynawebshop-whitedress-1.jpg', pricc: '225' },
+  'magna-scarf': { imageName: 'mynawebshop-magnascarf-1.jpg', pricc: '99' },
+  'nolia-dustpink': { imageName: 'mynawebshop-pinkdress-1.jpg', pricc: '215' },
+  'reeva-denim-jacket': { imageName: 'reeva-denim-jacket-01.jpg', pricc: '159' },
+  'senna-skirt': { imageName: 'senna-skirt-01.jpg', pricc: '135' },
+  'tilja-top': { imageName: 'mynawebshop-tiljatop-1.jpg', pricc: '115' },
+  'tuli-dress': { imageName: 'tuli-dress-01.jpg', pricc: '169' },
+};
 
 export default class Index extends React.Component {
   constructor(props) {
@@ -40,7 +63,8 @@ export default class Index extends React.Component {
       amountId: [],
       coupon: '',
       priceModifier: 1,
-      checked: 0
+      checked: 0,
+      ...props,
     };
 
     this.getPrice = this.getPrice.bind(this);
@@ -110,7 +134,6 @@ export default class Index extends React.Component {
       let data = output;
       let tmp = data['products'];
       this.setState({ products: tmp });
-      //console.log (this.state.products);
     })
     .catch(error => console.log(error.message));
     console.log (this.state.products);
@@ -133,6 +156,7 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
+
   getInCart () {
     fetch(API_SERVER + 'listen.php?part=getproductsnumberincart&sessiontoken=' + session)
     .then(response => response.json())
@@ -144,106 +168,34 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
+
   createProductRender () {
-
-    /*<select id={dataId2} className="amountButton" onChange={this.changeSize}>
-      {t1}
-      {t2}
-      {t3}
-      {t4}
-      {t5}
-    </select>*/
-
-    //console.log (this.state.products);
-    let nr = this.state.inCart;
     let prod = this.state.products;
     let images = this.state.productsImg;
-    //console.log (this.state.productsImg);
     let prices = this.state.productsPrice;
-    //let amo = this.state.amount;
-    let amountLimit;
-    let idName;
-    let amount;
-    let pricc;
-    let id;
-    let idT;
-    let dataId;
-    let dataId2;
-    let size;
-    let hlp;
-    let imgsrc;
-    let imgtmp;
-    let i;
     let tmp = [];
-    let s1;
-    let s2;
-    let s3;
-    let s4;
-    let s5;
-    let t1;
-    let t2;
-    let t3;
-    let t4;
-    let t5;
-    let imageName;
 
-    for (i=0; i<nr; i++) {
-      id = prod[i]['id'];
-      idT = "t" + id;
-      dataId = "d" + id;
-      dataId2 = "c" + id
-      size = prod[i]['size'];
-      idName = prod[i]['idname'];
-      //amount = amo[i]['tm1'];
-      amount = 1;
+    for (let i=0; i < this.state.inCart; i++) {
+      const id = prod[i]['id'];
+      const idT = "t" + id;
+      const size = prod[i]['size'];
+      const idName = prod[i]['idname'];
+
+      let amountLimit;
       fetch(API_SERVER + 'listen.php?part=onstock&idname=' + idName + '&size=' + size)
-      .then(response => response.json())
-  		.then(output => {
-        let data = output;
-        amountLimit = data['onstock'];
-        this.setState({ amountLimit: amountLimit });
-      })
-      .catch(error => console.log(error.message));
+        .then(response => response.json())
+        .then(output => {
+          let data = output;
+          amountLimit = data['onstock'];
+          this.setState({ amountLimit: amountLimit });
+        })
+        .catch(error => console.log(error.message));
 
-      /*
-      if (amount == '1') { s1 = <option value="1" selected>1</option>; } else { s1 = <option value="1">1</option>; }
-      if (this.state.amountLimit > 1) { if (amount == '2') { s2 = <option value="2" selected>2</option>; } else { s2 = <option value="2">2</option>; } }
-      if (this.state.amountLimit > 2) { if (amount == '3') { s3 = <option value="3" selected>3</option>; } else { s3 = <option value="3">3</option>; } }
-      if (this.state.amountLimit > 3) { if (amount == '4') { s4 = <option value="4" selected>4</option>; } else { s4 = <option value="4">4</option>; } }
-      if (this.state.amountLimit > 4) { if (amount == '5') { s5 = <option value="5" selected>5</option>; } else { s5 = <option value="5">5</option>; } }
-      if (size == 'xs') { t1 = <option value="xs" selected>XS</option>; } else { t1 = <option value="xs">XS</option>; }
-      if (size == 's') { t2 = <option value="s" selected>S</option>; } else { t2 = <option value="s">S</option>; }
-      if (size == 'm') { t3 = <option value="m" selected>M</option>; } else { t3 = <option value="m">M</option>; }
-      if (size == 'ml') { t4 = <option value="ml" selected>ML</option>; } else { t4 = <option value="ml">ML</option>; }
-      if (size == 'l') { t5 = <option value="l" selected>L</option>; } else { t5 = <option value="l">L</option>; }
-      */
-      if (idName == 'alyss-dress') { imageName = 'mynawebshop-alyssdress-1.jpg'; pricc = '215'; }
-      if (idName == 'aster-green') { imageName = 'mynawebshop-greenpants-1.jpg'; pricc = '139'; }
-      if (idName == 'aster-sand') { imageName = 'mynawebshop-linenpants-1.jpg'; pricc = '139'; }
-      if (idName == 'calla-cream') { imageName = 'mynawebshop-whitejeans-1.jpg'; pricc = '155'; }
-      if (idName == 'gea-cream') { imageName = 'mynawebshop-whitetop-1.jpg'; pricc = '75'; }
-      if (idName == 'ivy-cream') { imageName = 'mynawebshop-whitetshirt-1.jpg'; pricc = '75'; }
-      if (idName == 'lotus-sand') { imageName = 'mynawebshop-whitedress-1.jpg'; pricc = '225'; }
-      if (idName == 'magna-scarf') { imageName = 'mynawebshop-magnascarf-1.jpg'; pricc = '99'; }
-      if (idName == 'nolia-dustpink') { imageName = 'mynawebshop-pinkdress-1.jpg'; pricc = '215'; }
-      if (idName == 'tilja-top') { imageName = 'mynawebshop-tiljatop-1.jpg'; pricc = '115'; }
-      if (idName == 'senna-skirt') { imageName = 'senna-skirt-01.jpg'; pricc = '135'; }
-      if (idName == 'tuli-dress') { imageName = 'tuli-dress-01.jpg'; pricc = '169'; }
-      if (idName == 'leya-wrap-dress') { imageName = 'leya-wrap-dress-01.jpg'; pricc = '319'; }
-      if (idName == 'dahlia-blouse') { imageName = 'dahlia-blouse-01.jpg'; pricc = '105'; }
-      if (idName == 'delphi-culottes') { imageName = 'delphi-culottes-01.jpg'; pricc = '95'; }
-      if (idName == 'bella-hand-painted-blouse') { imageName = 'bella-print-01.jpg'; pricc = '129'; }
-      if (idName == 'bella-blouse') { imageName = 'bella-blouse-01.jpg'; pricc = '79'; }
-      if (idName == 'senna-skirt') { imageName = 'senna-skirt-01.jpg'; pricc = '135'; }
-      if (idName == 'reeva-denim-jacket') { imageName = 'reeva-denim-jacket-01.jpg'; pricc = '159'; }
-      if (idName == 'iris-vest') { imageName = 'iris-vest-01.jpg'; pricc = '75'; }
-      if (idName == 'lili-top') { imageName = 'lili-top-shadow-01.jpg'; pricc = '69'; }
-      if (idName == 'lili-top-satin') { imageName = 'lili-top-satin-01.jpg'; pricc = '69'; }
-      if (idName == 'lisia-dress') { imageName = 'lisia-dress-01.jpg'; pricc = '179'; }
-
-      //pricc = prices[i];
-      imgtmp = images[i];
-      imgsrc = API_SERVER + 'productphotos/' + imageName;
+      const {
+        imageName,
+        pricc,
+      } = productDetailHash[idName];
+      const imgsrc = API_SERVER + 'productphotos/' + imageName;
 
       tmp[i] = <div key={"keyID" + i}><div className="row"><div className="col-md-5"><img className="dyn" src={imgsrc} /></div>
       <div className="col-md-7">
@@ -338,15 +290,16 @@ export default class Index extends React.Component {
     this.setState({ amountId: tmpId }, () => { console.log (this.state.amountId); });
     this.createProductRender ();
   }
+
   changeAmount (e) {
     let idTmp = e.currentTarget.id;
     let id = idTmp.substr(1);
     let value = e.currentTarget.value;
     fetch(API_SERVER + 'listen.php?part=setamountincart&id=' + id + '&amount=' + value + '&pin=558240', {mode: 'no-cors'})
   }
-  changeSize (e) {
 
-  }
+  changeSize (e) {}
+
   handleCouponChange (event) {
     let tmp = event.target.value;
     let text = tmp.toLowerCase();
@@ -386,13 +339,13 @@ export default class Index extends React.Component {
   }
 
   componentDidMount() {
-    //if (this.state.checked == '0') { this.amILoggedIn(); }
     this.getProductsInCart();
     this.getInCart();
     this.getPrice ();
     this.getShipping ();
     setTimeout(this.getUserAddress, 500);
   }
+
   render() {
 		return (
 			<Container fluid>
@@ -418,7 +371,7 @@ export default class Index extends React.Component {
             <div className="spacer50px" />
             <div className="row">
               <div className="col-md-4">
-                <div className="noBorder mediumFont ceMob"><a href="/autumn-collection"><button className="startshoppingButton">CONTINUE SHOPPING</button></a></div>
+                <div className="noBorder mediumFont ceMob"><a href="/shop-collections"><button className="startshoppingButton">CONTINUE SHOPPING</button></a></div>
               </div>
               <div className="col-md-4 ce">
                 <p className="capitalLetters">Total: €{this.state.price}</p>
