@@ -41,6 +41,7 @@ function loadData(idName) {
         description: productdetails.desclong,
         compCare: productdetails.compcare,
         availability: productdetails.availability,
+        isOneSize: productdetails.is_one_size,
         photos: {
           photo1: productdetails.pic1,
           photo2: productdetails.pic2,
@@ -88,6 +89,7 @@ export async function getStaticPaths() {
       { params: { idname: 'senna-skirt' } },
       { params: { idname: 'tilja-top' } },
       { params: { idname: 'tuli-dress' } },
+      { params: { idname: 'magna-scarf' } },
     ],
     fallback: true
   };
@@ -111,6 +113,7 @@ class Index extends React.Component {
     super(props);
 
     const idName = props.router.query.idname;
+    const isOneSize = props.isOneSize;
 
     this.state = {
       cartButtonVisibility: 'visible',
@@ -125,7 +128,6 @@ class Index extends React.Component {
       description: '',
       compCare: '',
       fade: 'fadeIn',
-      visible: false,
       nextPage: '',
       photos: {
         photo1: '',
@@ -139,7 +141,7 @@ class Index extends React.Component {
         photo9: '',
       },
       productInfo: '',
-      selectedSize: '0',
+      selectedSize: isOneSize ? 'one_size' : '0',
       ...props
     };
 
@@ -165,11 +167,13 @@ class Index extends React.Component {
     fetch(API_SERVER + 'listen.php?part=availabilityexact&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
-      const isAvialable = output && output.availability && output.availability === 1;
-      if (isAvialable) {
+      const availability = output && output.availability;
+      if (availability > 0) {
         this.setState({ avby: DEFAULT_AVAILABLE, cartButtonVisibility: 'visible' });
-      } else {
+      } else if(availability === 0) {
         this.setState({ avby: 'Pre-Order/Contact Us', cartButtonVisibility: 'invisible' });
+      } else if(availability === null) {
+        this.setState({ avby: 'Sorry', cartButtonVisibility: 'invisible' });
       }
     })
     .catch(error => console.log(error.message));
@@ -326,7 +330,14 @@ class Index extends React.Component {
                 <div className="row">
                   <div className="col-md-1"></div>
                   <div className="col-md-6 left">
-                    <select id="chooseSize" className="sizeButton" value={this.state.selectedSize} onChange={this.handleSizeChange}>
+                    <select
+                      id="chooseSize"
+                      className={this.state.isOneSize ?
+                                 'sizeButton invisible' :
+                                 'sizeButton'}
+                      value={this.state.selectedSize}
+                      onChange={this.handleSizeChange}
+                    >
                       <option value="0">CHOOSE SIZE</option>
 											<option value="xs">XS</option>
 											<option value="s">S</option>
@@ -335,7 +346,15 @@ class Index extends React.Component {
                       <option value="l">L</option>
 										</select>
                     <div className="spacer25px"></div>
-                    <div className={this.state.cartButtonVisibility}><div className="noBorder mediumFont"><button type="button" className="cartButton" onClick={this.addToCart}>{this.state.addToCart}</button></div></div>
+                    <div className={this.state.cartButtonVisibility}>
+                      <div className="noBorder mediumFont">
+                        <button
+                          type="button"
+                          className="cartButton"
+                          onClick={this.addToCart}
+                        >{this.state.addToCart}</button>
+                      </div>
+                    </div>
                   </div>
                   <div className="col-md-4">
                     <div className="capitalLetters pad8px">
