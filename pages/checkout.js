@@ -366,7 +366,7 @@ export default class Index extends React.Component {
     } else {
       let loggedIn = this.state.loggedIn;
       if (loggedIn == 'no') {
-        this.myAccount ();
+        this.myAccount();
       } else {
         this.setState({ showPaypal: 'showPaypal' });
       }
@@ -450,8 +450,8 @@ export default class Index extends React.Component {
   componentDidMount() {
     this.getProductsInCart();
     this.getInCart();
-    this.getPrice ();
-    this.getShipping ();
+    this.getPrice();
+    this.getShipping();
     setTimeout(this.getUserAddress, 500);
   }
 
