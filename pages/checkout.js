@@ -39,12 +39,130 @@ const productDetailHash = {
   'tuli-dress': { imageName: 'tuli-dress-01.jpg', pricc: '169' },
 };
 
+class Loading extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          height: '100%',
+          'zIndex': 100,
+          'backgroundColor': 'rgba(0,0,0, 0.3)',
+        }}
+        className={this.props.isLoading ?
+                   'col-md-12 blur-divs-after visible' :
+                   'col-md-12 invisible'}
+      >
+        <div
+          style={{
+            top: '50%',
+            left: '50%',
+            position: 'relative'
+          }}
+          className="spinner-border"
+        ></div>
+      </div>
+    );
+  }
+}
+
+class CartItems extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      trash: props.trash,
+      products: props.products,
+    };
+
+    this.delProductFromCart = props.delProductFromCart;
+    this.trashHover = this.trashHover.bind(this);
+    this.trashNormal = this.trashNormal.bind(this);
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    return {
+      ...state,
+      products: props.products
+    };
+  }
+
+  trashHover(e) {
+    e.target.src = '/trash-b.png';
+  }
+  trashNormal(e) {
+    e.target.src = '/trash.png';
+  }
+
+  getProductImageLink(idName) {
+    if(!idName) return '';
+    return '/product_photos/' + productDetailHash[idName].imageName;
+  }
+
+  render() {
+    return (
+      <div>
+        <Loading isLoading={this.props.loading} />
+        {Object.values(this.state.products).map((product, i) =>
+          <div key={'keyID' + i}>
+            <div className="row">
+              <div className="col-md-5">
+                <img className="dyn" src={this.getProductImageLink(product.idname)} />
+              </div>
+              <div className="col-md-7">
+                <div className="cartIconContainer">
+                  <div className="vertical-center">
+                    <table className="cartCo">
+                      <tbody>
+                        <tr>
+                          <td>{product.idname}</td>
+                          <td> </td>
+                          <td>
+                            <span className="capitalLetters">{product.size}</span>
+                          </td>
+                          <td>€{productDetailHash[product.idname].pricc}</td>
+                          <td>
+                            <a
+                              id={'t' + product.id}
+                              href="#"
+                              onClick={this.delProductFromCart}
+                              onMouseEnter={this.trashHover}
+                              onMouseLeave={this.trashNormal}
+                            >
+                              <img
+                                src="/trash.png"
+                                width="35"
+                                height="35"
+                              />
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr />
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
 export default class Index extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      visibility: 'visible',
+      loadingProducts: false,
       price: '0',
       shipping: '0',
       myEmail: '',
@@ -132,11 +250,10 @@ export default class Index extends React.Component {
     .then(response => response.json())
 		.then(output => {
       let data = output;
-      let tmp = data['products'];
+      let tmp = data['products'] || {};
       this.setState({ products: tmp });
     })
     .catch(error => console.log(error.message));
-    console.log (this.state.products);
   }
   getImagesPrice (e) {
     let idName = e;
@@ -163,7 +280,7 @@ export default class Index extends React.Component {
 		.then(output => {
       let data = output;
       let tmp = data['nr'];
-      if (tmp == '0') { this.setState({ emptyCartAlert: <div><div className='spacer25px' /><p><i>Your cart is empty.</i> <br /><br /><a href="/autumn-collection"><button className="startshoppingButton">START SHOPPING HERE</button></a></p></div> }); }
+      if (tmp == '0') { this.setState({ emptyCartAlert: <div><div className='spacer25px' /><p><i>Your cart is empty.</i> <br /><br /><a href="/shop-collections"><button className="startshoppingButton">START SHOPPING HERE</button></a></p></div> }); }
       this.setState({ inCart: tmp });
     })
     .catch(error => console.log(error.message));
@@ -171,13 +288,10 @@ export default class Index extends React.Component {
 
   createProductRender () {
     let prod = this.state.products;
-    let images = this.state.productsImg;
-    let prices = this.state.productsPrice;
     let tmp = [];
 
     for (let i=0; i < this.state.inCart; i++) {
       const id = prod[i]['id'];
-      const idT = "t" + id;
       const size = prod[i]['size'];
       const idName = prod[i]['idname'];
 
@@ -210,7 +324,7 @@ export default class Index extends React.Component {
 
         </td>
         <td>€{pricc}</td>
-        <td><a id={idT} href="#" onClick={this.delProductFromCart} onMouseEnter={this.trashHover} onMouseLeave={this.trashNormal}><img src={this.state.trash} width="35" height="35" /></a></td>
+        <td><a id={'t' + id} href="#" onClick={this.delProductFromCart} onMouseEnter={this.trashHover} onMouseLeave={this.trashNormal}><img src={this.state.trash} width="35" height="35" /></a></td>
         </tr></tbody></table>
         </div></div>
       </div></div><hr /></div>
@@ -220,19 +334,15 @@ export default class Index extends React.Component {
   addImages () {
     let nr = this.state.inCart;
     let prod = this.state.products;
-    console.log ("now");
-    console.log (prod);
     let hlp;
     let i;
     for (i=0; i<nr; i++) {
       hlp = prod[i]['idname'];
-      console.log ("hlp:");
-      console.log (hlp);
       this.getImagesPrice (hlp);
     }
   }
   delProductFromCart (e) {
-    this.setState({ visibility: 'invisible' });
+    this.setState({ loadingProducts: true });
     let idTmp = e.currentTarget.id;
     let id = idTmp.substring(1);
     fetch(API_SERVER + 'listen.php?part=delproductfromcart&id=' + id + '&sessiontoken=' + session, {mode: 'no-cors'})
@@ -282,12 +392,11 @@ export default class Index extends React.Component {
         tm2 = data['id'];
         tmp.push({ tm1 });
         tmpId.push({ tm2 });
-        //console.log (this.state.products);
       })
       .catch(error => console.log(error.message));
     }
-    this.setState({ amount: tmp }, () => { console.log (this.state.amount); });
-    this.setState({ amountId: tmpId }, () => { console.log (this.state.amountId); });
+    this.setState({ amount: tmp });
+    this.setState({ amountId: tmpId });
     this.createProductRender ();
   }
 
@@ -365,9 +474,12 @@ export default class Index extends React.Component {
           <div className="col-md-8">
             Cart / {this.state.inCart} items
             <hr />
-            <div className={this.state.visibility}>
-              {this.state.productRender}
-            </div>
+            <CartItems
+              trash={this.state.trash}
+              products={this.state.products}
+              delProductFromCart={this.delProductFromCart}
+              loading={this.state.loadingProducts}
+            />
             <div className="spacer50px" />
             <div className="row">
               <div className="col-md-4">

@@ -550,3 +550,7 @@ select.sizeButton::-ms-expand {
     height: 100%;
   }
 }
+
+.blur-divs-after ~ div {
+  filter: blur(5px);
+}
