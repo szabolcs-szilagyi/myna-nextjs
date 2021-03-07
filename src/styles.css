@@ -16,6 +16,9 @@ h2 {
 img.dyn {
   max-width: 100%;
 }
+img.maxHeight {
+  max-height: 95vh;
+}
 .spacer10px {
   width: 100%;
   height: 10px;
@@ -524,3 +527,30 @@ select.sizeButton::-ms-expand {
   }
 }
 
+
+[style*="--aspect-ratio"] > :first-child {
+  width: 100%;
+}
+[style*="--aspect-ratio"] > img {
+  height: auto;
+}
+@supports (--custom:property) {
+  [style*="--aspect-ratio"] {
+    position: relative;
+  }
+  [style*="--aspect-ratio"]::before {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+  }
+  [style*="--aspect-ratio"] > :first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+}
+
+.blur-divs-after ~ div {
+  filter: blur(5px);
+}

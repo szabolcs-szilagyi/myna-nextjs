@@ -22,7 +22,7 @@ export default class Nav extends Component {
     super(props);
     this.state = {
       myEmail: '',
-      cart: './cart.png',
+      cart: '/cart.png',
       inCart: '0'
     };
     this.amILoggedIn = this. amILoggedIn.bind(this);
@@ -46,10 +46,10 @@ export default class Nav extends Component {
   handleChange () {
   }
   cartHover () {
-    this.setState({ cart: './cart-b.png' });
+    this.setState({ cart: '/cart-b.png' });
   }
   cartNormal () {
-    this.setState({ cart: './cart.png' });
+    this.setState({ cart: '/cart.png' });
   }
   getInCart () {
     fetch(API_SERVER + 'listen.php?part=getproductsnumberincart&sessiontoken=' + session)
@@ -74,7 +74,7 @@ export default class Nav extends Component {
         <div className="desktopNav">
           <div className="row">
             <div className="col-md-2">
-              <a href="/"><img className="logoMain" src="./logo.png" alt="MYNA logo" /></a>
+              <a href="/"><img className="logoMain" src="/logo.png" alt="MYNA logo" /></a>
             </div>
             <div className="col-md-7 capitalLetters">
               <ul className="navMenu">
@@ -101,7 +101,7 @@ export default class Nav extends Component {
           <div className="row">
             <div className="col-md-1" />
             <div className="col-md-2">
-              <a href="/"><img src="./logo.png" alt="MYNA logo" /></a>
+              <a href="/"><img src="/logo.png" alt="MYNA logo" /></a>
             </div>
             <div className="col-md-1" />
             <div className="col-md-4 ce menu">
@@ -130,7 +130,7 @@ export default class Nav extends Component {
         <div className="mobileNav">
           <div className="row">
             <div className="col-md-12 ce">
-              <a href="/"><img src="./logo.png" alt="MYNA logo" /></a>
+              <a href="/"><img src="/logo.png" alt="MYNA logo" /></a>
               <div className="blackFont"><a href="/my-account">My Account</a></div>
               <div className="blackFont padtop10px"><a href="/checkout" onMouseEnter={this.cartHover} onMouseLeave={this.cartNormal}><img src={this.state.cart} width="35" height="35" />({this.state.inCart})</a></div>
             </div>

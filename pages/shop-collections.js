@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-//import { useRouter } from 'next/router';
 import { API_SERVER } from '../src/constants';
 import Cookies from 'universal-cookie';
-//import UserMenu from '../components/UserMenu';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import "../src/styles.css";
 const cookies = new Cookies();
 const hash = cookies.get('hash');
 
-export default class Index extends React.Component {
+class SingleProduct extends React.Component {
+  squareStyle = {
+    '--aspect-ratio': '1'
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
-      nextPage: '',
       divClass: 'cImage'
     };
 
@@ -29,21 +29,43 @@ export default class Index extends React.Component {
     this.hoverPhotoOut = this.hoverPhotoOut.bind(this);
   }
 
-  connectionAlive() {
+  connectionAlive() {}
 
-  }
   hoverPhotoIn (e) {
     e.currentTarget.classList.add('cImageHovered');
   }
+
   hoverPhotoOut (e) {
     e.currentTarget.classList.remove('cImageHovered');
   }
 
-  componentDidUpdate() {
+  render() {
+    const props = this.props;
+
+    return (
+      <div className="col-md-6 ce">
+        <div
+          className={this.state.divClass}
+          onMouseOver={this.hoverPhotoIn}
+          onMouseOut={this.hoverPhotoOut}
+          style={this.squareStyle}
+        >
+          <a href={props.productPageLink}>
+            <img
+              className="dyn"
+              src={props.productImageLink}
+              alt={props.productName}
+            />
+            <p>{props.productName}<br /><span>{props.price}</span></p>
+          </a>
+        </div>
+        <div className="spacer25px" />
+      </div>
+    );
   }
-  componentDidMount() {
-    console.log (window.location.pathname);
-  }
+}
+
+export default class Index extends React.Component {
   render() {
 		return (
 			<Container fluid>
@@ -59,83 +81,15 @@ export default class Index extends React.Component {
         <div className="row">
           <div className="col-md-3" />
           <div className="col-md-2 ce capitalLetters">
-            <a href="#love-and-light" className="smallFont ce blackFont">Love and Light</a>
+            <a href="#consciously-beautiful" className="smallFont ce blackFont">Consciously Beautiful</a>
           </div>
           <div className="col-md-2 ce capitalLetters">
-            <a href="#consciously-beautiful" className="smallFont ce blackFont">Consciously Beautiful</a>
+            <a href="#love-and-light" className="smallFont ce blackFont">Love and Light</a>
           </div>
           <div className="col-md-2 ce capitalLetters">
             <a href="#autumn-collection" className="smallFont ce blackFont">Autumn Collection</a>
           </div>
           <div className="col-md-3" />
-        </div>
-        <div className="spacer50px" />
-        <div className="row">
-          <div id="love-and-light" className="col-md-12 ce capitalLetters">
-            <h5><strong>Love and Light</strong></h5>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-2" />
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/lotus-sand"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitedress-1.jpg`} alt="Lotus Woven Dress" /><p>Lotus Woven Dress <br /><span>€225</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/ivy-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitetshirt-1.jpg`} alt="Ivy Knitted Jersey Top" /><p>Ivy Knitted Jersey Top <br /><span>€75</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-2" />
-        </div>
-        <div className="row">
-          <div className="col-md-2" />
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/aster-green"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-greenpants-1.jpg`} alt="Aster Green" /><p>Aster Woven Culotte Pants <br /><span>€139</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/aster-sand"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-linenpants-1.jpg`} alt="Aster Sand" /><p>Aster Woven Culotte Pants <br /><span>€139</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-2" />
-        </div>
-        <div className="row">
-          <div className="col-md-2" />
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/gea-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitetop-1.jpg`} alt="Gea Knitted Jersey Top" /><p>Gea Knitted Jersey Top <br /><span>€75</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/nolia-dustpink"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-pinkdress-1.jpg`} alt="Nolia Woven Dress" /><p>Nolia Woven Dress <br /><span>€215</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-2" />
-        </div>
-        <div className="row">
-          <div className="col-md-2" />
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-3" />
-              <div className="col-md-6 ce">
-                <a href="/calla-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitejeans-1.jpg`} alt="Calla Denim Pants" /><p>Calla Denim Pants <br /><span>€155</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-3" />
-            </div>
-          </div>
-          <div className="col-md-2" />
         </div>
 
         <div className="spacer50px" />
@@ -144,86 +98,157 @@ export default class Index extends React.Component {
             <h5><strong>Consciously Beautiful</strong></h5>
           </div>
         </div>
+
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/alyss-dress"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-alyssdress-2.jpg`} alt="ALYSS Tencel Woven Dress" /><p>ALYSS Tencel Woven Dress <br /><span>€215</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/tilja-top"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-tiljatop-4.jpg`} alt="TILIA Tencel Top" /><p>TILIA Tencel Top <br /><span>€115</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
+              <SingleProduct
+                productPageLink="/reeva-denim-jacket"
+                productImageLink="product_photos/reeva-denim-jacket-01.jpg"
+                productName="REEVA Denim Jacket"
+                price="€159"
+              />
+              <SingleProduct
+                productPageLink="/senna-skirt"
+                productImageLink="product_photos/senna-skirt-01.jpg"
+                productName="SENNA Skirt"
+                price="€135"
+              />
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
+
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/reeva-denim-jacket"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/reeva-denim-jacket-01.jpg`} alt="REEVA Denim Jacket" /><p>REEVA Denim Jacket <br /><span>€159</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/senna-skirt"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/senna-skirt-01.jpg`} alt="SENNA Skirt" /><p>SENNA Skirt <br /><span>€135</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
+              <SingleProduct
+                productPageLink="/tuli-dress"
+                productImageLink="product_photos/tuli-dress-01.jpg"
+                productName="TULI Dress"
+                price="€169"
+              />
+              <SingleProduct
+                productPageLink="/leya-wrap-dress"
+                productImageLink="product_photos/leya-wrap-dress-01.jpg"
+                productName="LEYA Wrap Dress"
+                price="€319"
+              />
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
+
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/tuli-dress"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/tuli-dress-01.jpg`} alt="TULI Dress" /><p>TULI Dress <br /><span>€169</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/leya-wrap-dress"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/leya-wrap-dress-01.jpg`} alt="LEYA Wrap Dress" /><p>LEYA Wrap Dress <br /><span>€319</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
+              <SingleProduct
+                productPageLink="/dahlia-blouse"
+                productImageLink="product_photos/dahlia-blouse-01.jpg"
+                productName="DAHLIA Blouse"
+                price="€105"
+              />
+              <SingleProduct
+                productPageLink="/bella-hand-painted-blouse"
+                productImageLink="product_photos/bella-print-01.jpg"
+                productName="BELLA Hand Painted Blouse"
+                price="€129"
+              />
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/dalhia-blouse"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/dalhia-blouse-01.jpg`} alt="DALHIA Blouse" /><p>DALHIA Blouse <br /><span>€105</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/bella-hand-painted-blouse"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/bella-print-01.jpg`} alt="BELLA Hand Painted Blouse" /><p>BELLA Hand Painted Blouse <br /><span>€129</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
+              <SingleProduct
+                productPageLink="/bella-blouse"
+                productImageLink="product_photos/bella-blouse-01.jpg"
+                productName="BELLA Blouse"
+                price="€79"
+              />
+              <SingleProduct
+                productPageLink="/delphi-culottes"
+                productImageLink="product_photos/delphi-culottes-01.jpg"
+                productName="DELPHI Culottes"
+                price="€95"
+              />
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
+        </div>
+
+        <div className="spacer50px" />
+        <div className="row">
+          <div id="love-and-light" className="col-md-12 ce capitalLetters">
+            <h5><strong>Love and Light</strong></h5>
+          </div>
         </div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/bella-blouse"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/bella-blouse-01.jpg`} alt="BELLA Blouse" /><p>BELLA Blouse <br /><span>€79</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/delphi-culottes"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/delphi-culottes-01.jpg`} alt="DELPHI Culottes" /><p>DELPHI Culottes <br /><span>€95</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
+              <SingleProduct
+                productPageLink="/lotus-sand"
+                productImageLink="product_photos/mynawebshop-whitedress-1.jpg"
+                productName="Lotus Woven Dress"
+                price="€225"
+              />
+              <SingleProduct
+                productPageLink="/ivy-cream"
+                productImageLink="product_photos/mynawebshop-whitetshirt-1.jpg"
+                productName="Ivy Knitted Jersey Top"
+                price="€75"
+              />
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
+        <div className="row">
+          <div className="col-md-2"></div>
+          <div className="col-md-8">
+            <div className="row">
+              <SingleProduct
+                productPageLink="/aster-green"
+                productImageLink="product_photos/mynawebshop-greenpants-1.jpg"
+                productName="Aster Green"
+                price="€139"
+              />
+              <SingleProduct
+                productPageLink="/aster-sand"
+                productImageLink="product_photos/mynawebshop-linenpants-1.jpg"
+                productName="Aster Sand"
+                price="€139"
+              />
+            </div>
+          </div>
+          <div className="col-md-2"></div>
+        </div>
+        <div className="row">
+          <div className="col-md-2"></div>
+          <div className="col-md-8">
+            <div className="row">
+              <SingleProduct
+                productPageLink="/gea-cream"
+                productImageLink="product_photos/mynawebshop-whitetop-1.jpg"
+                productName="Gea Knitted Jersey Top"
+                price="€75"
+              />
+              <SingleProduct
+                productPageLink="/nolia-dustpink"
+                productImageLink="product_photos/mynawebshop-pinkdress-1.jpg"
+                productName="Nolia Woven Dress"
+                price="€215"
+              />
+            </div>
+          </div>
+          <div className="col-md-2"></div>
+        </div>
+
         <div className="spacer50px" />
         <div className="row">
           <div id="autumn-collection" className="col-md-12 ce capitalLetters">
@@ -231,55 +256,48 @@ export default class Index extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/alyss-dress"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-alyssdress-1.jpg`} alt="Alyss Dress" /><p>ALYSS dress <br /><span>€215</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/calla-cream"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-whitejeans-1.jpg`} alt="Calla Denim Pants" /><p>Calla Denim Pants <br /><span>€155</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
+              <SingleProduct
+                productPageLink="/alyss-dress"
+                productImageLink="product_photos/mynawebshop-alyssdress-1.jpg"
+                productName="Alyss Dress"
+                price="€215"
+              />
+              <SingleProduct
+                productPageLink="/calla-cream"
+                productImageLink="product_photos/mynawebshop-whitejeans-1.jpg"
+                productName="Calla Denim Pants"
+                price="€155"
+              />
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/tilja-top"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-tiljatop-1.jpg`} alt="Tilia Top" /><p>TILIA top <br /><span>€115</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/magna-scarf"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-magnascarf-1.jpg`} alt="Magna Scarf" /><p>MAGNA scarf <br /><span>€99</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
+              <SingleProduct
+                productPageLink="/tilja-top"
+                productImageLink="product_photos/mynawebshop-tiljatop-1.jpg"
+                productName="Tilia Top"
+                price="€115"
+              />
+              <SingleProduct
+                productPageLink="/magna-scarf"
+                productImageLink="product_photos/mynawebshop-magnascarf-1.jpg"
+                productName="Magna Scarf"
+                price="€99"
+              />
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
-        <div className="row">
-          <div className="col-md-2" />
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-6 ce">
-                <a href="/nolia-dustpink"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-pinkdress-1.jpg`} alt="Nolia Woven Dress" /><p>Nolia Woven Dress <br /><span>€215</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-              <div className="col-md-6 ce">
-                <a href="/aster-green"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/mynawebshop-greenpants-1.jpg`} alt="Aster Green" /><p>Aster Woven Culotte Pants <br /><span>€139</span></p></div></a>
-                <div className="spacer25px" />
-              </div>
-            </div>
-          </div>
-          <div className="col-md-2" />
-        </div>
+
         <Footer />
       </Container>
-		);
-	}
+    );
+  }
 }
