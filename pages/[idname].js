@@ -171,9 +171,9 @@ class Index extends React.Component {
       if (availability > 0) {
         this.setState({ avby: DEFAULT_AVAILABLE, cartButtonVisibility: 'visible' });
       } else if(availability === 0) {
-        this.setState({ avby: 'Pre-Order/Contact Us', cartButtonVisibility: 'invisible' });
+        this.setState({ avby: 'Pre-Order / Contact Us', cartButtonVisibility: 'invisible' });
       } else if(availability === null) {
-        this.setState({ avby: 'Sorry', cartButtonVisibility: 'invisible' });
+        this.setState({ avby: 'Not Available', cartButtonVisibility: 'invisible' });
       }
     })
     .catch(error => console.log(error.message));
