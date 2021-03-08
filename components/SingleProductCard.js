@@ -2,7 +2,8 @@ import React from 'react';
 
 export default class SingleProductCard extends React.Component {
   squareStyle = {
-    '--aspect-ratio': '1'
+    '--aspect-ratio': '1',
+    overflow: 'hidden', // TODO: should not be needed! images need to be square!
   }
 
   constructor(props) {
