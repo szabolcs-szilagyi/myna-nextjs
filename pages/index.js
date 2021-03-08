@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-//import { useRouter } from 'next/router';
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+
 import { API_SERVER } from '../src/constants';
 import Slider from '../components/Slider';
-import Cookies from 'universal-cookie';
-//import UserMenu from '../components/UserMenu';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Ping from '../components/Ping';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import "../src/styles.css";
+
+import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 const hash = cookies.get('hash');
 
