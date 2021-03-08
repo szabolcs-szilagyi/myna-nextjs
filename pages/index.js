@@ -24,26 +24,18 @@ export default class Index extends React.Component {
       divClass: 'cImage'
     };
 
-    this.connectionAlive = this.connectionAlive.bind(this);
     this.hoverPhotoIn = this.hoverPhotoIn.bind(this);
     this.hoverPhotoOut = this.hoverPhotoOut.bind(this);
   }
 
-  connectionAlive() {
-
-  }
   hoverPhotoIn (e) {
     e.currentTarget.classList.add('cImageHovered');
   }
+
   hoverPhotoOut (e) {
     e.currentTarget.classList.remove('cImageHovered');
   }
 
-  componentDidUpdate() {
-  }
-  componentDidMount() {
-    console.log (window.location.pathname);
-  }
   render() {
 		return (
 			<Container fluid>
