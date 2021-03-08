@@ -55,60 +55,60 @@ export default class Index extends React.Component {
             <Slider />
           </div>
         </div>
-        <div className="spacer50px" />
+        <div className="spacer50px"></div>
         <div className="row">
           <div className="col-md-12 ce capitalLetters">
             Your Loved Pieces
           </div>
         </div>
-        <div className="spacer50px" />
+        <div className="spacer50px"></div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/leya-wrap-dress"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/leya-wrap-dress-01.jpg`} alt="LEYA Wrap Dress" /><p>LEYA Wrap Dress <br /><span>€319</span></p></div></a>
-                <div className="spacer25px" />
+                <a href="/leya-wrap-dress"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`/product_photos/leya-wrap-dress-01.jpg`} alt="LEYA Wrap Dress" /><p>LEYA Wrap Dress <br /><span>€319</span></p></div></a>
+                <div className="spacer25px"></div>
               </div>
               <div className="col-md-6 ce">
-                <a href="/dahlia-blouse"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/dahlia-blouse-01.jpg`} alt="DAHLIA Blouse" /><p>DAHLIA Blouse <br /><span>€105</span></p></div></a>
-                <div className="spacer25px" />
+                <a href="/dahlia-blouse"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`/product_photos/dahlia-blouse-01.jpg`} alt="DAHLIA Blouse" /><p>DAHLIA Blouse <br /><span>€105</span></p></div></a>
+                <div className="spacer25px"></div>
               </div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/tuli-dress"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/tuli-dress-03.jpg`} alt="TULI Dress" /><p>TULI Dress <br /><span>€169</span></p></div></a>
-                <div className="spacer25px" />
+                <a href="/tuli-dress"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`/product_photos/tuli-dress-03.jpg`} alt="TULI Dress" /><p>TULI Dress <br /><span>€169</span></p></div></a>
+                <div className="spacer25px"></div>
               </div>
               <div className="col-md-6 ce">
-                <a href="/bella-hand-painted-blouse"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/bella-print-01.jpg`} alt="BELLA Hand Painted Blouse" /><p>BELLA Hand Painted Blouse <br /><span>€129</span></p></div></a>
-                <div className="spacer25px" />
+                <a href="/bella-hand-painted-blouse"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`/product_photos/bella-print-01.jpg`} alt="BELLA Hand Painted Blouse" /><p>BELLA Hand Painted Blouse <br /><span>€129</span></p></div></a>
+                <div className="spacer25px"></div>
               </div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6 ce">
-                <a href="/reeva-denim-jacket"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/reeva-denim-jacket-01.jpg`} alt="REEVA Denim Jacket" /><p>REEVA Denim Jacket <br /><span>€159</span></p></div></a>
-                <div className="spacer25px" />
+                <a href="/reeva-denim-jacket"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`/product_photos/reeva-denim-jacket-01.jpg`} alt="REEVA Denim Jacket" /><p>REEVA Denim Jacket <br /><span>€159</span></p></div></a>
+                <div className="spacer25px"></div>
               </div>
               <div className="col-md-6 ce">
-                <a href="/senna-skirt"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`${API_SERVER}productphotos/senna-skirt-01.jpg`} alt="SENNA Skirt" /><p>SENNA Skirt <br /><span>€135</span></p></div></a>
-                <div className="spacer25px" />
+                <a href="/senna-skirt"><div className={this.state.divClass} onMouseOver={this.hoverPhotoIn} onMouseOut={this.hoverPhotoOut}><img className="dyn" src={`/product_photos/senna-skirt-01.jpg`} alt="SENNA Skirt" /><p>SENNA Skirt <br /><span>€135</span></p></div></a>
+                <div className="spacer25px"></div>
               </div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
         <Footer />
       </Container>
