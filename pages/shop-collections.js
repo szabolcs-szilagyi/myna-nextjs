@@ -1,69 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { API_SERVER } from '../src/constants';
-import Cookies from 'universal-cookie';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import SingleProductCard from '../components/SingleProductCard';
 import "../src/styles.css";
+
+import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 const hash = cookies.get('hash');
-
-class SingleProduct extends React.Component {
-  squareStyle = {
-    '--aspect-ratio': '1'
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      divClass: 'cImage'
-    };
-
-    this.connectionAlive = this.connectionAlive.bind(this);
-    this.hoverPhotoIn = this.hoverPhotoIn.bind(this);
-    this.hoverPhotoOut = this.hoverPhotoOut.bind(this);
-  }
-
-  connectionAlive() {}
-
-  hoverPhotoIn (e) {
-    e.currentTarget.classList.add('cImageHovered');
-  }
-
-  hoverPhotoOut (e) {
-    e.currentTarget.classList.remove('cImageHovered');
-  }
-
-  render() {
-    const props = this.props;
-
-    return (
-      <div className="col-md-6 ce">
-        <div
-          className={this.state.divClass}
-          onMouseOver={this.hoverPhotoIn}
-          onMouseOut={this.hoverPhotoOut}
-          style={this.squareStyle}
-        >
-          <a href={props.productPageLink}>
-            <img
-              className="dyn"
-              src={props.productImageLink}
-              alt={props.productName}
-            />
-            <p>{props.productName}<br /><span>{props.price}</span></p>
-          </a>
-        </div>
-        <div className="spacer25px" />
-      </div>
-    );
-  }
-}
 
 export default class Index extends React.Component {
   render() {
@@ -103,13 +53,13 @@ export default class Index extends React.Component {
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/reeva-denim-jacket"
                 productImageLink="product_photos/reeva-denim-jacket-01.jpg"
                 productName="REEVA Denim Jacket"
                 price="€159"
               />
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/senna-skirt"
                 productImageLink="product_photos/senna-skirt-01.jpg"
                 productName="SENNA Skirt"
@@ -124,13 +74,13 @@ export default class Index extends React.Component {
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/tuli-dress"
                 productImageLink="product_photos/tuli-dress-01.jpg"
                 productName="TULI Dress"
                 price="€169"
               />
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/leya-wrap-dress"
                 productImageLink="product_photos/leya-wrap-dress-01.jpg"
                 productName="LEYA Wrap Dress"
@@ -145,13 +95,13 @@ export default class Index extends React.Component {
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/dahlia-blouse"
                 productImageLink="product_photos/dahlia-blouse-01.jpg"
                 productName="DAHLIA Blouse"
                 price="€105"
               />
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/bella-hand-painted-blouse"
                 productImageLink="product_photos/bella-print-01.jpg"
                 productName="BELLA Hand Painted Blouse"
@@ -165,13 +115,13 @@ export default class Index extends React.Component {
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/bella-blouse"
                 productImageLink="product_photos/bella-blouse-01.jpg"
                 productName="BELLA Blouse"
                 price="€79"
               />
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/delphi-culottes"
                 productImageLink="product_photos/delphi-culottes-01.jpg"
                 productName="DELPHI Culottes"
@@ -192,13 +142,13 @@ export default class Index extends React.Component {
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/lotus-sand"
                 productImageLink="product_photos/mynawebshop-whitedress-1.jpg"
                 productName="Lotus Woven Dress"
                 price="€225"
               />
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/ivy-cream"
                 productImageLink="product_photos/mynawebshop-whitetshirt-1.jpg"
                 productName="Ivy Knitted Jersey Top"
@@ -212,13 +162,13 @@ export default class Index extends React.Component {
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/aster-green"
                 productImageLink="product_photos/mynawebshop-greenpants-1.jpg"
                 productName="Aster Green"
                 price="€139"
               />
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/aster-sand"
                 productImageLink="product_photos/mynawebshop-linenpants-1.jpg"
                 productName="Aster Sand"
@@ -232,13 +182,13 @@ export default class Index extends React.Component {
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/gea-cream"
                 productImageLink="product_photos/mynawebshop-whitetop-1.jpg"
                 productName="Gea Knitted Jersey Top"
                 price="€75"
               />
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/nolia-dustpink"
                 productImageLink="product_photos/mynawebshop-pinkdress-1.jpg"
                 productName="Nolia Woven Dress"
@@ -259,13 +209,13 @@ export default class Index extends React.Component {
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/alyss-dress"
                 productImageLink="product_photos/mynawebshop-alyssdress-1.jpg"
                 productName="Alyss Dress"
                 price="€215"
               />
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/calla-cream"
                 productImageLink="product_photos/mynawebshop-whitejeans-1.jpg"
                 productName="Calla Denim Pants"
@@ -279,13 +229,13 @@ export default class Index extends React.Component {
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/tilja-top"
                 productImageLink="product_photos/mynawebshop-tiljatop-1.jpg"
                 productName="Tilia Top"
                 price="€115"
               />
-              <SingleProduct
+              <SingleProductCard
                 productPageLink="/magna-scarf"
                 productImageLink="product_photos/mynawebshop-magnascarf-1.jpg"
                 productName="Magna Scarf"
