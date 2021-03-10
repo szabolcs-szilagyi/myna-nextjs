@@ -1,7 +1,12 @@
 import React, { useState, Component } from 'react';
 import { PayPalButton } from "react-paypal-button-v2";
 import Cookies from 'universal-cookie';
-import {API_SERVER as API_SERVER} from '../src/constants';
+
+import {
+  PAY_PAL_CLIENT_ID,
+  API_SERVER,
+} from '../src/constants';
+
 const cookies = new Cookies();
 const session = cookies.get('session');
 
@@ -145,36 +150,31 @@ export default class Example extends Component {
     setTimeout(this.getItToMail, 1500);
   }
 
-    render() {
-        return (
-            <PayPalButton
-                amount={this.props.dataFromParent}
-                // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-                onSuccess={(details, data) => {
-                    // here to write the SUCCESS script
-                    this.completed ();
-                    alert("We will contact you in email");
-                    setTimeout(this.reload, 2000);
+  render() {
+    return (
+      <PayPalButton
+        amount={this.props.dataFromParent}
+        // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+        onSuccess={(details, data) => {
+          // here to write the SUCCESS script
+          this.completed();
+          alert("We will contact you in email");
+          setTimeout(this.reload, 2000);
 
-                    // OPTIONAL: Call your server to save the transaction
-                //    return fetch("/paypal-transaction-complete", {
-                //        method: "post",
-                //        body: JSON.stringify({
-                //            orderId: data.orderID
-                //        })
-                //    });
-                }}
-                options={{
-                    disableFunding: "card",
-                    //live -Justyna
-                    clientId: "Aet-UX8Rj1rBuMbuaNKBUOqyTdWiaJpkN-EEwkPphiZcREn3aeP_b7EhqMDzcidzJxX5Y-jMNogmfJGc",
-                    //live -Magdalena
-                    //clientId: "AV1VNTxZpawgLCFPTo1p06zUI1EICb62IbkrxqScFq-rQdKdyBqp07UlybT2hSgmKYsd4X-ciMfS8nkZ",
-                    //sandbox -Magdalena
-                    //clientId: "AQIX4lwiUlCsoo671-JWES0SJ7BNGhkM7MpIwBRiUn4Xzk-4oXPjhpDWVyaxrReLfH5XYcTLorzlPTAu",
-                    currency: "EUR"
-                }}
-            />
-        );
-    }
+          // OPTIONAL: Call your server to save the transaction
+          //    return fetch("/paypal-transaction-complete", {
+          //        method: "post",
+          //        body: JSON.stringify({
+          //            orderId: data.orderID
+          //        })
+          //    });
+        }}
+        options={{
+          disableFunding: "card",
+          clientId: PAY_PAL_CLIENT_ID,
+          currency: "EUR"
+        }}
+      />
+    );
+  }
 }
