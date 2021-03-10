@@ -76,21 +76,9 @@ class CartItems extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      trash: props.trash,
-      products: props.products,
-    };
-
     this.delProductFromCart = props.delProductFromCart;
     this.trashHover = this.trashHover.bind(this);
     this.trashNormal = this.trashNormal.bind(this);
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    return {
-      ...state,
-      products: props.products
-    };
   }
 
   trashHover(e) {
@@ -109,7 +97,7 @@ class CartItems extends React.Component {
     return (
       <div>
         <Loading isLoading={this.props.loading} />
-        {Object.values(this.state.products).map((product, i) =>
+        {Object.values(this.props.products).map((product, i) =>
           <div key={'keyID' + i}>
             <div className="row">
               <div className="col-md-5">
@@ -172,8 +160,6 @@ export default class Index extends React.Component {
       productsImg: [],
       productsPrice: [],
       inCart: '0',
-      productRender: [],
-      trash: './trash.png',
       emptyCartAlert: '',
       showPaypal: 'hidePaypal',
       amountLimit: '',
@@ -191,13 +177,10 @@ export default class Index extends React.Component {
     this.getProductsInCart = this.getProductsInCart.bind(this);
     this.getImagesPrice = this.getImagesPrice.bind(this);
     this.getInCart = this.getInCart.bind(this);
-    this.createProductRender = this.createProductRender.bind(this);
     this.addImages = this.addImages.bind(this);
     this.delProductFromCart = this.delProductFromCart.bind(this);
     this.reload = this.reload.bind(this);
     this.myAccount = this.myAccount.bind(this);
-    this.trashHover = this.trashHover.bind(this);
-    this.trashNormal = this.trashNormal.bind(this);
     this.pressedCheckout = this.pressedCheckout.bind(this);
     this.getAmount = this.getAmount.bind(this);
     this.changeAmount = this.changeAmount.bind(this);
@@ -286,51 +269,6 @@ export default class Index extends React.Component {
     .catch(error => console.log(error.message));
   }
 
-  createProductRender () {
-    let prod = this.state.products;
-    let tmp = [];
-
-    for (let i=0; i < this.state.inCart; i++) {
-      const id = prod[i]['id'];
-      const size = prod[i]['size'];
-      const idName = prod[i]['idname'];
-
-      let amountLimit;
-      fetch(API_SERVER + 'listen.php?part=onstock&idname=' + idName + '&size=' + size)
-        .then(response => response.json())
-        .then(output => {
-          let data = output;
-          amountLimit = data['onstock'];
-          this.setState({ amountLimit: amountLimit });
-        })
-        .catch(error => console.log(error.message));
-
-      const {
-        imageName,
-        pricc,
-      } = productDetailHash[idName];
-      const imgsrc = API_SERVER + 'productphotos/' + imageName;
-
-      tmp[i] = <div key={"keyID" + i}><div className="row"><div className="col-md-5"><img className="dyn" src={imgsrc} /></div>
-      <div className="col-md-7">
-        <div className="cartIconContainer"><div className="vertical-center">
-        <table className="cartCo"><tbody><tr>
-        <td>{idName}</td>
-        <td>
-
-        </td>
-        <td>
-          <span className="capitalLetters">{size}</span>
-
-        </td>
-        <td>€{pricc}</td>
-        <td><a id={'t' + id} href="#" onClick={this.delProductFromCart} onMouseEnter={this.trashHover} onMouseLeave={this.trashNormal}><img src={this.state.trash} width="35" height="35" /></a></td>
-        </tr></tbody></table>
-        </div></div>
-      </div></div><hr /></div>
-    }
-    this.setState({ productRender: tmp });
-  }
   addImages () {
     let nr = this.state.inCart;
     let prod = this.state.products;
@@ -353,12 +291,6 @@ export default class Index extends React.Component {
   }
   myAccount () {
     window.location.href = "/my-account";
-  }
-  trashHover () {
-    this.setState({ trash: './trash-b.png' });
-  }
-  trashNormal () {
-    this.setState({ trash: './trash.png' });
   }
   pressedCheckout () {
     if (this.state.checked == '0') {
@@ -397,7 +329,6 @@ export default class Index extends React.Component {
     }
     this.setState({ amount: tmp });
     this.setState({ amountId: tmpId });
-    this.createProductRender ();
   }
 
   changeAmount (e) {
@@ -475,7 +406,6 @@ export default class Index extends React.Component {
             Cart / {this.state.inCart} items
             <hr />
             <CartItems
-              trash={this.state.trash}
               products={this.state.products}
               delProductFromCart={this.delProductFromCart}
               loading={this.state.loadingProducts}
@@ -500,8 +430,6 @@ export default class Index extends React.Component {
           </div>
           <div className="col-md-2" />
         </div>
-
-
         <Footer />
       </Container>
 		);
