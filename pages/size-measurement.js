@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-//import { useRouter } from 'next/router';
 import {API_SERVER as API_SERVER} from '../src/constants';
 import Cookies from 'universal-cookie';
-//import UserMenu from '../components/UserMenu';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-//import 'bootstrap/dist/css/bootstrap.min.css';
 import "../src/styles.css";
-import {size_info2 as size_info} from '../src/constants';
 const cookies = new Cookies();
 const hash = cookies.get('hash');
+
+import SizeInfo from '../components/SizeInfo';
 
 export default class Index extends React.Component {
   constructor(props) {
@@ -53,7 +51,9 @@ export default class Index extends React.Component {
         <div className="row">
           <div className="col-md-2" />
           <div className="col-md-8 ce">
-            <div dangerouslySetInnerHTML={{ __html: size_info }}></div>
+            <div>
+              <SizeInfo tableClass="mainMeas"/>
+            </div>
           <div className="spacer50px" />
           <div className="spacer25px" />
           <p>If you find that your measurements sit outside of the sizes offered, please email us on <br /><a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a> with your measurements and we'll do our best to advise and assist you.</p>
