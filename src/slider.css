@@ -1,11 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 
-.slide-container {
-  width: 100%;
-  margin: auto;
-}
-
 .textcontainer {
   position: relative;
   width: 100%;
@@ -60,6 +55,12 @@ h3 {
   cursor: pointer;
 }
 
+.slide-container {
+  width: 100%;
+  margin: auto;
+  min-height: 837px;
+}
+
 .each-slide > div {
   display: flex;
   align-items: center;
@@ -110,6 +111,9 @@ h3 {
 }
 
 @media only screen and (max-width: 1440px) {
+  .slide-container {
+    min-height: 737px;
+  }
   .each-slide > div {
     height: 700px;
   }
@@ -122,16 +126,25 @@ h3 {
   }
 }
 @media only screen and (max-width: 1340px) {
+  .slide-container {
+    min-height: 637px;
+  }
   .each-slide > div {
     height: 600px;
   }
 }
 @media only screen and (max-width: 1240px) {
+  .slide-container {
+    min-height: 537px;
+  }
   .each-slide > div {
     height: 500px;
   }
 }
 @media only screen and (max-width: 1140px) {
+  .slide-container {
+    min-height: 437px;
+  }
   .each-slide > div {
     height: 400px;
   }
@@ -140,6 +153,9 @@ h3 {
   }
 }
 @media only screen and (max-width: 720px) {
+  .slide-container {
+    min-height: 287px;
+  }
   .each-slide > div {
     height: 250px;
   }
