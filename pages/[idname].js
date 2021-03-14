@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { withRouter } from 'next/router'
+import { withRouter } from 'next/router';
 
 import {
   API_SERVER,
-  desc_cont,
-  size_info,
-  deli_info,
-  prod_descB,
-  prod_compB,
-  prod_sizeB,
-  prod_deliB,
 } from '../src/constants';
 
 import Header from '../components/Header';
@@ -19,6 +12,7 @@ import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import PhotoViewer from '../components/PhotoViewer';
+import ProductInfo from '../components/ProductInfo';
 
 import "../src/styles.css";
 
@@ -95,18 +89,6 @@ export async function getStaticPaths() {
   };
 }
 
-function DescButton({ id, text, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      className="border-0 capitalLetters mediumFont blackFont"
-      style={{
-        'backgroundColor': 'inherit'
-      }}
-      id={id}
-    >{text}</button>
-  );
-}
 
 class Index extends React.Component {
   constructor(props) {
@@ -140,7 +122,6 @@ class Index extends React.Component {
         photo8: '',
         photo9: '',
       },
-      productInfo: '',
       selectedSize: isOneSize ? 'one_size' : '0',
       ...props
     };
@@ -151,7 +132,6 @@ class Index extends React.Component {
     this.loadCurrency = this.loadCurrency.bind(this);
     this.loadData = this.loadData.bind(this);
     this.handleSizeChange = this.handleSizeChange.bind(this);
-    this.productInfoHandling = this.productInfoHandling.bind(this);
   }
 
   defaultButton () {
@@ -240,24 +220,6 @@ class Index extends React.Component {
     this.setState({ selectedSize: e.target.value }, () => { this.checkAvailability(); });
   }
 
-  productInfoHandling(e) {
-    const currentId = e.currentTarget.id;
-    const {
-      description,
-      compCare,
-    } = this.state;
-
-    if (currentId === 'productDesc') {
-      this.setState({ productInfo: description });
-    } else if (currentId === 'productComp') {
-      this.setState({ productInfo: compCare });
-    } else if (currentId === 'productSize') {
-      this.setState({ productInfo: size_info });
-    } else if (currentId === 'productDeli') {
-      this.setState({ productInfo: deli_info });
-    }
-  }
-
   componentDidMount() {
     this.loadCurrency();
   }
@@ -285,46 +247,11 @@ class Index extends React.Component {
                   </div>
                 </div>
                 <div className="spacer50px"></div>
-                <div className="row">
-                  <div className="col-sm-6 col-xl-3">
-                    <DescButton
-                      onClick={this.productInfoHandling}
-                      id="productDesc"
-                      text={prod_descB}
-                    />
-                  </div>
-                  <div className="col-sm-6 col-xl-3">
-                    <DescButton
-                      onClick={this.productInfoHandling}
-                      id="productComp"
-                      text={prod_compB}
-                    />
-                  </div>
-                  <div className="spacer10px d-none d-sm-block d-xl-none"></div>
-                  <div className="col-sm-6 col-xl-3">
-                    <DescButton
-                      onClick={this.productInfoHandling}
-                      id="productSize"
-                      text={prod_sizeB}
-                    />
-                  </div>
-                  <div className="col-sm-6 col-xl-3">
-                    <DescButton
-                      onClick={this.productInfoHandling}
-                      id="productDeli"
-                      text={prod_deliB}
-                    />
-                  </div>
-                </div>
-                <div className="spacer50px"></div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div
-                      className="productInfoContainer"
-                      dangerouslySetInnerHTML={{ __html: this.state.productInfo || this.state.description }}
-                    ></div>
-                  </div>
-                </div>
+
+                <ProductInfo
+                  description={this.state.description}
+                  compCare={this.state.compCare}
+                />
 
                 <div className="spacer50px"></div>
                 <div className="row">
@@ -339,9 +266,9 @@ class Index extends React.Component {
                       onChange={this.handleSizeChange}
                     >
                       <option value="0">CHOOSE SIZE</option>
-											<option value="xs">XS</option>
-											<option value="s">S</option>
-											<option value="m">M</option>
+                      <option value="xs">XS</option>
+                      <option value="s">S</option>
+                      <option value="m">M</option>
                       <option value="ml">ML</option>
                       <option value="l">L</option>
 										</select>
@@ -366,7 +293,15 @@ class Index extends React.Component {
                 <div className="spacer25px"></div>
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="productInfoContainer noBorder mediumFont" dangerouslySetInnerHTML={{ __html: desc_cont }}></div>
+                    <div className="productInfoContainer noBorder mediumFont">
+                      <div className="mediumFont ju">
+                        Each item is created by our talented creative director Justyna and handmade
+                        with care in Poland. If you cannot find your size, get in touch with us and
+                        we will do our best to help. Email us on
+                        <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a>
+                        or click here for more information about orders.
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
