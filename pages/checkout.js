@@ -417,7 +417,7 @@ export default class Index extends React.Component {
               </div>
               <div className="col-md-4 ce">
                 <p className="capitalLetters">Total: €{this.state.price}</p>
-                <p className="capitalLetters">incl. {this.state.shipping ? this.state.shipping : 'free shipping'}</p>
+                <p className="capitalLetters">{this.state.shipping ? this.state.shipping : 'free shipping'}</p>
                 <p><input type="text" value={this.state.coupon} onChange={this.handleCouponChange} placeholder="Coupon code" /></p>
               </div>
               <div className="col-md-4">
