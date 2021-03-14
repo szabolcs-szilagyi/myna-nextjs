@@ -123,6 +123,7 @@ class Index extends React.Component {
         photo9: '',
       },
       selectedSize: isOneSize ? 'one_size' : '0',
+      lastItemsDate: null,
       ...props
     };
 
@@ -171,7 +172,10 @@ class Index extends React.Component {
           let tmp = data['success'];
         })
         .catch(error => console.log(error.message));
-        this.setState({ addToCart: 'ADDED TO CART' });
+        this.setState({
+          addToCart: 'ADDED TO CART',
+          lastItemsDate: Date.now(),
+        });
         setTimeout(this.defaultButton, 3000);
       }
     }
@@ -228,7 +232,7 @@ class Index extends React.Component {
 		return (
       <Container fluid>
         <Header />
-        <Nav />
+        <Nav lastItemsDate={this.state.lastItemsDate} />
         <Ping />
         <div className="spacer50px"></div>
         <div className="row">

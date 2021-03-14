@@ -17,14 +17,14 @@ function getInCart() {
     .catch(error => console.log(error.message));
 }
 
-function Cart({ containerClass }) {
+function Cart({ containerClass, lastItemsDate }) {
   const [inCart, setInCart] = useState(0);
   const [cartIcon, setCartIcon] = useState('/cart.png');
 
   useEffect(() => {
     getInCart()
       .then(numberOfProducts => setInCart(numberOfProducts));
-  }, [inCart]);
+  }, [inCart, lastItemsDate]);
 
   return (
     <div className={containerClass}>
@@ -42,7 +42,7 @@ function Cart({ containerClass }) {
   );
 }
 
-export default function Nav() {
+export default function Nav({ lastItemsDate }) {
   return (
     <div>
 
@@ -64,7 +64,10 @@ export default function Nav() {
               <div className="col-md-7 ce padtop50px">
                 <a className="menu" href="/my-account">My Account</a>
               </div>
-              <Cart containerClass="col-md-5 ce padtop43px navCart" />
+              <Cart
+                containerClass="col-md-5 ce padtop43px navCart"
+                lastItemsDate={lastItemsDate}
+              />
             </div>
           </div>
         </div>
@@ -81,7 +84,10 @@ export default function Nav() {
             <div className="padtop50px blackFont"><a href="/my-account">My Account</a></div>
           </div>
           <div className="col-md-4 ce">
-            <Cart containerClass="padtop43px blackFont" />
+            <Cart
+              containerClass="padtop43px blackFont"
+              lastItemsDate={lastItemsDate}
+            />
           </div>
         </div>
         <div className="row">
@@ -105,7 +111,10 @@ export default function Nav() {
           <div className="col-md-12 ce">
             <a href="/"><img src="/logo.png" alt="MYNA logo" /></a>
             <div className="blackFont"><a href="/my-account">My Account</a></div>
-            <Cart containerClass="blackFont padtop10px" />
+            <Cart
+              containerClass="blackFont padtop10px"
+              lastItemsDate={lastItemsDate}
+            />
           </div>
         </div>
         <div className="row">
