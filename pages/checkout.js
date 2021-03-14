@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-//import { useRouter } from 'next/router';
-import {API_SERVER as API_SERVER} from '../src/constants';
+
 import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+const session = cookies.get('session');
+
 import Header from '../components/Header';
 import PayPal from '../components/Paypal';
 import Nav from '../components/Nav';
@@ -11,8 +13,10 @@ import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import "../src/styles.css";
-const cookies = new Cookies();
-const session = cookies.get('session');
+
+import {
+  API_SERVER
+} from '../src/constants';
 
 const productDetailHash = {
   'alyss-dress': { imageName: 'mynawebshop-alyssdress-1.jpg', pricc: '215' },
