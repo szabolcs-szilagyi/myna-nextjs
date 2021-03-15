@@ -9,7 +9,6 @@ import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import SingleProductCard from '../components/SingleProductCard';
-import "../src/styles.css";
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();

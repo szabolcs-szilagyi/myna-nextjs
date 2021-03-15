@@ -8,7 +8,6 @@ import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import "../src/styles.css";
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();

@@ -11,7 +11,6 @@ import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 //import 'bootstrap/dist/css/bootstrap.min.css';
-import "../src/styles.css";
 const cookies = new Cookies();
 const hash = cookies.get('hash');
 

@@ -13,8 +13,6 @@ import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
-import "../src/styles.css";
-
 import event from '../lib/gtag';
 
 import {

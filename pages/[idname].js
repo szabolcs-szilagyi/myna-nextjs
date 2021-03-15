@@ -14,8 +14,6 @@ import Container from 'react-bootstrap/Container';
 import PhotoViewer from '../components/PhotoViewer';
 import ProductInfo from '../components/ProductInfo';
 
-import "../src/styles.css";
-
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 const hash = cookies.get('hash');
