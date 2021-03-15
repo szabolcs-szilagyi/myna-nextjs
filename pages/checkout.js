@@ -12,7 +12,10 @@ import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+
 import "../src/styles.css";
+
+import event from '../lib/gtag';
 
 import {
   API_SERVER
@@ -290,13 +293,22 @@ export default class Index extends React.Component {
     fetch(API_SERVER + 'listen.php?part=delproductfromcart&id=' + id + '&sessiontoken=' + session, {mode: 'no-cors'})
     setTimeout(this.reload, 1000);
   }
+
   reload () {
     window.location.href = "/checkout";
   }
+
   myAccount () {
     window.location.href = "/my-account";
   }
+
   pressedCheckout () {
+    event('begin_checkout', {
+      value: this.state.amount,
+      coupon: this.state.coupon,
+      currency: 'EUR',
+    })
+
     if (this.state.checked == '0') {
       this.amILoggedIn();
     } else {
@@ -308,6 +320,7 @@ export default class Index extends React.Component {
       }
     }
   }
+
   getAmount () {
     let nr = this.state.inCart;
     let prod = this.state.products;
@@ -417,7 +430,11 @@ export default class Index extends React.Component {
             <div className="spacer50px" />
             <div className="row">
               <div className="col-md-4">
-                <div className="noBorder mediumFont ceMob"><a href="/shop-collections"><button className="startshoppingButton">CONTINUE SHOPPING</button></a></div>
+                <div className="noBorder mediumFont ceMob">
+                  <a href="/shop-collections">
+                    <button className="startshoppingButton">CONTINUE SHOPPING</button>
+                  </a>
+                </div>
               </div>
               <div className="col-md-4 ce">
                 <p className="capitalLetters">Total: €{this.state.price}</p>
@@ -425,7 +442,12 @@ export default class Index extends React.Component {
                 <p><input type="text" value={this.state.coupon} onChange={this.handleCouponChange} placeholder="Coupon code" /></p>
               </div>
               <div className="col-md-4">
-                <div className="noBorder mediumFont right ceMob"><button className="cartButton" onClick={this.pressedCheckout}>CHECKOUT</button></div>
+                <div className="noBorder mediumFont right ceMob">
+                  <button
+                    className="cartButton"
+                    onClick={this.pressedCheckout}
+                  >CHECKOUT</button>
+                </div>
                 <div className={this.state.showPaypal}>
                   <PayPal dataFromParent = {this.state.price} />
                 </div>
