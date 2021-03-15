@@ -380,9 +380,6 @@ select.sizeButton {
 select.sizeButton::-ms-expand {
   display: none;
 }
-.w500 {
-  width: 500px;
-}
 .maxWidth, .maxWidth table {
   width: 100%;
 }
