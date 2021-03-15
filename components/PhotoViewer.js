@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-awesome-modal';
+import Image from 'next/image';
 
 export default class PhotoViewer extends React.Component {
 
@@ -89,14 +90,15 @@ export default class PhotoViewer extends React.Component {
       <div className="col-md-6 ce">
         <div className="row">
           <div className="col-md-12" id={this.state.fade}>
-            <div style={PhotoViewer.aspectStyle}>
-              <img
-                src={this.getPhotoUri(this.state.photo1)}
-                onClick={this.productPhotoHandling}
-                className="pointer bigProductPhoto dyn"
-                id="photo1"
-              />
-            </div>
+            <Image
+              src={this.getPhotoUri(this.state.photo1)}
+              layout="responsive"
+              width={500}
+              height={500}
+              onClick={this.productPhotoHandling}
+              className="pointer dyn"
+              id="photo1"
+            />
           </div>
         </div>
         <div className="spacer50px"></div>
@@ -105,34 +107,37 @@ export default class PhotoViewer extends React.Component {
             <div className="marginAuto">
               <div className="row">
                 <div className="col-4 ce">
-                  <div style={PhotoViewer.aspectStyle}>
-                    <img
-                      src={this.getPhotoUri(this.state.photo2)}
-                      onClick={this.productPhotoHandling}
-                      className="pointer smallProductPhoto dyn"
-                      id="photo2"
-                    />
-                  </div>
+                  <Image
+                    src={this.getPhotoUri(this.state.photo2)}
+                    layout="responsive"
+                    width={150}
+                    height={150}
+                    onClick={this.productPhotoHandling}
+                    className="pointer dyn"
+                    id="photo2"
+                  />
                 </div>
                 <div className="col-4 ce">
-                  <div style={PhotoViewer.aspectStyle}>
-                    <img
-                      src={this.getPhotoUri(this.state.photo3)}
-                      onClick={this.productPhotoHandling}
-                      className="pointer smallProductPhoto dyn"
-                      id="photo3"
-                    />
-                  </div>
+                  <Image
+                    src={this.getPhotoUri(this.state.photo3)}
+                    layout="responsive"
+                    width={150}
+                    height={150}
+                    onClick={this.productPhotoHandling}
+                    className="pointer dyn"
+                    id="photo3"
+                  />
                 </div>
                 <div className="col-4 ce">
-                  <div style={PhotoViewer.aspectStyle}>
-                    <img
-                      src={this.getPhotoUri(this.state.photo4)}
-                      onClick={this.productPhotoHandling}
-                      className="pointer smallProductPhoto dyn"
-                      id="photo4"
-                    />
-                  </div>
+                  <Image
+                    src={this.getPhotoUri(this.state.photo4)}
+                    layout="responsive"
+                    width={150}
+                    height={150}
+                    onClick={this.productPhotoHandling}
+                    className="pointer dyn"
+                    id="photo4"
+                  />
                 </div>
               </div>
             </div>
