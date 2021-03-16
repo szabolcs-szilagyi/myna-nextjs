@@ -150,56 +150,6 @@ a.blackFont:hover, blackFont a :hover {
   color: #000000;
   text-decoration: underline;
 }
-.cImage {
-  background: #b5664c;
-}
-.cImage:hover {
-}
-.cImageHovered img {
-  opacity: 0.5;
-  transition: opacity 500ms;
-  cursor: pointer;
-  z-index: -10;
-}
-.cImage p {
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-  display: none;
-  opacity: 1;
-  z-index: 10;
-}
-.cImage span {
-  border-top: 1px solid white;
-  color: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  display: inherit;
-  opacity: inherit;
-}
-.cImage:hover p {
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.lbtxtContainer {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  min-height: 350px;
-}
-.lbtxt {
-  font-size: 18px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 #dropdown-custom-components {
   background: none;
   color: black;
@@ -389,15 +339,6 @@ select.sizeButton::-ms-expand {
 .paddingtop5px {
   padding-top: 15px;
 }
-#fadeNone {
-  visibility: hidden;
-}
-#fadeIn img {
-    animation: fadein 1s;
-    -moz-animation: fadein 1s; /* Firefox */
-    -webkit-animation: fadein 1s; /* Safari and Chrome */
-    -o-animation: fadein 1s; /* Opera */
-}
 .desktopNav {
   display: block;
 }
@@ -413,48 +354,6 @@ select.sizeButton::-ms-expand {
 .mobileNav {
   display: none;
 }
-@keyframes fadein {
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
-@-moz-keyframes fadein { /* Firefox */
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
-@-webkit-keyframes fadein { /* Safari and Chrome */
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
-@-o-keyframes fadein { /* Opera */
-    from {
-        opacity:0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-@media only screen and (max-width: 1700px) {
-  .cImage p {
-    font-size: 16px;
-  }
-}
-@media only screen and (max-width: 1280px) {
-  .cImage p {
-    font-size: 14px;
-  }
-}
 @media only screen and (max-width: 1226px) {
   .desktopNav {
     display: none;
@@ -464,10 +363,6 @@ select.sizeButton::-ms-expand {
   }
   .mobileNav {
     display: none;
-  }
-  .lbtxt {
-    font-size: 14px;
-    top: 40%;
   }
   .ceMob {
     text-align: center;
@@ -486,9 +381,6 @@ select.sizeButton::-ms-expand {
   }
   .mobileNav {
     display: block;
-  }
-  .lbtxt {
-    font-size: 18px;
   }
   .nlsb {
     margin-top: 25px;
@@ -522,30 +414,6 @@ select.sizeButton::-ms-expand {
   #banner {
     font-size: 1em;
     font-weight: bold;
-  }
-}
-
-
-[style*="--aspect-ratio"] > :first-child {
-  width: 100%;
-}
-[style*="--aspect-ratio"] > img {
-  height: auto;
-}
-@supports (--custom:property) {
-  [style*="--aspect-ratio"] {
-    position: relative;
-  }
-  [style*="--aspect-ratio"]::before {
-    content: "";
-    display: block;
-    padding-bottom: calc(100% / (var(--aspect-ratio)));
-  }
-  [style*="--aspect-ratio"] > :first-child {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
   }
 }
 

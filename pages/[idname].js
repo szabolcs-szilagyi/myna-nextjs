@@ -107,8 +107,6 @@ class Index extends React.Component {
       productPrice: '',
       description: '',
       compCare: '',
-      fade: 'fadeIn',
-      nextPage: '',
       photos: {
         photo1: '',
         photo2: '',
