@@ -189,7 +189,6 @@ export default class Index extends React.Component {
     this.pressedCheckout = this.pressedCheckout.bind(this);
     this.getAmount = this.getAmount.bind(this);
     this.changeAmount = this.changeAmount.bind(this);
-    this.changeSize = this.changeSize.bind(this);
     this.handleCouponChange = this.handleCouponChange.bind(this);
     this.getUserAddress = this.getUserAddress.bind(this);
   }
@@ -353,8 +352,6 @@ export default class Index extends React.Component {
     fetch(API_SERVER + 'listen.php?part=setamountincart&id=' + id + '&amount=' + value + '&pin=558240', {mode: 'no-cors'})
   }
 
-  changeSize (e) {}
-
   handleCouponChange (event) {
     let tmp = event.target.value;
     let text = tmp.toLowerCase();
@@ -363,6 +360,7 @@ export default class Index extends React.Component {
     this.setState({coupon: text}, () => { if (text == 'mynagift15') { this.setState({priceModifier: 0.85}, () => { }); } });
     setTimeout(this.getPrice, 200);
   }
+
   getUserAddress () {
     fetch(API_SERVER + 'listen.php?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
     .then(response => response.json())
@@ -390,7 +388,7 @@ export default class Index extends React.Component {
       }
     })
     .catch(error => console.log(error.message));
-    this.getAmount ();
+    this.getAmount();
   }
 
   componentDidMount() {
