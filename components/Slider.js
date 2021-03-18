@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 import styles from './Slider.module.css';
 
@@ -10,24 +11,24 @@ const Slide = dynamic(() =>
 
 const slides = [
   {
-    text: 'shop collection',
+    text: 'Consciously Beautiful',
     linkText: 'SHOP THE LOOK',
     linkHref: '/shop-collections',
-    imageSrc: './slide_1.jpg',
+    imageSrc: '/slide_1.jpg',
     buttonClass: styles.button,
   },
   {
-    text: 'shop collections',
+    text: 'Consciously Beautiful',
     linkText: 'LOOKBOOK',
     linkHref: '/lookbook',
-    imageSrc: './slide_2.jpg',
+    imageSrc: '/slide_2.jpg',
     buttonClass: styles.button,
   },
   {
     text: 'Our Story',
     linkText: 'READ MORE',
     linkHref: '/our-story',
-    imageSrc: './slide_3.jpg',
+    imageSrc: '/slide_3.jpg',
     buttonClass: styles.button2,
   }
 ];
@@ -48,12 +49,16 @@ export default class Slider extends Component {
           <Slide {...properties}>
             {slides.map(({ text, linkText, linkHref, imageSrc, buttonClass }, i) => (
               <div key={`slider-${i}`} className={styles.eachSlide}>
-                <div style={{'backgroundImage': `url(${imageSrc})`}}>
                   <div className={styles.textcontainer}>
+                    <Image
+                      src={imageSrc}
+                      layout="fill"
+                      objectFit="cover"
+                      objectPosition="left top"
+                    />
                     <h3>{text}</h3>
                     <a href={linkHref} className={buttonClass}>{linkText}</a>
                   </div>
-                </div>
               </div>
             ))}
           </Slide>
