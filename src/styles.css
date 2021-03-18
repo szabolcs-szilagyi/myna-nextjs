@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
 
-@font-face {
-  font-family: 'Freeland';
-  src: url('/fonts/freeland.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
-}
-
-
 .body, p {
   font-family: 'Lato', sans-serif;
   font-weight: 400;
