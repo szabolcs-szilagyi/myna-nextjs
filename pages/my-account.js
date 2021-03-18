@@ -10,7 +10,6 @@ import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import "../src/styles.css";
 const cookies = new Cookies();
 const session = cookies.get('session');
 

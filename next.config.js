@@ -1,11 +1,6 @@
-const withImages = require('next-images');
-const withCSS = require('@zeit/next-css');
-const withFonts = require('next-fonts');
-module.exports = withFonts();
-
 const DEV_PORT = process.env.DEV_PORT;
 
-module.exports = withImages(withCSS({
+module.exports = {
 	webpack(config) {
 		return config;
 	},
@@ -19,4 +14,4 @@ module.exports = withImages(withCSS({
       // live Aet...JGc
       'Aet-UX8Rj1rBuMbuaNKBUOqyTdWiaJpkN-EEwkPphiZcREn3aeP_b7EhqMDzcidzJxX5Y-jMNogmfJGc',
 	}
-}));
+};

@@ -1,18 +1,18 @@
 import React from 'react';
 import Modal from 'react-awesome-modal';
+import Image from 'next/image';
+
+import style from './PhotoViewer.module.css';
 
 export default class PhotoViewer extends React.Component {
 
-  static aspectStyle = {
-    '--aspect-ratio': 1,
-  }
-
   constructor(props) {
     super(props);
+    const { photos } = props;
 
     this.state = {
-      fade: 'fadeIn',
-      ...props.photos,
+      fade: style.fadeIn,
+      ...photos,
     };
 
     this.productPhotoHandling = this.productPhotoHandling.bind(this);
@@ -22,16 +22,12 @@ export default class PhotoViewer extends React.Component {
 		this.closeModal = this.closeModal.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ ...nextProps.photos });
+  fadeOut() {
+    this.setState({ fade: style.fadeNone });
   }
 
-  fadeOut () {
-    this.setState({ fade: 'fadeNone' });
-  }
-
-  fadeIn () {
-    this.setState({ fade: 'fadeIn' });
+  fadeIn() {
+    this.setState({ fade: style.fadeIn });
   }
 
   openModal() {
@@ -43,37 +39,38 @@ export default class PhotoViewer extends React.Component {
 	}
 
   productPhotoHandling(e) {
-    let currentId = e.currentTarget.id;
-    let tmp1 = this.state.photo1;
-    let tmp2;
-    if (currentId == 'photo1') {
+    const currentId = e.currentTarget.id;
+    const currentMainPhoto = this.state.photo1;
+    let newMainPhoto;
+
+    if (currentId === 'photo1') {
       this.openModal();
     } else {
       this.fadeOut();
       setTimeout(this.fadeIn, 100);
     }
 
-    if (currentId == 'photo2') {
-      tmp2 = this.state.photo2;
+    if (currentId === 'photo2') {
+      newMainPhoto = this.state.photo2;
       this.setState({
-        photo1: tmp2,
-        photo2: tmp1,
+        photo1: newMainPhoto,
+        photo2: currentMainPhoto,
       });
     }
 
-    if (currentId == 'photo3') {
-      tmp2 = this.state.photo3;
+    if (currentId === 'photo3') {
+      newMainPhoto = this.state.photo3;
       this.setState({
-        photo1: tmp2,
-        photo3: tmp1,
+        photo1: newMainPhoto,
+        photo3: currentMainPhoto,
       });
     }
 
-    if (currentId == 'photo4') {
-      tmp2 = this.state.photo4;
+    if (currentId === 'photo4') {
+      newMainPhoto = this.state.photo4;
       this.setState({
-        photo1: tmp2,
-        photo4: tmp1,
+        photo1: newMainPhoto,
+        photo4: currentMainPhoto,
       });
     }
   }
@@ -89,14 +86,15 @@ export default class PhotoViewer extends React.Component {
       <div className="col-md-6 ce">
         <div className="row">
           <div className="col-md-12" id={this.state.fade}>
-            <div style={PhotoViewer.aspectStyle}>
-              <img
-                src={this.getPhotoUri(this.state.photo1)}
-                onClick={this.productPhotoHandling}
-                className="pointer bigProductPhoto dyn"
-                id="photo1"
-              />
-            </div>
+            <Image
+              src={this.getPhotoUri(this.state.photo1)}
+              layout="responsive"
+              width={500}
+              height={500}
+              onClick={this.productPhotoHandling}
+              className="pointer dyn"
+              id="photo1"
+            />
           </div>
         </div>
         <div className="spacer50px"></div>
@@ -105,34 +103,37 @@ export default class PhotoViewer extends React.Component {
             <div className="marginAuto">
               <div className="row">
                 <div className="col-4 ce">
-                  <div style={PhotoViewer.aspectStyle}>
-                    <img
-                      src={this.getPhotoUri(this.state.photo2)}
-                      onClick={this.productPhotoHandling}
-                      className="pointer smallProductPhoto dyn"
-                      id="photo2"
-                    />
-                  </div>
+                  <Image
+                    src={this.getPhotoUri(this.state.photo2)}
+                    layout="responsive"
+                    width={150}
+                    height={150}
+                    onClick={this.productPhotoHandling}
+                    className="pointer dyn"
+                    id="photo2"
+                  />
                 </div>
                 <div className="col-4 ce">
-                  <div style={PhotoViewer.aspectStyle}>
-                    <img
-                      src={this.getPhotoUri(this.state.photo3)}
-                      onClick={this.productPhotoHandling}
-                      className="pointer smallProductPhoto dyn"
-                      id="photo3"
-                    />
-                  </div>
+                  <Image
+                    src={this.getPhotoUri(this.state.photo3)}
+                    layout="responsive"
+                    width={150}
+                    height={150}
+                    onClick={this.productPhotoHandling}
+                    className="pointer dyn"
+                    id="photo3"
+                  />
                 </div>
                 <div className="col-4 ce">
-                  <div style={PhotoViewer.aspectStyle}>
-                    <img
-                      src={this.getPhotoUri(this.state.photo4)}
-                      onClick={this.productPhotoHandling}
-                      className="pointer smallProductPhoto dyn"
-                      id="photo4"
-                    />
-                  </div>
+                  <Image
+                    src={this.getPhotoUri(this.state.photo4)}
+                    layout="responsive"
+                    width={150}
+                    height={150}
+                    onClick={this.productPhotoHandling}
+                    className="pointer dyn"
+                    id="photo4"
+                  />
                 </div>
               </div>
             </div>
@@ -142,7 +143,7 @@ export default class PhotoViewer extends React.Component {
         <Modal
           visible={this.state.visible}
           effect="fadeInUp"
-          onClickAway={() => this.closeModal()}
+          onClickAway={this.closeModal}
         >
           <div>
             <img src={this.getPhotoUri(this.state.photo1)} className="dyn maxHeight" />

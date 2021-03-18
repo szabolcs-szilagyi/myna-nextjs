@@ -10,7 +10,6 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import SingleProductCard from '../components/SingleProductCard';
-import "../src/styles.css";
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();

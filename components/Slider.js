@@ -1,15 +1,37 @@
 import React, { Component } from 'react';
-import "../src/slider.css";
 import dynamic from 'next/dynamic';
+
+import styles from './Slider.module.css';
+
 const Slide = dynamic(() =>
   import('react-slideshow-image').then((slideshow) => slideshow.Slide),
   { ssr: false }
-)
-const slideImages = [
-  './slide_1.jpg',
-  './slide_2.jpg',
-  './slide_3.jpg'
+);
+
+const slides = [
+  {
+    text: 'shop collection',
+    linkText: 'SHOP THE LOOK',
+    linkHref: '/shop-collections',
+    imageSrc: './slide_1.jpg',
+    buttonClass: styles.button,
+  },
+  {
+    text: 'shop collections',
+    linkText: 'LOOKBOOK',
+    linkHref: '/lookbook',
+    imageSrc: './slide_2.jpg',
+    buttonClass: styles.button,
+  },
+  {
+    text: 'Our Story',
+    linkText: 'READ MORE',
+    linkHref: '/our-story',
+    imageSrc: './slide_3.jpg',
+    buttonClass: styles.button2,
+  }
 ];
+
 const properties = {
   duration: 5000,
   transitionDuration: 500,
@@ -17,64 +39,23 @@ const properties = {
   indicators: true,
   arrows: true,
   pauseOnHover: true,
-  onChange: (oldIndex, newIndex) => {
-    console.log(`slide transition from ${oldIndex} to ${newIndex}`);
-  }
-}
-/*
-const Slideshow = () => {
-    return (
-      <div className="slide-container">
-        <Slide {...properties}>
-          <div className="each-slide">
-            <div style={{'backgroundImage': `url(${slideImages[0]})`}}>
-              <span>Slide 1</span>
-            </div>
-          </div>
-          <div className="each-slide">
-            <div style={{'backgroundImage': `url(${slideImages[1]})`}}>
-              <span>Slide 2</span>
-            </div>
-          </div>
-          <div className="each-slide">
-            <div style={{'backgroundImage': `url(${slideImages[2]})`}}>
-              <span>Slide 3</span>
-            </div>
-          </div>
-        </Slide>
-      </div>
-    )
-}
-*/
+};
+
 export default class Slider extends Component {
     render () {
       return (
-        <div className="slide-container">
+        <div className={styles.slideContainer}>
           <Slide {...properties}>
-            <div className="each-slide">
-              <div style={{'backgroundImage': `url(${slideImages[0]})`}}>
-                <div className="textcontainer">
-                  <h3>shop collection</h3>
-                  <a href="/shop-collections" className="button">SHOP THE LOOK</a>
+            {slides.map(({ text, linkText, linkHref, imageSrc, buttonClass }, i) => (
+              <div key={`slider-${i}`} className={styles.eachSlide}>
+                <div style={{'backgroundImage': `url(${imageSrc})`}}>
+                  <div className={styles.textcontainer}>
+                    <h3>{text}</h3>
+                    <a href={linkHref} className={buttonClass}>{linkText}</a>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="each-slide">
-              <div style={{'backgroundImage': `url(${slideImages[1]})`}}>
-                <div className="textcontainer">
-                  <h3>shop collections</h3>
-                  <a href="/lookbook" className="button">LOOKBOOK</a>
-                </div>
-              </div>
-            </div>
-            <div className="each-slide">
-              <div style={{'backgroundImage': `url(${slideImages[2]})`}}>
-                <div className="textcontainer">
-                  <h3>Our Story</h3>
-                  <a href="/our-story" className="button2">READ MORE</a>
-                </div>
-              </div>
-            </div>
+            ))}
           </Slide>
         </div>
       )
