@@ -160,14 +160,10 @@ export default class Index extends React.Component {
       shipping: '0',
       myEmail: '',
       loggedIn: 'no',
-      activeCoupon: '',
       products: [],
-      productsImg: [],
-      productsPrice: [],
       inCart: '0',
       emptyCartAlert: '',
       showPaypal: 'hidePaypal',
-      amountLimit: '',
       amount: [],
       amountId: [],
       coupon: '',
@@ -180,20 +176,17 @@ export default class Index extends React.Component {
     this.getShipping = this.getShipping.bind(this);
     this.amILoggedIn = this.amILoggedIn.bind(this);
     this.getProductsInCart = this.getProductsInCart.bind(this);
-    this.getImagesPrice = this.getImagesPrice.bind(this);
     this.getInCart = this.getInCart.bind(this);
-    this.addImages = this.addImages.bind(this);
     this.delProductFromCart = this.delProductFromCart.bind(this);
     this.reload = this.reload.bind(this);
     this.myAccount = this.myAccount.bind(this);
     this.pressedCheckout = this.pressedCheckout.bind(this);
     this.getAmount = this.getAmount.bind(this);
-    this.changeAmount = this.changeAmount.bind(this);
     this.handleCouponChange = this.handleCouponChange.bind(this);
     this.getUserAddress = this.getUserAddress.bind(this);
   }
 
-  getPrice () {
+  getPrice() {
     fetch(API_SERVER + 'listen.php?part=totalcheckout&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
@@ -208,7 +201,8 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
-  getShipping () {
+
+  getShipping() {
     fetch(API_SERVER + 'listen.php?part=getshippinginfo&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
@@ -218,6 +212,7 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
+
   amILoggedIn () {
     fetch(API_SERVER + 'listen.php?part=amiloggedin&sessiontoken=' + session)
     .then(response => response.json())
@@ -232,7 +227,8 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
-  getProductsInCart () {
+
+  getProductsInCart() {
     fetch(API_SERVER + 'listen.php?part=getproductsincart&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
@@ -242,26 +238,8 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
-  getImagesPrice (e) {
-    let idName = e;
-    fetch(API_SERVER + 'listen.php?part=getproductdata&productname=' + idName)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['productdetails'];
-      let pic = tmp['pic1'];
-      let price = tmp['productprice'];
-      this.setState(previousState => ({
-        productsImg: [...previousState.productsImg, pic]
-      }));
-      this.setState(previousState => ({
-        productsPrice: [...previousState.productsPrice, price]
-      }));
-    })
-    .catch(error => console.log(error.message));
-  }
 
-  getInCart () {
+  getInCart() {
     fetch(API_SERVER + 'listen.php?part=getproductsnumberincart&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
@@ -273,16 +251,6 @@ export default class Index extends React.Component {
     .catch(error => console.log(error.message));
   }
 
-  addImages () {
-    let nr = this.state.inCart;
-    let prod = this.state.products;
-    let hlp;
-    let i;
-    for (i=0; i<nr; i++) {
-      hlp = prod[i]['idname'];
-      this.getImagesPrice (hlp);
-    }
-  }
   delProductFromCart (e) {
     this.setState({ loadingProducts: true });
     let idTmp = e.currentTarget.id;
@@ -343,13 +311,6 @@ export default class Index extends React.Component {
     }
     this.setState({ amount: tmp });
     this.setState({ amountId: tmpId });
-  }
-
-  changeAmount (e) {
-    let idTmp = e.currentTarget.id;
-    let id = idTmp.substr(1);
-    let value = e.currentTarget.value;
-    fetch(API_SERVER + 'listen.php?part=setamountincart&id=' + id + '&amount=' + value + '&pin=558240', {mode: 'no-cors'})
   }
 
   handleCouponChange (event) {
