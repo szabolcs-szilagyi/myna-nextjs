@@ -42,11 +42,11 @@ export default class Footer extends Component {
   render() {
     return (
       <div>
-        <div className="spacer50px" />
+        <div className="spacer50px"></div>
         <hr />
-        <div className="spacer25px" />
+        <div className="spacer25px"></div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-6">
@@ -70,17 +70,33 @@ export default class Footer extends Component {
                       <img className="logo" src="/logo.png" alt="MYNA logo" />
                     </div>
                     <div className="col-6 text-right">
-                      <a href="https://www.facebook.com/mynalabel" target="fb-mynalabel"><img src="/facebook.svg" alt="facebook" /></a>
+                      <a
+                        href="https://www.facebook.com/mynalabel"
+                        target="fb-mynalabel"
+                      ><img
+                         src="/facebook.svg"
+                         alt="facebook"
+                         width="30"
+                         heigth="30"
+                       /></a>
                     </div>
                     <div className="col-6">
-                      <a href="https://www.instagram.com/mynalabel/" target="insta-mynalabel"><img src="/instagram.svg" alt="instagram" /></a>
+                      <a
+                        href="https://www.instagram.com/mynalabel/"
+                        target="insta-mynalabel"
+                      ><img
+                         src="/instagram.svg"
+                         alt="instagram"
+                         width="30"
+                         heigth="30"
+                       /></a>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="col-md-6">
                 <div className="row">
-                  <div className="col-md-4" />
+                  <div className="col-md-4"></div>
                   <div className="col-md-8">
                     <p><a href="/our-story" className="blackFont">Our Story</a></p>
                     <p><a href="/sustainability" className="blackFont">Sustainability</a></p>
@@ -92,7 +108,8 @@ export default class Footer extends Component {
               </div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
+          <div className="spacer50px"></div>
         </div>
       </div>
     );
