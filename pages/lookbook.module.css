@@ -1,35 +1,29 @@
-.lbtxtContainer {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  min-height: 350px;
+@font-face {
+  font-family: 'Freeland';
+  /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+  src: url('/fonts/freeland.ttf') format('truetype');
+  font-display: swap;
 }
 
-.lbtxt {
-  font-size: 18px;
-  font-family: 'Lato', sans-serif;
+.quote {
+  font-size: 1.5em;
+  font-family: 'Freeland', sans-serif;
   font-weight: 300;
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 @media only screen and (max-width: 1226px) {
-  .lbtxt {
-    font-size: 14px;
-    top: 40%;
+  .quote {
+    font-size: 1.2em;
   }
 }
 
 @media only screen and (max-width: 768px) {
-  .lbtxt {
-    font-size: 18px;
+  .quote {
+    font-size: 1em;
   }
 }
 
-.imageContainer {
+.imageContainer div {
   background: #b5664c;
 }
 

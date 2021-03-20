@@ -16,9 +16,9 @@ import style from './lookbook.module.css';
 
 import { API_SERVER } from '../src/constants';
 
-function LookbookImage({ imageSrc, height, width, alt = '' }) {
+function LookbookImage({ imageSrc, height, width, alt = '', additionalClass = '' }) {
   return (
-    <div className={style.imageContainer} >
+    <div className={style.imageContainer + ' ' + additionalClass} >
       <a href="/shop-collections">
         <Image
           layout="responsive"
@@ -46,30 +46,48 @@ export default class Index extends React.Component {
           </div>
         </div>
         <div className="spacer50px"></div>
+
         <div className="row">
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
               <div className="col-md-7 ce">
-                <div className={style.lbtxtContainer}>
-                  <div className={style.lbtxt}>
-                    She's matured and grown, this time she reflects a balanced elegance of a different summer glow.
-                    She's nurturing and perceptive, but every now and then she shows her romantic and spontanous side.
-                  </div>
-                </div>
-              </div>
-              <div className="col-md-4 ce">
                 <LookbookImage
                   imageSrc="/lookbook/01.jpg"
                   height={853}
                   width={1280}
+                  additionalClass="col-md-12 px-0"
                 />
-                <div className="spacer25px"></div>
+                <div className={' col-md-12 px-5 py-5'}>
+                  <p className={style.quote} >
+                    She's matured and grown, this time she reflects a balanced elegance of a different summer glow.
+                    She's nurturing and perceptive, but every now and then she shows her romantic and spontanous side.
+                  </p>
+                </div>
               </div>
-              <div className="col-md-1 ce"></div>
+              <LookbookImage
+                imageSrc="/lookbook/03.jpg"
+                height={1280}
+                width={853}
+                additionalClass="col-md-5"
+              />
             </div>
+            <div className="col-md-1 ce"></div>
           </div>
           <div className="col-md-2"></div>
+          <div className="spacer25px"></div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-2"></div>
+          <LookbookImage
+            imageSrc="/lookbook/04.jpg"
+            height={853}
+            width={1280}
+            additionalClass="col-md-8"
+          />
+          <div className="col-md-2"></div>
+          <div className="spacer25px"></div>
         </div>
 
         <div className="row">
@@ -78,84 +96,40 @@ export default class Index extends React.Component {
             <div className="row">
               <div className="col-md-6 ce">
                 <LookbookImage
-                  imageSrc="/lookbook/02.jpg"
-                  height={853}
-                  width={1280}
-                />
-                <div className="spacer25px"></div>
-              </div>
-              <div className="col-md-6 ce">
-                <LookbookImage
-                  imageSrc="/lookbook/03.jpg"
+                  imageSrc="/lookbook/05.jpg"
                   height={1280}
                   width={853}
                 />
-                <div className="spacer25px"></div>
+                <div className="spacer25px d-block d-md-none"></div>
               </div>
-            </div>
-          </div>
-          <div className="col-md-2"></div>
-        </div>
-        <div className="row">
-          <div className="col-md-2"></div>
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-3"></div>
-              <div className="col-md-8 ce">
-                <LookbookImage
-                  imageSrc="/lookbook/04.jpg"
-                  height={1280}
-                  width={1280}
-                />
-                <div className="spacer25px"></div>
-              </div>
-              <div className="col-md-1"></div>
-            </div>
-          </div>
-          <div className="col-md-2"></div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-2"></div>
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-8 ce">
-                <LookbookImage
-                  imageSrc="/lookbook/05.jpg"
-                  height={853}
-                  width={1280}
-                />
-                <div className="spacer25px"></div>
-              </div>
-              <div className="col-md-4 ce">
+              <div className="col-md-6" >
                 <LookbookImage
                   imageSrc="/lookbook/06.jpg"
                   height={853}
                   width={1280}
                 />
                 <div className="spacer25px"></div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-2"></div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-2"></div>
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-2"></div>
-              <div className="col-md-8 ce">
                 <LookbookImage
                   imageSrc="/lookbook/07.jpg"
                   height={853}
                   width={1280}
                 />
-                <div className="spacer25px"></div>
               </div>
-              <div className="col-md-2"></div>
             </div>
           </div>
+          <div className="col-md-2"></div>
+          <div className="spacer25px"></div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-2"></div>
+          <LookbookImage
+            imageSrc="/lookbook/08.jpg"
+            height={853}
+            width={1280}
+            additionalClass="col-md-8"
+          />
+          <div className="spacer25px"></div>
           <div className="col-md-2"></div>
         </div>
 
@@ -163,15 +137,27 @@ export default class Index extends React.Component {
           <div className="col-md-2"></div>
           <div className="col-md-8">
             <div className="row">
-              <div className="col-md-6 ce">
+              <div className="col-md-6" >
                 <LookbookImage
-                  imageSrc="/lookbook/08.jpg"
+                  imageSrc="/lookbook/09.jpg"
                   height={853}
                   width={1280}
                 />
                 <div className="spacer25px"></div>
+                <LookbookImage
+                  imageSrc="/lookbook/10.jpg"
+                  height={853}
+                  width={1280}
+                />
+                <div className="spacer25px d-block d-md-none"></div>
               </div>
-              <div className="col-md-6 ce"></div>
+              <div className="col-md-6 ce">
+                <LookbookImage
+                  imageSrc="/lookbook/11.jpg"
+                  height={1280}
+                  width={853}
+                />
+              </div>
             </div>
           </div>
           <div className="col-md-2"></div>
