@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import Image from 'next/image';
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -109,7 +110,12 @@ class CartItems extends React.Component {
           <div key={'keyID' + i}>
             <div className="row">
               <div className="col-md-5">
-                <img className="dyn" src={this.getProductImageLink(product.idname)} />
+                <Image
+                  src={this.getProductImageLink(product.idname)}
+                  layout="responsive"
+                  width={100}
+                  height={100}
+                />
               </div>
               <div className="col-md-7">
                 <div className="cartIconContainer">
