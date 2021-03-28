@@ -259,15 +259,15 @@ export default class Index extends React.Component {
     setTimeout(this.reload, 1000);
   }
 
-  reload () {
+  reload() {
     window.location.href = "/checkout";
   }
 
-  myAccount () {
+  myAccount() {
     window.location.href = "/my-account";
   }
 
-  pressedCheckout () {
+  pressedCheckout() {
     event('begin_checkout', {
       value: this.state.amount,
       coupon: this.state.coupon,
@@ -366,16 +366,16 @@ export default class Index extends React.Component {
       <Header />
         <Nav />
         <Ping />
-        <div className="spacer50px" />
+        <div className="spacer50px"></div>
         <div className="row">
           <div className="col-md-12 ce capitalLetters">
             <h2><strong>Your Loved Pieces</strong></h2>
             {this.state.emptyCartAlert}
           </div>
         </div>
-        <div className="spacer25px" />
+        <div className="spacer25px"></div>
         <div className="row">
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
           <div className="col-md-8">
             Cart / {this.state.inCart} items
             <hr />
@@ -384,7 +384,7 @@ export default class Index extends React.Component {
               delProductFromCart={this.delProductFromCart}
               loading={this.state.loadingProducts}
             />
-            <div className="spacer50px" />
+            <div className="spacer50px"></div>
             <div className="row">
               <div className="col-md-4">
                 <div className="noBorder mediumFont ceMob">
@@ -411,7 +411,7 @@ export default class Index extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-md-2" />
+          <div className="col-md-2"></div>
         </div>
         <Footer />
       </Container>
