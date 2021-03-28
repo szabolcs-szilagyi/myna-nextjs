@@ -100,41 +100,39 @@ export default class PhotoViewer extends React.Component {
         <div className="spacer50px"></div>
         <div className="row">
           <div className="col-md-12">
-            <div className="marginAuto">
-              <div className="row">
-                <div className="col-4 ce">
-                  <Image
-                    src={this.getPhotoUri(this.state.photo2)}
-                    layout="responsive"
-                    width={150}
-                    height={150}
-                    onClick={this.productPhotoHandling}
-                    className="pointer"
-                    id="photo2"
-                  />
-                </div>
-                <div className="col-4 ce">
-                  <Image
-                    src={this.getPhotoUri(this.state.photo3)}
-                    layout="responsive"
-                    width={150}
-                    height={150}
-                    onClick={this.productPhotoHandling}
-                    className="pointer"
-                    id="photo3"
-                  />
-                </div>
-                <div className="col-4 ce">
-                  <Image
-                    src={this.getPhotoUri(this.state.photo4)}
-                    layout="responsive"
-                    width={150}
-                    height={150}
-                    onClick={this.productPhotoHandling}
-                    className="pointer"
-                    id="photo4"
-                  />
-                </div>
+            <div className="row">
+              <div className="col-4 ce">
+                <Image
+                  src={this.getPhotoUri(this.state.photo2)}
+                  layout="responsive"
+                  width={150}
+                  height={150}
+                  onClick={this.productPhotoHandling}
+                  className="pointer"
+                  id="photo2"
+                />
+              </div>
+              <div className="col-4 ce">
+                <Image
+                  src={this.getPhotoUri(this.state.photo3)}
+                  layout="responsive"
+                  width={150}
+                  height={150}
+                  onClick={this.productPhotoHandling}
+                  className="pointer"
+                  id="photo3"
+                />
+              </div>
+              <div className="col-4 ce">
+                <Image
+                  src={this.getPhotoUri(this.state.photo4)}
+                  layout="responsive"
+                  width={150}
+                  height={150}
+                  onClick={this.productPhotoHandling}
+                  className="pointer"
+                  id="photo4"
+                />
               </div>
             </div>
           </div>
