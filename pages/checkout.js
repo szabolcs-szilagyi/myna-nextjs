@@ -14,10 +14,13 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
 import event from '../lib/gtag';
+import { requestFactory } from '../lib/request';
 
 import {
   API_SERVER
 } from '../src/constants';
+
+const listenRequest = requestFactory(API_SERVER + 'listen.php');
 
 const productDetailHash = {
   'alyss-dress': { imageName: 'mynawebshop-alyssdress-1.jpg', pricc: '215' },
@@ -124,7 +127,7 @@ class CartItems extends React.Component {
                             <a
                               id={'t' + product.id}
                               href="#"
-                              onClick={this.delProductFromCart}
+                              onClick={() => this.delProductFromCart(product.id)}
                               onMouseEnter={this.trashHover}
                               onMouseLeave={this.trashNormal}
                             >
@@ -162,10 +165,7 @@ export default class Index extends React.Component {
       loggedIn: 'no',
       products: [],
       inCart: '0',
-      emptyCartAlert: '',
       showPaypal: 'hidePaypal',
-      amount: [],
-      amountId: [],
       coupon: '',
       priceModifier: 1,
       checked: 0,
@@ -176,86 +176,73 @@ export default class Index extends React.Component {
     this.getShipping = this.getShipping.bind(this);
     this.amILoggedIn = this.amILoggedIn.bind(this);
     this.getProductsInCart = this.getProductsInCart.bind(this);
-    this.getInCart = this.getInCart.bind(this);
     this.delProductFromCart = this.delProductFromCart.bind(this);
     this.reload = this.reload.bind(this);
     this.myAccount = this.myAccount.bind(this);
     this.pressedCheckout = this.pressedCheckout.bind(this);
-    this.getAmount = this.getAmount.bind(this);
     this.handleCouponChange = this.handleCouponChange.bind(this);
     this.getUserAddress = this.getUserAddress.bind(this);
   }
 
   getPrice() {
-    fetch(API_SERVER + 'listen.php?part=totalcheckout&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['topay'];
-      let delivery = data['delivery'];
-      let products = data['products'];
-      let modifier = this.state.priceModifier;
-      let ovr = tmp * modifier;
-      let ovr2 = Math.floor(ovr);
-      this.setState({ price: ovr2 });
+    listenRequest({
+      query: { part: 'totalcheckout', sessiontoken: session },
+      options: { json: true },
     })
-    .catch(error => console.log(error.message));
+      .then(({ topay }) => {
+        const modifier = this.state.priceModifier;
+        const newPrice = Math.floor(topay * modifier);
+        this.setState({ price: newPrice });
+      })
+      .catch(error => console.log(error.message));
   }
 
   getShipping() {
-    fetch(API_SERVER + 'listen.php?part=getshippinginfo&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['shippinginfo'];
-      this.setState({ shipping: tmp });
+    listenRequest({
+      query: { part: 'getshippinginfo', sessiontoken: session },
+      options: { json: true },
     })
-    .catch(error => console.log(error.message));
+      .then(({ shippinginfo }) => {
+        this.setState({ shipping: shippinginfo });
+      })
+      .catch(error => console.log(error.message));
   }
 
-  amILoggedIn () {
-    fetch(API_SERVER + 'listen.php?part=amiloggedin&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['email'];
-      if (tmp != "nodata") {
-        this.setState({ myEmail: tmp, loggedIn: 'yes', checked: 1 });
-      } else {
-        this.myAccount ();
-      }
+  amILoggedIn() {
+    listenRequest({
+      query: { part: 'amiloggedin', sessiontoken: session },
+      options: { json: true },
     })
-    .catch(error => console.log(error.message));
+      .then(({ email }) => {
+        if (email !== 'nodata') {
+          this.setState({ myEmail: email, loggedIn: 'yes', checked: 1 });
+        } else {
+          this.myAccount ();
+        }
+      })
+      .catch(error => console.log(error.message));
   }
 
   getProductsInCart() {
-    fetch(API_SERVER + 'listen.php?part=getproductsincart&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['products'] || {};
-      this.setState({ products: tmp });
+    listenRequest({
+      query: { part: 'getproductsincart', sessiontoken: session },
+      options: { json: true },
     })
-    .catch(error => console.log(error.message));
+      .then(({ products }) => {
+        if(!products) products = {};
+        this.setState({ products, inCart: Object.keys(products).length });
+      })
+      .catch(error => console.log(error.message));
   }
 
-  getInCart() {
-    fetch(API_SERVER + 'listen.php?part=getproductsnumberincart&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['nr'];
-      if (tmp == '0') { this.setState({ emptyCartAlert: <div><div className='spacer25px' /><p><i>Your cart is empty.</i> <br /><br /><a href="/shop-collections"><button className="startshoppingButton">START SHOPPING HERE</button></a></p></div> }); }
-      this.setState({ inCart: tmp });
-    })
-    .catch(error => console.log(error.message));
-  }
-
-  delProductFromCart (e) {
+  delProductFromCart(id) {
     this.setState({ loadingProducts: true });
-    let idTmp = e.currentTarget.id;
-    let id = idTmp.substring(1);
-    fetch(API_SERVER + 'listen.php?part=delproductfromcart&id=' + id + '&sessiontoken=' + session, {mode: 'no-cors'})
+
+    listenRequest({
+      query: { part: 'delproductfromcart', id: id, sessiontoken: session },
+      fetchOptions: { mode: 'no-cors' },
+    })
+
     setTimeout(this.reload, 1000);
   }
 
@@ -269,7 +256,7 @@ export default class Index extends React.Component {
 
   pressedCheckout() {
     event('begin_checkout', {
-      value: this.state.amount,
+      value: this.state.price,
       coupon: this.state.coupon,
       currency: 'EUR',
     })
@@ -286,75 +273,36 @@ export default class Index extends React.Component {
     }
   }
 
-  getAmount () {
-    let nr = this.state.inCart;
-    let prod = this.state.products;
-    let amount;
-    let id = [];
-    let i;
-    let tm1;
-    let tm2;
-    let tmp = [];
-    let tmpId = [];
-    for (i=0; i<nr; i++) {
-      id[i] = prod[i]['id'];
-      fetch(API_SERVER + 'listen.php?part=getamountincart&id=' + id[i] + '&pin=558240')
-      .then(response => response.json())
-  		.then(output => {
-        let data = output;
-        tm1 = data['amount'];
-        tm2 = data['id'];
-        tmp.push({ tm1 });
-        tmpId.push({ tm2 });
-      })
-      .catch(error => console.log(error.message));
-    }
-    this.setState({ amount: tmp });
-    this.setState({ amountId: tmpId });
-  }
+  handleCouponChange(event) {
+    let coupon = event.target.value.toLowerCase();
+    let priceModifier = 1;
 
-  handleCouponChange (event) {
-    let tmp = event.target.value;
-    let text = tmp.toLowerCase();
-    this.setState({priceModifier: 1}, () => { });
-    this.setState({coupon: text}, () => { if (text == 'mynafriend10') { this.setState({priceModifier: 0.9}, () => { }); } });
-    this.setState({coupon: text}, () => { if (text == 'mynagift15') { this.setState({priceModifier: 0.85}, () => { }); } });
+    if(coupon === 'mynafriend10') priceModifier = 0.9;
+    else if(coupon === 'mynagift15') priceModifier = 0.85;
+
+    this.setState({ coupon, priceModifier });
+
     setTimeout(this.getPrice, 200);
   }
 
-  getUserAddress () {
-    fetch(API_SERVER + 'listen.php?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let valid = data['success'];
-      let tmp = data['addressdata'];
-      let type = tmp['type'];
-      let name = tmp['name'];
-      let mobile = tmp['mobile'];
-      let address1 = tmp['address1'];
-      let address2 = tmp['address2'];
-      let city = tmp['city'];
-      let state = tmp['state'];
-      let zip = tmp['zip'];
-      let country = tmp['country'];
-      let comment = tmp['comment'];
-      if (this.state.loggedIn == 'yes') {
-        if (valid == '0') { this.myAccount (); }
-        if (type == '0') { this.myAccount (); }
-        if (address1 == '0') { this.myAccount (); }
-        if (city == '0') { this.myAccount (); }
-        if (country == '0') { this.myAccount (); }
-        if (zip == '0') { this.myAccount (); }
-      }
+  getUserAddress() {
+    listenRequest({
+      query: { part: 'getaddressdata', email: this.state.myEmail, sessiontoken: session },
+      options: { json: true },
     })
-    .catch(error => console.log(error.message));
-    this.getAmount();
+      .then(({ success, addressdata }) => {
+        const { type, address1, city, zip, country } = addressdata;
+        const neededData = [type, address1, city, zip, country];
+
+        if (this.state.loggedIn == 'yes' && neededData.some(value => value === '0')) {
+          this.myAccount();
+        }
+      })
+      .catch(error => console.log(error.message));
   }
 
   componentDidMount() {
     this.getProductsInCart();
-    this.getInCart();
     this.getPrice();
     this.getShipping();
     setTimeout(this.getUserAddress, 500);
@@ -370,7 +318,10 @@ export default class Index extends React.Component {
         <div className="row">
           <div className="col-md-12 ce capitalLetters">
             <h2><strong>Your Loved Pieces</strong></h2>
-            {this.state.emptyCartAlert}
+            <div className={this.state.inCart ? 'd-none' : 'd-block'}>
+              <div className='spacer25px'></div>
+              <p><i>Your cart is empty.</i> <br /><br /><a href="/shop-collections"><button className="startshoppingButton">START SHOPPING HERE</button></a></p>
+            </div>
           </div>
         </div>
         <div className="spacer25px"></div>
