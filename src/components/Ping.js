@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
-import {API_SERVER as API_SERVER} from '../src/constants';
+import {API_SERVER as API_SERVER} from '../constants';
 const cookies = new Cookies();
 //const hash = cookies.get('hash');
 const session = cookies.get('session');

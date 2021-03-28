@@ -14,7 +14,7 @@ import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import style from './lookbook.module.css';
 
-import { API_SERVER } from '../src/constants';
+import { API_SERVER } from '../constants';
 
 function LookbookImage({ imageSrc, height, width, alt = '', additionalClass = '' }) {
   return (

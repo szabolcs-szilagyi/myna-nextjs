@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 import {
   PAY_PAL_CLIENT_ID,
   API_SERVER,
-} from '../src/constants';
+} from '../constants';
 
 const cookies = new Cookies();
 const session = cookies.get('session');

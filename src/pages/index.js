@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
-import { API_SERVER } from '../src/constants';
+import { API_SERVER } from '../constants';
 import Slider from '../components/Slider';
 import Header from '../components/Header';
 import Nav from '../components/Nav';

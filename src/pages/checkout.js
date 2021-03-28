@@ -18,7 +18,7 @@ import { requestFactory } from '../lib/request';
 
 import {
   API_SERVER
-} from '../src/constants';
+} from '../constants';
 
 const listenRequest = requestFactory(API_SERVER + 'listen.php');
 

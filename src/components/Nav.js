@@ -7,7 +7,7 @@ const session = cookies.get('session');
 
 import {
   API_SERVER
-} from '../src/constants';
+} from '../constants';
 
 
 function getInCart() {

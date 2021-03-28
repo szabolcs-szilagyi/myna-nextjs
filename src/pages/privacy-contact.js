@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 //import { useRouter } from 'next/router';
-import {API_SERVER as API_SERVER} from '../src/constants';
+import {API_SERVER as API_SERVER} from '../constants';
 import Cookies from 'universal-cookie';
 //import UserMenu from '../components/UserMenu';
 import Header from '../components/Header';

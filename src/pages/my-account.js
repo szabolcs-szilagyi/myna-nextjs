@@ -2,7 +2,7 @@ import React, { useState, Component } from 'react';
 import ReactDOM from 'react-dom';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
-import {API_SERVER as API_SERVER} from '../src/constants';
+import {API_SERVER as API_SERVER} from '../constants';
 import Cookies from 'universal-cookie';
 import Header from '../components/Header';
 import Nav from '../components/Nav';

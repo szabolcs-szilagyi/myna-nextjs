@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {API_SERVER as API_SERVER} from '../src/constants';
+import {API_SERVER as API_SERVER} from '../constants';
 import fetch from 'isomorphic-unfetch';
 
 export default class Ping extends Component {

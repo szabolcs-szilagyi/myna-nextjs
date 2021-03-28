@@ -4,7 +4,7 @@ import { withRouter } from 'next/router';
 
 import {
   API_SERVER,
-} from '../src/constants';
+} from '../constants';
 
 import Header from '../components/Header';
 import Nav from '../components/Nav';
