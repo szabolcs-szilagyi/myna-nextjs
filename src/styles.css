@@ -88,9 +88,7 @@ table.mainMeas td {
 .noBorder {
   border: 0 !important;
 }
-#productContainer {
 
-}
 .email_newsletter input {
   color: #000000;
   border: 0;
@@ -135,12 +133,6 @@ a.blackFont:hover, blackFont a :hover {
   color: #000000;
   text-decoration: underline;
 }
-#dropdown-custom-components {
-  background: none;
-  color: black;
-  border: 0 !important;
-  outline: none !important;
-}
 select#chooseSize {
   color: #000;
   text-decoration: none;
@@ -165,9 +157,6 @@ select#chooseSize:hover {
   padding: 5px 10px 5px 10px;
   border-top: 1px solid #000000;
   border-bottom: 1px solid #000000;
-}
-.leftPadAddCartButton {
-  padding: 5px;
 }
 .left {
   text-align: left;
@@ -202,23 +191,6 @@ select#chooseSize:hover {
   text-align: center;
   margin: auto;
 }
-.dBorder {
-  border-color: #b0644f;
-  box-shadow: #b0644f;
-}
-.dropdown .dropdown-menu{
-  display: block;
-  opacity:0;
-  -webkit-transition: all 200ms ease-in;
-  -moz-transition: all 200ms ease-in;
-  -ms-transition: all 200ms ease-in;
-  -o-transition: all 200ms ease-in;
-  transition: all 200ms ease-in;
- }
-.dropdown:hover .dropdown-menu {
-  display: block;
-  opacity: 1;
-}
 .noPadding {
   padding: 0;
 }
@@ -227,10 +199,6 @@ select#chooseSize:hover {
 }
 .right {
   text-align: right;
-}
-.form-control:focus {
-  border-color: #ff80ff;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(255, 100, 255, 0.5);
 }
 .navCart a:hover {
   font-weight: bold;

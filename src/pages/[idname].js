@@ -234,7 +234,7 @@ class Index extends React.Component {
         <div className="row">
           <div className="col-md-1"></div>
           <div className="col-md-10">
-            <div className="row" id="productContainer">
+            <div className="row">
 
               <PhotoViewer
                 photos={this.state.photos}
