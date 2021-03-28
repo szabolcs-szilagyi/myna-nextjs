@@ -4,11 +4,9 @@ class HeadElement extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUrl: '',
       title: ''
     };
     this.setTitle = this.setTitle.bind(this);
-    this.resetZoom = this.resetZoom.bind(this);
   }
 
   pathToTitle(pathStr) {
@@ -26,11 +24,8 @@ class HeadElement extends React.Component {
   setTitle () {
     let cpn = window.location.pathname;
 
-    this.setState({ currentUrl: cpn });
     this.setState({ title: this.pathToTitle(cpn) });
   }
-
-  resetZoom () {}
 
   componentDidMount() {
     setTimeout(this.setTitle, 250);
