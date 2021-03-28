@@ -1,3 +1,7 @@
+.maxHeight {
+  max-height: 95vh;
+}
+
 #fadeNone {
   visibility: hidden;
 }

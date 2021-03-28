@@ -92,7 +92,7 @@ export default class PhotoViewer extends React.Component {
               width={500}
               height={500}
               onClick={this.productPhotoHandling}
-              className="pointer dyn"
+              className="pointer"
               id="photo1"
             />
           </div>
@@ -109,7 +109,7 @@ export default class PhotoViewer extends React.Component {
                     width={150}
                     height={150}
                     onClick={this.productPhotoHandling}
-                    className="pointer dyn"
+                    className="pointer"
                     id="photo2"
                   />
                 </div>
@@ -120,7 +120,7 @@ export default class PhotoViewer extends React.Component {
                     width={150}
                     height={150}
                     onClick={this.productPhotoHandling}
-                    className="pointer dyn"
+                    className="pointer"
                     id="photo3"
                   />
                 </div>
@@ -131,7 +131,7 @@ export default class PhotoViewer extends React.Component {
                     width={150}
                     height={150}
                     onClick={this.productPhotoHandling}
-                    className="pointer dyn"
+                    className="pointer"
                     id="photo4"
                   />
                 </div>
@@ -146,7 +146,7 @@ export default class PhotoViewer extends React.Component {
           onClickAway={this.closeModal}
         >
           <div>
-            <img src={this.getPhotoUri(this.state.photo1)} className="dyn maxHeight" />
+            <img src={this.getPhotoUri(this.state.photo1)} className={style.maxHeight} />
           </div>
         </Modal>
 
