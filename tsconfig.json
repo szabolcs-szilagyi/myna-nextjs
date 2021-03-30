@@ -6,6 +6,12 @@
       "dom.iterable",
       "esnext"
     ],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -17,6 +23,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "declaration": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
