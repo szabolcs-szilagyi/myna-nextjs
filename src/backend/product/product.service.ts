@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ProductFilterDto } from './dto/product-filter.dto';
 import { Product } from './entities/product.entity';
 import { ProductRepository } from './product.repository';
 
@@ -10,8 +11,8 @@ export class ProductService {
     private productRepository: ProductRepository
   ) {}
 
-  findAll(): Promise<Product[]> {
-    return this.productRepository.find();
+  findAll(productFilterDto: ProductFilterDto): Promise<Product[]> {
+    return this.productRepository.find(productFilterDto);
   }
 
   findOne(id: number): Promise<Product> {

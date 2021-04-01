@@ -7,8 +7,8 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar')
-  idname: string;
+  @Column('varchar', { name: 'idname' })
+  idName: string;
 
   @Column('varchar')
   availability: string;
