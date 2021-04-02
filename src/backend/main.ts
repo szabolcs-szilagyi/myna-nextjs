@@ -11,7 +11,10 @@ export module Backend {
 
   export async function getApp() {
     if (!app) {
-      app = await NestFactory.create(AppModule);
+      app = await NestFactory.create(
+        AppModule,
+        { bodyParser: false }
+      );
       app.setGlobalPrefix("api");
 
       await app.init();
