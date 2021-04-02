@@ -3,6 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ProductController } from "../product/product.controller";
 import { ProductModule } from "../product/product.module";
 import { TokenController } from "../token/token.controller";
+import { TokenModule } from "../token/token.module";
 import { AppController } from './app.controller';
 import { catchAllOmiter } from "./app.middleware";
 
@@ -19,6 +20,7 @@ import { catchAllOmiter } from "./app.middleware";
       synchronize: false,
     }),
     ProductModule,
+    TokenModule,
   ],
   controllers: [AppController],
 })
