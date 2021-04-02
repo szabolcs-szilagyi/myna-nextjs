@@ -1,10 +1,8 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductController } from './product.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductRepository } from './product.repository';
-
-import { catchAllOmiter } from './product.middleware';
 
 @Module({
   imports: [
@@ -13,10 +11,4 @@ import { catchAllOmiter } from './product.middleware';
   providers: [ProductService],
   controllers: [ProductController],
 })
-export class ProductModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(catchAllOmiter)
-      .forRoutes(ProductController)
-  }
-}
+export class ProductModule {}

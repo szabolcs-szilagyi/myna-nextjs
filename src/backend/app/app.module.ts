@@ -1,7 +1,10 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ProductController } from "../product/product.controller";
 import { ProductModule } from "../product/product.module";
+import { TokenController } from "../token/token.controller";
 import { AppController } from './app.controller';
+import { catchAllOmiter } from "./app.middleware";
 
 @Module({
   imports: [
@@ -19,4 +22,10 @@ import { AppController } from './app.controller';
   ],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(catchAllOmiter)
+      .forRoutes(ProductController, TokenController)
+  }
+}

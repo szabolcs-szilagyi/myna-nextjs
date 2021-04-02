@@ -14,7 +14,6 @@ export class ProductController {
   getProductData(
     @Query(ValidationPipe) productFilterDto: ProductFilterDto
   ) {
-    console.log(productFilterDto);
     return this.productService.findAll(productFilterDto);
   }
 
