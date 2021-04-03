@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { createHash, randomInt } from 'crypto';
 import { LoginTokenRepository } from './login-token.repository';
 import { DateTime } from 'luxon';
+import { SessionTokenRepository } from './session-token.repository';
 
 type MD5Hash = string;
 
@@ -11,6 +12,8 @@ export class TokenService {
   constructor(
     @InjectRepository(LoginTokenRepository)
     private readonly loginTokenRepository: LoginTokenRepository,
+    @InjectRepository(SessionTokenRepository)
+    private readonly sessionTokenRepository: SessionTokenRepository,
   ) {}
 
   async getLoginToken(email: string): Promise<MD5Hash> {
@@ -28,5 +31,45 @@ export class TokenService {
     })
 
     return hash;
+  }
+
+  async authorizeLogin(email: string, loginToken: MD5Hash): Promise<boolean> {
+    const tokenRecord = await this.loginTokenRepository.findOne(
+      { email, loginToken },
+      { select: ['id'] },
+    );
+
+    return tokenRecord?.id !== undefined;
+  }
+
+  async validateSessionToken(sessionToken: string) {
+    const tokenRecord = await this.sessionTokenRepository.findOne(
+      { sessionToken },
+      { select: ['id'] },
+    );
+
+    return tokenRecord?.id !== undefined;
+  }
+
+  setEmailToSession(email: string, sessionToken: string): Promise<any> {
+    return this.sessionTokenRepository.update({ sessionToken }, { email })
+  }
+
+  async setSessionToken(): Promise<string> {
+    const now = DateTime
+      .fromISO(new Date().toISOString(), { zone: 'Europe/London' })
+      .toFormat('yyyy-MM-dd HH:mm:ss');
+
+    const email = 'nodata';
+    const toHash = [randomInt(10000, 99999), now, randomInt(10000, 99999)].join('')
+    const sessionToken = createHash('md5').update(toHash).digest('hex');
+
+    this.sessionTokenRepository.insert({
+      email,
+      sessionToken,
+      createTime: now,
+    })
+
+    return sessionToken;
   }
 }
