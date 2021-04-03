@@ -54,8 +54,11 @@ export class AppController {
       case PartOption.GetCurrency:
         return { currency: '€' };
       case PartOption.LoginMail:
-        // need login and user data
-        return {};
+        return got.post('http://localhost:3000/api/token/mail-login', {
+          isStream: true,
+          json: { email: req.query.email },
+          responseType: 'json',
+        });
       default:
         throw new NotFoundException();
     }
