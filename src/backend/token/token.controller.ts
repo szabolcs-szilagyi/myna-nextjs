@@ -1,8 +1,10 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { PurifiedToken } from './decorators/purified-token.decorator';
+import { CustomHeaders } from './decorators/custom-headers.decorator';
 import { EmailStripperPipe } from './pipes/email-stripper.pipe';
 import { TokenService } from './token.service';
+import { UserDataDto } from '../user/dto/user-data.dto';
 
 @Controller('token')
 export class TokenController {
@@ -97,5 +99,22 @@ export class TokenController {
     }
 
     return { email };
+  }
+
+  @Get('get-user-data')
+  async getUserData(
+    @PurifiedToken('session-token') sessionToken: string,
+    @CustomHeaders('email', EmailStripperPipe) email: string,
+  ): Promise<object> {
+    email = email.substr(0, 127);
+    const isSessionValid = await this.tokenService.validateSessionTokenStrict(sessionToken, email);
+    let userData: string | UserDataDto;
+    if(isSessionValid) {
+      userData = await this.userService.getUserData(email);
+    } else {
+      userData = '0';
+    }
+
+    return { userdata: userData };
   }
 }

@@ -52,6 +52,15 @@ export class TokenService {
     return tokenRecord?.id !== undefined;
   }
 
+  async validateSessionTokenStrict(sessionToken: string, email: email) {
+    const tokenRecord = await this.sessionTokenRepository.findOne(
+      { sessionToken, email },
+      { select: ['id'] },
+    );
+
+    return tokenRecord?.id !== undefined;
+  }
+
   setEmailToSession(email: string, sessionToken: string): Promise<any> {
     return this.sessionTokenRepository.update({ sessionToken }, { email })
   }

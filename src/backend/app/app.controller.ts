@@ -87,6 +87,15 @@ export class AppController {
           },
         });
 
+      case PartOption.GetUserData:
+        return got.get('http://localhost:3000/api/token/get-user-data', {
+          isStream: true,
+          headers: {
+            'session-token': req.query.sessiontoken,
+            'email': req.query.email,
+          },
+        });
+
       default:
         throw new NotFoundException();
     }

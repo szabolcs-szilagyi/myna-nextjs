@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { omit } from 'lodash/fp'
 import { UserRepository } from './user.repository';
 import { DateTime } from 'luxon';
+import { UserDataDto } from './dto/user-data.dto';
 
 @Injectable()
 export class UserService {
@@ -36,5 +38,11 @@ export class UserService {
       .toFormat('yyyy-MM-dd HH:mm:ss');
 
     await this.userRepository.update({ email }, { lastLogin: now });
+  }
+
+  async getUserData(email: string): Promise<UserDataDto> {
+    const userRecord = await this.userRepository.findOne({ email })
+
+    return omit(['id'], userRecord) as UserDataDto;
   }
 }
