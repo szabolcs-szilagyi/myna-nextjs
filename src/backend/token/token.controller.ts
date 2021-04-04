@@ -82,4 +82,20 @@ export class TokenController {
       sessiontoken: sessionToken,
     }
   }
+
+  @Get('am-i-logged-in')
+  async amILoggedIn(
+    @PurifiedToken('session-token') sessionToken: string,
+  ) {
+    const isSesstionValid = await this.tokenService.validateSessionToken(sessionToken);
+
+    let email: string;
+    if(isSesstionValid) {
+      email = await this.tokenService.amILoggedIn(sessionToken)
+    } else {
+      email = 'nodata';
+    }
+
+    return { email };
+  }
 }

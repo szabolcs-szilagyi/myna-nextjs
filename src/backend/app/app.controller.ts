@@ -79,6 +79,14 @@ export class AppController {
           },
         });
 
+      case PartOption.AmILoggedIn:
+        return got.get('http://localhost:3000/api/token/am-i-logged-in', {
+          isStream: true,
+          headers: {
+            'session-token': req.query.sessiontoken,
+          },
+        });
+
       default:
         throw new NotFoundException();
     }

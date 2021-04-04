@@ -6,6 +6,7 @@ import { DateTime } from 'luxon';
 import { SessionTokenRepository } from './session-token.repository';
 
 type MD5Hash = string;
+type email = string;
 
 @Injectable()
 export class TokenService {
@@ -73,7 +74,7 @@ export class TokenService {
     return sessionToken;
   }
 
-  async fakeExtendSession(sessionToken): Promise<void> {
+  async fakeExtendSession(sessionToken: string): Promise<void> {
     const now = DateTime
       .fromISO(new Date().toISOString(), { zone: 'Europe/London' })
       .toFormat('yyyy-MM-dd HH:mm:ss');
@@ -81,7 +82,12 @@ export class TokenService {
     await this.sessionTokenRepository.update({ sessionToken }, { createTime: now });
   }
 
-  async deleteSession(sessionToken): Promise<void> {
+  async deleteSession(sessionToken: string): Promise<void> {
     await this.sessionTokenRepository.delete({ sessionToken });
+  }
+
+  async amILoggedIn(sessionToken: string): Promise<email> {
+    const tokenRecord = await this.sessionTokenRepository.findOne({ sessionToken }, { select: ['email'] })
+    return tokenRecord.email;
   }
 }
