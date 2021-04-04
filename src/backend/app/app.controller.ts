@@ -51,14 +51,26 @@ export class AppController {
         }).json()
 
         return { productdetails: result[0] };
+
       case PartOption.GetCurrency:
         return { currency: '€' };
+
       case PartOption.LoginMail:
         return got.post('http://localhost:3000/api/token/mail-login', {
           isStream: true,
           json: { email: req.query.email },
-          responseType: 'json',
         });
+
+      case PartOption.Login:
+        return got.post('http://localhost:3000/api/token/login', {
+          isStream: true,
+          json: { email: req.query.email },
+          headers: {
+            'session-token': req.query.sessiontoken,
+            'login-token': req.query.logintoken,
+          },
+        });
+
       default:
         throw new NotFoundException();
     }
