@@ -9,14 +9,14 @@ enum PartOption {
   Login = 'login',
   Ping = 'ping',
   AmILoggedIn = 'amiloggedin',
-  Logout = 'logout',
+  Logout = 'logout', // not used!
   GetUserData = 'getuserdata',
   UpdateUserData = 'updateuserdata',
   GetShippingInfo = 'getshippinginfo',
   GetEmail = 'getemail',
   GetAddressData = 'getaddressdata',
   SetAddressData = 'setaddressdata',
-  DelAddressData = 'deladdressdata',
+  DelAddressData = 'deladdressdata', // not implemented
   SetSessionToken = 'setsessiontoken',
   SetNewsletterSubscription = 'setnewslettersubscription',
   GetNewsletterSubscription = 'getnewslettersubscription',
@@ -68,6 +68,14 @@ export class AppController {
           headers: {
             'session-token': req.query.sessiontoken,
             'login-token': req.query.logintoken,
+          },
+        });
+
+      case PartOption.Ping:
+        return got.get('http://localhost:3000/api/token/ping', {
+          isStream: true,
+          headers: {
+            'session-token': req.query.sessiontoken,
           },
         });
 

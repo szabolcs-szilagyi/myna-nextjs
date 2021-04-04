@@ -72,4 +72,16 @@ export class TokenService {
 
     return sessionToken;
   }
+
+  async fakeExtendSession(sessionToken): Promise<void> {
+    const now = DateTime
+      .fromISO(new Date().toISOString(), { zone: 'Europe/London' })
+      .toFormat('yyyy-MM-dd HH:mm:ss');
+
+    await this.sessionTokenRepository.update({ sessionToken }, { createTime: now });
+  }
+
+  async deleteSession(sessionToken): Promise<void> {
+    await this.sessionTokenRepository.delete({ sessionToken });
+  }
 }

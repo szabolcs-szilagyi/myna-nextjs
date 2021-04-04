@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { PurifiedToken } from './decorators/purified-token.decorator';
 import { EmailStripperPipe } from './pipes/email-stripper.pipe';
@@ -50,6 +50,35 @@ export class TokenController {
     return {
       login_successful: successful,
       email,
+      sessiontoken: sessionToken,
+    }
+  }
+
+  @Get('ping')
+  async ping(
+    @PurifiedToken('session-token') sessionToken: string,
+  ) {
+    const isSessionValid = await this.tokenService.validateSessionToken(sessionToken);
+
+    /**
+     * This logic about the deletion is point less: the `validateSessionToken`
+     * doesn't check if the session token is still valid or not, just returns
+     * true _if_ there is a record with matching token. This is how it was in
+     * the old system so for the time of the migration I would not change on it,
+     * but would worth a cleanup in the logic
+     */
+    let pong: string;
+    if(isSessionValid) {
+      await this.tokenService.fakeExtendSession(sessionToken);
+      pong = '1';
+    } else {
+      await this.tokenService.deleteSession(sessionToken);
+      sessionToken = await this.tokenService.setSessionToken();
+      pong = '0';
+    }
+
+    return {
+      pong,
       sessiontoken: sessionToken,
     }
   }
