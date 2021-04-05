@@ -89,11 +89,41 @@ export class AppController {
 
       case PartOption.GetUserData:
         return got.get('http://localhost:3000/api/token/get-user-data', {
-          isStream: true,
           headers: {
             'session-token': req.query.sessiontoken,
             'email': req.query.email,
           },
+          responseType: 'json',
+        })
+            .then(({ body }) => {
+              const {
+                email,
+                firstName: firstname,
+                lastName: lastname,
+                lastLogin: lastlogin,
+                birthday
+              } = body as any;
+
+              return {
+                userdata: { email, firstname, lastname, lastlogin, birthday },
+              };
+            });
+
+      case PartOption.UpdateUserData:
+        const {
+          sessiontoken,
+          email,
+          firstname: firstName,
+          lastname: lastName,
+          birthday
+        } = req.query;
+
+        return got.post('http://localhost:3000/api/token/update-user-data', {
+          isStream: true,
+          headers: {
+            'session-token': sessiontoken,
+          },
+          json: { email, firstName, lastName, birthday }
         });
 
       default:

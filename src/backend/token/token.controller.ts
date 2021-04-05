@@ -17,12 +17,11 @@ export class TokenController {
 
   @Post('mail-login')
   async mailLogin(@Body('email', EmailStripperPipe) email: string): Promise<object> {
-    const safeEmail = email.substr(0, 127);
-    const loginToken = await this.tokenService.getLoginToken(safeEmail);
+    const loginToken = await this.tokenService.getLoginToken(email);
 
     return {
       logintoken: loginToken,
-      email: safeEmail,
+      email,
     }
   }
 
@@ -105,8 +104,7 @@ export class TokenController {
   async getUserData(
     @PurifiedToken('session-token') sessionToken: string,
     @CustomHeaders('email', EmailStripperPipe) email: string,
-  ): Promise<object> {
-    email = email.substr(0, 127);
+  ): Promise<UserDataDto | string> {
     const isSessionValid = await this.tokenService.validateSessionTokenStrict(sessionToken, email);
     let userData: string | UserDataDto;
     if(isSessionValid) {
@@ -115,6 +113,24 @@ export class TokenController {
       userData = '0';
     }
 
-    return { userdata: userData };
+    return userData;
+  }
+
+  @Post('update-user-data')
+  async updateUserData(
+    @PurifiedToken('session-token') sessionToken: string,
+    @Body() userDataDto: UserDataDto,
+  ) {
+    const isSessionValid = await this.tokenService.validateSessionTokenStrict(sessionToken, userDataDto.email);
+
+    let success: string;
+    if(isSessionValid) {
+      await this.userService.updateUserData(userDataDto);
+      success = '1';
+    } else {
+      success = '0';
+    }
+
+    return { success };
   }
 }

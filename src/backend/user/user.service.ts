@@ -45,4 +45,9 @@ export class UserService {
 
     return omit(['id'], userRecord) as UserDataDto;
   }
+
+  async updateUserData(userDataDto: UserDataDto): Promise<void> {
+    const { email, firstName, lastName, birthday } = userDataDto;
+    await this.userRepository.update({ email }, { firstName, lastName, birthday });
+  }
 }
