@@ -126,6 +126,14 @@ export class AppController {
           json: { email, firstName, lastName, birthday }
         });
 
+      case PartOption.GetShippingInfo:
+        return got.get('http://localhost:3000/api/address/shipping-info', {
+          isStream: true,
+          headers: {
+            'session-token': req.query.sessiontoken,
+          },
+        });
+
       default:
         throw new NotFoundException();
     }

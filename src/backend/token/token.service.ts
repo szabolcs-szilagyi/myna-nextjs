@@ -95,8 +95,8 @@ export class TokenService {
     await this.sessionTokenRepository.delete({ sessionToken });
   }
 
-  async amILoggedIn(sessionToken: string): Promise<email> {
+  async getEmailBySessionToken(sessionToken: string): Promise<email> {
     const tokenRecord = await this.sessionTokenRepository.findOne({ sessionToken }, { select: ['email'] })
-    return tokenRecord.email;
+    return tokenRecord?.email;
   }
 }

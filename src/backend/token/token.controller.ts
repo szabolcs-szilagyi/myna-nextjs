@@ -92,7 +92,7 @@ export class TokenController {
 
     let email: string;
     if(isSesstionValid) {
-      email = await this.tokenService.amILoggedIn(sessionToken)
+      email = await this.tokenService.getEmailBySessionToken(sessionToken)
     } else {
       email = 'nodata';
     }
