@@ -134,6 +134,15 @@ export class AppController {
           },
         });
 
+      case PartOption.GetEmail:
+        return got.get('http://localhost:3000/api/token/get-email', {
+          isStream: true,
+          headers: {
+            'session-token': req.query.sessiontoken,
+          },
+        });
+
+
       default:
         throw new NotFoundException();
     }

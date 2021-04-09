@@ -133,4 +133,20 @@ export class TokenController {
 
     return { success };
   }
+
+  @Get('get-email')
+  async getEmail(
+    @PurifiedToken('session-token') sessionToken: string,
+  ) {
+    const isSesstionValid = await this.tokenService.validateSessionToken(sessionToken);
+
+    let email;
+    if(isSesstionValid) {
+      email = await this.tokenService.getEmailBySessionToken(sessionToken);
+    } else {
+      email = null;
+    }
+
+    return { email };
+  }
 }

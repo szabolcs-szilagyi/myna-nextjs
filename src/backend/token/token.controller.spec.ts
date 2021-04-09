@@ -1,0 +1,79 @@
+import { agent } from 'supertest';
+import { Test } from '@nestjs/testing';
+import { INestApplication } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TokenService } from '../token/token.service';
+import { LoginTokenRepository } from '../token/login-token.repository';
+import { SessionTokenRepository } from '../token/session-token.repository';
+import { TokenController } from './token.controller';
+import { UserService } from '../user/user.service';
+import { UserModule } from '../user/user.module';
+import { UserRepository } from '../user/user.repository';
+
+describe('AddressController', () => {
+  let app: INestApplication;
+
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [
+        TypeOrmModule.forRoot({
+          type: 'mysql',
+          host: 'localhost',
+          port: 3306,
+          username: 'myna_test',
+          password: 'test',
+          database: 'myna_test',
+          autoLoadEntities: true,
+          synchronize: false,
+        }),
+        TypeOrmModule.forFeature([
+          LoginTokenRepository,
+          SessionTokenRepository,
+          UserRepository,
+        ]),
+      ],
+      controllers: [TokenController],
+      providers: [
+        TokenService,
+        UserService,
+      ],
+    })
+      .compile();
+
+    app = moduleRef.createNestApplication();
+    await app.init();
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+
+  describe('TokenController', () => {
+    let sessionRepo: SessionTokenRepository;
+
+    beforeAll(() => {
+      sessionRepo = app.get(SessionTokenRepository) as SessionTokenRepository;
+    });
+
+    beforeEach(async () => {
+      await sessionRepo.delete({});
+    })
+
+    it('returns default empty value for no session', async () => {
+      return agent(app.getHttpServer())
+        .get('/token/get-email')
+        .expect(200, { email: null })
+    });
+
+    it('returns the e-mail belonging to the session', async () => {
+      const email = 'tuto@ges.hi';
+      const sessionToken = 'lkasjdfl;aksjdf;aksjdf;lakj';
+      await sessionRepo.insert({ email, sessionToken, createTime: new Date() })
+
+      return agent(app.getHttpServer())
+        .get('/token/get-email')
+        .set('session-token', sessionToken)
+        .expect(200, { email })
+    });
+  })
+});
