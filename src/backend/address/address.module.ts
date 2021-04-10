@@ -3,12 +3,12 @@ import { AddressService } from './address.service';
 import { AddressController } from './address.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddressRepository } from './address.repository';
-import { TokenService } from '../token/token.service';
+import { TokenModule } from '../token/token.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([AddressRepository]),
-    TokenService,
+    TokenModule,
   ],
   providers: [AddressService],
   controllers: [AddressController],

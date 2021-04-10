@@ -1,6 +1,7 @@
 import { Controller, NotFoundException, Get, Req, Query } from '@nestjs/common';
 import { Request } from 'express';
 import got from 'got';
+import { isEmpty } from 'lodash';
 
 enum PartOption {
   GetProductData = 'getproductdata',
@@ -141,6 +142,35 @@ export class AppController {
             'session-token': req.query.sessiontoken,
           },
         });
+
+      case PartOption.GetAddressData:
+        return got.get('http://localhost:3000/api/address/address-data', {
+          headers: {
+            'session-token': req.query.sessiontoken,
+            'email': req.query.email,
+          },
+          responseType: 'json',
+        })
+            .then(({ body }) => {
+              if(isEmpty(body)) return { addressdata: '0', success: '0', email: req.query.email }
+              return  {
+                addressdata: {
+                  type: body.type.toString(),
+                  email: req.query.email,
+                  session_token: req.query.sessiontoken,
+                  mobile: body.mobile,
+                  address1: body.addressLine1,
+                  address2: body.addressLine2,
+                  city: body.city,
+                  state: body.state,
+                  zip: body.zip,
+                  country: body.country,
+                  comment: body.comment,
+                },
+                success: '1',
+                email: req.query.email,
+              }
+            })
 
 
       default:
