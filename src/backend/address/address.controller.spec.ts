@@ -9,6 +9,9 @@ import { AddressRepository } from './address.repository';
 import { LoginTokenRepository } from '../token/login-token.repository';
 import { SessionTokenRepository } from '../token/session-token.repository';
 import { Address } from './entities/address.entity';
+import { AddressDataDto } from './dto/address-data.dto';
+import { assert, match } from 'sinon';
+import { omit } from 'lodash/fp';
 
 describe('AddressController', () => {
   let app: INestApplication;
@@ -199,4 +202,71 @@ describe('AddressController', () => {
         });
     });
   });
+
+  describe('POST address-data', () => {
+    it('returns success false if details are not correct', async () => {
+      return agent(app.getHttpServer())
+        .post('/address/address-data')
+        .expect(201, { success: false });
+    });
+
+    it('returns success true if details saved', async () => {
+      const sessionToken = '123edswedsww2343234';
+      const addressData: AddressDataDto = {
+        name: 'teszt elek',
+        mobile: '0034234432432432',
+        email: 'test@tele.k',
+        addressLine1: 'line 2 1 2',
+        addressLine2: 'line 1 2 1',
+        city: 'Yemen',
+        country: 'Dontknow',
+        state: '',
+        comment: 'dog barks',
+        zip: '123-123',
+        type: 1,
+      }
+
+      await sessionRepo.insert({ email: addressData.email, sessionToken, createTime: new Date() });
+
+      return agent(app.getHttpServer())
+        .post('/address/address-data')
+        .set('session-token', sessionToken)
+        .send(addressData)
+        .expect(201, { success: true });
+    });
+
+    it('should be able to save and retrieve data', async () => {
+      const sessionToken = '123edswedsww2343234';
+      const addressData: AddressDataDto = {
+        name: 'teszt elek',
+        mobile: '0034234432432432',
+        email: 'test@tele.k',
+        addressLine1: 'line 2 1 2',
+        addressLine2: 'line 1 2 1',
+        city: 'Yemen',
+        country: 'Dontknow',
+        state: '',
+        comment: 'dog barks',
+        zip: '123-123',
+        type: 1,
+      }
+
+      await sessionRepo.insert({ email: addressData.email, sessionToken, createTime: new Date() });
+
+      await agent(app.getHttpServer())
+        .post('/address/address-data')
+        .set('session-token', sessionToken)
+        .send(addressData)
+        .expect(201, { success: true });
+
+      return agent(app.getHttpServer())
+        .set('session-token', sessionToken)
+        .set('email', addressData.email)
+        .get('/address/address-data')
+        .expect(200)
+        .then(({ body }) => {
+          assert.match(body, omit(['name', 'email', 'sessionToken'], addressData));
+        });
+    });
+  })
 });

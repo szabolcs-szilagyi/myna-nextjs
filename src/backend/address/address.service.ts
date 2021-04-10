@@ -72,4 +72,14 @@ export class AddressService {
     if(deliveryCost === 10) return 'incl. €10 shipping fee (EU)'
 		if(deliveryCost === 25) return 'incl. €25 shipping fee (Non-EU)';
   }
+
+  async upsertAddressData(address: Address): Promise<void> {
+    const existingAddressData = await this.getAddressDataByEmail(address.email);
+
+    if (existingAddressData) {
+      await this.addressRepository.update({ email: address.email }, address);
+    } else {
+      await this.addressRepository.insert(address);
+    }
+  }
 }

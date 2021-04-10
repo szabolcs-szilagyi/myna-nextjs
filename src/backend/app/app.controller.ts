@@ -1,7 +1,9 @@
 import { Controller, NotFoundException, Get, Req, Query } from '@nestjs/common';
 import { Request } from 'express';
 import got from 'got';
-import { isEmpty } from 'lodash';
+import { isEmpty, pick } from 'lodash';
+import { AddressDataDto } from '../address/dto/address-data.dto';
+import { LegacyAddressDto } from './dto/legacy-address.dto';
 
 enum PartOption {
   GetProductData = 'getproductdata',
@@ -111,20 +113,17 @@ export class AppController {
             });
 
       case PartOption.UpdateUserData:
-        const {
-          sessiontoken,
-          email,
-          firstname: firstName,
-          lastname: lastName,
-          birthday
-        } = req.query;
-
         return got.post('http://localhost:3000/api/token/update-user-data', {
           isStream: true,
           headers: {
-            'session-token': sessiontoken,
+            'session-token': req.query.sessiontoken,
           },
-          json: { email, firstName, lastName, birthday }
+          json: {
+            email: req.query.email,
+            firstName: req.query.firstname,
+            lastName: req.query.lastname,
+            birthday: req.query.birthday,
+          }
         });
 
       case PartOption.GetShippingInfo:
@@ -171,6 +170,28 @@ export class AppController {
                 email: req.query.email,
               }
             })
+
+      case PartOption.SetAddressData:
+        return got.post('http://localhost:3000/api/address/address-data', {
+          headers: {
+            'session-token': req.query.sessiontoken,
+          },
+          responseType: 'json',
+          json: <AddressDataDto>{
+            name: req.query.name,
+            mobile: req.query.mobile,
+            email: req.query.email,
+            addressLine1: req.query.address1,
+            addressLine2: req.query.address2,
+            city: req.query.city,
+            state: req.query.state,
+            country: req.query.country,
+            zip: req.query.zip,
+            comment: req.query.comment,
+            type: 1,
+          }
+        })
+            .then(({body}) => ({ success: body.success ? '1' : '0' }))
 
 
       default:

@@ -140,7 +140,7 @@ export class TokenController {
   ) {
     const isSesstionValid = await this.tokenService.validateSessionToken(sessionToken);
 
-    let email;
+    let email: string | null;
     if(isSesstionValid) {
       email = await this.tokenService.getEmailBySessionToken(sessionToken);
     } else {

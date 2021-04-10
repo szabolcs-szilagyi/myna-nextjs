@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { CustomHeaders } from '../token/decorators/custom-headers.decorator';
 import { PurifiedToken } from '../token/decorators/purified-token.decorator';
 import { EmailStripperPipe } from '../token/pipes/email-stripper.pipe';
@@ -6,6 +6,7 @@ import { TokenService } from '../token/token.service';
 import { AddressService } from './address.service';
 import { Address } from './entities/address.entity';
 import * as lodash from 'lodash/fp';
+import { AddressDataDto } from './dto/address-data.dto';
 
 @Controller('address')
 export class AddressController {
@@ -43,5 +44,18 @@ export class AddressController {
     }
 
     return addressData;
+  }
+
+  @Post('address-data')
+  async setAddressData(
+    @PurifiedToken('session-token') sessionToken: string,
+    @Body() addressDataDto: AddressDataDto,
+  ) {
+    const isSessionValid = await this.tokenService.validateSessionTokenStrict(sessionToken, addressDataDto.email)
+
+    if (!isSessionValid) return { success: false };
+
+    await this.addressService.upsertAddressData({ ...addressDataDto, sessionToken });
+    return { success: true };
   }
 }
