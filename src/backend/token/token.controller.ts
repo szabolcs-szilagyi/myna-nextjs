@@ -149,4 +149,11 @@ export class TokenController {
 
     return { email };
   }
+
+  @Get('session')
+  async getSessionToken() {
+    const sessionToken = await this.tokenService.setSessionToken();
+
+    return { sessiontoken: sessionToken };
+  }
 }

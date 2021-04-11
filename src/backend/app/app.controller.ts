@@ -191,7 +191,10 @@ export class AppController {
             type: 1,
           }
         })
-            .then(({body}) => ({ success: body.success ? '1' : '0' }))
+            .then(({ body }) => ({ success: body.success ? '1' : '0' }))
+
+      case PartOption.SetSessionToken:
+        return got.get('http://localhost:3000/api/token/session', { isStream: true });
 
 
       default:

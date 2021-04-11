@@ -17,10 +17,23 @@ export class TokenService {
     private readonly sessionTokenRepository: SessionTokenRepository,
   ) {}
 
-  async getLoginToken(email: string): Promise<MD5Hash> {
+  private getNow(): string {
     const now = DateTime
       .fromISO(new Date().toISOString(), { zone: 'Europe/London' })
       .toFormat('yyyy-MM-dd HH:mm:ss');
+
+    return now;
+  }
+
+  private generateSessionToken(now: string): MD5Hash {
+    const toHash = [randomInt(10000, 99999), now, randomInt(10000, 99999)].join('')
+    const sessionToken = createHash('md5').update(toHash).digest('hex');
+
+    return sessionToken;
+  }
+
+  async getLoginToken(email: string): Promise<MD5Hash> {
+    const now = this.getNow();
 
     const toHash = [email, now, randomInt(10000, 99999)].join('')
     const hash = createHash('md5').update(toHash).digest('hex');
@@ -66,13 +79,10 @@ export class TokenService {
   }
 
   async setSessionToken(): Promise<string> {
-    const now = DateTime
-      .fromISO(new Date().toISOString(), { zone: 'Europe/London' })
-      .toFormat('yyyy-MM-dd HH:mm:ss');
+    const now = this.getNow();
 
     const email = 'nodata';
-    const toHash = [randomInt(10000, 99999), now, randomInt(10000, 99999)].join('')
-    const sessionToken = createHash('md5').update(toHash).digest('hex');
+    const sessionToken = this.generateSessionToken(now);
 
     this.sessionTokenRepository.insert({
       email,

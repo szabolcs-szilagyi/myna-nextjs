@@ -7,8 +7,8 @@ import { LoginTokenRepository } from '../token/login-token.repository';
 import { SessionTokenRepository } from '../token/session-token.repository';
 import { TokenController } from './token.controller';
 import { UserService } from '../user/user.service';
-import { UserModule } from '../user/user.module';
 import { UserRepository } from '../user/user.repository';
+import { assert, match } from 'sinon';
 
 describe('AddressController', () => {
   let app: INestApplication;
@@ -74,6 +74,16 @@ describe('AddressController', () => {
         .get('/token/get-email')
         .set('session-token', sessionToken)
         .expect(200, { email })
+    });
+
+    describe('GET session', () => {
+      it('returns a new session token', async () => {
+        const { body } = await agent(app.getHttpServer())
+          .get('/token/session')
+          .expect(200);
+
+        assert.match(body, { sessiontoken: match.string })
+      });
     });
   })
 });
