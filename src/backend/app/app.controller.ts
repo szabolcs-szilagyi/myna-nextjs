@@ -3,7 +3,6 @@ import { Request } from 'express';
 import got from 'got';
 import { isEmpty, pick } from 'lodash';
 import { AddressDataDto } from '../address/dto/address-data.dto';
-import { LegacyAddressDto } from './dto/legacy-address.dto';
 
 enum PartOption {
   GetProductData = 'getproductdata',
@@ -196,6 +195,14 @@ export class AppController {
       case PartOption.SetSessionToken:
         return got.get('http://localhost:3000/api/token/session', { isStream: true });
 
+      case PartOption.SetNewsletterSubscription:
+        return got.post('http://localhost:3000/api/newsletter/subscribe', {
+          isStream: true,
+          throwHttpErrors: false,
+          json: {
+            email: req.query.email,
+          }
+        });
 
       default:
         throw new NotFoundException();

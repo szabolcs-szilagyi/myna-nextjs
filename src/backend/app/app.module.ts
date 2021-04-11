@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AddressModule } from "../address/address.module";
+import { NewsletterModule } from "../newsletter/newsletter.module";
 import { ProductController } from "../product/product.controller";
 import { ProductModule } from "../product/product.module";
 import { TokenController } from "../token/token.controller";
@@ -21,10 +22,11 @@ import { catchAllOmiter } from "./app.middleware";
       autoLoadEntities: true,
       synchronize: false,
     }),
+    AddressModule,
+    NewsletterModule,
     ProductModule,
     TokenModule,
     UserModule,
-    AddressModule,
   ],
   controllers: [AppController],
 })
