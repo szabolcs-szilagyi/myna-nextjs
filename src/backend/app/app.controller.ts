@@ -21,7 +21,7 @@ enum PartOption {
   DelAddressData = 'deladdressdata', // not implemented
   SetSessionToken = 'setsessiontoken',
   SetNewsletterSubscription = 'setnewslettersubscription',
-  GetNewsletterSubscription = 'getnewslettersubscription',
+  GetNewsletterSubscription = 'getnewslettersubscription', // not used
   ConfirmNewsletterSubscription = 'confirmnewslettersubscription',
   DelNewsletterSubscription = 'delnewslettersubscription',
   AddProductToCart = 'addproducttocart',
@@ -201,6 +201,15 @@ export class AppController {
           throwHttpErrors: false,
           json: {
             email: req.query.email,
+          }
+        });
+
+      case PartOption.ConfirmNewsletterSubscription:
+        return got.get('http://localhost:3000/api/newsletter/confirm', {
+          isStream: true,
+          throwHttpErrors: false,
+          searchParams: {
+            token: req.query.token,
           }
         });
 

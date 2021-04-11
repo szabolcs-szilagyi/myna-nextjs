@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Inject, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Inject, NotFoundException, Post, Query } from '@nestjs/common';
 import { EmailStripperPipe } from '../token/pipes/email-stripper.pipe';
 import { NewsletterService } from './newsletter.service';
 
@@ -21,5 +21,15 @@ export class NewsletterController {
     } else {
       return { success: '0', token: undefined };
     }
+  }
+
+  @Get('confirm')
+  async confirm(
+    @Query('token') token: string,
+  ) {
+    if(!token) throw new BadRequestException()
+    const numberAffected = await this.newsletterService.confirm(token);
+
+    if(numberAffected < 1) throw new NotFoundException();
   }
 }

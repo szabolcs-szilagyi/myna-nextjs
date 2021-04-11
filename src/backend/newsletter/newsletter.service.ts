@@ -26,7 +26,7 @@ export class NewsletterService {
 
     await queryRunner.manager.insert(NewsletterEntity, {
       email,
-      enabled: 1,
+      enabled: 0,
       subscribeDate: new Date(),
       token,
     })
@@ -42,5 +42,11 @@ export class NewsletterService {
     }
 
     return token;
+  }
+
+  async confirm(token: string): Promise<number> {
+    const result = await this.newsletterRepository.update({ token }, { enabled: 1 });
+
+    return result.affected;
   }
 }

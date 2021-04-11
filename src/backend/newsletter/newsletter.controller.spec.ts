@@ -71,4 +71,32 @@ describe('NewsletterController', () => {
         .then(({ body }) => assert.match(body, { success: '0' }));
     });
   });
+
+  describe('GET confirm', () => {
+    it('should be resistent', async () => {
+      return agent(app.getHttpServer())
+        .get('/newsletter/confirm')
+        .expect(400);
+    });
+
+    it('should return OK if manages to activate', async () => {
+      const token = await agent(app.getHttpServer())
+        .post('/newsletter/subscribe')
+        .send({ email: 'hello@123123123.hu' })
+        .expect(201)
+        .then(({ body }) => (body.token));
+
+      return agent(app.getHttpServer())
+        .get('/newsletter/confirm')
+        .query({ token })
+        .expect(200);
+    });
+
+    it('should return 404 if the provided token does not exist', async () => {
+      return agent(app.getHttpServer())
+        .get('/newsletter/confirm')
+        .query({ token: 'no such thing' })
+        .expect(404);
+    })
+  })
 });
