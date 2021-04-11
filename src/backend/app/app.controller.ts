@@ -213,6 +213,16 @@ export class AppController {
           }
         });
 
+      case PartOption.DelNewsletterSubscription:
+        return got.get('http://localhost:3000/api/newsletter/unsubscribe', {
+          isStream: true,
+          throwHttpErrors: false,
+          searchParams: {
+            email: req.query.email,
+            token: req.query.token,
+          }
+        });
+
       default:
         throw new NotFoundException();
     }

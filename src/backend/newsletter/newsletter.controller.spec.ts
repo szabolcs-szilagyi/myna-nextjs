@@ -3,7 +3,6 @@ import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { assert, match } from 'sinon';
-import { omit } from 'lodash/fp';
 import { NewsletterController } from './newsletter.controller';
 import { NewsletterService } from './newsletter.service';
 import { NewsletterRepository } from './newsletter.repository';
@@ -97,6 +96,32 @@ describe('NewsletterController', () => {
         .get('/newsletter/confirm')
         .query({ token: 'no such thing' })
         .expect(404);
-    })
+    });
+  })
+
+  describe('GET unsubscribe', () => {
+    it('should expect proper parameters', async () => {
+      return agent(app.getHttpServer())
+        .get('/newsletter/unsubscribe')
+        .expect(400);
+    });
+
+    it('should remove subscription', async () => {
+      const email = 'kdls@ksdjfk.ru';
+      const token = await agent(app.getHttpServer())
+        .post('/newsletter/subscribe')
+        .send({ email })
+        .expect(201)
+        .then(({ body }) => (body.token));
+
+      await agent(app.getHttpServer())
+        .get('/newsletter/unsubscribe')
+        .query({ email, token })
+        .expect(200);
+
+      const subscriptionRecord = await newsletterRepo.findOne({ email });
+
+      expect(subscriptionRecord?.id).toBeUndefined();
+    });
   })
 });

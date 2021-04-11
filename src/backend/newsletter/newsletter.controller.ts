@@ -11,7 +11,7 @@ export class NewsletterController {
 
   @Post('subscribe')
   async subscribe(
-    @Body('email', EmailStripperPipe) email: string,
+    @Body('email') email: string,
   ) {
     if(!email) throw new BadRequestException();
     const subscriptionToken: string = await this.newsletterService.subscribe(email)
@@ -31,5 +31,19 @@ export class NewsletterController {
     const numberAffected = await this.newsletterService.confirm(token);
 
     if(numberAffected < 1) throw new NotFoundException();
+  }
+
+  @Get('unsubscribe')
+  async unsubscribe(
+    @Query('email') email: string,
+    @Query('token') token: string,
+  ) {
+    if(!token || !email) throw new BadRequestException()
+
+    const numberAffected = await this.newsletterService.unsubscribe(email, token);
+
+    if(numberAffected < 1) throw new NotFoundException();
+
+    return { success: '1' };
   }
 }

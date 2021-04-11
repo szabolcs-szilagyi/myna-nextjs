@@ -49,4 +49,10 @@ export class NewsletterService {
 
     return result.affected;
   }
+
+  async unsubscribe(email: string, token: string): Promise<number> {
+    const result = await this.newsletterRepository.delete({ email, token });
+
+    return result.affected;
+  }
 }
