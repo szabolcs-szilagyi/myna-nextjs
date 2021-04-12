@@ -3,6 +3,7 @@ import { Request } from 'express';
 import got from 'got';
 import { isEmpty, pick } from 'lodash';
 import { AddressDataDto } from '../address/dto/address-data.dto';
+import { AddToCartDto } from '../cart/dto/add-to-cart.dto';
 
 enum PartOption {
   GetProductData = 'getproductdata',
@@ -221,6 +222,19 @@ export class AppController {
             email: req.query.email,
             token: req.query.token,
           }
+        });
+
+      case PartOption.AddProductToCart:
+        return got.post('http://localhost:3000/api/cart', {
+          isStream: true,
+          throwHttpErrors: false,
+          headers: {
+            'session-token': req.query.sessiontoken,
+          },
+          json: <AddToCartDto>{
+            idName: req.query.idname,
+            size: req.query.size,
+          },
         });
 
       default:
