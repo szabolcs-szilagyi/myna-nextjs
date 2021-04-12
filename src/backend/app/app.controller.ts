@@ -1,4 +1,4 @@
-import { Controller, NotFoundException, Get, Req, Query } from '@nestjs/common';
+import { Controller, NotFoundException, Get, Req, Query, BadRequestException } from '@nestjs/common';
 import { Request } from 'express';
 import got from 'got';
 import { isEmpty, pick } from 'lodash';
@@ -236,6 +236,19 @@ export class AppController {
             size: req.query.size,
           },
         });
+
+      case PartOption.DelProductFromCart:
+        return got.delete('http://localhost:3000/api/cart/' + req.query.id, {
+          throwHttpErrors: false,
+          headers: {
+            'session-token': req.query.sessiontoken,
+          }
+        })
+            .then(({ statusCode }) => {
+              if(statusCode === 200) return { success: '1' };
+              if(statusCode === 400) throw new BadRequestException();
+            })
+        ;
 
       default:
         throw new NotFoundException();

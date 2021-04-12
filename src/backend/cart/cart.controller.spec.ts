@@ -69,4 +69,31 @@ describe('CartController', () => {
       assert.match(cartItemRecord[0], { paid: match.falsy, sessionToken })
     })
   });
+
+  describe('DELETE cart/:id', () => {
+    it('requires session and product id', () => {
+      return agent(app.getHttpServer())
+        .delete('/cart/0')
+        .expect(400);
+    })
+
+    it('able to remove product from cart', async () => {
+      const sessionToken = 'randomles1324324';
+      await agent(app.getHttpServer())
+        .post('/cart')
+        .set('session-token', sessionToken)
+        .send(<AddToCartDto>{
+          idName: 'sotest',
+          size: 'XL',
+        })
+        .expect(201, { success: '1' });
+
+      const cartItemRecord = await cartRepo.findOne({ sessionToken });
+
+      await agent(app.getHttpServer())
+        .delete('/cart/' + cartItemRecord.id)
+        .set('session-token', sessionToken)
+        .expect(200, { success: '1' });
+    })
+  });
 });

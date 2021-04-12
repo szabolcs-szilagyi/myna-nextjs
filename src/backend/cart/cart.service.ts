@@ -21,4 +21,8 @@ export class CartService {
       paid: false,
     });
   }
+
+  async removeProductFromCart(id: number, sessionToken: string): Promise<void> {
+    await this.cartRepository.delete({ id, sessionToken })
+  }
 }
