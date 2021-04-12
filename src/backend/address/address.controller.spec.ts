@@ -59,7 +59,7 @@ describe('AddressController', () => {
   afterAll(async () => app.close());
 
   describe('GET shipping-info', () => {
-    it('returns default text if no session available', async () => {
+    it('returns default text if no session available', () => {
       return agent(app.getHttpServer())
         .get('/address/shipping-info')
         .expect(200, { shippinginfo: 'Plus shipping fee' })
@@ -157,7 +157,7 @@ describe('AddressController', () => {
   });
 
   describe('GET address-data', () => {
-    it('should return default empty data', async () => {
+    it('should return default empty data', () => {
       return agent(app.getHttpServer())
         .get('/address/address-data')
         .expect(200, {});
@@ -204,7 +204,7 @@ describe('AddressController', () => {
   });
 
   describe('POST address-data', () => {
-    it('returns success false if details are not correct', async () => {
+    it('returns success false if details are not correct', () => {
       return agent(app.getHttpServer())
         .post('/address/address-data')
         .expect(201, { success: false });

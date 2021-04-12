@@ -10,8 +10,9 @@ import { UserService } from '../user/user.service';
 import { UserRepository } from '../user/user.repository';
 import { assert, match } from 'sinon';
 
-describe('AddressController', () => {
+describe('TokenController', () => {
   let app: INestApplication;
+  let sessionRepo: SessionTokenRepository;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -42,22 +43,19 @@ describe('AddressController', () => {
 
     app = moduleRef.createNestApplication();
     await app.init();
+
+    sessionRepo = app.get(SessionTokenRepository) as SessionTokenRepository;
   });
 
   afterAll(async () => {
     await app.close();
   });
 
-  describe('TokenController', () => {
-    let sessionRepo: SessionTokenRepository;
+  beforeEach(async () => {
+    await sessionRepo.delete({});
+  })
 
-    beforeAll(() => {
-      sessionRepo = app.get(SessionTokenRepository) as SessionTokenRepository;
-    });
-
-    beforeEach(async () => {
-      await sessionRepo.delete({});
-    })
+  describe('GET get-email', () => {
 
     it('returns default empty value for no session', async () => {
       return agent(app.getHttpServer())
@@ -75,15 +73,15 @@ describe('AddressController', () => {
         .set('session-token', sessionToken)
         .expect(200, { email })
     });
-
-    describe('GET session', () => {
-      it('returns a new session token', async () => {
-        const { body } = await agent(app.getHttpServer())
-          .get('/token/session')
-          .expect(200);
-
-        assert.match(body, { sessiontoken: match.string })
-      });
-    });
   })
+
+  describe('GET session', () => {
+    it('returns a new session token', async () => {
+      const { body } = await agent(app.getHttpServer())
+        .get('/token/session')
+        .expect(200);
+
+      assert.match(body, { sessiontoken: match.string })
+    });
+  });
 });
