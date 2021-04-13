@@ -42,7 +42,7 @@ describe('CartController', () => {
 
   afterAll(() => app.close());
 
-  afterEach(async () => {
+  beforeEach(async () => {
     await cartRepo.delete({});
   });
 
@@ -94,6 +94,42 @@ describe('CartController', () => {
         .delete('/cart/' + cartItemRecord.id)
         .set('session-token', sessionToken)
         .expect(200, { success: '1' });
-    })
+    });
+  });
+
+  describe('GET products-to-mail', () => {
+    it('requires session-token', () => {
+      return agent(app.getHttpServer())
+        .get('/cart/products-to-mail')
+        .expect(400);
+    });
+
+    it('returns the correct products', async () => {
+      const sessionToken = 'rromelslsdkfe';
+      await agent(app.getHttpServer())
+        .post('/cart')
+        .set('session-token', sessionToken)
+        .send(<AddToCartDto>{
+          idName: 'first',
+          size: 'L',
+        })
+        .expect(201, { success: '1' });
+
+      await agent(app.getHttpServer())
+        .post('/cart')
+        .set('session-token', sessionToken)
+        .send(<AddToCartDto>{
+          idName: 'second',
+          size: 'L',
+        })
+        .expect(201, { success: '1' });
+
+      await cartRepo.update({ sessionToken, idName: 'second' }, { paid: true });
+
+      await agent(app.getHttpServer())
+        .get('/cart/products-to-mail')
+        .set('session-token', sessionToken)
+        .expect(200, [{ idName: 'first', size: 'L' }]);
+    });
   });
 });

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Inject, BadRequestException, Delete, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Post, Body, Inject, BadRequestException, Delete, Param, ParseIntPipe, Get } from '@nestjs/common';
 import { PurifiedToken } from '../token/decorators/purified-token.decorator';
 import { CartService } from './cart.service';
 import { AddToCartDto } from './dto/add-to-cart.dto';
@@ -32,5 +32,16 @@ export class CartController {
     await this.cartService.removeProductFromCart(id, sessionToken);
 
     return { success: '1' };
+  }
+
+  @Get('products-to-mail')
+  async getProductsToMail(
+    @PurifiedToken('session-token') sessionToken: string,
+  ) {
+    if(!sessionToken) throw new BadRequestException();
+
+    const products = this.cartService.getPurchasedProducts(sessionToken);
+
+    return products;
   }
 }

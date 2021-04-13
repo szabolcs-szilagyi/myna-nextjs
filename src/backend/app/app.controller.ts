@@ -1,9 +1,10 @@
-import { Controller, NotFoundException, Get, Req, Query, BadRequestException } from '@nestjs/common';
+import { Controller, NotFoundException, Get, Req, Query, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { Request } from 'express';
 import got from 'got';
 import { isEmpty, pick } from 'lodash';
 import { AddressDataDto } from '../address/dto/address-data.dto';
 import { AddToCartDto } from '../cart/dto/add-to-cart.dto';
+import { CartEntity } from '../cart/entities/cart.entity';
 
 enum PartOption {
   GetProductData = 'getproductdata',
@@ -247,8 +248,30 @@ export class AppController {
             .then(({ statusCode }) => {
               if(statusCode === 200) return { success: '1' };
               if(statusCode === 400) throw new BadRequestException();
-            })
-        ;
+            });
+
+      case PartOption.GetProductToMail:
+        return got.get('http://localhost:3000/api/cart/products-to-mail', {
+          throwHttpErrors: false,
+          responseType: 'json',
+          headers: {
+            'session-token': req.query.sessiontoken,
+          }
+        })
+            .then(({ statusCode, body }) => {
+              if(statusCode < 300) {
+                let products = body.reduce((memo, product: Partial<CartEntity>) => {
+                  memo += `${product.idName} - ${product.size}, `;
+                  return memo;
+                }, '');
+
+                return { products };
+              } else if (statusCode < 500) {
+                throw new BadRequestException();
+              } else {
+                throw new InternalServerErrorException();
+              }
+            });
 
       default:
         throw new NotFoundException();

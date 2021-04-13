@@ -25,4 +25,19 @@ export class CartService {
   async removeProductFromCart(id: number, sessionToken: string): Promise<void> {
     await this.cartRepository.delete({ id, sessionToken })
   }
+
+  /**
+   * WARNING: bad naming
+   *
+   * Says purchased products, but it looks for products in the _cart_ table that
+   * were not yet paid.
+   */
+  async getPurchasedProducts(sessionToken: string) {
+    const products = await this.cartRepository.find({
+      where: { sessionToken, paid: false },
+      select: ['idName', 'size'],
+    });
+
+    return products;
+  }
 }
