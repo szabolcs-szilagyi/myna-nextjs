@@ -260,10 +260,13 @@ export class AppController {
         })
             .then(({ statusCode, body }) => {
               if(statusCode < 300) {
-                const products = body.reduce((memo, product: Partial<CartEntity>) => {
-                  memo += `${product.idName} - ${product.size}, `;
-                  return memo;
-                }, '');
+                const products = (<Partial<CartEntity>[]>body).reduce(
+                  (memo, product: Partial<CartEntity>) => {
+                    memo += `${product.idName} - ${product.size}, `;
+                    return memo;
+                  },
+                  ''
+                );
 
                 return { products };
               } else if (statusCode < 500) {
@@ -283,7 +286,7 @@ export class AppController {
         })
             .then(({ statusCode, body }) => {
               if(statusCode < 300) {
-                const products = body.reduce(
+                const products = (<Partial<CartEntity>[]>body).reduce(
                   (memo, product: Partial<CartEntity>, index) => {
                     memo[index] = {
                       id: product.id,
@@ -299,6 +302,24 @@ export class AppController {
                 );
 
                 return { products };
+              } else if (statusCode < 500) {
+                throw new BadRequestException();
+              } else {
+                throw new InternalServerErrorException();
+              }
+            });
+
+      case PartOption.GetProductsNumberInCart:
+        return got.get('http://localhost:3000/api/cart/products-in-cart', {
+          throwHttpErrors: false,
+          responseType: 'json',
+          headers: {
+            'session-token': req.query.sessiontoken,
+          },
+        })
+            .then(({ statusCode, body }) => {
+              if(statusCode < 300) {
+                return { nr: (<CartEntity[]>body).length.toString() }
               } else if (statusCode < 500) {
                 throw new BadRequestException();
               } else {
