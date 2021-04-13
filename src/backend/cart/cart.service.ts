@@ -27,15 +27,12 @@ export class CartService {
   }
 
   /**
-   * WARNING: bad naming
-   *
-   * Says purchased products, but it looks for products in the _cart_ table that
-   * were not yet paid.
+   * WARNING: return non paid items only
    */
-  async getPurchasedProducts(sessionToken: string) {
+  async getProductsInCart(sessionToken: string) {
     const products = await this.cartRepository.find({
       where: { sessionToken, paid: false },
-      select: ['idName', 'size'],
+      order: { id: 'ASC' },
     });
 
     return products;

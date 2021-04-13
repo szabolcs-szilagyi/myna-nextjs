@@ -97,10 +97,10 @@ describe('CartController', () => {
     });
   });
 
-  describe('GET products-to-mail', () => {
+  describe('GET products-in-cart', () => {
     it('requires session-token', () => {
       return agent(app.getHttpServer())
-        .get('/cart/products-to-mail')
+        .get('/cart/products-in-cart')
         .expect(400);
     });
 
@@ -127,9 +127,12 @@ describe('CartController', () => {
       await cartRepo.update({ sessionToken, idName: 'second' }, { paid: true });
 
       await agent(app.getHttpServer())
-        .get('/cart/products-to-mail')
+        .get('/cart/products-in-cart')
         .set('session-token', sessionToken)
-        .expect(200, [{ idName: 'first', size: 'L' }]);
+        .expect(200)
+        .then(({ body }) => {
+          assert.match(body[0], { idName: 'first', size: 'L' })
+        });
     });
   });
 });

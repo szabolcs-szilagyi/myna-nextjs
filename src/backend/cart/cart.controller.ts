@@ -34,13 +34,13 @@ export class CartController {
     return { success: '1' };
   }
 
-  @Get('products-to-mail')
-  async getProductsToMail(
+  @Get('products-in-cart')
+  async getProductsInCart(
     @PurifiedToken('session-token') sessionToken: string,
   ) {
     if(!sessionToken) throw new BadRequestException();
 
-    const products = this.cartService.getPurchasedProducts(sessionToken);
+    const products = this.cartService.getProductsInCart(sessionToken);
 
     return products;
   }

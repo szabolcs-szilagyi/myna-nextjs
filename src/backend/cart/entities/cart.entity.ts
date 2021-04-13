@@ -18,5 +18,5 @@ export class CartEntity {
   amount: number;
 
   @Column('tinyint')
-  paid: boolean;
+  paid: number;
 }

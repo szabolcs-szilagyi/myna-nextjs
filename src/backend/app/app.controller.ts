@@ -243,7 +243,7 @@ export class AppController {
           throwHttpErrors: false,
           headers: {
             'session-token': req.query.sessiontoken,
-          }
+          },
         })
             .then(({ statusCode }) => {
               if(statusCode === 200) return { success: '1' };
@@ -251,19 +251,52 @@ export class AppController {
             });
 
       case PartOption.GetProductToMail:
-        return got.get('http://localhost:3000/api/cart/products-to-mail', {
+        return got.get('http://localhost:3000/api/cart/products-in-cart', {
           throwHttpErrors: false,
           responseType: 'json',
           headers: {
             'session-token': req.query.sessiontoken,
-          }
+          },
         })
             .then(({ statusCode, body }) => {
               if(statusCode < 300) {
-                let products = body.reduce((memo, product: Partial<CartEntity>) => {
+                const products = body.reduce((memo, product: Partial<CartEntity>) => {
                   memo += `${product.idName} - ${product.size}, `;
                   return memo;
                 }, '');
+
+                return { products };
+              } else if (statusCode < 500) {
+                throw new BadRequestException();
+              } else {
+                throw new InternalServerErrorException();
+              }
+            });
+
+      case PartOption.GetProductsInCart:
+        return got.get('http://localhost:3000/api/cart/products-in-cart', {
+          throwHttpErrors: false,
+          responseType: 'json',
+          headers: {
+            'session-token': req.query.sessiontoken,
+          },
+        })
+            .then(({ statusCode, body }) => {
+              if(statusCode < 300) {
+                const products = body.reduce(
+                  (memo, product: Partial<CartEntity>, index) => {
+                    memo[index] = {
+                      id: product.id,
+                      idname: product.idName,
+                      size: product.size,
+                      session_token: product.sessionToken,
+                      amount: product.amount.toString(),
+                      paid: product.paid.toString(),
+                    };
+                    return memo;
+                  },
+                  {}
+                );
 
                 return { products };
               } else if (statusCode < 500) {
