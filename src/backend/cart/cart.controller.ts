@@ -1,5 +1,6 @@
 import { Controller, Post, Body, Inject, BadRequestException, Delete, Param, ParseIntPipe, Get } from '@nestjs/common';
 import { PurifiedToken } from '../token/decorators/purified-token.decorator';
+import { TokenService } from '../token/token.service';
 import { CartService } from './cart.service';
 import { AddToCartDto } from './dto/add-to-cart.dto';
 
@@ -7,7 +8,9 @@ import { AddToCartDto } from './dto/add-to-cart.dto';
 export class CartController {
   constructor(
     @Inject(CartService)
-    private readonly cartService: CartService
+    private readonly cartService: CartService,
+    @Inject(TokenService)
+    private readonly tokenService: TokenService,
   ) {}
 
   @Post()
@@ -43,5 +46,18 @@ export class CartController {
     const products = this.cartService.getProductsInCart(sessionToken);
 
     return products;
+  }
+
+  @Post('products-paid')
+  async productsPaid(
+    @PurifiedToken('session-token') sessionToken: string,
+  ) {
+    if(!sessionToken) throw new BadRequestException();
+
+    const email = await this.tokenService.getEmailBySessionToken(sessionToken);
+
+    if(!email) throw new BadRequestException();
+
+    return this.cartService.setProductsPaid(sessionToken, email);
   }
 }

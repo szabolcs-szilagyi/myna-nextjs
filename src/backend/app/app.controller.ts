@@ -327,6 +327,18 @@ export class AppController {
               }
             });
 
+      case PartOption.SetProductPaid:
+        return got.post('http://localhost:3000/api/cart/products-paid', {
+          throwHttpErrors: false,
+          headers: {
+            'session-token': req.query.sessiontoken,
+          },
+        })
+            .then(({ statusCode }) => {
+              if(statusCode < 300) return { success: '1' };
+              if(statusCode < 500) throw new BadRequestException();
+            });
+
       default:
         throw new NotFoundException();
     }

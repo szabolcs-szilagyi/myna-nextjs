@@ -1,13 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Connection } from 'typeorm';
+import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { CartRepository } from './cart.repository';
 import { AddToCartDto } from './dto/add-to-cart.dto';
+import { StockRepository } from './stock.repository';
+import { PurchasedRepository } from './purchased.repository';
 
 @Injectable()
 export class CartService {
   constructor(
     @InjectRepository(CartRepository)
     private readonly cartRepository: CartRepository,
+    @InjectRepository(StockRepository)
+    private readonly stockRepository: StockRepository,
+    @InjectRepository(PurchasedRepository)
+    private readonly purchasedRepository: PurchasedRepository,
+    @InjectConnection()
+    private readonly connection: Connection,
   ) {}
 
   async addProductToCart(
@@ -18,7 +27,7 @@ export class CartService {
       ...addToCartDto,
       sessionToken,
       amount: 1,
-      paid: false,
+      paid: 0,
     });
   }
 
@@ -26,15 +35,35 @@ export class CartService {
     await this.cartRepository.delete({ id, sessionToken })
   }
 
-  /**
-   * WARNING: return non paid items only
-   */
-  async getProductsInCart(sessionToken: string) {
-    const products = await this.cartRepository.find({
-      where: { sessionToken, paid: false },
-      order: { id: 'ASC' },
-    });
+  getProductsInCart(sessionToken: string) {
+    return this.cartRepository.getProductsInCart(sessionToken);
+  }
 
-    return products;
+  async setProductsPaid(sessionToken: string, email: string) {
+    const queryRunner = this.connection.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    const cartRepo = queryRunner.manager.getCustomRepository(CartRepository);
+    const stockRepo = queryRunner.manager.getCustomRepository(StockRepository);
+    const purchasedRepo = queryRunner.manager.getCustomRepository(PurchasedRepository);
+    try {
+      const products = await cartRepo.getProductsInCart(sessionToken);
+      for(const product of products) {
+        await stockRepo.reduceStock(product.idName, product.size);
+        await cartRepo.setProductPaid(product);
+      }
+      await purchasedRepo.insert({ email, sessionToken, time: new Date() });
+
+      await queryRunner.commitTransaction();
+    } catch(e) {
+      console.log(e);
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
+    }
+
+    return {};
   }
 }

@@ -6,11 +6,23 @@ import { CartRepository } from './cart.repository';
 import { CartService } from './cart.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddToCartDto } from './dto/add-to-cart.dto';
-import { assert, match } from 'sinon';
+import { assert, match, createSandbox } from 'sinon';
+import { StockRepository } from './stock.repository';
+import { PurchasedRepository } from './purchased.repository';
+import { TokenService } from '../token/token.service';
+import { TokenModule } from '../token/token.module';
+
+const sandbox = createSandbox();
 
 describe('CartController', () => {
   let app: INestApplication;
   let cartRepo: CartRepository;
+  let stockRepo: StockRepository;
+  let purchasedRepo: PurchasedRepository;
+
+  const tokenService = {
+    getEmailBySessionToken: sandbox.stub(),
+  };
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -27,23 +39,35 @@ describe('CartController', () => {
         }),
         TypeOrmModule.forFeature([
           CartRepository,
+          StockRepository,
+          PurchasedRepository,
         ]),
+        TokenModule,
       ],
       controllers: [CartController],
       providers: [CartService],
     })
+      .overrideProvider(TokenService)
+      .useValue(tokenService)
       .compile();
 
     app = moduleRef.createNestApplication();
     await app.init();
 
     cartRepo = app.get(CartRepository) as CartRepository;
-  })
+    stockRepo = app.get(StockRepository) as StockRepository;
+    purchasedRepo = app.get(PurchasedRepository) as PurchasedRepository;
+  });
 
   afterAll(() => app.close());
 
   beforeEach(async () => {
     await cartRepo.delete({});
+    await stockRepo.delete({});
+    await purchasedRepo.delete({});
+
+    sandbox.reset();
+    tokenService.getEmailBySessionToken.callsFake(async () => 'slkdjfslkdjfls');
   });
 
   describe('POST cart', () => {
@@ -124,7 +148,7 @@ describe('CartController', () => {
         })
         .expect(201, { success: '1' });
 
-      await cartRepo.update({ sessionToken, idName: 'second' }, { paid: true });
+      await cartRepo.update({ sessionToken, idName: 'second' }, { paid: 1 });
 
       await agent(app.getHttpServer())
         .get('/cart/products-in-cart')
@@ -133,6 +157,86 @@ describe('CartController', () => {
         .then(({ body }) => {
           assert.match(body[0], { idName: 'first', size: 'L' })
         });
+    });
+  });
+
+  describe('POST products-paid', () => {
+    it('requires session-token', () => {
+      return agent(app.getHttpServer())
+        .get('/cart/products-in-cart')
+        .expect(400);
+    });
+
+    it('reduces stock levels', async () => {
+      const sessionToken = 'fdsafdsafdsa';
+      await agent(app.getHttpServer())
+        .post('/cart')
+        .set('session-token', sessionToken)
+        .send(<AddToCartDto>{ idName: 'first1', size: 's' })
+        .expect(201, { success: '1' });
+
+      await stockRepo.insert({ idName: 'first1', s: 5, m: 5 });
+      await stockRepo.insert({ idName: 'second2', s: 5, m: 2 });
+
+      await agent(app.getHttpServer())
+        .post('/cart/products-paid')
+        .set('session-token', sessionToken)
+        .expect(201);
+
+      const stockLevels = await stockRepo.find({ order: { id: 'ASC' } });
+
+      assert.match(stockLevels, [
+        match({ idName: 'first1', s: 4, m: 5 }),
+        match({ idName: 'second2', s: 5, m: 2 }),
+      ]);
+    });
+
+    it('set cart items that they have been paid', async () => {
+      const sessionToken = 'fdsafdsalkjlkj';
+      await agent(app.getHttpServer())
+        .post('/cart')
+        .set('session-token', sessionToken)
+        .send(<AddToCartDto>{ idName: 'first2', size: 's' })
+        .expect(201, { success: '1' });
+
+      await stockRepo.insert({ idName: 'first2', s: 5, m: 5 });
+
+      await agent(app.getHttpServer())
+        .post('/cart/products-paid')
+        .set('session-token', sessionToken)
+        .expect(201);
+
+      const cartContent = await cartRepo.getProductsInCart(sessionToken);
+      const rawCartContent = await cartRepo.find({
+        where: { sessionToken },
+        order: { id: 'ASC' },
+      });
+
+      expect(cartContent.length).toEqual(0);
+      assert.match(rawCartContent, [
+        match({ sessionToken, paid: 1, idName: 'first2' }),
+      ]);
+    });
+
+    it('records the transaction in the purchased repo', async () => {
+      const sessionToken = 'fdsafeeeeeelkj';
+      await agent(app.getHttpServer())
+        .post('/cart')
+        .set('session-token', sessionToken)
+        .send(<AddToCartDto>{ idName: 'first3', size: 'm' })
+        .expect(201, { success: '1' });
+
+      await stockRepo.insert({ idName: 'first3', s: 5, m: 5 });
+
+      await agent(app.getHttpServer())
+        .post('/cart/products-paid')
+        .set('session-token', sessionToken)
+        .expect(201);
+
+      const purchaseRecords = await purchasedRepo.find({ sessionToken });
+
+      assert.calledOnce(tokenService.getEmailBySessionToken);
+      expect(purchaseRecords.length).toEqual(1)
     });
   });
 });
