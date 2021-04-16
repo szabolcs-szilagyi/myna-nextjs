@@ -1,4 +1,5 @@
 import { EntityRepository, Repository } from "typeorm";
+import { MoreAccurateAvailablityDto } from "./dto/more-accurate-availablity.dto";
 import { CartEntity } from "./entities/cart.entity";
 
 @EntityRepository(CartEntity)
@@ -17,5 +18,10 @@ export class CartRepository extends Repository<CartEntity> {
 
   async setProductPaid(product: CartEntity): Promise<void> {
     await this.update({ id: product.id }, { paid: 1 });
+  }
+
+  async getProductReservation(moreAccurateAvailablityDto: MoreAccurateAvailablityDto) {
+    const { sessionToken, idName, size } = moreAccurateAvailablityDto;
+    return this.find({ sessionToken, idName, size: size === 'oneSize' ? 'onesize': size })
   }
 }

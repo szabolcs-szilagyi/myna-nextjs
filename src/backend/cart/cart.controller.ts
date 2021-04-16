@@ -3,6 +3,7 @@ import { PurifiedToken } from '../token/decorators/purified-token.decorator';
 import { TokenService } from '../token/token.service';
 import { CartService } from './cart.service';
 import { AddToCartDto } from './dto/add-to-cart.dto';
+import { MoreAccurateAvailablityDto } from './dto/more-accurate-availablity.dto';
 import { ProductWithSizeDto } from './dto/product-with-size.dto';
 
 @Controller('cart')
@@ -70,5 +71,18 @@ export class CartController {
     if(stockRecord === undefined) throw new NotFoundException();
 
     return { availability: stockRecord?.[productWithSizeDto.size] };
+  }
+
+  @Get('more-accurate-availability')
+  async getMoreAccurateAvailability(
+    @PurifiedToken('session-token') sessionToken: string,
+    @Query() moreAccurateAvailablityDto: Omit<MoreAccurateAvailablityDto, 'sessionToken'>,
+  ) {
+    const availability = await this.cartService.getMoreAccurateAvailability({
+      sessionToken,
+      ...moreAccurateAvailablityDto,
+    });
+
+    return { availability };
   }
 }

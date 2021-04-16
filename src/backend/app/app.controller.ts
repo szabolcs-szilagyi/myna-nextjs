@@ -349,6 +349,19 @@ export class AppController {
           },
         });
 
+      case PartOption.AvailabilityExact:
+        return got.get('http://localhost:3000/api/cart/more-accurate-availability', {
+          throwHttpErrors: false,
+          isStream: true,
+          headers: {
+            'session-token': req.query.sessiontoken,
+          },
+          searchParams: {
+            idName: req.query.idname,
+            size: req.query.size === 'one_size' ? 'oneSize' : req.query.size,
+          },
+        });
+
       default:
         throw new NotFoundException();
     }

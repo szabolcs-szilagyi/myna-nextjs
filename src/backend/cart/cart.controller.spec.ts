@@ -279,4 +279,74 @@ describe('CartController', () => {
         .expect(200, { availability: 5 });
     });
   });
+
+  describe('GET more-accurate-availability', () => {
+    it('gives un-altered number if nothing in cart', async () => {
+      await stockRepo.insert({
+        idName: 'exist',
+        xs: 1,
+        s: 2,
+        m: 3,
+        ml: 4,
+        l: 5,
+        oneSize: null,
+      });
+
+      return agent(app.getHttpServer())
+        .get('/cart/more-accurate-availability')
+        .query({ idName: 'exist', size: 'l' })
+        .expect(200, { availability: 5 });
+    });
+
+    it('reduces availability with the number of products in cart', async () => {
+      const sessionToken = '12312312434233e';
+      await stockRepo.insert({
+        idName: 'exist',
+        xs: 1,
+        s: 2,
+        m: 3,
+        ml: 4,
+        l: 5,
+        oneSize: 66,
+      });
+      await cartRepo.insert({
+        amount: 2,
+        idName: 'exist',
+        size: 'onesize',
+        paid: 0,
+        sessionToken,
+      });
+
+      return agent(app.getHttpServer())
+        .get('/cart/more-accurate-availability')
+        .set('session-token', sessionToken)
+        .query({ idName: 'exist', size: 'oneSize' })
+        .expect(200, { availability: 64 });
+    });
+
+    it('will not reduce availability if different session is given', async () => {
+      await stockRepo.insert({
+        idName: 'exist',
+        xs: 1,
+        s: 2,
+        m: 3,
+        ml: 4,
+        l: 5,
+        oneSize: 66,
+      });
+      await cartRepo.insert({
+        amount: 2,
+        idName: 'exist',
+        size: 'onesize',
+        paid: 0,
+        sessionToken: '12312312434233e',
+      });
+
+      return agent(app.getHttpServer())
+        .get('/cart/more-accurate-availability')
+        .set('session-token', 'somethingelse')
+        .query({ idName: 'exist', size: 'oneSize' })
+        .expect(200, { availability: 66 });
+    });
+  });
 });

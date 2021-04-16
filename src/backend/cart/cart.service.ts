@@ -6,6 +6,8 @@ import { AddToCartDto } from './dto/add-to-cart.dto';
 import { StockRepository } from './stock.repository';
 import { PurchasedRepository } from './purchased.repository';
 import { StockEntity } from './entities/stock.entity';
+import { MoreAccurateAvailablityDto } from './dto/more-accurate-availablity.dto';
+import { sumBy } from 'lodash';
 
 @Injectable()
 export class CartService {
@@ -70,5 +72,14 @@ export class CartService {
 
   getAvailability(idName: string): Promise<StockEntity> {
     return this.stockRepository.getAvailability(idName);
+  }
+
+  async getMoreAccurateAvailability(moreAccurateAvailablityDto: MoreAccurateAvailablityDto) {
+    const available = await this.getAvailability(moreAccurateAvailablityDto.idName);
+    const reserved = await this.cartRepository.getProductReservation(moreAccurateAvailablityDto);
+
+    const reservationSum = sumBy(reserved, 'amount');
+
+    return available?.[moreAccurateAvailablityDto.size] - reservationSum;
   }
 }
