@@ -1,8 +1,9 @@
-import { Controller, Post, Body, Inject, BadRequestException, Delete, Param, ParseIntPipe, Get } from '@nestjs/common';
+import { Controller, Post, Body, Inject, BadRequestException, Delete, Param, ParseIntPipe, Get, Query, NotFoundException } from '@nestjs/common';
 import { PurifiedToken } from '../token/decorators/purified-token.decorator';
 import { TokenService } from '../token/token.service';
 import { CartService } from './cart.service';
 import { AddToCartDto } from './dto/add-to-cart.dto';
+import { ProductWithSizeDto } from './dto/product-with-size.dto';
 
 @Controller('cart')
 export class CartController {
@@ -53,11 +54,21 @@ export class CartController {
     @PurifiedToken('session-token') sessionToken: string,
   ) {
     if(!sessionToken) throw new BadRequestException();
-
     const email = await this.tokenService.getEmailBySessionToken(sessionToken);
 
     if(!email) throw new BadRequestException();
-
     return this.cartService.setProductsPaid(sessionToken, email);
+  }
+
+  @Get('availability')
+  async getAvailability(
+    @Query() productWithSizeDto: ProductWithSizeDto,
+  ) {
+    if(!productWithSizeDto.idName || !productWithSizeDto.size) throw new BadRequestException();
+
+    const stockRecord = await this.cartService.getAvailability(productWithSizeDto.idName);
+    if(stockRecord === undefined) throw new NotFoundException();
+
+    return { availability: stockRecord?.[productWithSizeDto.size] };
   }
 }

@@ -6,4 +6,8 @@ export class StockRepository extends Repository<StockEntity> {
   async reduceStock(idName: string, size: string) {
     await this.decrement({ idName }, size, 1);
   }
+
+  getAvailability(idName: string): Promise<StockEntity> {
+    return this.findOne({ idName });
+  }
 }

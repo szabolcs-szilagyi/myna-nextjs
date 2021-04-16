@@ -239,4 +239,44 @@ describe('CartController', () => {
       expect(purchaseRecords.length).toEqual(1)
     });
   });
+
+  describe('GET availability', () => {
+    it('needs product idName', () => {
+      return agent(app.getHttpServer())
+        .get('/cart/availability')
+        .query({ size: 'l' })
+        .expect(400);
+    });
+
+    it('also needs size', () => {
+      return agent(app.getHttpServer())
+        .get('/cart/availability')
+        .query({ idName: 'test-product' })
+        .expect(400);
+    });
+
+    it('returns not found if asking for non-existent combo', () => {
+      return agent(app.getHttpServer())
+        .get('/cart/availability')
+        .query({ idName: 'test-product', size: 'l' })
+        .expect(404);
+    });
+
+    it('return the amount from the database', async () => {
+      await stockRepo.insert({
+        idName: 'exist',
+        xs: 1,
+        s: 2,
+        m: 3,
+        ml: 4,
+        l: 5,
+        oneSize: null,
+      });
+
+      return agent(app.getHttpServer())
+        .get('/cart/availability')
+        .query({ idName: 'exist', size: 'l' })
+        .expect(200, { availability: 5 });
+    });
+  });
 });

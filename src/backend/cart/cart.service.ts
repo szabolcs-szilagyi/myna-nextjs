@@ -5,6 +5,7 @@ import { CartRepository } from './cart.repository';
 import { AddToCartDto } from './dto/add-to-cart.dto';
 import { StockRepository } from './stock.repository';
 import { PurchasedRepository } from './purchased.repository';
+import { StockEntity } from './entities/stock.entity';
 
 @Injectable()
 export class CartService {
@@ -65,5 +66,9 @@ export class CartService {
     }
 
     return {};
+  }
+
+  getAvailability(idName: string): Promise<StockEntity> {
+    return this.stockRepository.getAvailability(idName);
   }
 }

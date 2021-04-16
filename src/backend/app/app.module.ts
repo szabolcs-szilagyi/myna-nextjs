@@ -1,6 +1,7 @@
 import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AddressModule } from "../address/address.module";
+import { CartController } from "../cart/cart.controller";
 import { CartModule } from "../cart/cart.module";
 import { NewsletterModule } from "../newsletter/newsletter.module";
 import { ProductController } from "../product/product.controller";
@@ -36,6 +37,6 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(catchAllOmiter)
-      .forRoutes(ProductController, TokenController)
+      .forRoutes('*')
   }
 }

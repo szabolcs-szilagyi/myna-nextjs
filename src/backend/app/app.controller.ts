@@ -339,6 +339,16 @@ export class AppController {
               if(statusCode < 500) throw new BadRequestException();
             });
 
+      case PartOption.Availability:
+        return got.get('http://localhost:3000/api/cart/availability', {
+          throwHttpErrors: false,
+          isStream: true,
+          searchParams: {
+            idName: req.query.idname,
+            size: req.query.size === 'one_size' ? 'oneSize' : req.query.size,
+          },
+        });
+
       default:
         throw new NotFoundException();
     }
