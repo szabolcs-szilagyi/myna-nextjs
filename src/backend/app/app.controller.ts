@@ -34,11 +34,11 @@ enum PartOption {
   SetProductPaid = 'setproductpaid',
   Availability = 'availability',
   AvailabilityExact = 'availabilityexact',
-  OnStock = 'onstock',
+  OnStock = 'onstock', // not used
   TotalCheckout = 'totalcheckout',
-  ReduceStock = 'reducestock',
-  GetAmountInCart = 'getamountincart',
-  SetAmountInCart = 'setamountincart',
+  ReduceStock = 'reducestock', // not used
+  GetAmountInCart = 'getamountincart', // not used
+  SetAmountInCart = 'setamountincart', // not used
 }
 
 @Controller()
