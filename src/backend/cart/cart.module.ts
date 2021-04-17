@@ -6,6 +6,7 @@ import { CartRepository } from './cart.repository';
 import { StockRepository } from './stock.repository';
 import { PurchasedRepository } from './purchased.repository';
 import { TokenModule } from '../token/token.module';
+import { AddressModule } from '../address/address.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { TokenModule } from '../token/token.module';
       PurchasedRepository,
     ]),
     TokenModule,
+    AddressModule,
   ],
   controllers: [CartController],
   providers: [CartService]

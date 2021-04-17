@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "../../product/entities/product.entity";
 
 @Entity({ name: 'cart' })
 export class CartEntity {
@@ -19,4 +20,8 @@ export class CartEntity {
 
   @Column('tinyint')
   paid: number;
+
+  @ManyToOne(type => Product, product => product.cartItems)
+  @JoinColumn({ name: 'idname', referencedColumnName: 'idName' })
+  product: Product;
 }

@@ -11,6 +11,11 @@ import { StockRepository } from './stock.repository';
 import { PurchasedRepository } from './purchased.repository';
 import { TokenService } from '../token/token.service';
 import { TokenModule } from '../token/token.module';
+import { AddressModule } from '../address/address.module';
+import { AddressService } from '../address/address.service';
+import { ProductModule } from '../product/product.module';
+import { ProductRepository } from '../product/product.repository';
+import { Address } from '../address/entities/address.entity';
 
 const sandbox = createSandbox();
 
@@ -19,9 +24,14 @@ describe('CartController', () => {
   let cartRepo: CartRepository;
   let stockRepo: StockRepository;
   let purchasedRepo: PurchasedRepository;
+  let productRepo: ProductRepository;
 
   const tokenService = {
     getEmailBySessionToken: sandbox.stub(),
+  };
+  const addressService = {
+    getAddressDataByEmail: sandbox.stub(),
+    getDeliveryCost: sandbox.stub(),
   };
 
   beforeAll(async () => {
@@ -43,12 +53,16 @@ describe('CartController', () => {
           PurchasedRepository,
         ]),
         TokenModule,
+        AddressModule,
+        ProductModule, // needed so that we can add products for test
       ],
       controllers: [CartController],
       providers: [CartService],
     })
       .overrideProvider(TokenService)
       .useValue(tokenService)
+      .overrideProvider(AddressService)
+      .useValue(addressService)
       .compile();
 
     app = moduleRef.createNestApplication();
@@ -57,6 +71,7 @@ describe('CartController', () => {
     cartRepo = app.get(CartRepository) as CartRepository;
     stockRepo = app.get(StockRepository) as StockRepository;
     purchasedRepo = app.get(PurchasedRepository) as PurchasedRepository;
+    productRepo = app.get(ProductRepository) as ProductRepository;
   });
 
   afterAll(() => app.close());
@@ -65,9 +80,9 @@ describe('CartController', () => {
     await cartRepo.delete({});
     await stockRepo.delete({});
     await purchasedRepo.delete({});
+    await productRepo.delete({});
 
     sandbox.reset();
-    tokenService.getEmailBySessionToken.callsFake(async () => 'slkdjfslkdjfls');
   });
 
   describe('POST cart', () => {
@@ -168,6 +183,7 @@ describe('CartController', () => {
     });
 
     it('reduces stock levels', async () => {
+      tokenService.getEmailBySessionToken.callsFake(async () => 'slkdjfslkdjfls');
       const sessionToken = 'fdsafdsafdsa';
       await agent(app.getHttpServer())
         .post('/cart')
@@ -192,6 +208,7 @@ describe('CartController', () => {
     });
 
     it('set cart items that they have been paid', async () => {
+      tokenService.getEmailBySessionToken.callsFake(async () => 'slkdjfslkdjfls');
       const sessionToken = 'fdsafdsalkjlkj';
       await agent(app.getHttpServer())
         .post('/cart')
@@ -219,6 +236,7 @@ describe('CartController', () => {
     });
 
     it('records the transaction in the purchased repo', async () => {
+      tokenService.getEmailBySessionToken.callsFake(async () => 'slkdjfslkdjfls');
       const sessionToken = 'fdsafeeeeeelkj';
       await agent(app.getHttpServer())
         .post('/cart')
@@ -347,6 +365,144 @@ describe('CartController', () => {
         .set('session-token', 'somethingelse')
         .query({ idName: 'exist', size: 'oneSize' })
         .expect(200, { availability: 66 });
+    });
+  });
+
+  describe('GET total', () => {
+    it('returns error if session token not given', () => {
+      return agent(app.getHttpServer())
+        .get('/cart/total')
+        .expect(400);
+    });
+
+    it('will calculate with zero delivery if email not set', async () => {
+      await productRepo.insert({
+        idName: 'my-awesome-product',
+        availability: 'Available',
+        isOneSize: 0,
+        name: 'My AWESOME product',
+        color: 'black ofcourse...',
+        price: 222,
+        description: 'oh yeah, buy this',
+        compCare: 'handwash only!',
+        pic1: 'that.png',
+      });
+      await cartRepo.insert({
+        amount: 2,
+        idName: 'my-awesome-product',
+        paid: 0,
+        sessionToken: 'asdfasdf',
+        size: 's',
+      });
+
+      tokenService.getEmailBySessionToken.resolves(undefined);
+
+      await agent(app.getHttpServer())
+        .get('/cart/total')
+        .set('session-token', 'asdfasdf')
+        .expect(200, { topay: 444, delivery: 0, products: 444 });
+
+      assert.notCalled(addressService.getDeliveryCost);
+    });
+
+    it('returns correct sum', async () => {
+      await productRepo.insert({
+        idName: 'my-awesome-product',
+        availability: 'Available',
+        isOneSize: 0,
+        name: 'My AWESOME product',
+        color: 'black ofcourse...',
+        price: 111,
+        description: 'oh yeah, buy this',
+        compCare: 'handwash only!',
+        pic1: 'that.png',
+      });
+      await cartRepo.insert({
+        amount: 2,
+        idName: 'my-awesome-product',
+        paid: 0,
+        sessionToken: 'asdfasdf',
+        size: 's',
+      });
+
+      tokenService.getEmailBySessionToken.resolves('wannabuy@hello.com');
+      addressService.getAddressDataByEmail.resolves(<Address>{
+        country: 'Poland',
+      });
+      addressService.getDeliveryCost.returns(10)
+
+      return agent(app.getHttpServer())
+        .get('/cart/total')
+        .set('session-token', 'asdfasdf')
+        .expect(200, { topay: 232, delivery: 10, products: 222 });
+    });
+
+    it('ignores invalid coupon', async () => {
+      const sessionToken = '654323456543';
+      await productRepo.insert({
+        idName: 'my-awesome-product',
+        availability: 'Available',
+        isOneSize: 0,
+        name: 'My AWESOME product',
+        color: 'black ofcourse...',
+        price: 333,
+        description: 'oh yeah, buy this',
+        compCare: 'handwash only!',
+        pic1: 'that.png',
+      });
+      await cartRepo.insert({
+        amount: 2,
+        idName: 'my-awesome-product',
+        paid: 0,
+        sessionToken,
+        size: 's',
+      });
+
+      tokenService.getEmailBySessionToken.resolves('wannabuy@hello.com');
+      addressService.getAddressDataByEmail.resolves(<Address>{
+        country: 'Poland',
+      });
+      addressService.getDeliveryCost.returns(10)
+
+      return agent(app.getHttpServer())
+        .get('/cart/total')
+        .set('session-token', sessionToken)
+        .set('coupon', 'my-fake-coupon20')
+        .expect(200, { topay: 676, delivery: 10, products: 666 });
+    });
+
+    it('reduces the price if coupon is valid', async () => {
+      const sessionToken = '654323456543';
+      await productRepo.insert({
+        idName: 'my-awesome-product',
+        availability: 'Available',
+        isOneSize: 0,
+        name: 'My AWESOME product',
+        color: 'black ofcourse...',
+        price: 100,
+        description: 'oh yeah, buy this',
+        compCare: 'handwash only!',
+        pic1: 'that.png',
+      });
+      await cartRepo.insert({
+        amount: 1,
+        idName: 'my-awesome-product',
+        paid: 0,
+        sessionToken,
+        size: 's',
+      });
+
+      tokenService.getEmailBySessionToken.resolves('wannabuy@hello.com');
+      addressService.getAddressDataByEmail.resolves(<Address>{
+        country: 'Poland',
+      });
+      addressService.getDeliveryCost.returns(10)
+
+      return agent(app.getHttpServer())
+        .get('/cart/total')
+        .set('session-token', sessionToken)
+        .set('coupon', 'mynafriend10')
+        .expect(200, { topay: 100, delivery: 10, products: 90 });
     });
   });
 });

@@ -362,6 +362,16 @@ export class AppController {
           },
         });
 
+      case PartOption.TotalCheckout:
+        return got.get('http://localhost:3000/api/cart/total', {
+          throwHttpErrors: false,
+          isStream: true,
+          headers: {
+            'session-token': req.query.sessiontoken,
+            'coupon': req.query.coupon,
+          },
+        });
+
       default:
         throw new NotFoundException();
     }

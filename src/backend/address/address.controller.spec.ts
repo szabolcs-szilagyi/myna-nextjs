@@ -89,11 +89,11 @@ describe('AddressController', () => {
         mobile: '',
       })
 
-      await agent(app.getHttpServer())
+      return agent(app.getHttpServer())
         .get('/address/shipping-info')
         .set('session-token', sessionToken)
         .expect(200, { shippinginfo: 'incl. €10 shipping fee (EU)' });
-    })
+    });
 
     it('for non-EU countries shipping is 25 EUR', async () => {
       const sessionToken = 'asdfasdfasdfasdfasdfasd';
@@ -119,7 +119,7 @@ describe('AddressController', () => {
         mobile: '',
       })
 
-      await agent(app.getHttpServer())
+      return agent(app.getHttpServer())
         .get('/address/shipping-info')
         .set('session-token', sessionToken)
         .expect(200, { shippinginfo: 'incl. €25 shipping fee (Non-EU)' });
@@ -149,7 +149,7 @@ describe('AddressController', () => {
         mobile: '',
       })
 
-      await agent(app.getHttpServer())
+      return agent(app.getHttpServer())
         .get('/address/shipping-info')
         .set('session-token', sessionToken)
         .expect(200, { shippinginfo: 'incl. free shipping' });

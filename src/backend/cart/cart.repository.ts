@@ -24,4 +24,11 @@ export class CartRepository extends Repository<CartEntity> {
     const { sessionToken, idName, size } = moreAccurateAvailablityDto;
     return this.find({ sessionToken, idName, size: size === 'oneSize' ? 'onesize': size })
   }
+
+  getItemsWithDetails(sessionToken: string) {
+    return this.find({
+      where: { sessionToken },
+      relations: ['product'],
+    });
+  }
 }

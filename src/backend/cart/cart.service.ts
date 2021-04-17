@@ -9,6 +9,8 @@ import { StockEntity } from './entities/stock.entity';
 import { MoreAccurateAvailablityDto } from './dto/more-accurate-availablity.dto';
 import { sumBy } from 'lodash';
 
+type Coupon = 'mynafriend10' | 'mynagift15';
+
 @Injectable()
 export class CartService {
   constructor(
@@ -32,6 +34,21 @@ export class CartService {
       amount: 1,
       paid: 0,
     });
+  }
+
+  private applyCoupon(price: number, coupon: Coupon) {
+    const validCoupons = {
+      mynafriend10: 0.9,
+      mynagift15: 0.85,
+    };
+
+    const reduction = validCoupons?.[coupon];
+
+    if(reduction !== undefined) {
+      return price * reduction;
+    } else {
+      return price;
+    }
   }
 
   async removeProductFromCart(id: number, sessionToken: string): Promise<void> {
@@ -81,5 +98,13 @@ export class CartService {
     const reservationSum = sumBy(reserved, 'amount');
 
     return available?.[moreAccurateAvailablityDto.size] - reservationSum;
+  }
+
+  async getCartValue(sessionToken: string, coupon: string) {
+    const cartItems = await this.cartRepository.getItemsWithDetails(sessionToken);
+    const productTotal = sumBy(cartItems, item => item.amount * item.product.price);
+    const withCoupon = this.applyCoupon(productTotal, <Coupon>coupon);
+
+    return withCoupon;
   }
 }

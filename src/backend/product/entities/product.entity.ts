@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { CartEntity } from "../../cart/entities/cart.entity";
 
 @Entity({
   name: 'products'
@@ -57,4 +58,7 @@ export class Product {
 
   @Column('varchar')
   pic9: string;
+
+  @OneToMany(() => CartEntity, cartItems => cartItems.idName)
+  cartItems: CartEntity[];
 }

@@ -1,4 +1,6 @@
 import { Controller, Post, Body, Inject, BadRequestException, Delete, Param, ParseIntPipe, Get, Query, NotFoundException } from '@nestjs/common';
+import { sumBy } from 'lodash';
+import { AddressService } from '../address/address.service';
 import { PurifiedToken } from '../token/decorators/purified-token.decorator';
 import { TokenService } from '../token/token.service';
 import { CartService } from './cart.service';
@@ -13,6 +15,8 @@ export class CartController {
     private readonly cartService: CartService,
     @Inject(TokenService)
     private readonly tokenService: TokenService,
+    @Inject(AddressService)
+    private readonly addressSevice: AddressService,
   ) {}
 
   @Post()
@@ -84,5 +88,30 @@ export class CartController {
     });
 
     return { availability };
+  }
+
+  @Get('total')
+  async getTotal(
+    @PurifiedToken('session-token') sessionToken: string,
+    @PurifiedToken('coupon') coupon: string,
+  ) {
+    if(!sessionToken) throw new BadRequestException();
+
+    const email = await this.tokenService.getEmailBySessionToken(sessionToken);
+
+    let deliveryCost: number;
+    if(email) {
+      const address = await this.addressSevice.getAddressDataByEmail(email);
+      deliveryCost = this.addressSevice.getDeliveryCost(address.country);
+    } else {
+      deliveryCost = 0;
+    }
+    const cartValue = await this.cartService.getCartValue(sessionToken, coupon);
+
+    return {
+      topay: cartValue + deliveryCost,
+      delivery: deliveryCost,
+      products: cartValue,
+    };
   }
 }

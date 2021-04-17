@@ -12,5 +12,6 @@ import { TokenModule } from '../token/token.module';
   ],
   providers: [AddressService],
   controllers: [AddressController],
+  exports: [AddressService],
 })
 export class AddressModule {}
