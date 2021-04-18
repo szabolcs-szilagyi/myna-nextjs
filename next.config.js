@@ -1,4 +1,7 @@
-const DEV_PORT = process.env.DEV_PORT;
+const {
+  DEV_PORT,
+  API_PATH,
+} = process.env;
 
 module.exports = {
 	webpack(config) {
@@ -8,6 +11,7 @@ module.exports = {
     SERVER_ADDRESS: DEV_PORT ?
       `http://localhost:${DEV_PORT}/` :
       'https://myca.hende.org/',
+    API_PATH: API_PATH || 'listen.php',
     PAY_PAL_CLIENT_ID: DEV_PORT ?
       // sandbox AWh...06W
       `AWhXmi7ecVKx2DNiRBL15o-EoxX4hS52H09EB3SrdPAeSE01AvlE2dMqZa8rsDy7yeFHThNc9vULo06W` :

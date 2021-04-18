@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev-local": "DEV_PORT=3030 next dev",
+    "dev-experiment": "DEV_PORT=3000 API_PATH='api/legacy' next dev",
     "test": "jest",
     "build": "next build",
     "start": "next start"

@@ -18,10 +18,11 @@ import event from '../lib/gtag';
 import { requestFactory } from '../lib/request';
 
 import {
-  API_SERVER
+  API_SERVER,
+  API_PATH,
 } from '../constants';
 
-const listenRequest = requestFactory(API_SERVER + 'listen.php');
+const listenRequest = requestFactory(API_SERVER + API_PATH);
 
 const productDetailHash = {
   'alyss-dress': { imageName: 'mynawebshop-alyssdress-1.jpg', pricc: '215' },

@@ -2,7 +2,10 @@ import React, { useState, Component } from 'react';
 import ReactDOM from 'react-dom';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
-import {API_SERVER as API_SERVER} from '../constants';
+import {
+  API_SERVER,
+  API_PATH,
+} from '../constants';
 import Cookies from 'universal-cookie';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
@@ -117,7 +120,7 @@ export default class Index extends React.Component {
     this.setState({dComment: event.target.value}, () => { });
   }
   amILoggedIn () {
-    fetch(API_SERVER + 'listen.php?part=amiloggedin&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=amiloggedin&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       let data = output;
@@ -133,7 +136,7 @@ export default class Index extends React.Component {
     setTimeout(this.sendMail, 500);
   }
   createToken () {
-    fetch(API_SERVER + 'listen.php?part=loginmail&email=' + this.state.inputEmail)
+    fetch(API_SERVER + API_PATH + '?part=loginmail&email=' + this.state.inputEmail)
     .then(response => response.json())
 		.then(output => {
       let data = output;
@@ -179,7 +182,7 @@ export default class Index extends React.Component {
     if (lname == '') { crossRoad = 1; }
     if (bday == '') { crossRoad = 1; }
     if (crossRoad == 0) {
-      fetch(API_SERVER + 'listen.php?part=updateuserdata&email=' + this.state.myEmail + '&firstname=' + this.state.firstName + '&lastname=' + this.state.lastName + '&birthday=' + this.state.birthday  + '&sessiontoken=' + session)
+      fetch(API_SERVER + API_PATH + '?part=updateuserdata&email=' + this.state.myEmail + '&firstname=' + this.state.firstName + '&lastname=' + this.state.lastName + '&birthday=' + this.state.birthday  + '&sessiontoken=' + session)
       .then(response => response.json())
 		  .then(output => {
         let data = output;
@@ -189,7 +192,7 @@ export default class Index extends React.Component {
     }
   }
   loadUserData () {
-    fetch(API_SERVER + 'listen.php?part=getuserdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=getuserdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       let data = output;
@@ -214,7 +217,7 @@ export default class Index extends React.Component {
     if (city == '') { crossRoad = 1; }
     if (zip == '') { crossRoad = 1; }
     if (crossRoad == 0) {
-      fetch(API_SERVER + 'listen.php?part=setaddressdata&email=' + this.state.myEmail + '&type=1&mobile=' + this.state.dMobile + '&address1=' + this.state.dAddress1 + '&address2=' + this.state.dAddress2 + '&city=' + this.state.dCity + '&state=' + this.state.dState + '&zip=' + this.state.dZip + '&country=' + this.state.dCountry + '&comment=' + this.state.dComment  + '&sessiontoken=' + session)
+      fetch(API_SERVER + API_PATH + '?part=setaddressdata&email=' + this.state.myEmail + '&type=1&mobile=' + this.state.dMobile + '&address1=' + this.state.dAddress1 + '&address2=' + this.state.dAddress2 + '&city=' + this.state.dCity + '&state=' + this.state.dState + '&zip=' + this.state.dZip + '&country=' + this.state.dCountry + '&comment=' + this.state.dComment  + '&sessiontoken=' + session)
       .then(response => response.json())
 		  .then(output => {
         let data = output;
@@ -224,7 +227,7 @@ export default class Index extends React.Component {
     }
   }
   loadAddressData () {
-    fetch(API_SERVER + 'listen.php?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       let data = output;
@@ -249,7 +252,7 @@ export default class Index extends React.Component {
     .catch(error => console.log(error.message));
   }
   checkEmail () {
-    fetch(API_SERVER + 'listen.php?part=getemail&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=getemail&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       let data = output;

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import {API_SERVER as API_SERVER} from '../constants';
+import {
+  API_SERVER,
+  API_PATH,
+} from '../constants';
 import fetch from 'isomorphic-unfetch';
 
 export default class Ping extends Component {
@@ -20,7 +23,7 @@ export default class Ping extends Component {
         if (searchParams.has('token')) {
           let token = searchParams.get('token');
           let email = searchParams.get('email');
-          fetch(API_SERVER + 'listen.php?part=confirmnewslettersubscription&token=' + token, {mode: 'no-cors'});
+          fetch(API_SERVER + API_PATH + '?part=confirmnewslettersubscription&token=' + token, {mode: 'no-cors'});
           fetch(API_SERVER + 'amazon-ses-smtp.php?part=confirmnewslettersubscription&email=' + email + '&token=' + token, {mode: 'no-cors'});
         }
       }
@@ -29,7 +32,7 @@ export default class Ping extends Component {
         if (searchParams.has('token')) {
           let token = searchParams.get('token');
           let email = searchParams.get('email');
-          fetch(API_SERVER + 'listen.php?part=delnewslettersubscription&token=' + token + '&email=' + email, {mode: 'no-cors'});
+          fetch(API_SERVER + API_PATH + '?part=delnewslettersubscription&token=' + token + '&email=' + email, {mode: 'no-cors'});
           fetch(API_SERVER + 'amazon-ses-smtp.php?part=delnewslettersubscription&email=' + email + '&token=' + token, {mode: 'no-cors'});
         }
       }

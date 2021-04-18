@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import {API_SERVER as API_SERVER} from '../constants';
+import {
+  API_SERVER,
+  API_PATH,
+} from '../constants';
 import fetch from 'isomorphic-unfetch';
 
 export default class Footer extends Component {
@@ -24,7 +27,7 @@ export default class Footer extends Component {
     setTimeout(this.sendMail, 500);
   }
   getToken () {
-    fetch(API_SERVER + 'listen.php?part=setnewslettersubscription&email=' + this.state.value)
+    fetch(API_SERVER + API_PATH + '?part=setnewslettersubscription&email=' + this.state.value)
     .then(response => response.json())
 		.then(output => {
       let data = output;

@@ -5,6 +5,7 @@ import { isEmpty, pick } from 'lodash';
 import { AddressDataDto } from '../address/dto/address-data.dto';
 import { AddToCartDto } from '../cart/dto/add-to-cart.dto';
 import { CartEntity } from '../cart/entities/cart.entity';
+import { Product } from '../product/entities/product.entity';
 
 enum PartOption {
   GetProductData = 'getproductdata',
@@ -50,11 +51,34 @@ export class AppController {
   ) {
     switch (part) {
       case PartOption.GetProductData:
-        const result = await got.get('http://localhost:3000/api/product', {
+        return got.get('http://localhost:3000/api/product', {
           searchParams: { idName: req.query.productname },
-        }).json()
+          responseType: 'json',
+        })
+            .then(({ body }) => {
+              const product = body[0] as Product;
+              const productdetails = {
+                id: product.id,
+                productname: product.name,
+                productcolor: product.color,
+                productprice: product.price,
+                desclong: product.description,
+                compcare: product.compCare,
+                availability: product.availability,
+                is_one_size: product.isOneSize,
+                pic1: product.pic1,
+                pic2: product.pic2,
+                pic3: product.pic3,
+                pic4: product.pic4,
+                pic5: product.pic5,
+                pic6: product.pic6,
+                pic7: product.pic7,
+                pic8: product.pic8,
+                pic9: product.pic9,
+              };
 
-        return { productdetails: result[0] };
+              return { productdetails };
+            });
 
       case PartOption.GetCurrency:
         return { currency: '€' };

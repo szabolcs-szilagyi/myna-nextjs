@@ -6,12 +6,13 @@ const cookies = new Cookies();
 const session = cookies.get('session');
 
 import {
-  API_SERVER
+  API_SERVER,
+  API_PATH,
 } from '../constants';
 
 
 function getInCart() {
-  return fetch(API_SERVER + 'listen.php?part=getproductsnumberincart&sessiontoken=' + session)
+  return fetch(API_SERVER + API_PATH + '?part=getproductsnumberincart&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => output.nr)
     .catch(error => console.log(error.message));

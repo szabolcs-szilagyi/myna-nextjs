@@ -1,5 +1,4 @@
 import { Controller, Post, Body, Inject, BadRequestException, Delete, Param, ParseIntPipe, Get, Query, NotFoundException } from '@nestjs/common';
-import { sumBy } from 'lodash';
 import { AddressService } from '../address/address.service';
 import { PurifiedToken } from '../token/decorators/purified-token.decorator';
 import { TokenService } from '../token/token.service';

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import {API_SERVER as API_SERVER} from '../constants';
+import {
+  API_SERVER,
+  API_PATH,
+} from '../constants';
 import fetch from 'isomorphic-unfetch';
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -23,7 +26,7 @@ export default class Ping extends Component {
         if (searchParams.has('token')) {
           let token = searchParams.get('token');
           let email = searchParams.get('email');
-          fetch(API_SERVER + 'listen.php?part=login&logintoken=' + token + '&email=' + email + '&sessiontoken=' + session, {mode: 'no-cors'});
+          fetch(API_SERVER + API_PATH + '?part=login&logintoken=' + token + '&email=' + email + '&sessiontoken=' + session, {mode: 'no-cors'});
         }
       }
 

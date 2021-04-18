@@ -4,6 +4,7 @@ import { withRouter } from 'next/router';
 
 import {
   API_SERVER,
+  API_PATH,
 } from '../constants';
 
 import Header from '../components/Header';
@@ -22,7 +23,7 @@ const session = cookies.get('session');
 const DEFAULT_AVAILABLE = 'Available for pre-order';
 
 function loadData(idName) {
-  return fetch(API_SERVER + 'listen.php?part=getproductdata&productname=' + idName)
+  return fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + idName)
     .then(response => response.json())
 		.then(({ productdetails }) => {
       return {
@@ -141,7 +142,7 @@ class Index extends React.Component {
     if (size === '0') return;
 
     let idName = this.state.idName;
-    fetch(API_SERVER + 'listen.php?part=availabilityexact&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=availabilityexact&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       const availability = output && output.availability;
@@ -161,7 +162,7 @@ class Index extends React.Component {
       let size = this.state.selectedSize;
       if (size != '0') {
         let idName = this.state.idName;
-        fetch(API_SERVER + 'listen.php?part=addproducttocart&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
+        fetch(API_SERVER + API_PATH + '?part=addproducttocart&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
         .then(response => response.json())
   		  .then(output => {
           let data = output;
@@ -178,7 +179,7 @@ class Index extends React.Component {
   }
 
   loadCurrency () {
-    fetch(API_SERVER + 'listen.php?part=getcurrency')
+    fetch(API_SERVER + API_PATH + '?part=getcurrency')
     .then(response => response.json())
 		.then(output => {
       let data = output;
@@ -189,7 +190,7 @@ class Index extends React.Component {
   }
 
   loadData () {
-    fetch(API_SERVER + 'listen.php?part=getproductdata&productname=' + this.state.idName)
+    fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + this.state.idName)
     .then(response => response.json())
 		.then(({ productdetails }) => {
       this.setState({

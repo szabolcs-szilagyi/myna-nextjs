@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import {API_SERVER as API_SERVER} from '../constants';
 import Cookies from 'universal-cookie';
 import Header from '../components/Header';
 import Nav from '../components/Nav';

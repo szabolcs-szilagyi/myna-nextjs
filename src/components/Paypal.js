@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 import {
   PAY_PAL_CLIENT_ID,
   API_SERVER,
+  API_PATH,
 } from '../constants';
 
 const cookies = new Cookies();
@@ -45,7 +46,7 @@ export default class Example extends Component {
   }
 
   getPrice () {
-    fetch(API_SERVER + 'listen.php?part=totalcheckout&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=totalcheckout&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       let data = output;
@@ -55,7 +56,7 @@ export default class Example extends Component {
     .catch(error => console.log(error.message));
   }
   getEmail () {
-    fetch(API_SERVER + 'listen.php?part=getemail&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=getemail&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       let data = output;
@@ -65,7 +66,7 @@ export default class Example extends Component {
     .catch(error => console.log(error.message));
   }
   getItToMail () {
-    fetch(API_SERVER + 'listen.php?part=getproducttomail&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=getproducttomail&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       let data = output;
@@ -75,7 +76,7 @@ export default class Example extends Component {
     .catch(error => console.log(error.message));
   }
   completed () {
-    fetch(API_SERVER + 'listen.php?part=getproductsincart&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=getproductsincart&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       let data = output;
@@ -87,7 +88,7 @@ export default class Example extends Component {
     setTimeout(this.sendMail, 1000);
   }
   setPaid () {
-    fetch(API_SERVER + 'listen.php?part=setproductpaid&sessiontoken=' + session, {mode: 'no-cors'})
+    fetch(API_SERVER + API_PATH + '?part=setproductpaid&sessiontoken=' + session, {mode: 'no-cors'})
   }
   sendMail () {
     fetch(API_SERVER + 'amazon-ses-smtp.php?part=purchased&email=' + this.state.myEmail + '&token=' + session
@@ -107,7 +108,7 @@ export default class Example extends Component {
     , {mode: 'no-cors'})
   }
   getUserDetails () {
-    fetch(API_SERVER + 'listen.php?part=getuserdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=getuserdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       let data = output;
@@ -120,7 +121,7 @@ export default class Example extends Component {
     .catch(error => console.log(error.message));
   }
   getUserAddress () {
-    fetch(API_SERVER + 'listen.php?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
+    fetch(API_SERVER + API_PATH + '?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       let data = output;

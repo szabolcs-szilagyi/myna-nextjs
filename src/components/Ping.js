@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
-import {API_SERVER as API_SERVER} from '../constants';
+import {
+  API_SERVER,
+  API_PATH,
+} from '../constants';
 const cookies = new Cookies();
 //const hash = cookies.get('hash');
 const session = cookies.get('session');
@@ -16,7 +19,7 @@ export default class Ping extends Component {
   }
   ping() {
     if (session == 'undefined') {
-      fetch(API_SERVER + 'listen.php?part=ping')
+      fetch(API_SERVER + API_PATH + '?part=ping')
       .then(response => response.json())
   		.then(output => {
         let data = output;
@@ -27,7 +30,7 @@ export default class Ping extends Component {
       setTimeout(this.redirect, 1000);
     }
     if (session != 'undefined') {
-      fetch(API_SERVER + 'listen.php?part=ping&sessiontoken=' + session)
+      fetch(API_SERVER + API_PATH + '?part=ping&sessiontoken=' + session)
       .then(response => response.json())
   		.then(output => {
         let data = output;
