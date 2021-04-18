@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Inject, BadRequestException, Delete, Param, ParseIntPipe, Get, Query, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Body, BadRequestException, Delete, Param, ParseIntPipe, Get, Query, NotFoundException } from '@nestjs/common';
 import { AddressService } from '../address/address.service';
 import { PurifiedToken } from '../token/decorators/purified-token.decorator';
 import { TokenService } from '../token/token.service';
@@ -10,11 +10,8 @@ import { ProductWithSizeDto } from './dto/product-with-size.dto';
 @Controller('cart')
 export class CartController {
   constructor(
-    @Inject(CartService)
     private readonly cartService: CartService,
-    @Inject(TokenService)
     private readonly tokenService: TokenService,
-    @Inject(AddressService)
     private readonly addressSevice: AddressService,
   ) {}
 
