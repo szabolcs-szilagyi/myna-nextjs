@@ -5,26 +5,36 @@ import * as http from "http";
 import { NextApiHandler } from "next";
 import { INestApplication } from "@nestjs/common";
 
-export class Backend {
+export module Backend {
 
-  static app: Promise<INestApplication>;
+  let app: INestApplication;
+  let appPromise: Promise<void>;
 
-  constructor() {
-    if (Backend.app) return;
+  export async function getApp() {
+    if (app) {
+      return app;
+    }
     console.log('################ App not initialized yet! ###########');
 
-    Backend.app = NestFactory.create(
-      AppModule,
-      { bodyParser: false }
-    )
-      .then((appInstance) => {
-        appInstance.setGlobalPrefix("api");
-        return appInstance.init().then(() => appInstance);
+    if (!appPromise) {
+      appPromise = new Promise(async (resolve) => {
+        const appInCreation = await NestFactory.create(AppModule, {
+          bodyParser: false,
+        });
+        appInCreation.setGlobalPrefix("api");
+
+        await appInCreation.init();
+        app = appInCreation;
+        resolve();
       });
+    }
+
+    await appPromise;
+    return app;
   }
 
-  async getListener() {
-    const app = await Backend.app;
+  export async function getListener() {
+    const app = await getApp();
     const server: http.Server = app.getHttpServer();
     const [ listener ] = server.listeners("request") as NextApiHandler[];
     return listener;
