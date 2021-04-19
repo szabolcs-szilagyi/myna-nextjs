@@ -1,4 +1,4 @@
-import { Controller, Post, Body, BadRequestException, Delete, Param, ParseIntPipe, Get, Query, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Body, BadRequestException, Delete, Param, ParseIntPipe, Get, Query, NotFoundException, ValidationPipe } from '@nestjs/common';
 import { AddressService } from '../address/address.service';
 import { PurifiedToken } from '../token/decorators/purified-token.decorator';
 import { TokenService } from '../token/token.service';
@@ -18,9 +18,9 @@ export class CartController {
   @Post()
   async addProduct(
     @PurifiedToken('session-token') sessionToken: string,
-    @Body() addToCartDto: AddToCartDto,
+    @Body(ValidationPipe) addToCartDto: AddToCartDto,
   ) {
-    if(!addToCartDto.idName || !addToCartDto.size || !sessionToken) throw new BadRequestException();
+    if(!sessionToken) throw new BadRequestException();
 
     await this.cartService.addProductToCart(addToCartDto, sessionToken);
 

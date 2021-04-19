@@ -1,3 +1,11 @@
-import { CartEntity } from "../entities/cart.entity";
+import { IsNotEmpty, IsString } from "class-validator";
 
-export type AddToCartDto = Pick<CartEntity, "idName" | "size">;
+export class AddToCartDto {
+  @IsNotEmpty()
+  @IsString()
+  idName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  size: string;
+}

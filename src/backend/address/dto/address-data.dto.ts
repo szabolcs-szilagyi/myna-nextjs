@@ -1,8 +1,7 @@
 import { Transform } from "class-transformer";
-import { IsInt, IsString, Max, MaxLength, Min } from "class-validator";
+import { IsInt, IsString, Max, Min } from "class-validator";
 import { emailPurification } from "../../utils/email-purification";
 import { mildPurification } from "../../utils/mild-purification";
-import { strictPurification } from "../../utils/strict-purification";
 
 export class AddressDataDto {
   @IsInt()
@@ -13,10 +12,6 @@ export class AddressDataDto {
   @IsString()
   @Transform(({ value }) => emailPurification(value))
   email: string;
-
-  // @IsString()
-  // @Transform(({ value }) => strictPurification(value))
-  // sessionToken: string;
 
   @IsString()
   name: string;
