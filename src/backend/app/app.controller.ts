@@ -5,7 +5,7 @@ import { isEmpty, pick } from 'lodash';
 import { AddressDataDto } from '../address/dto/address-data.dto';
 import { AddToCartDto } from '../cart/dto/add-to-cart.dto';
 import { CartEntity } from '../cart/entities/cart.entity';
-import { Product } from '../product/entities/product.entity';
+import { ProductEntity } from '../product/entities/product.entity';
 
 enum PartOption {
   GetProductData = 'getproductdata',
@@ -56,7 +56,7 @@ export class AppController {
           responseType: 'json',
         })
             .then(({ body }) => {
-              const product = body[0] as Product;
+              const product = body[0] as ProductEntity;
               const productdetails = {
                 id: product.id,
                 productname: product.name,
@@ -177,19 +177,22 @@ export class AppController {
         })
             .then(({ body }) => {
               if(isEmpty(body)) return { addressdata: '0', success: '0', email: req.query.email }
+
+              const addressData = body as AddressDataDto;
+
               return  {
                 addressdata: {
-                  type: body.type.toString(),
+                  type: addressData.type.toString(),
                   email: req.query.email,
                   session_token: req.query.sessiontoken,
-                  mobile: body.mobile,
-                  address1: body.addressLine1,
-                  address2: body.addressLine2,
-                  city: body.city,
-                  state: body.state,
-                  zip: body.zip,
-                  country: body.country,
-                  comment: body.comment,
+                  mobile: addressData.mobile,
+                  address1: addressData.addressLine1,
+                  address2: addressData.addressLine2,
+                  city: addressData.city,
+                  state: addressData.state,
+                  zip: addressData.zip,
+                  country: addressData.country,
+                  comment: addressData.comment,
                 },
                 success: '1',
                 email: req.query.email,
@@ -216,7 +219,7 @@ export class AppController {
             type: 1,
           }
         })
-            .then(({ body }) => ({ success: body.success ? '1' : '0' }))
+            .then(({ body }) => ({ success: (<any>body).success ? '1' : '0' }))
 
       case PartOption.SetSessionToken:
         return got.get('http://localhost:3000/api/token/session', { isStream: true });

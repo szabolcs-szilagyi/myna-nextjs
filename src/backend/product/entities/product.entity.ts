@@ -1,10 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CartEntity } from "../../cart/entities/cart.entity";
 
 @Entity({
   name: 'products'
 })
-export class Product {
+export class ProductEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

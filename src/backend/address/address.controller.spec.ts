@@ -8,7 +8,7 @@ import { AddressController } from '../address/address.controller';
 import { AddressRepository } from './address.repository';
 import { LoginTokenRepository } from '../token/login-token.repository';
 import { SessionTokenRepository } from '../token/session-token.repository';
-import { Address } from './entities/address.entity';
+import { AddressEntity } from './entities/address.entity';
 import { AddressDataDto } from './dto/address-data.dto';
 import { assert, match } from 'sinon';
 import { omit } from 'lodash/fp';
@@ -167,7 +167,7 @@ describe('AddressController', () => {
       const sessionToken = 'aaasdfasdfasdf';
       const email = 'heldxo@lldf.kl';
 
-      const addressData: Address = {
+      const addressData: AddressEntity = {
         addressLine1: 'line 1',
         addressLine2: 'line 2',
         city: 'good city',

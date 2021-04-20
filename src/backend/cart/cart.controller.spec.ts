@@ -15,7 +15,7 @@ import { AddressModule } from '../address/address.module';
 import { AddressService } from '../address/address.service';
 import { ProductModule } from '../product/product.module';
 import { ProductRepository } from '../product/product.repository';
-import { Address } from '../address/entities/address.entity';
+import { AddressEntity } from '../address/entities/address.entity';
 
 const sandbox = createSandbox();
 
@@ -426,7 +426,7 @@ describe('CartController', () => {
       });
 
       tokenService.getEmailBySessionToken.resolves('wannabuy@hello.com');
-      addressService.getAddressDataByEmail.resolves(<Address>{
+      addressService.getAddressDataByEmail.resolves(<AddressEntity>{
         country: 'Poland',
       });
       addressService.getDeliveryCost.returns(10)
@@ -459,7 +459,7 @@ describe('CartController', () => {
       });
 
       tokenService.getEmailBySessionToken.resolves('wannabuy@hello.com');
-      addressService.getAddressDataByEmail.resolves(<Address>{
+      addressService.getAddressDataByEmail.resolves(<AddressEntity>{
         country: 'Poland',
       });
       addressService.getDeliveryCost.returns(10)
@@ -493,7 +493,7 @@ describe('CartController', () => {
       });
 
       tokenService.getEmailBySessionToken.resolves('wannabuy@hello.com');
-      addressService.getAddressDataByEmail.resolves(<Address>{
+      addressService.getAddressDataByEmail.resolves(<AddressEntity>{
         country: 'Poland',
       });
       addressService.getDeliveryCost.returns(10)

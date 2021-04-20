@@ -4,7 +4,7 @@ import { PurifiedToken } from '../token/decorators/purified-token.decorator';
 import { EmailStripperPipe } from '../token/pipes/email-stripper.pipe';
 import { TokenService } from '../token/token.service';
 import { AddressService } from './address.service';
-import { Address } from './entities/address.entity';
+import { AddressEntity } from './entities/address.entity';
 import * as lodash from 'lodash/fp';
 import { AddressDataDto } from './dto/address-data.dto';
 
@@ -35,12 +35,14 @@ export class AddressController {
   ) {
     const isSessionValid = await this.tokenService.validateSessionTokenStrict(sessionToken, email);
 
-    let addressData: Address;
+    let addressData: Omit<AddressEntity, 'id' | 'sessionToken' | 'email' | 'name'>;
     if(isSessionValid) {
-      addressData = await this.addressService.getAddressDataByEmail(email);
-      addressData = lodash.omit(['id', 'sessionToken', 'email', 'name'], addressData);
+      addressData = lodash.omit(
+        ['id', 'sessionToken', 'email', 'name'],
+        (await this.addressService.getAddressDataByEmail(email))
+      );
     } else {
-      addressData = {} as Address;
+      addressData = {} as AddressEntity;
     }
 
     return addressData;
@@ -55,7 +57,7 @@ export class AddressController {
 
     if (!isSessionValid) return { success: false };
 
-    await this.addressService.upsertAddressData({ ...addressDataDto, sessionToken });
+    await this.addressService.upsertAddressData(<AddressEntity>{ ...addressDataDto, sessionToken });
     return { success: true };
   }
 }

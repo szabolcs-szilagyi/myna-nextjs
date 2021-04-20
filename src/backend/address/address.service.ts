@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AddressRepository } from './address.repository';
-import { Address } from './entities/address.entity';
+import { AddressEntity } from './entities/address.entity';
 
 @Injectable()
 export class AddressService {
@@ -40,7 +40,7 @@ export class AddressService {
     private readonly addressRepository: AddressRepository,
   ) {}
 
-  async getAddressDataByEmail(email: string): Promise<Address> {
+  async getAddressDataByEmail(email: string): Promise<AddressEntity> {
     const availableAddresses = await this.addressRepository.find({
       where: { email },
       order: { id: 'DESC' },
@@ -73,7 +73,7 @@ export class AddressService {
 		if(deliveryCost === 25) return 'incl. €25 shipping fee (Non-EU)';
   }
 
-  async upsertAddressData(address: Address): Promise<void> {
+  async upsertAddressData(address: AddressEntity): Promise<void> {
     const existingAddressData = await this.getAddressDataByEmail(address.email);
 
     if (existingAddressData) {
