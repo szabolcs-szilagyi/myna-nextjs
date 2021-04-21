@@ -261,7 +261,7 @@ export class AppController {
           },
           json: <AddToCartDto>{
             idName: req.query.idname,
-            size: req.query.size,
+            size: req.query.size === 'one_size' ? 'oneSize' : req.query.size,
           },
         });
 
