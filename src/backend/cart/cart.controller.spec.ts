@@ -405,6 +405,36 @@ describe('CartController', () => {
       assert.notCalled(addressService.getDeliveryCost);
     });
 
+    it('will calculate with zero delivery if email is `nodata`', async () => {
+      await productRepo.insert({
+        idName: 'my-awesome-product',
+        availability: 'Available',
+        isOneSize: 0,
+        name: 'My AWESOME product',
+        color: 'black ofcourse...',
+        price: 222,
+        description: 'oh yeah, buy this',
+        compCare: 'handwash only!',
+        pic1: 'that.png',
+      });
+      await cartRepo.insert({
+        amount: 4,
+        idName: 'my-awesome-product',
+        paid: 0,
+        sessionToken: 'asdfasdf',
+        size: 's',
+      });
+
+      tokenService.getEmailBySessionToken.resolves('nodata');
+
+      await agent(app.getHttpServer())
+        .get('/cart/total')
+        .set('session-token', 'asdfasdf')
+        .expect(200, { topay: 888, delivery: 0, products: 888 });
+
+      assert.notCalled(addressService.getDeliveryCost);
+    });
+
     it('returns correct sum', async () => {
       await productRepo.insert({
         idName: 'my-awesome-product',

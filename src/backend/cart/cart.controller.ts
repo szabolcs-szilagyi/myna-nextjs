@@ -96,7 +96,7 @@ export class CartController {
     const email = await this.tokenService.getEmailBySessionToken(sessionToken);
 
     let deliveryCost: number;
-    if(email) {
+    if(email && email !== 'nodata') {
       const address = await this.addressSevice.getAddressDataByEmail(email);
       deliveryCost = this.addressSevice.getDeliveryCost(address.country);
     } else {
