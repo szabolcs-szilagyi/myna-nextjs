@@ -25,9 +25,9 @@ export class CartRepository extends Repository<CartEntity> {
     return this.find({ sessionToken, idName, size: size === 'oneSize' ? 'onesize': size })
   }
 
-  getItemsWithDetails(sessionToken: string) {
+  getItemsWithDetails(sessionToken: string, filter: object) {
     return this.find({
-      where: { sessionToken },
+      where: { ...filter, sessionToken },
       relations: ['product'],
     });
   }

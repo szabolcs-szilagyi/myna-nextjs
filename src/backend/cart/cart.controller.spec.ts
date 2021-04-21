@@ -467,6 +467,45 @@ describe('CartController', () => {
         .expect(200, { topay: 232, delivery: 10, products: 222 });
     });
 
+    it('returns correct sum even if the same session already bought items', async () => {
+      await productRepo.insert({
+        idName: 'my-good-product',
+        availability: 'Available',
+        isOneSize: 0,
+        name: 'My AWESOME product',
+        color: 'black ofcourse...',
+        price: 111,
+        description: 'oh yeah, buy this',
+        compCare: 'handwash only!',
+        pic1: 'that.png',
+      });
+      await cartRepo.insert({
+        amount: 2,
+        idName: 'my-good-product',
+        paid: 0,
+        sessionToken: 'asdfasdf',
+        size: 's',
+      });
+      await cartRepo.insert({
+        amount: 2,
+        idName: 'my-good-product',
+        paid: 1,
+        sessionToken: 'asdfasdf',
+        size: 's',
+      });
+
+      tokenService.getEmailBySessionToken.resolves('wannabuy@hello.com');
+      addressService.getAddressDataByEmail.resolves(<AddressEntity>{
+        country: 'Poland',
+      });
+      addressService.getDeliveryCost.returns(10)
+
+      return agent(app.getHttpServer())
+        .get('/cart/total')
+        .set('session-token', 'asdfasdf')
+        .expect(200, { topay: 232, delivery: 10, products: 222 });
+    });
+
     it('ignores invalid coupon', async () => {
       const sessionToken = '654323456543';
       await productRepo.insert({
