@@ -1,4 +1,5 @@
 import { Controller, NotFoundException, Get, Req, Query, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import got from 'got';
 import { isEmpty, pick } from 'lodash';
@@ -44,6 +45,18 @@ enum PartOption {
 
 @Controller()
 export class AppController {
+  private readonly host: string;
+  private readonly forwardGot: typeof got;
+
+  constructor(
+    private readonly configService: ConfigService,
+  ) {
+    this.host = configService.get('next-js.SERVER_ADDRESS');
+    this.forwardGot = got.extend({
+      prefixUrl: this.host,
+    });
+  }
+
   @Get('legacy')
   async legacyRouter(
     @Req() req: Request,
@@ -51,7 +64,7 @@ export class AppController {
   ) {
     switch (part) {
       case PartOption.GetProductData:
-        return got.get('http://localhost:3000/api/product', {
+        return this.forwardGot.get('api/product', {
           searchParams: { idName: req.query.productname },
           responseType: 'json',
         })
@@ -84,13 +97,13 @@ export class AppController {
         return { currency: '€' };
 
       case PartOption.LoginMail:
-        return got.post('http://localhost:3000/api/token/mail-login', {
+        return this.forwardGot.post('api/token/mail-login', {
           isStream: true,
           json: { email: req.query.email },
         });
 
       case PartOption.Login:
-        return got.post('http://localhost:3000/api/token/login', {
+        return this.forwardGot.post('api/token/login', {
           isStream: true,
           json: { email: req.query.email },
           headers: {
@@ -100,7 +113,7 @@ export class AppController {
         });
 
       case PartOption.Ping:
-        return got.get('http://localhost:3000/api/token/ping', {
+        return this.forwardGot.get('api/token/ping', {
           isStream: true,
           headers: {
             'session-token': req.query.sessiontoken,
@@ -108,7 +121,7 @@ export class AppController {
         });
 
       case PartOption.AmILoggedIn:
-        return got.get('http://localhost:3000/api/token/am-i-logged-in', {
+        return this.forwardGot.get('api/token/am-i-logged-in', {
           isStream: true,
           headers: {
             'session-token': req.query.sessiontoken,
@@ -116,7 +129,7 @@ export class AppController {
         });
 
       case PartOption.GetUserData:
-        return got.get('http://localhost:3000/api/token/get-user-data', {
+        return this.forwardGot.get('api/token/get-user-data', {
           headers: {
             'session-token': req.query.sessiontoken,
             'email': req.query.email,
@@ -138,7 +151,7 @@ export class AppController {
             });
 
       case PartOption.UpdateUserData:
-        return got.post('http://localhost:3000/api/token/update-user-data', {
+        return this.forwardGot.post('api/token/update-user-data', {
           isStream: true,
           headers: {
             'session-token': req.query.sessiontoken,
@@ -152,7 +165,7 @@ export class AppController {
         });
 
       case PartOption.GetShippingInfo:
-        return got.get('http://localhost:3000/api/address/shipping-info', {
+        return this.forwardGot.get('api/address/shipping-info', {
           isStream: true,
           headers: {
             'session-token': req.query.sessiontoken,
@@ -160,7 +173,7 @@ export class AppController {
         });
 
       case PartOption.GetEmail:
-        return got.get('http://localhost:3000/api/token/get-email', {
+        return this.forwardGot.get('api/token/get-email', {
           isStream: true,
           headers: {
             'session-token': req.query.sessiontoken,
@@ -168,7 +181,7 @@ export class AppController {
         });
 
       case PartOption.GetAddressData:
-        return got.get('http://localhost:3000/api/address/address-data', {
+        return this.forwardGot.get('api/address/address-data', {
           headers: {
             'session-token': req.query.sessiontoken,
             'email': req.query.email,
@@ -200,7 +213,7 @@ export class AppController {
             })
 
       case PartOption.SetAddressData:
-        return got.post('http://localhost:3000/api/address/address-data', {
+        return this.forwardGot.post('api/address/address-data', {
           headers: {
             'session-token': req.query.sessiontoken,
           },
@@ -222,10 +235,10 @@ export class AppController {
             .then(({ body }) => ({ success: (<any>body).success ? '1' : '0' }))
 
       case PartOption.SetSessionToken:
-        return got.get('http://localhost:3000/api/token/session', { isStream: true });
+        return this.forwardGot.get('api/token/session', { isStream: true });
 
       case PartOption.SetNewsletterSubscription:
-        return got.post('http://localhost:3000/api/newsletter/subscribe', {
+        return this.forwardGot.post('api/newsletter/subscribe', {
           isStream: true,
           throwHttpErrors: false,
           json: {
@@ -234,7 +247,7 @@ export class AppController {
         });
 
       case PartOption.ConfirmNewsletterSubscription:
-        return got.get('http://localhost:3000/api/newsletter/confirm', {
+        return this.forwardGot.get('api/newsletter/confirm', {
           isStream: true,
           throwHttpErrors: false,
           searchParams: {
@@ -243,7 +256,7 @@ export class AppController {
         });
 
       case PartOption.DelNewsletterSubscription:
-        return got.get('http://localhost:3000/api/newsletter/unsubscribe', {
+        return this.forwardGot.get('api/newsletter/unsubscribe', {
           isStream: true,
           throwHttpErrors: false,
           searchParams: {
@@ -253,7 +266,7 @@ export class AppController {
         });
 
       case PartOption.AddProductToCart:
-        return got.post('http://localhost:3000/api/cart', {
+        return this.forwardGot.post('api/cart', {
           isStream: true,
           throwHttpErrors: false,
           headers: {
@@ -266,7 +279,7 @@ export class AppController {
         });
 
       case PartOption.DelProductFromCart:
-        return got.delete('http://localhost:3000/api/cart/' + req.query.id, {
+        return this.forwardGot.delete('api/cart/' + req.query.id, {
           throwHttpErrors: false,
           headers: {
             'session-token': req.query.sessiontoken,
@@ -278,7 +291,7 @@ export class AppController {
             });
 
       case PartOption.GetProductToMail:
-        return got.get('http://localhost:3000/api/cart/products-in-cart', {
+        return this.forwardGot.get('api/cart/products-in-cart', {
           throwHttpErrors: false,
           responseType: 'json',
           headers: {
@@ -304,7 +317,7 @@ export class AppController {
             });
 
       case PartOption.GetProductsInCart:
-        return got.get('http://localhost:3000/api/cart/products-in-cart', {
+        return this.forwardGot.get('api/cart/products-in-cart', {
           throwHttpErrors: false,
           responseType: 'json',
           headers: {
@@ -337,7 +350,7 @@ export class AppController {
             });
 
       case PartOption.GetProductsNumberInCart:
-        return got.get('http://localhost:3000/api/cart/products-in-cart', {
+        return this.forwardGot.get('api/cart/products-in-cart', {
           throwHttpErrors: false,
           responseType: 'json',
           headers: {
@@ -355,7 +368,7 @@ export class AppController {
             });
 
       case PartOption.SetProductPaid:
-        return got.post('http://localhost:3000/api/cart/products-paid', {
+        return this.forwardGot.post('api/cart/products-paid', {
           throwHttpErrors: false,
           headers: {
             'session-token': req.query.sessiontoken,
@@ -367,7 +380,7 @@ export class AppController {
             });
 
       case PartOption.Availability:
-        return got.get('http://localhost:3000/api/cart/availability', {
+        return this.forwardGot.get('api/cart/availability', {
           throwHttpErrors: false,
           isStream: true,
           searchParams: {
@@ -377,7 +390,7 @@ export class AppController {
         });
 
       case PartOption.AvailabilityExact:
-        return got.get('http://localhost:3000/api/cart/more-accurate-availability', {
+        return this.forwardGot.get('api/cart/more-accurate-availability', {
           throwHttpErrors: false,
           isStream: true,
           headers: {
@@ -390,7 +403,7 @@ export class AppController {
         });
 
       case PartOption.TotalCheckout:
-        return got.get('http://localhost:3000/api/cart/total', {
+        return this.forwardGot.get('api/cart/total', {
           throwHttpErrors: false,
           isStream: true,
           headers: {

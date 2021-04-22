@@ -4,14 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev-local": "DEV_PORT=3030 next dev",
-    "dev-experiment": "DEV_PORT=3000 API_PATH='api/legacy' next dev",
     "test": "jest",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "@nestjs/common": "7.6.15",
+    "@nestjs/config": "0.6.3",
     "@nestjs/core": "7.6.15",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "7.6.15",
