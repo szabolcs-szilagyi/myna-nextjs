@@ -12,6 +12,7 @@ import { AppController } from './app.controller';
 import { catchAllOmiter } from "./app.middleware";
 import databaseConfig from '../config/database.config';
 import nextJSConfig from '../config/next-js.config';
+import { EmailModule } from "../email/email.module";
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import nextJSConfig from '../config/next-js.config';
     ProductModule,
     TokenModule,
     UserModule,
+    EmailModule,
   ],
   controllers: [AppController],
 })

@@ -6,6 +6,7 @@ import { isEmpty, pick } from 'lodash';
 import { AddressDataDto } from '../address/dto/address-data.dto';
 import { AddToCartDto } from '../cart/dto/add-to-cart.dto';
 import { CartEntity } from '../cart/entities/cart.entity';
+import { EmailService } from '../email/email.service';
 import { ProductEntity } from '../product/entities/product.entity';
 
 enum PartOption {
@@ -50,11 +51,17 @@ export class AppController {
 
   constructor(
     private readonly configService: ConfigService,
+    private readonly emailService: EmailService,
   ) {
     this.host = configService.get('next-js.SERVER_ADDRESS');
     this.forwardGot = got.extend({
       prefixUrl: this.host,
     });
+  }
+
+  @Get('test-email')
+  testEmail() {
+    return this.emailService.sendATestEmail();
   }
 
   @Get('legacy')
