@@ -6,7 +6,7 @@ import { isEmpty, pick } from 'lodash';
 import { AddressDataDto } from '../address/dto/address-data.dto';
 import { AddToCartDto } from '../cart/dto/add-to-cart.dto';
 import { CartEntity } from '../cart/entities/cart.entity';
-import { EmailService } from '../email/email.service';
+import { PurchaseEmailDto } from '../email/dto/purchase-email.dto';
 import { ProductEntity } from '../product/entities/product.entity';
 
 enum PartOption {
@@ -42,6 +42,8 @@ enum PartOption {
   ReduceStock = 'reducestock', // not used
   GetAmountInCart = 'getamountincart', // not used
   SetAmountInCart = 'setamountincart', // not used
+
+  PurchasedEmail = 'purchased',
 }
 
 @Controller()
@@ -51,17 +53,11 @@ export class AppController {
 
   constructor(
     private readonly configService: ConfigService,
-    private readonly emailService: EmailService,
   ) {
-    this.host = configService.get('next-js.SERVER_ADDRESS');
+    this.host = this.configService.get('next-js.SERVER_ADDRESS');
     this.forwardGot = got.extend({
       prefixUrl: this.host,
     });
-  }
-
-  @Get('test-email')
-  testEmail() {
-    return this.emailService.sendATestEmail();
   }
 
   @Get('legacy')
@@ -418,6 +414,31 @@ export class AppController {
             'coupon': req.query.coupon,
           },
         });
+
+      case PartOption.PurchasedEmail:
+        return this.forwardGot.post('api/email', {
+          throwHttpErrors: false,
+          json: {
+            price: req.query.price,
+            customerEmail: req.query.email,
+            firstName: req.query.firstname,
+            lastName: req.query.lastname,
+            birthday: req.query.birthday,
+            mobile: req.query.mobile,
+            address1: req.query.address1,
+            address2: req.query.address2,
+            city: req.query.city,
+            state: req.query.state,
+            zip: req.query.zip,
+            country: req.query.country,
+            comment: req.query.comment,
+            products: req.query.products,
+          } as PurchaseEmailDto,
+        })
+            .then(({ statusCode }) => {
+              if(statusCode < 300) return;
+              if(statusCode < 500) throw new BadRequestException();
+            });
 
       default:
         throw new NotFoundException();

@@ -6,6 +6,7 @@ import {
   PAY_PAL_CLIENT_ID,
   API_SERVER,
   API_PATH,
+  EMAIL_PATH,
 } from '../constants';
 
 const cookies = new Cookies();
@@ -91,7 +92,7 @@ export default class Example extends Component {
     fetch(API_SERVER + API_PATH + '?part=setproductpaid&sessiontoken=' + session, {mode: 'no-cors'})
   }
   sendMail () {
-    fetch(API_SERVER + 'amazon-ses-smtp.php?part=purchased&email=' + this.state.myEmail + '&token=' + session
+    fetch(API_SERVER + EMAIL_PATH +'?part=purchased&email=' + this.state.myEmail + '&token=' + session
     + '&price=' + this.state.price
     + '&firstname=' + this.state.firstName
     + '&lastname=' + this.state.lastName
