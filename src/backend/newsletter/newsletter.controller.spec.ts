@@ -6,6 +6,8 @@ import { assert, match } from 'sinon';
 import { NewsletterController } from './newsletter.controller';
 import { NewsletterService } from './newsletter.service';
 import { NewsletterRepository } from './newsletter.repository';
+import { EmailService } from '../email/email.service';
+import { EmailModule } from '../email/email.module';
 
 describe('NewsletterController', () => {
   let app: INestApplication;
@@ -26,13 +28,20 @@ describe('NewsletterController', () => {
         }),
         TypeOrmModule.forFeature([
           NewsletterRepository
-        ])
+        ]),
+        EmailModule,
       ],
       controllers: [NewsletterController],
       providers: [
         NewsletterService,
       ],
     })
+      .overrideProvider(EmailService)
+      .useValue({
+        sendNewsletterConfirmationEmail: () => Promise.resolve(),
+        sendSubscribedEmail: () => Promise.resolve(),
+        sendUnsubscribedEmail: () => Promise.resolve(),
+      } as Partial<EmailService>)
       .compile();
 
     app = moduleRef.createNestApplication();
