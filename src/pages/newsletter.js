@@ -23,7 +23,7 @@ export default class Ping extends Component {
         if (searchParams.has('token')) {
           let token = searchParams.get('token');
           let email = searchParams.get('email');
-          fetch(API_SERVER + API_PATH + '?part=confirmnewslettersubscription&token=' + token, {mode: 'no-cors'});
+          fetch(API_SERVER + API_PATH + '?part=confirmnewslettersubscription&email=' + email + '&token=' + token, {mode: 'no-cors'});
           fetch(API_SERVER + 'amazon-ses-smtp.php?part=confirmnewslettersubscription&email=' + email + '&token=' + token, {mode: 'no-cors'});
         }
       }

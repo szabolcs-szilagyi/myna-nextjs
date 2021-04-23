@@ -4,6 +4,7 @@ import { Connection } from 'typeorm';
 import { NewsletterEntity } from './entities/newsletter.entity';
 import { NewsletterRepository } from './newsletter.repository';
 import * as crypto from 'crypto';
+import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class NewsletterService {
@@ -12,6 +13,7 @@ export class NewsletterService {
     private readonly newsletterRepository: NewsletterRepository,
     @InjectConnection()
     private readonly connection: Connection,
+    private readonly emailService: EmailService,
   ) {}
 
   async subscribe(email: string): Promise<string> {
@@ -32,7 +34,7 @@ export class NewsletterService {
     })
 
     try {
-      console.log('TODO: send e-mail about the subscription');
+      await this.emailService.sendNewsletterConfirmationEmail({ email, token });
       await queryRunner.commitTransaction();
     } catch(e) {
       token = '';
@@ -44,14 +46,16 @@ export class NewsletterService {
     return token;
   }
 
-  async confirm(token: string): Promise<number> {
+  async confirm(email: string, token: string): Promise<number> {
     const result = await this.newsletterRepository.update({ token }, { enabled: 1 });
+    await this.emailService.sendSubscribedEmail({ email, token });
 
     return result.affected;
   }
 
   async unsubscribe(email: string, token: string): Promise<number> {
     const result = await this.newsletterRepository.delete({ email, token });
+    await this.emailService.sendUnsubscribedEmail({ email, token });
 
     return result.affected;
   }

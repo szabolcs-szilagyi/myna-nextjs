@@ -254,6 +254,7 @@ export class AppController {
           isStream: true,
           throwHttpErrors: false,
           searchParams: {
+            email: req.query.email,
             token: req.query.token,
           }
         });

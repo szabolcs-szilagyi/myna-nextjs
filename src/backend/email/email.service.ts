@@ -4,6 +4,8 @@ import {
   SendEmailCommand
 } from '@aws-sdk/client-sesv2';
 import { PurchaseEmailDto } from './dto/purchase-email.dto';
+import { NewsletterSubscriptionEmailDto } from './dto/newsletter-subscription-email.dto';
+import { ConfigService } from '@nestjs/config';
 
 type PreparedEmail = {
   to: string,
@@ -15,8 +17,15 @@ type PreparedEmail = {
 @Injectable()
 export class EmailService {
   private readonly client: SESv2Client;
+  private readonly host: string;
+  readonly senderEmail: string = 'szabolcs.szilagyi@gmx.com';
+  // readonly senderEmail: string = 'connect@mynalabel.com';
 
-  constructor() {
+  constructor(
+    private readonly configService: ConfigService,
+  ) {
+    this.host = this.configService.get('next-js.SERVER_ADDRESS');
+
     this.client = new SESv2Client({
       region: 'eu-west-3',
       credentials: {
@@ -28,10 +37,11 @@ export class EmailService {
 
   private async sendEmail(preparedEmail: PreparedEmail): Promise<void> {
     const command = new SendEmailCommand({
-      FromEmailAddress: 'M Y N A <szabolcs.szilagyi@gmx.com>',
+      FromEmailAddress: `M Y N A <${this.senderEmail}>`,
       Destination: {
         ToAddresses: ['szabolcs.szilagyi@gmx.com'],
-        // BccAddresses: ['connect@mynalabel.com'],
+        // ToAddresses: [preparedEmail.to],
+        // BccAddresses: [this.senderEmail],
       },
       Content: {
         Simple: {
@@ -44,7 +54,12 @@ export class EmailService {
       },
     });
 
-    await this.client.send(command);
+    try {
+      await this.client.send(command);
+    } catch(e) {
+      console.log('Error in sending email:', e.message, 'data:', JSON.stringify(preparedEmail));
+      throw e;
+    }
   }
 
   async sendPurchaseEmail(purchaseEmailDto: PurchaseEmailDto) {
@@ -62,6 +77,47 @@ export class EmailService {
       subject,
       textBody,
       htmlBody,
+    } as PreparedEmail;
+
+    await this.sendEmail(preparedEmail);
+  }
+
+  async sendNewsletterConfirmationEmail(newsletterSubscriptionEmailDto: NewsletterSubscriptionEmailDto) {
+    const { email, token } = newsletterSubscriptionEmailDto;
+    const preparedEmail = {
+      to: email,
+      subject: 'Confirm newsletter subscription',
+      textBody: `Please click here to confirm newsletter subscription: ${this.host}newsletter?part=subscribenewsletter&token=${token}&email=${email}`,
+      htmlBody: `<h2>Confirm newsletter subscription</h2>
+<p>Please click here to confirm newsletter subscription:
+<a href="${this.host}newsletter?part=subscribenewsletter&token=${token}&email=${email}">${this.host}newsletter?part=subscribenewsletter&token=${token}&email=${email}</a>
+</p>`,
+    } as PreparedEmail;
+
+    await this.sendEmail(preparedEmail);
+  }
+
+  async sendSubscribedEmail(newsletterSubscriptionEmailDto: NewsletterSubscriptionEmailDto) {
+    const { email, token } = newsletterSubscriptionEmailDto;
+    const preparedEmail = {
+      to: email,
+      subject: 'Subscribed',
+      textBody: `You have successfully subscribed to our newsletters! You can unsubscribe on: ${this.host}newsletter?part=unsubscribe&token=${token}&email=${email}`,
+      htmlBody: `<h2>Thank you!</h2>
+<p>You have successfully subscribed to our newsletters! You can unsubscribe on:
+<a href="${this.host}newsletter?part=unsubscribe&token=${token}&email=${email}">${this.host}newsletter?part=unsubscribe&token=${token}&email=${email}</a>
+</p>`,
+    } as PreparedEmail;
+
+    await this.sendEmail(preparedEmail);
+  }
+
+  async sendUnsubscribedEmail(newsletterSubscriptionEmailDto: NewsletterSubscriptionEmailDto) {
+    const preparedEmail = {
+      to: newsletterSubscriptionEmailDto.email,
+      subject: 'Unsubscribed',
+      textBody: 'You have successfully unsubscribed from our newsletters!',
+      htmlBody: '<p>You have successfully unsubscribed from our newsletters!</p>',
     } as PreparedEmail;
 
     await this.sendEmail(preparedEmail);

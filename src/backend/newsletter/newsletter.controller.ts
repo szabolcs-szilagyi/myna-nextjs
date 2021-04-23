@@ -25,10 +25,11 @@ export class NewsletterController {
 
   @Get('confirm')
   async confirm(
+    @Query('email') email: string,
     @Query('token') token: string,
   ) {
     if(!token) throw new BadRequestException()
-    const numberAffected = await this.newsletterService.confirm(token);
+    const numberAffected = await this.newsletterService.confirm(email, token);
 
     if(numberAffected < 1) throw new NotFoundException();
   }
