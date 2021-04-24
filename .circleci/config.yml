@@ -1,15 +1,8 @@
-# This config uses the `.circleci/extended/orb-test.yml` as its base, and then publishes the app to S3.
-# The workflow contained here demonstrates a practical application of `post-steps`
-# and using workspace persistence
 version: 2.1
 
 
-orbs:
-  node: circleci/node@4.1
-  aws-s3: circleci/aws-s3@2.0
-
 jobs:
-  runTests:
+  build:
     docker:
       - image: circleci/node:14
       - image: mysql:5.7.23
@@ -35,10 +28,17 @@ jobs:
           command: |
             sudo apt-get install default-mysql-client
             mysql -h 127.0.0.1 -u myna_test -ptest myna_test < sql-data/schema.sql
-      - run: npm ci --no-audit
-      - run: npm test
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      - run:
+          name: Try running docker
+          command: |
+            docker build --tag myna .
+            docker run --network host --rm myna npm test
 
 workflows:
   sample:
     jobs:
-      - runTests
+      - build
