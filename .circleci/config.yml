@@ -52,7 +52,7 @@ jobs:
       - run:
           name: Prepare Dockerrun file
           command: |
-            cat > Dockerrun.aws.json << EOF
+            cat > Dockerrun.aws.json \<< EOF
             {
               "AWSEBDockerrunVersion": "1",
               "Image": {
