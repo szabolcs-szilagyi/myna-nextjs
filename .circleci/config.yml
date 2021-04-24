@@ -11,7 +11,7 @@ orbs:
 jobs:
   runTests:
     docker:
-      - image: node:14.16.0
+      - image: circleci/node:14
       - image: mysql:5.7.23
         environment:
           MYSQL_RANDOM_ROOT_PASSWORD: true
@@ -20,6 +20,21 @@ jobs:
           MYSQL_PASSWORD: test
     steps:
       - checkout
+      - run:
+          name: Waiting for MySQL to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z 127.0.0.1 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
+      - run:
+          name: Install MySQL CLI; Import dummy data; run an example query
+          command: |
+            sudo apt-get install default-mysql-client
+            mysql -h 127.0.0.1 -u myna_test -ptest myna_test < sql-data/schema.sql
       - run: npm ci --no-audit
       - run: npm test
 
