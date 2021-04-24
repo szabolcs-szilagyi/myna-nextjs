@@ -41,8 +41,8 @@ jobs:
       - run:
           name: Build docker image and run tests
           command: |
-            docker build --quiet --tag $AWS_ECR_ACCOUNT_URL:latest .
-            docker run --network host --rm myna npm test
+            docker build --quiet --tag $AWS_ECR_ACCOUNT_URL/myna:latest .
+            docker run --network host --rm $AWS_ECR_ACCOUNT_URL/myna:latest npm test
       - aws-ecr/ecr-login
       - aws-ecr/push-image:
           repo: myna
