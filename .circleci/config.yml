@@ -69,7 +69,7 @@ jobs:
             EOF
             zip docker.zip Dockerrun.aws.json
       - run:
-          name: Deploy to EB
+          name: Deploy to ElasticBeanstalk
           command: |
             aws s3 cp docker.zip s3://elasticbeanstalk-eu-west-3-216857456197/<< pipeline.git.revision >>.zip
             aws elasticbeanstalk create-application-version \
