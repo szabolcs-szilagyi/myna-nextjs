@@ -3,20 +3,24 @@
 # and using workspace persistence
 version: 2.1
 
+
 orbs:
   node: circleci/node@4.1
-  # The S3 orb will setup the aws-cli and quickly copy or sync anything to s3.
-  # Orbs reduce the amount of configuration required for common tasks.
-  # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/aws-s3
-  # NOTE: Environment variables containing the necessary secrets can be setup in the CircleCI UI
-  # See here https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project
   aws-s3: circleci/aws-s3@2.0
+
+jobs:
+  mysql-server:
+    docker:
+      - image: mysql:5.7.23
+    steps:
+      - run: echo "hello world"
 
 workflows:
   sample:
     jobs:
+      - mysql-server
       - node/test:
           version: '14.16'
-          # after the node/test job completes, build the dist packages and save them to a workspace
           post-steps:
             - run: npm run build
+          requires: [mysql-server]
