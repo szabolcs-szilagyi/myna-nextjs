@@ -44,7 +44,8 @@ jobs:
             docker build --quiet --tag myna:<< pipeline.git.revision >> .
             docker run --network host --rm myna npm test
       - aws-ecr/ecr-login
-      - aws-ecr/push-image
+      - aws-ecr/push-image:
+          repo: myna
 
 workflows:
   sample:
