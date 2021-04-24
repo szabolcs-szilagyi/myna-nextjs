@@ -30,7 +30,7 @@ jobs:
             mysql -h 127.0.0.1 -u myna_test -ptest myna_test < sql-data/schema.sql
 
       - setup_remote_docker:
-          docker_layer_caching: true
+          docker_layer_caching: false
 
       - run:
           name: Try running docker
