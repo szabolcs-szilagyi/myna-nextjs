@@ -9,18 +9,21 @@ orbs:
   aws-s3: circleci/aws-s3@2.0
 
 jobs:
-  mysql-server:
+  runTests:
     docker:
+      - image: node:14.16.0
       - image: mysql:5.7.23
+        environment:
+          MYSQL_RANDOM_ROOT_PASSWORD: true
+          MYSQL_DATABASE: myna_test
+          MYSQL_USER: myna_test
+          MYSQL_PASSWORD: test
     steps:
-      - run: echo "hello world"
+      - checkout
+      - run: npm ci --no-audit
+      - run: npm test
 
 workflows:
   sample:
     jobs:
-      - mysql-server
-      - node/test:
-          version: '14.16'
-          post-steps:
-            - run: npm run build
-          requires: [mysql-server]
+      - runTests
