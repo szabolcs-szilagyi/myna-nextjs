@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Build docker image and run tests
           command: |
-            docker build --quiet --tag myna:<< pipeline.git.revision >> .
+            docker build --quiet --tag myna:latest .
             docker run --network host --rm myna npm test
       - aws-ecr/ecr-login
       - aws-ecr/push-image:
