@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   aws-ecr: circleci/aws-ecr@7.0.0
+  aws-cli: circleci/aws-cli@2.0.0
 
 jobs:
   build:
@@ -41,11 +42,42 @@ jobs:
       - run:
           name: Build docker image and run tests
           command: |
-            docker build --quiet --tag $AWS_ECR_ACCOUNT_URL/myna:latest .
-            docker run --network host --rm $AWS_ECR_ACCOUNT_URL/myna:latest npm test
+            docker build --quiet --tag $AWS_ECR_ACCOUNT_URL/myna:<< pipeline.git.revision >> .
+            docker run --network host --rm $AWS_ECR_ACCOUNT_URL/myna:<< pipeline.git.revision >> npm test
       - aws-ecr/ecr-login
       - aws-ecr/push-image:
           repo: myna
+          tag: << pipeline.git.revision >>
+      - aws-cli/setup
+      - run:
+          name: Prepare Dockerrun file
+          command: |
+            cat > Dockerrun.aws.json << EOF
+            {
+              "AWSEBDockerrunVersion": "1",
+              "Image": {
+                "Name": "$AWS_ECR_ACCOUNT_URL/myna:<< pipeline.git.revision >>",
+                "Update": "true"
+              },
+              "Ports": [
+                {
+                  "ContainerPort": "3000"
+                }
+              ],
+              "Logging": "/var/log/application"
+            }
+            EOF
+            zip docker.zip Dockerrun.aws.json
+            aws s3 cp docker.zip s3://elasticbeanstalk-eu-west-3-216857456197/<< pipeline.git.revision >>.zip
+            aws elasticbeanstalk create-application-version \
+              --application-name myna \
+              --version-label << pipeline.git.revision >> \
+              --source-bundle S3Bucket="elasticbeanstalk-eu-west-3-216857456197",S3Key="<< pipeline.git.revision >>.zip"
+            aws elasticbeanstalk update-environment \
+              --application-name myna \
+              --environment-name myna-staging \
+              --version-label << pipeline.git.revision >>
+
 
 workflows:
   sample:
