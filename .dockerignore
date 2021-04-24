@@ -1,5 +1,6 @@
 node_modules
 .next
+.circleci
 coverage
 packages
 npm-debug.log
