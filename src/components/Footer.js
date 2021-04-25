@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   API_SERVER,
   API_PATH,
+  EMAIL_PATH,
 } from '../constants';
 import fetch from 'isomorphic-unfetch';
 
@@ -37,7 +38,7 @@ export default class Footer extends Component {
     .catch(error => console.log(error.message));
   }
   sendMail () {
-    fetch(API_SERVER + 'amazon-ses-smtp.php?part=subscribenewsletter&email=' + this.state.value + '&token=' + this.state.token, {mode: 'no-cors'});
+    fetch(API_SERVER + EMAIL_PATH + '?part=subscribenewsletter&email=' + this.state.value + '&token=' + this.state.token);
     this.setState({ placeHolder: 'check your mailbox', value: '' });
   }
   componentDidMount() {
