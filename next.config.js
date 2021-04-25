@@ -9,7 +9,7 @@ const configuration = {
     PAY_PAL_CLIENT_ID: 'AWhXmi7ecVKx2DNiRBL15o-EoxX4hS52H09EB3SrdPAeSE01AvlE2dMqZa8rsDy7yeFHThNc9vULo06W',
   },
   staging: {
-    SERVER_ADDRESS: 'https://mynalabel-staging.herokuapp.com/',
+    SERVER_ADDRESS: 'https://myna-nextjs.vercel.app/',
     API_ADDRESS: 'https://mynalabel-staging.herokuapp.com/',
     API_PATH: 'api/legacy',
     EMAIL_PATH: 'api/legacy',
