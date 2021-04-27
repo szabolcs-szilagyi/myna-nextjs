@@ -16,10 +16,10 @@ const configuration = {
     PAY_PAL_CLIENT_ID: 'AWhXmi7ecVKx2DNiRBL15o-EoxX4hS52H09EB3SrdPAeSE01AvlE2dMqZa8rsDy7yeFHThNc9vULo06W',
   },
   production: {
-    SERVER_ADDRESS: 'https://myca.hende.org/',
-    API_ADDRESS: 'https://mynalabel-production.herokuapp.com/',
-    API_PATH: 'listen.php',
-    EMAIL_PATH: 'amazon-ses-smtp.php',
+    SERVER_ADDRESS: 'https://api.mynalabel.com/',
+    API_ADDRESS: 'https://api.mynalabel.com/',
+    API_PATH: 'legacy',
+    EMAIL_PATH: 'legacy',
     PAY_PAL_CLIENT_ID: 'Aet-UX8Rj1rBuMbuaNKBUOqyTdWiaJpkN-EEwkPphiZcREn3aeP_b7EhqMDzcidzJxX5Y-jMNogmfJGc',
   },
 };
