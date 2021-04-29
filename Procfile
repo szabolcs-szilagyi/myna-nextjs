@@ -1,1 +1,1 @@
-web: bin/start-nginx npm start
+web: ./heroku-start.sh& bin/start-nginx npm start
