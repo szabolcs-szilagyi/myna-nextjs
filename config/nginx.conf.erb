@@ -17,7 +17,7 @@ http {
 
 	server_tokens off;
 
-proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=STATIC:10m inactive=7d use_temp_path=off;
+proxy_cache_path /tmp/cache/nginx levels=1:2 keys_zone=STATIC:10m inactive=7d use_temp_path=off;
 	log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
 	access_log <%= ENV['NGINX_ACCESS_LOG_PATH'] || 'logs/nginx/access.log' %> l2met;
 	error_log <%= ENV['NGINX_ERROR_LOG_PATH'] || 'logs/nginx/error.log' %>;
