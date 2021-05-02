@@ -113,8 +113,8 @@ export default class Index extends React.Component {
             <SingleProductCard
               className="col-md-3"
               productPageLink="/tuli-dress"
-              productImageLink="/landing/tuli_dress.jpg"
-              productName="TULI Dress"
+              productImageLink="/landing/time-for-linen/lili.jpg"
+              productName="LILI Top"
               price="€169"
               width={853}
               height={1280}
@@ -122,8 +122,8 @@ export default class Index extends React.Component {
             <SingleProductCard
               className="col-md-3"
               productPageLink="/tuli-dress"
-              productImageLink="/landing/tuli_dress.jpg"
-              productName="TULI Dress"
+              productImageLink="/landing/time-for-linen/iris.jpg"
+              productName="IRIS Top"
               price="€169"
               width={853}
               height={1280}
@@ -144,9 +144,7 @@ export default class Index extends React.Component {
                 <SingleProductCard
                   className="col-md-5 order-first"
                   productPageLink="/tuli-dress"
-                  productImageLink="/landing/tuli_dress.jpg"
-                  productName="TULI Dress"
-                  price="€169"
+                  productImageLink="/landing/feel-connected/tulipan.jpg"
                   width={1280}
                   height={853}
                 />
@@ -155,7 +153,7 @@ export default class Index extends React.Component {
             <SingleProductCard
               className="col-md-3 order-first"
               productPageLink="/tuli-dress"
-              productImageLink="/landing/tuli_dress.jpg"
+              productImageLink="/landing/feel-connected/tuli-dress.jpg"
               productName="TULI Dress"
               price="€169"
               width={853}
@@ -173,8 +171,8 @@ export default class Index extends React.Component {
             <SingleProductCard
               className="col-md-3"
               productPageLink="/tuli-dress"
-              productImageLink="/landing/tuli_dress.jpg"
-              productName="TULI Dress"
+              productImageLink="/landing/organic-cotton/bella.jpg"
+              productName="BELLA Top"
               price="€169"
               width={1280}
               height={1280}
@@ -182,17 +180,16 @@ export default class Index extends React.Component {
             <SingleProductCard
               className="col-md-5 mx-auto"
               productPageLink="/tuli-dress"
-              productImageLink="/landing/tuli_dress.jpg"
-              productName="TULI Dress"
-              price="€169"
+              productImageLink="/landing/organic-cotton/bella-and-dahlia.jpg"
+              productName="BELLA & DAHLIA Tops"
               width={1290}
               height={740}
             />
             <SingleProductCard
               className="col-md-3"
               productPageLink="/tuli-dress"
-              productImageLink="/landing/tuli_dress.jpg"
-              productName="TULI Dress"
+              productImageLink="/landing/organic-cotton/dahlia.jpg"
+              productName="DAHLIA Top"
               price="€169"
               width={1280}
               height={1280}
@@ -204,8 +201,8 @@ export default class Index extends React.Component {
               <SingleProductCard
                 className="col-md-12"
                 productPageLink="/tuli-dress"
-                productImageLink="/landing/tuli_dress.jpg"
-                productName="TULI Dress"
+                productImageLink="/product_photos/bella-print-01.jpg"
+                productName="BELLA Top"
                 price="€169"
                 width={1280}
                 height={1280}
@@ -222,8 +219,8 @@ export default class Index extends React.Component {
               <SingleProductCard
                 className="col-md-12"
                 productPageLink="/tuli-dress"
-                productImageLink="/landing/tuli_dress.jpg"
-                productName="TULI Dress"
+                productImageLink="/landing/leya/anastazia.jpg"
+                productName="LEYA Dress"
                 price="€169"
                 width={1280}
                 height={1280}
@@ -236,9 +233,7 @@ export default class Index extends React.Component {
           <h1 className="text-center mt-5 mb-3">OUR ORGANIC COTTON & HEMP QUALITY</h1>
           <div className="row">
             <div className="col-md-8 mx-auto order-last">
-              <p>Sustainability is very important and fashion is no longer only focused on comfort but also its
-                impact on the environment. Our GEA and IVY basic tops are best examples.
-                What do we know:</p>
+              <p>Sustainability is very important and fashion is no longer only focused on comfort but also its impact on the environment. Our GEA and IVY basic tops are best examples. What do we know:</p>
               <ul>
                 <li>HEMP is antibacterial, which means you can wear it longer than other fabrics, before washing,</li>
                 <li>no pesticides need to be used to grow it as it is weed,</li>
@@ -249,8 +244,8 @@ export default class Index extends React.Component {
             <SingleProductCard
               className="col-md-3"
               productPageLink="/tuli-dress"
-              productImageLink="/landing/tuli_dress.jpg"
-              productName="TULI Dress"
+              productImageLink="/landing/hemp/MynaWebShop-WhiteTop-3.jpg"
+              productName="IVY Top"
               price="€169"
               width={1280}
               height={1280}
@@ -258,17 +253,16 @@ export default class Index extends React.Component {
             <SingleProductCard
               className="col-md-5 mx-auto"
               productPageLink="/tuli-dress"
-              productImageLink="/landing/tuli_dress.jpg"
-              productName="TULI Dress"
-              price="€169"
+              productImageLink="/landing/hemp/gea-and-ivy.jpg"
+              productName="GEA & IVY Tops"
               width={1290}
               height={740}
             />
             <SingleProductCard
               className="col-md-3"
               productPageLink="/tuli-dress"
-              productImageLink="/landing/tuli_dress.jpg"
-              productName="TULI Dress"
+              productImageLink="/product_photos/mynawebshop-whitetshirt-1.jpg"
+              productName="GEA Top"
               price="€169"
               width={1280}
               height={1280}
@@ -285,7 +279,7 @@ export default class Index extends React.Component {
             <SingleProductCard
               className="col-md-6"
               productPageLink="/ivy-cream"
-              productImageLink="/landing/ivy.jpg"
+              productImageLink="/lookbook/08.jpg"
               productName="IVY Top"
               price="€75"
               width={1280}
