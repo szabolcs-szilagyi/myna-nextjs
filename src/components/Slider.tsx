@@ -14,21 +14,21 @@ const slides = [
     text: 'Consciously Beautiful',
     linkText: 'SHOP THE LOOK',
     linkHref: '/shop-collections',
-    imageSrc: '/slide_1.jpg',
+    imageSrc: '/slides/01.jpg',
     buttonClass: styles.button,
   },
   {
     text: 'Consciously Beautiful',
     linkText: 'LOOKBOOK',
     linkHref: '/lookbook',
-    imageSrc: '/slide_2.jpg',
+    imageSrc: '/slides/02.jpg',
     buttonClass: styles.button,
   },
   {
     text: 'Our Story',
     linkText: 'READ MORE',
     linkHref: '/our-story',
-    imageSrc: '/slide_3.jpg',
+    imageSrc: '/slides/03.jpg',
     buttonClass: styles.button2,
   }
 ];
@@ -50,6 +50,7 @@ export default function Slider() {
           <div key={`slider-${i}`} className={styles.eachSlide}>
             <div className={styles.textcontainer}>
               <Image
+                quality={90}
                 src={imageSrc}
                 layout="fill"
                 objectFit="cover"

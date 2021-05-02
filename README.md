@@ -1,30 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MYNA
 
-## Getting Started
+## Image conversion commands
 
-First, run the development server:
+To create the square product images
+```sh
+function optimize_images {
+  mkdir optimized;
 
-```bash
-npm run dev
-# or
-yarn dev
+  for image in *.jpg
+  convert $image -resize 1270x1270 optimized/_$image && \
+  jpeg-recompress -m ms-ssim -a optimized/_$image optimized/$image;
+
+  rm optimized/_*.jpg;
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+For lookbook images (without any colour overlays):
+```sh
+function optimize_lookbook_images {
+  mkdir optimized;
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+  for image in *.jpg
+  convert $image -resize 1280x1280 optimized/_$image && \
+  jpeg-recompress -q high -a optimized/_$image optimized/$image;
 
-## Learn More
+  rm optimized/_*.jpg;
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+For slider images (with colour overlays):
+```sh
+function optimize_slider_images {
+  mkdir optimized;
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  for image in *.jpg
+  do
+    for color in '#b6664d' '#49594e' '#efdfd7'
+    do
+      convert $image \
+        -resize 1400x852 \
+        -size 1400x852 "xc:$color" +swap \
+        -gravity west \
+        -composite \
+        -fill "$color" \
+        -draw "fill-opacity 0.35 rectangle 0,0 1060,852" \
+        optimized/${color:1:$}_$image;
+    done
+  done
+}
+```
