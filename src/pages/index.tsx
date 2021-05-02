@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
 
 import Slider from '../components/Slider';
 import Header from '../components/Header';
@@ -9,10 +7,6 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import SingleProductCard from '../components/SingleProductCard';
-
-import Cookies from 'universal-cookie';
-const cookies = new Cookies();
-const hash = cookies.get('hash');
 
 export default class Index extends React.Component {
   render() {
