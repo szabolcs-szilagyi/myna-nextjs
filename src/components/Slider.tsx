@@ -59,12 +59,12 @@ export default function Slider() {
               <h3>{text}</h3>
               <a href={linkHref} className={buttonClass}>{linkText}</a>
               <div className={styles.description}>
-                  <p>We design pieces to love forever, inspired by natural beauty.</p>
+                <p>We design pieces to love forever, inspired by natural beauty.</p>
               </div>
             </div>
           </div>
         ))}
       </Slide>
     </div>
-  )
+  );
 }

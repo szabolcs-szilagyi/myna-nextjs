@@ -4,7 +4,7 @@
 
 To create the square product images
 ```sh
-function optimize_images {
+function optimize_product_images {
   mkdir optimized;
 
   for image in *.jpg
