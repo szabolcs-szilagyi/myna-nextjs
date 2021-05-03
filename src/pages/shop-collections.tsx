@@ -35,7 +35,7 @@ export default class Index extends React.Component {
             <a href="#love-and-light" className="smallFont ce blackFont">Love and Light</a>
           </div>
           <div className="col-md-2 ce capitalLetters">
-            <a href="#autumn-collection" className="smallFont ce blackFont">Autumn Collection</a>
+            <a href="#love-affair-collection" className="smallFont ce blackFont">Love Affair Collection</a>
           </div>
           <div className="col-md-3" />
         </div>
@@ -199,8 +199,8 @@ export default class Index extends React.Component {
 
         <div className="spacer50px" />
         <div className="row">
-          <div id="autumn-collection" className="col-md-12 ce capitalLetters">
-            <h5><strong>Autumn Collection</strong></h5>
+          <div id="love-affair-collection" className="col-md-12 ce capitalLetters">
+            <h5><strong>Love Affair Collection</strong></h5>
           </div>
         </div>
         <div className="row">

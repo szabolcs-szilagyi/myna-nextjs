@@ -50,7 +50,7 @@ export default class Index extends React.Component {
               </SingleProductCard>
               <SingleProductCard
                 className="col-md-4"
-                productPageLink="/shop-collections#autumn-collection"
+                productPageLink="/shop-collections#love-affair-collection"
                 productImageLink="/landing/love_affair.jpg"
                 productName="ALYSS Dress"
               >
@@ -274,14 +274,13 @@ export default class Index extends React.Component {
           <h1 className="text-center mt-5 mb-3">STAY INSPIRED WITH MYNA – VIEW OUR LOOKBOOK</h1>
           <div className="row">
             <div className="col-md-6 order-last my-auto">
-              <p>Text from look book</p>
+              <p>Text from lookbook</p>
             </div>
             <SingleProductCard
               className="col-md-6"
               productPageLink="/ivy-cream"
               productImageLink="/lookbook/08.jpg"
-              productName="IVY Top"
-              price="€75"
+              productName="LOOKBOOK"
               width={1280}
               height={853}
             />
