@@ -77,7 +77,7 @@ export default class Index extends React.Component {
           />
           <SingleProductCard
             className="col-md-3"
-            productPageLink=""
+            productPageLink="/lisia-dress"
             productImageLink="/landing/lisia.jpg"
             productName="LISIA Dress"
             price="€179"
@@ -170,16 +170,16 @@ export default class Index extends React.Component {
             </div>
             <SingleProductCard
               className="col-md-3"
-              productPageLink="/tuli-dress"
+              productPageLink="/bella-blouse"
               productImageLink="/landing/organic-cotton/bella.jpg"
-              productName="BELLA Top"
-              price="€169"
+              productName="BELLA Blouse"
+              price="€79"
               width={1280}
               height={1280}
             />
             <SingleProductCard
               className="col-md-5 mx-auto"
-              productPageLink="/tuli-dress"
+              productPageLink="/shop-collections#consciously-beautiful"
               productImageLink="/landing/organic-cotton/bella-and-dahlia.jpg"
               productName="BELLA & DAHLIA Tops"
               width={1290}
@@ -187,10 +187,10 @@ export default class Index extends React.Component {
             />
             <SingleProductCard
               className="col-md-3"
-              productPageLink="/tuli-dress"
+              productPageLink="/dahlia-blouse"
               productImageLink="/landing/organic-cotton/dahlia.jpg"
-              productName="DAHLIA Top"
-              price="€169"
+              productName="DAHLIA Blouse"
+              price="€105"
               width={1280}
               height={1280}
             />
@@ -200,10 +200,10 @@ export default class Index extends React.Component {
             <div className="col-md-6">
               <SingleProductCard
                 className="col-md-12"
-                productPageLink="/tuli-dress"
+                productPageLink="/bella-hand-painted-blouse"
                 productImageLink="/product_photos/bella-print-01.jpg"
-                productName="BELLA Top"
-                price="€169"
+                productName="BELLA Hand Painted Blouse"
+                price="€129"
                 width={1280}
                 height={1280}
               />
@@ -218,10 +218,10 @@ export default class Index extends React.Component {
               </div>
               <SingleProductCard
                 className="col-md-12"
-                productPageLink="/tuli-dress"
+                productPageLink="/leya-wrap-dress"
                 productImageLink="/landing/leya/anastazia.jpg"
                 productName="LEYA Dress"
-                price="€169"
+                price="€319"
                 width={1280}
                 height={1280}
               />
@@ -243,16 +243,16 @@ export default class Index extends React.Component {
             </div>
             <SingleProductCard
               className="col-md-3"
-              productPageLink="/tuli-dress"
+              productPageLink="/gea-cream"
               productImageLink="/landing/hemp/MynaWebShop-WhiteTop-3.jpg"
-              productName="IVY Top"
-              price="€169"
+              productName="GEA Top"
+              price="€75"
               width={1280}
               height={1280}
             />
             <SingleProductCard
               className="col-md-5 mx-auto"
-              productPageLink="/tuli-dress"
+              productPageLink="/shop-collections#love-and-light"
               productImageLink="/landing/hemp/gea-and-ivy.jpg"
               productName="GEA & IVY Tops"
               width={1290}
@@ -260,10 +260,10 @@ export default class Index extends React.Component {
             />
             <SingleProductCard
               className="col-md-3"
-              productPageLink="/tuli-dress"
+              productPageLink="/ivy-cream"
               productImageLink="/product_photos/mynawebshop-whitetshirt-1.jpg"
-              productName="GEA Top"
-              price="€169"
+              productName="IVY Top"
+              price="€75"
               width={1280}
               height={1280}
             />
@@ -274,11 +274,14 @@ export default class Index extends React.Component {
           <h1 className="text-center mt-5 mb-3">STAY INSPIRED WITH MYNA – VIEW OUR LOOKBOOK</h1>
           <div className="row">
             <div className="col-md-6 order-last my-auto">
-              <p>Text from lookbook</p>
+              <p className={style.quote} >
+                She's matured and grown, this time she reflects a balanced elegance of a different summer glow.
+                She's nurturing and perceptive, but every now and then she shows her romantic and spontanous side.
+              </p>
             </div>
             <SingleProductCard
               className="col-md-6"
-              productPageLink="/ivy-cream"
+              productPageLink="/lookbook"
               productImageLink="/lookbook/08.jpg"
               productName="LOOKBOOK"
               width={1280}
