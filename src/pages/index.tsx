@@ -112,19 +112,19 @@ export default class Index extends React.Component {
             </div>
             <SingleProductCard
               className="col-md-3"
-              productPageLink="/tuli-dress"
+              productPageLink="/lili-top-satin"
               productImageLink="/landing/time-for-linen/lili.jpg"
-              productName="LILI Top"
-              price="€169"
+              productName="LILI Top Satin"
+              price="€69"
               width={853}
               height={1280}
             />
             <SingleProductCard
               className="col-md-3"
-              productPageLink="/tuli-dress"
+              productPageLink="/iris-vest"
               productImageLink="/landing/time-for-linen/iris.jpg"
-              productName="IRIS Top"
-              price="€169"
+              productName="IRIS Vest"
+              price="€75"
               width={853}
               height={1280}
             />

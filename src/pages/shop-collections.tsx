@@ -118,6 +118,18 @@ export default class Index extends React.Component {
             price: "€105",
           },
           {
+            name: "LILI Top Satin",
+            link: "/lili-top-satin",
+            mainPhoto: "/product_photos/lili-top-satin-01.jpg",
+            price: "€69",
+          },
+          {
+            name: "IRIS Vest",
+            link: "/iris-vest",
+            mainPhoto: "/product_photos/iris-vest-01.jpg",
+            price: "€75",
+          },
+          {
             name: "BELLA Hand Painted Blouse",
             link: "/bella-hand-painted-blouse",
             mainPhoto: "/product_photos/bella-print-01.jpg",
