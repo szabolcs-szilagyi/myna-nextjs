@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import Image from 'next/image';
 
 import Cookies from 'universal-cookie';
@@ -12,7 +11,6 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
 
 import event from '../lib/gtag';
 import { requestFactory } from '../lib/request';
