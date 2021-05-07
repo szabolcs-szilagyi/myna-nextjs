@@ -298,9 +298,7 @@ class Index extends React.Component {
                       <div className="mediumFont ju">
                         Each item is created by our talented creative director Justyna and handmade
                         with care in Poland. If you cannot find your size, get in touch with us and
-                        we will do our best to help. Email us on
-                        <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a>
-                        or click here for more information about orders.
+                        we will do our best to help. Email us on <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a> or click <a className="blackFont" href="/shipping">here</a> for more information about orders.
                       </div>
                     </div>
                   </div>
