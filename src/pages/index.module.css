@@ -1,0 +1,28 @@
+@font-face {
+  font-family: 'Freeland';
+  /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+  src: url('/fonts/freeland.ttf') format('truetype');
+  font-display: swap;
+}
+
+.quote {
+  font-size: 1.5em;
+  font-family: 'Freeland', sans-serif;
+  font-weight: 300;
+}
+
+@media only screen and (max-width: 1226px) {
+  .quote {
+    font-size: 1.2em;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .quote {
+    font-size: 1em;
+  }
+}
+
+.verticalSpacing {
+  height: 10em;
+}
