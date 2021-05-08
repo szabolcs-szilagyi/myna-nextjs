@@ -334,7 +334,7 @@ export default class Index extends React.Component {
         <div className="spacer50px"></div>
         <div className="row">
           <div className="col-md-12 ce capitalLetters">
-            <h2><strong>Your Loved Pieces</strong></h2>
+            <h1><strong>Your Loved Pieces</strong></h1>
             <div className={this.state.inCart ? 'd-none' : 'd-block'}>
               <div className='spacer25px'></div>
               <p><i>Your cart is empty.</i> <br /><br /><a href="/shop-collections"><button className="startshoppingButton">START SHOPPING HERE</button></a></p>

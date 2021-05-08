@@ -244,7 +244,7 @@ class Index extends React.Component {
               <div className="col-md-6 ce">
                 <div className="row">
                   <div className="col-md-12">
-                    <h2 className="capitalLetters">{this.state.productName} | {this.state.productColor} | {this.state.currency}{this.state.productPrice}</h2>
+                    <h1 className="capitalLetters">{this.state.productName} | {this.state.productColor} | {this.state.currency}{this.state.productPrice}</h1>
                   </div>
                 </div>
                 <div className="spacer50px"></div>

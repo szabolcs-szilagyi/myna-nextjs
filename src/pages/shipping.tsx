@@ -40,7 +40,7 @@ export default class Index extends React.Component {
           <div className="spacer50px" />
           <div className="row">
             <div className="col-md-12 ce capitalLetters">
-              <h2><strong>Shipping</strong></h2>
+              <h1><strong>Shipping</strong></h1>
             </div>
           </div>
         <div className="spacer50px" />
@@ -58,7 +58,7 @@ export default class Index extends React.Component {
               Customers are responsible for any customs and import taxes that may apply. MYNA is not responsible for delays due to customs.
             </p>
             <div className="spacer50px" />
-            <h2 className="capitalLetters ce"><strong>Returns and Exchanges</strong></h2>
+            <h1 className="capitalLetters ce"><strong>Returns and Exchanges</strong></h1>
             <div className="spacer50px" />
             <p>If you are unhappy with your order, please contact us at <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a> to let us know and we will assist you as well as we can.</p>
             <p>Returns and exchanges: <br />

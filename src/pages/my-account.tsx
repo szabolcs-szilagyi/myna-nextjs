@@ -284,7 +284,7 @@ export default class Index extends React.Component {
             <div className="spacer50px" />
             <div className="row">
               <div className="col-md-12 ce capitalLetters">
-                <h2><strong>Login to your account</strong></h2>
+                <h1><strong>Login to your account</strong></h1>
                 <p>Please give your email address to continue</p>
                 <div className="spacer50px" />
                 <input className="loginEmail" type="text" value={this.state.inputEmail} onChange={this.handleChange} maxLength={128} placeholder="enter your email here" />
@@ -305,7 +305,7 @@ export default class Index extends React.Component {
             <div className="spacer10px" />
             <div className="row">
               <div className="col-md-12 ce capitalLetters">
-                <h2><strong>Your account</strong></h2>
+                <h1><strong>Your account</strong></h1>
                 <div className="row">
                   <div className="col-md-2" />
                   <div className="col-md-4">

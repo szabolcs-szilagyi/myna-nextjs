@@ -42,7 +42,7 @@ export default class Index extends React.Component {
           <div className="spacer50px" />
           <div className="row">
             <div className="col-md-12 ce capitalLetters">
-              <h2><strong>Size and Measurements</strong></h2>
+              <h1><strong>Size and Measurements</strong></h1>
             </div>
           </div>
         <div className="spacer50px" />

@@ -40,7 +40,7 @@ export default class Index extends React.Component {
           <div className="spacer50px" />
           <div className="row">
             <div className="col-md-12 ce capitalLetters">
-              <h2><strong>Privacy</strong></h2>
+              <h1><strong>Privacy</strong></h1>
             </div>
           </div>
         <div className="spacer50px" />
@@ -51,7 +51,7 @@ export default class Index extends React.Component {
             <p>The information you share with us at the point of sale is saved securely and is only used to fulfil your order. Any records of our customers are stored and are strictly private and confidential (name, address, email, phone number when applicable). We do not store credit card details. We will not sell or disclose any personal information to third parties unless under legal obligation to a fraud prevention agency.</p>
             <p>When you subscribe to our mailing list, you will only receive marketing information in regards to M Y N A. If at any point you wish to be taken off our communication updates please let us know at <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a>.</p>
             <div className="spacer50px" />
-            <h2 className="capitalLetters ce"><strong>Contact</strong></h2>
+            <h1 className="capitalLetters ce"><strong>Contact</strong></h1>
             <div className="spacer50px" />
             <p><strong>If you need to speak to us about existing or future orders, or anything else email us on:</strong> <br /><a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a></p>
             <p><strong>Social media:</strong> <br /><a href="https://instagram.com/mynalabel" target="_blank" className="blackFont">instagram.com/mynalabel</a></p>

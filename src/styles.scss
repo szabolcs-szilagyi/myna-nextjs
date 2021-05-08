@@ -1,90 +1,142 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+@import '../node_modules/bootstrap/scss/_functions';
+@import '../node_modules/bootstrap/scss/_variables';
+@import '../node_modules/bootstrap/scss/mixins/_breakpoints';
+
+h1 {
+  font-size: 1.2rem;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 1.4rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 1.6rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 1.8rem;
+  }
+}
+
+h2 {
+  font-size: 1.1rem;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 1.3rem;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 1.5rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 1.7rem;
+  }
+}
 
 .body, p {
   font-family: 'Lato', sans-serif;
   font-weight: 400;
-}
-h2 {
-  font-size: 24px;
 }
 
 .spacer10px {
   width: 100%;
   height: 10px;
 }
+
 .spacer20px {
   width: 100%;
   height: 20px;
 }
+
 .spacer25px {
   width: 100%;
   height: 25px;
 }
+
 .spacer50px {
   width: 100%;
   height: 50px;
 }
+
 .pad8px {
   padding: 8px;
 }
+
 .ju {
   text-align: justify;
 }
+
 .invisible {
   display: none;
 }
+
 table.mainMeas td {
   padding: 10px;
 }
+
 .navMenu li {
   display: inline-block;
   padding: 50px 20px;
 }
+
 .navMenu li a {
   color: #000000;
   text-decoration: none;
 }
+
 .navMenu li a:hover {
   color: #000000;
   /* color: #989898; */
   text-decoration: underline;
 }
+
 .menu {
   color: #000000;
   text-decoration: none;
 }
+
 .menu:hover {
   color: #000000;
-  /* color: #989898; */
   text-decoration: underline;
 }
+
 .dropdown button {
   color: #000000;
   text-decoration: none;
 }
+
 .dropdown button:hover {
   color: #000000;
   text-decoration: underline;
 }
+
 .capitalLetters {
   text-transform: uppercase;
 }
+
 .ce {
   text-align: center;
 }
+
 .padtop10px {
   padding-top: 10px;
 }
+
 .padtop43px {
   padding-top: 43px;
 }
+
 .padtop50px {
   padding-top: 50px;
 }
+
 .spacer200px {
   width: 100%;
   height: 200px;
 }
+
 .noBorder {
   border: 0 !important;
 }
@@ -98,9 +150,11 @@ table.mainMeas td {
   border: 1px solid #ede0d8;
   width: 100%;
 }
+
 .email_newsletter input:focus {
   border: 1px solid #000000;
 }
+
 .email_newsletter button {
   color: #fff;
   text-decoration: none;
@@ -113,26 +167,33 @@ table.mainMeas td {
 	border: 1px solid #141414;
 	padding: 10px 25px;
 }
+
 .email_newsletter button:hover {
 	background: rgba(0,0,0,0.8); /* #101010 */
 }
+
 .smallFont {
   font-size: 12px;
 }
+
 .smallFont2 {
   font-size: 11px;
 }
+
 .mediumFont {
   font-size: 14px;
 }
+
 .blackFont, a.blackFont, .blackFont a {
   color: #000000;
   text-decoration: none;
 }
+
 a.blackFont:hover, blackFont a :hover {
   color: #000000;
   text-decoration: underline;
 }
+
 select#chooseSize {
   color: #000;
   text-decoration: none;
@@ -147,10 +208,12 @@ select#chooseSize {
   border-radius: 0px;
   outline: none;
 }
+
 select#chooseSize:hover {
   font-weight: bold;
   cursor: pointer;
 }
+
 .productInfoContainer {
   width: 95%;
   margin: auto;
@@ -158,17 +221,21 @@ select#chooseSize:hover {
   border-top: 1px solid #000000;
   border-bottom: 1px solid #000000;
 }
+
 .left {
   text-align: left;
 }
+
 .pointer {
   cursor: pointer;
 }
+
 .logo {
   padding-top: 3px;
   width: 168px;
   height: 75px;
 }
+
 .logoMain {
   padding-top: 3px;
   width: 240px;
@@ -181,6 +248,7 @@ select#chooseSize:hover {
   font-size: 18px;
   text-align: center;
 }
+
 .userDetails {
   width: 360px;
   padding: 8px;
@@ -188,31 +256,39 @@ select#chooseSize:hover {
   text-align: center;
   margin: auto;
 }
+
 .noPadding {
   padding: 0;
 }
+
 .dropdown .btn {
   vertical-align: null;
 }
+
 .right {
   text-align: right;
 }
+
 .navCart a:hover {
   font-weight: bold;
   text-decoration: none;
 }
+
 .hidePaypal {
   display: none;
 }
+
 .showPaypal {
   display: block;
 }
+
 .cartIconContainer {
   height: 100%;
   width: 100%;
   position: relative;
   border: none;
 }
+
 .cartIconContainer .vertical-center {
   margin: 0;
   position: absolute;
@@ -223,15 +299,18 @@ select#chooseSize:hover {
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
 }
+
 table.cartCo {
   margin: auto;
   min-width: 500px;
 }
+
 .cartCo td{
   min-width: 50px;
   width: 120px;
   text-align: center;
 }
+
 .startshoppingButton {
   font-size: 18px;
   padding: 5px;
@@ -243,9 +322,11 @@ table.cartCo {
   width: 260px;
   height: 50px;
 }
+
 .startshoppingButton:hover {
   font-weight: bold;
 }
+
 .cartButton {
   font-size: 18px;
   padding: 5px;
@@ -256,6 +337,7 @@ table.cartCo {
   width: 240px;
   height: 50px;
 }
+
 .cartButton:hover {
   font-size: 18px;
   padding: 5px;
@@ -266,9 +348,11 @@ table.cartCo {
   width: 240px;
   height: 50px;
 }
+
 .sizeButton {
   border: 1px solid #000000;
 }
+
 select.sizeButton {
   /* for Firefox */
   -moz-appearance: none;
@@ -280,79 +364,101 @@ select.sizeButton {
 select.sizeButton::-ms-expand {
   display: none;
 }
+
 .maxWidth, .maxWidth table {
   width: 100%;
 }
+
 .noPadLeft {
   padding-left: 0px;
 }
+
 .paddingtop5px {
   padding-top: 15px;
 }
+
 .desktopNav {
   display: block;
 }
+
 #banner {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2em;
 }
+
 .tabNav {
   display: none;
 }
+
 .mobileNav {
   display: none;
 }
+
 @media only screen and (max-width: 1226px) {
   .desktopNav {
     display: none;
   }
+
   .tabNav {
     display: block;
   }
+
   .mobileNav {
     display: none;
   }
+
   .ceMob {
     text-align: center;
   }
+
   .startshoppingButton, .cartButton {
     width: 180px;
     font-size: 14px;
   }
 }
+
 @media only screen and (max-width: 768px) {
   .desktopNav {
     display: none;
   }
+
   .tabNav {
     display: none;
   }
+
   .mobileNav {
     display: block;
   }
+
   .nlsb {
     margin-top: 25px;
   }
+
   .inl {
     padding: 5px;
   }
+
   .inl img {
     width: 140px;
     height: 140px;
   }
+
   .startshoppingButton, .cartButton {
     width: 240px;
     font-size: 18px;
   }
+
   .cl {
     clear: both;
   }
+
   table.cartCo {
     margin: auto;
     min-width: 300px;
   }
+
   .cartCo td{
     min-width: 50px;
     width: 60px;

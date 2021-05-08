@@ -53,15 +53,15 @@ function groupProducts(products: Product[]) {
 
 export async function getStaticProps() {
   const productsToRetrieve = [
+    ['consciously-beautiful', 'lili-top-satin'],
+    ['consciously-beautiful', 'lili-top'],
     ['consciously-beautiful', 'lisia-dress'],
     ['consciously-beautiful', 'senna-skirt'],
     ['consciously-beautiful', 'reeva-denim-jacket'],
     ['consciously-beautiful', 'tuli-dress'],
     ['consciously-beautiful', 'leya-wrap-dress'],
-    ['consciously-beautiful', 'dahlia-blouse'],
-    ['consciously-beautiful', 'lili-top-satin'],
-    ['consciously-beautiful', 'lili-top'],
     ['consciously-beautiful', 'iris-vest'],
+    ['consciously-beautiful', 'dahlia-blouse'],
     ['consciously-beautiful', 'bella-hand-painted-blouse'],
     ['consciously-beautiful', 'bella-blouse'],
     ['consciously-beautiful', 'delphi-culottes'],
@@ -105,7 +105,7 @@ export default function ShopCollections({ collectionData }) {
       <div className="spacer50px" />
       <div className="row">
         <div className="col-md-12 ce capitalLetters">
-          <h2><strong>Shop Collections</strong></h2>
+          <h1><strong>Shop Collections</strong></h1>
         </div>
       </div>
       <div className="row">

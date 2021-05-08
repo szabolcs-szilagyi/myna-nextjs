@@ -16,7 +16,7 @@ export default class Index extends React.Component {
         <div className="spacer50px"></div>
         <div className="row">
           <div className="col-md-12 ce capitalLetters">
-            <h2><strong>Sustainability</strong></h2>
+            <h1><strong>Sustainability</strong></h1>
           </div>
         </div>
         <div className="spacer50px"></div>
