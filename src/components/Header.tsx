@@ -1,6 +1,9 @@
+import React from 'react';
 import Head from 'next/head';
 
 class HeadElement extends React.Component {
+  state: any;
+
   constructor(props) {
     super(props);
     this.state = {

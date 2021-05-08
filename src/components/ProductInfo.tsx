@@ -16,6 +16,9 @@ function DescButton({ id, text, onClick }) {
 }
 
 export default class ProductInfo extends Component {
+  state: any;
+  props: any;
+
   constructor(props) {
     super(props);
 

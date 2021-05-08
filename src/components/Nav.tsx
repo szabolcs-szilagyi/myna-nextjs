@@ -43,6 +43,11 @@ function Cart({ containerClass, lastItemsDate }) {
   );
 }
 
+type NavPropsType = {
+  lastItemsDate?: string,
+};
+
+export default function Nav(props: NavPropsType);
 export default function Nav({ lastItemsDate }) {
   return (
     <div>

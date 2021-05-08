@@ -7,6 +7,8 @@ import {
 import fetch from 'isomorphic-unfetch';
 
 export default class Footer extends Component {
+  state: any;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -81,7 +83,7 @@ export default class Footer extends Component {
                          src="/facebook.svg"
                          alt="facebook"
                          width="30"
-                         heigth="30"
+                         height="30"
                        /></a>
                     </div>
                     <div className="col-6">
@@ -92,7 +94,7 @@ export default class Footer extends Component {
                          src="/instagram.svg"
                          alt="instagram"
                          width="30"
-                         heigth="30"
+                         height="30"
                        /></a>
                     </div>
                   </div>

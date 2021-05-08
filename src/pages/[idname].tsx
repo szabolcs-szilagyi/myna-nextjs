@@ -88,6 +88,8 @@ export async function getStaticPaths() {
 
 
 class Index extends React.Component {
+  state: any;
+
   constructor(props) {
     super(props);
 

@@ -5,6 +5,8 @@ import Image from 'next/image';
 import style from './PhotoViewer.module.css';
 
 export default class PhotoViewer extends React.Component {
+  state: any;
+  props: any;
 
   constructor(props) {
     super(props);

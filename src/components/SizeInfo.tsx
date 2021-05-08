@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 
+type SizeInfoOptionsType = {
+  tableClass?: string,
+}
+
+export default function SizeInfo(options: SizeInfoOptionsType);
 export default function SizeInfo({ tableClass }) {
   return (
     <div className="maxWidth">

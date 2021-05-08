@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { Component } from 'react';
 import { PayPalButton } from "react-paypal-button-v2";
 import Cookies from 'universal-cookie';
 
@@ -13,6 +13,9 @@ const cookies = new Cookies();
 const session = cookies.get('session');
 
 export default class Example extends Component {
+  state: any;
+  props: any;
+
   constructor(props) {
     super(props);
     this.state = {

@@ -48,6 +48,8 @@ const productDetailHash = {
 };
 
 class Loading extends React.Component {
+  props: any;
+
   constructor(props) {
     super(props);
   }
@@ -81,6 +83,9 @@ class Loading extends React.Component {
 }
 
 class CartItems extends React.Component {
+  props: any;
+  delProductFromCart: any;
+
   constructor(props) {
     super(props);
 
@@ -102,10 +107,15 @@ class CartItems extends React.Component {
   }
 
   render() {
+    type CheckoutProduct = {
+      id: number,
+      idname: string,
+      size: string,
+    }
     return (
       <div>
         <Loading isLoading={this.props.loading} />
-        {Object.values(this.props.products).map((product, i) =>
+        {Object.values(this.props.products).map((product: CheckoutProduct, i) =>
           <div key={'keyID' + i}>
             <div className="row">
               <div className="col-md-5">
@@ -159,6 +169,8 @@ class CartItems extends React.Component {
 }
 
 export default class Index extends React.Component {
+  state: any;
+
   constructor(props) {
     super(props);
 

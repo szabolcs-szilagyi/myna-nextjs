@@ -17,6 +17,9 @@ const cookies = new Cookies();
 const session = cookies.get('session');
 
 export default class Index extends React.Component {
+  options: any;
+  state: any;
+
   constructor(props) {
     super(props);
 
@@ -284,7 +287,7 @@ export default class Index extends React.Component {
                 <h2><strong>Login to your account</strong></h2>
                 <p>Please give your email address to continue</p>
                 <div className="spacer50px" />
-                <input className="loginEmail" type="text" value={this.state.inputEmail} onChange={this.handleChange} maxLength="128" placeholder="enter your email here" />
+                <input className="loginEmail" type="text" value={this.state.inputEmail} onChange={this.handleChange} maxLength={128} placeholder="enter your email here" />
                 <div className="spacer50px" />
                 <div className="noBorder mediumFont"><button type="button" className="cartButton" onClick={this.sendLogin}>{this.state.textOnLoginButton}</button></div>
               </div>
@@ -307,13 +310,13 @@ export default class Index extends React.Component {
                   <div className="col-md-2" />
                   <div className="col-md-4">
                     <div className="spacer25px" />
-                    <input className="userDetails" type="text" value={this.state.firstName} onChange={this.handleChange1} maxLength="128" placeholder="* NAME" />
+                    <input className="userDetails" type="text" value={this.state.firstName} onChange={this.handleChange1} maxLength={128} placeholder="* NAME" />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.lastName} onChange={this.handleChange2} maxLength="128" placeholder="* SURNAME" />
+                    <input className="userDetails" type="text" value={this.state.lastName} onChange={this.handleChange2} maxLength={128} placeholder="* SURNAME" />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.birthday} onChange={this.handleChange3} maxLength="10" placeholder="* DATE OF BIRTH (YYYY-MM-DD)" />
+                    <input className="userDetails" type="text" value={this.state.birthday} onChange={this.handleChange3} maxLength={10} placeholder="* DATE OF BIRTH (YYYY-MM-DD)" />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.dMobile} onChange={this.handleChange4} maxLength="32" placeholder="* MOBILE NUMBER" />
+                    <input className="userDetails" type="text" value={this.state.dMobile} onChange={this.handleChange4} maxLength={32} placeholder="* MOBILE NUMBER" />
                     <div className="spacer10px" />
                     <Select className="userDetails"
                       options={this.state.options}
@@ -324,13 +327,13 @@ export default class Index extends React.Component {
                   </div>
                   <div className="col-md-4">
                     <div className="spacer25px" />
-                    <input className="userDetails" type="text" value={this.state.dAddress1} onChange={this.handleChange5} maxLength="128" placeholder="* ADDRESS LINE 1" />
+                    <input className="userDetails" type="text" value={this.state.dAddress1} onChange={this.handleChange5} maxLength={128} placeholder="* ADDRESS LINE 1" />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.dAddress2} onChange={this.handleChange6} maxLength="128" placeholder="ADDRESS LINE 2" />
+                    <input className="userDetails" type="text" value={this.state.dAddress2} onChange={this.handleChange6} maxLength={128} placeholder="ADDRESS LINE 2" />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.dCity} onChange={this.handleChange7} maxLength="128" placeholder="* CITY" />
+                    <input className="userDetails" type="text" value={this.state.dCity} onChange={this.handleChange7} maxLength={128} placeholder="* CITY" />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.dZip} onChange={this.handleChange9} maxLength="64" placeholder="* POSTAL CODE" />
+                    <input className="userDetails" type="text" value={this.state.dZip} onChange={this.handleChange9} maxLength={64} placeholder="* POSTAL CODE" />
                     <div className="spacer10px" />
                     <div className="paddingtop5px">* Country: {this.state.dCountry}</div>
                     <div className="spacer10px" />
