@@ -124,6 +124,12 @@ export default class Index extends React.Component {
             price: '€69',
           },
           {
+            name: 'LILI Top',
+            link: '/lili-top',
+            mainPhoto: '/product_photos/lili-top-shadow-01.jpg',
+            price: '€69',
+          },
+          {
             name: 'IRIS Vest',
             link: '/iris-vest',
             mainPhoto: '/product_photos/iris-vest-01.jpg',

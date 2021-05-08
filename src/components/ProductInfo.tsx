@@ -122,8 +122,7 @@ export default class ProductInfo extends Component {
                 Receive your favourite items(s) within 5 to 7 days once shipped. For countries
                 outside of Europe shipping may take longer, please enquire for specific country. All
                 items are shipped within 3 business days from placing your order, with the exception
-                of pre-ordered pieces. Pre-order pieces are made within 1 to 2 weeks. Email us at
-                <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a>.
+                of pre-ordered pieces. Pre-order pieces are made within 1 to 2 weeks. Email us at <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a>.
                 You have 14 days to change your mind. Sale orders are non refundable.
               </div>
             </div>
