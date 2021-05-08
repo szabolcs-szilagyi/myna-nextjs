@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
+import * as reactBootstrap from 'react-bootstrap';
+
+const { Navbar, Nav: BSNav, NavDropdown } = reactBootstrap;
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -51,11 +53,10 @@ export default function Nav(props: NavPropsType);
 export default function Nav({ lastItemsDate }) {
   return (
     <div>
-
       <div className="desktopNav">
         <div className="row">
           <div className="col-md-2">
-            <a href="/"><img className="logoMain" src="/logo.png" alt="MYNA logo" /></a>
+            <a href="/"><img className="logoMain" src="/logo.png" alt="MYNA Logo" /></a>
           </div>
           <div className="col-md-7 capitalLetters">
             <ul className="navMenu">
@@ -83,7 +84,7 @@ export default function Nav({ lastItemsDate }) {
         <div className="row">
           <div className="col-md-1" />
           <div className="col-md-2">
-            <a href="/"><img src="/logo.png" alt="MYNA logo" /></a>
+            <a href="/"><img src="/logo.png" alt="MYNA Logo" /></a>
           </div>
           <div className="col-md-1" />
           <div className="col-md-4 ce menu">
@@ -113,24 +114,31 @@ export default function Nav({ lastItemsDate }) {
       </div>
 
       <div className="mobileNav">
-        <div className="row">
-          <div className="col-md-12 ce">
-            <a href="/"><img src="/logo.png" alt="MYNA logo" /></a>
-            <div className="blackFont"><a href="/my-account">My Account</a></div>
-            <Cart
-              containerClass="blackFont padtop10px"
-              lastItemsDate={lastItemsDate}
+        <Navbar bg="white" expand="lg">
+          <Navbar.Brand href="/">
+            <img
+              src="/logo.png"
+              width="240"
+              height="107"
+              alt="MYNA Logo"
+              loading="lazy"
             />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12 ce menu">
-            <div className="blackFont padtop10px"><a href="/lookbook">Lookbook</a></div>
-            <div className="blackFont padtop10px"><a href="/shop-collections">Shop Collections</a></div>
-            <div className="blackFont padtop10px"><a href="/sustainability">Sustainability</a></div>
-            <div className="blackFont padtop10px"><a href="/our-story">Our Story</a></div>
-          </div>
-        </div>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav" className="text-center">
+            <BSNav>
+              <BSNav.Link className="blackFont" href="/my-account">My Account</BSNav.Link>
+              <Cart
+                containerClass="blackFont padtop10px"
+                lastItemsDate={lastItemsDate}
+              />
+              <BSNav.Link className="blackFont" href="/lookbook">Lookbook</BSNav.Link>
+              <BSNav.Link className="blackFont" href="/shop-collections">Shop Collections</BSNav.Link>
+              <BSNav.Link className="blackFont" href="/sustainability">Sustainability</BSNav.Link>
+              <BSNav.Link className="blackFont" href="/our-story">Our Story</BSNav.Link>
+            </BSNav>
+          </Navbar.Collapse>
+        </Navbar>
       </div>
     </div>
   );
