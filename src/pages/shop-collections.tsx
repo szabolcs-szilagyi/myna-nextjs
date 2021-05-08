@@ -12,6 +12,7 @@ import {
 } from '../constants';
 import { request } from '../lib/request';
 
+type ColletcionTypes = 'consciously-beautiful' | 'love-and-light' | 'love-affair-collection';
 type Product = {
   link: string,
   mainPhoto: string,
@@ -75,7 +76,7 @@ export async function getStaticProps() {
     ['love-affair-collection', 'tilja-top'],
     ['love-affair-collection', 'magna-scarf'],
   ]
-  const collectionData: Record<string, Product[]> = {};
+  const collectionData: Partial<Record<ColletcionTypes, Product[]>> = {};
 
   for (const [collection, shortName] of productsToRetrieve) {
     const productDetails: any = (await request(`${API_SERVER}product`, {
