@@ -174,10 +174,7 @@ select#chooseSize:hover {
   width: 240px;
   height: 107px;
 }
-.ourStory {
-  width: 100%;
-  height: auto;
-}
+
 .loginEmail {
   width: 360px;
   padding: 8px;
