@@ -1,4 +1,4 @@
-export function request(url, { query = {}, options = {}, fetchOptions = {} }) {
+export function request(url: string, { query = {}, options = {}, fetchOptions = {} }) {
   const queryString = Object.entries(query)
     .reduce((qs, [key, value]) => {
       if (value === undefined) value = '';
@@ -12,9 +12,9 @@ export function request(url, { query = {}, options = {}, fetchOptions = {} }) {
 
   const uri = queryString ? `${url}?${queryString}` : url;
 
-  let fetchPromise;
+  let fetchPromise: Promise<unknown>;
 
-  if (options.json) {
+  if ((<any>options)?.json) {
     fetchPromise = fetch(uri, fetchOptions)
       .then(x => x.json());
   } else {
@@ -25,5 +25,5 @@ export function request(url, { query = {}, options = {}, fetchOptions = {} }) {
 };
 
 export function requestFactory(url) {
-  return (...args) => request(url, ...args);
+  return (options) => request(url, options);
 }
