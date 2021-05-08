@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { withRouter } from 'next/router';
 
 import {
@@ -17,12 +16,11 @@ import ProductInfo from '../components/ProductInfo';
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
-const hash = cookies.get('hash');
 const session = cookies.get('session');
 
 const DEFAULT_AVAILABLE = 'Available for pre-order';
 
-function loadData(idName) {
+function loadData(idName: string): Promise<unknown> {
   return fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + idName)
     .then(response => response.json())
 		.then(({ productdetails }) => {
