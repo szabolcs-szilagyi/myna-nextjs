@@ -26,14 +26,12 @@ export default class MyAccount extends Component {
     this.options = countryList().getData();
 
     this.state = {
-      options: this.options,
       value: null,
       myEmail: '',
       loginOrEdit: 'login',
       inputEmail: '',
       loginEmail: '',
       loginToken: '',
-      textOnLoginButton: 'SUBMIT',
       textOnSaveButton: 'SAVE & CHECKOUT',
       firstName: '',
       lastName: '',
@@ -49,19 +47,7 @@ export default class MyAccount extends Component {
       dMobile: ''
     };
 
-    this.setLabel = this.setLabel.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChange1 = this.handleChange1.bind(this);
-    this.handleChange2 = this.handleChange2.bind(this);
-    this.handleChange3 = this.handleChange3.bind(this);
-    this.handleChange4 = this.handleChange4.bind(this);
-    this.handleChange5 = this.handleChange5.bind(this);
-    this.handleChange6 = this.handleChange6.bind(this);
-    this.handleChange7 = this.handleChange7.bind(this);
-    this.handleChange8 = this.handleChange8.bind(this);
-    this.handleChange9 = this.handleChange9.bind(this);
-    this.handleChange10 = this.handleChange10.bind(this);
-    this.handleChange11 = this.handleChange11.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
 
     this.amILoggedIn = this.amILoggedIn.bind(this);
     this.sendLogin = this.sendLogin.bind(this);
@@ -69,71 +55,19 @@ export default class MyAccount extends Component {
     this.sendMail = this.sendMail.bind(this);
     this.saveDetails = this.saveDetails.bind(this);
     this.saveUserData = this.saveUserData.bind(this);
-    this.loadUserData = this.loadUserData.bind(this);
     this.saveAddressData = this.saveAddressData.bind(this);
-    this.loadAddressData = this.loadAddressData.bind(this);
     this.checkEmail = this.checkEmail.bind(this);
     this.redirect = this.redirect.bind(this);
 
   }
 
-  changeHandler = value => {
-    this.setState({ value }, () => {  });
-    setTimeout(this.setLabel, 500);
+  handleSelectChange = name => value => {
+    this.setState({ [name]: value });
   }
 
-  setLabel () {
-    let tmp = this.state.value;
-    let tmp2 = tmp["label"];
-    this.setState({ dCountry: tmp2 }, () => { console.log (this.state.dCountry); });
-  }
-
-  handleChange (event) {
-    this.setState({inputEmail: event.target.value}, () => { });
-  }
-
-  handleChange1 (event) {
-    this.setState({firstName: event.target.value}, () => { });
-  }
-
-  handleChange2 (event) {
-    this.setState({lastName: event.target.value}, () => { });
-  }
-
-  handleChange3 (event) {
-    this.setState({birthday: event.target.value}, () => { });
-  }
-
-  handleChange4 (event) {
-    this.setState({dMobile: event.target.value}, () => { });
-  }
-
-  handleChange5 (event) {
-    this.setState({dAddress1: event.target.value}, () => { });
-  }
-
-  handleChange6 (event) {
-    this.setState({dAddress2: event.target.value}, () => { });
-  }
-
-  handleChange7 (event) {
-    this.setState({dCity: event.target.value}, () => { });
-  }
-
-  handleChange8 (event) {
-    this.setState({dState: event.target.value}, () => { });
-  }
-
-  handleChange9 (event) {
-    this.setState({dZip: event.target.value}, () => { });
-  }
-
-  handleChange10 (event) {
-    this.setState({dCountry: event.target.value}, () => { });
-  }
-
-  handleChange11 (event) {
-    this.setState({dComment: event.target.value}, () => { });
+  handleInputChange({ target: { value, name } }) {
+    console.log(name, value);
+    this.setState({ [name]:  value });
   }
 
   amILoggedIn () {
@@ -178,7 +112,7 @@ export default class MyAccount extends Component {
     if (this.state.firstName == '') { crossRoad = 1; }
     if (this.state.lastName == '') { crossRoad = 1; }
     if (this.state.birthday == '') { crossRoad = 1; }
-    if (this.state.dCountry == '') { crossRoad = 1; }
+    if (this.state.dCountry?.label == '') { crossRoad = 1; }
     if (this.state.dAddress1 == '') { crossRoad = 1; }
     if (this.state.dCity == '') { crossRoad = 1; }
     if (this.state.zip == '') { crossRoad = 1; }
@@ -212,23 +146,6 @@ export default class MyAccount extends Component {
     }
   }
 
-  loadUserData () {
-    fetch(API_SERVER + API_PATH + '?part=getuserdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['userdata'];
-      let firstNameT = tmp['firstname'];
-      let lastNameT = tmp['lastname'];
-      let birthdayT = tmp['birthday'];
-      if (firstNameT == 'nodata') { firstNameT = ''; }
-      if (lastNameT == 'nodata') { lastNameT = ''; }
-      if (birthdayT == '1901-01-01') { birthdayT = ''; }
-      this.setState({ firstName: firstNameT, lastName: lastNameT, birthday: birthdayT });
-    })
-    .catch(error => console.log(error.message));
-  }
-
   saveAddressData () {
     let address1 = this.state.dAddress1;
     let city = this.state.dCity;
@@ -239,7 +156,7 @@ export default class MyAccount extends Component {
     if (city == '') { crossRoad = 1; }
     if (zip == '') { crossRoad = 1; }
     if (crossRoad == 0) {
-      fetch(API_SERVER + API_PATH + '?part=setaddressdata&email=' + this.state.myEmail + '&type=1&mobile=' + this.state.dMobile + '&address1=' + this.state.dAddress1 + '&address2=' + this.state.dAddress2 + '&city=' + this.state.dCity + '&state=' + this.state.dState + '&zip=' + this.state.dZip + '&country=' + this.state.dCountry + '&comment=' + this.state.dComment  + '&sessiontoken=' + session)
+      fetch(API_SERVER + API_PATH + '?part=setaddressdata&email=' + this.state.myEmail + '&type=1&mobile=' + this.state.dMobile + '&address1=' + this.state.dAddress1 + '&address2=' + this.state.dAddress2 + '&city=' + this.state.dCity + '&state=' + this.state.dState + '&zip=' + this.state.dZip + '&country=' + this.state?.dCountry.label + '&comment=' + this.state.dComment  + '&sessiontoken=' + session)
       .then(response => response.json())
 		  .then(output => {
         let data = output;
@@ -247,41 +164,6 @@ export default class MyAccount extends Component {
       })
       .catch(error => console.log(error.message));
     }
-  }
-
-  loadAddressData () {
-    fetch(API_SERVER + API_PATH + '?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['addressdata'];
-      let type = tmp['type'];
-      let mobile = tmp['mobile'];
-      let address1 = tmp['address1'];
-      let address2 = tmp['address2'];
-      let city = tmp['city'];
-      let state = tmp['state'];
-      let zip = tmp['zip'];
-      let country = tmp['country'];
-      let comment = tmp['comment'];
-      if (mobile == '0') { mobile = ''; }
-      if (address1 == '0') { address1 = ''; }
-      if (address2 == '0') { address2 = ''; }
-      if (city == '0') { city = ''; }
-      if (country == '0') { country = ''; }
-      if (zip == '0') { zip = ''; }
-      this.setState({
-        dMobile: mobile,
-        dAddress1: address1,
-        dAddress2: address2,
-        dCity: city,
-        dState: state,
-        dZip: zip,
-        dCountry: country,
-        dComment: comment,
-      });
-    })
-    .catch(error => console.log(error.message));
   }
 
   checkEmail () {
@@ -321,7 +203,8 @@ export default class MyAccount extends Component {
                   className="loginEmail"
                   type="text"
                   value={this.state.inputEmail}
-                  onChange={this.handleChange}
+                  name="inputEmail"
+                  onChange={this.handleInputChange}
                   maxLength={128}
                   placeholder="enter your email here"
                 />
@@ -331,7 +214,7 @@ export default class MyAccount extends Component {
                     type="button"
                     className="cartButton"
                     onClick={this.sendLogin}
-                  >{this.state.textOnLoginButton}</button>
+                  >SUBMIT</button>
                 </div>
               </div>
             </div>
@@ -357,7 +240,8 @@ export default class MyAccount extends Component {
                       className="userDetails"
                       type="text"
                       value={this.state.firstName}
-                      onChange={this.handleChange1}
+                      name="firstName"
+                      onChange={this.handleInputChange}
                       maxLength={128}
                       placeholder="* NAME"
                     />
@@ -366,7 +250,8 @@ export default class MyAccount extends Component {
                       className="userDetails"
                       type="text"
                       value={this.state.lastName}
-                      onChange={this.handleChange2}
+                      name="lastName"
+                      onChange={this.handleInputChange}
                       maxLength={128}
                       placeholder="* SURNAME"
                     />
@@ -375,7 +260,8 @@ export default class MyAccount extends Component {
                       className="userDetails"
                       type="text"
                       value={this.state.birthday}
-                      onChange={this.handleChange3}
+                      name="birthday"
+                      onChange={this.handleInputChange}
                       maxLength={10}
                       placeholder="* DATE OF BIRTH (YYYY-MM-DD)"
                     />
@@ -384,16 +270,17 @@ export default class MyAccount extends Component {
                       className="userDetails"
                       type="text"
                       value={this.state.dMobile}
-                      onChange={this.handleChange4}
+                      name="dMobile"
+                      onChange={this.handleInputChange}
                       maxLength={32}
                       placeholder="* MOBILE NUMBER"
                     />
                     <div className="spacer10px" />
                     <Select
                       className="userDetails"
-                      options={this.state.options}
-                      value={this.state.value}
-                      onChange={this.changeHandler}
+                      options={this.options}
+                      value={this.state.dCountry}
+                      onChange={this.handleSelectChange('dCountry')}
                     />
                     <div className="spacer10px" />
                   </div>
@@ -403,7 +290,8 @@ export default class MyAccount extends Component {
                       className="userDetails"
                       type="text"
                       value={this.state.dAddress1}
-                      onChange={this.handleChange5}
+                      name="dAddress1"
+                      onChange={this.handleInputChange}
                       maxLength={128}
                       placeholder="* ADDRESS LINE 1"
                     />
@@ -412,7 +300,8 @@ export default class MyAccount extends Component {
                       className="userDetails"
                       type="text"
                       value={this.state.dAddress2}
-                      onChange={this.handleChange6}
+                      name="dAddress2"
+                      onChange={this.handleInputChange}
                       maxLength={128}
                       placeholder="ADDRESS LINE 2"
                     />
@@ -421,7 +310,8 @@ export default class MyAccount extends Component {
                       className="userDetails"
                       type="text"
                       value={this.state.dCity}
-                      onChange={this.handleChange7}
+                      name="dCity"
+                      onChange={this.handleInputChange}
                       maxLength={128}
                       placeholder="* CITY"
                     />
@@ -430,12 +320,13 @@ export default class MyAccount extends Component {
                       className="userDetails"
                       type="text"
                       value={this.state.dZip}
-                      onChange={this.handleChange9}
+                      name="dZip"
+                      onChange={this.handleInputChange}
                       maxLength={64}
                       placeholder="* POSTAL CODE"
                     />
                     <div className="spacer10px" />
-                    <div className="paddingtop5px">* Country: {this.state.dCountry}</div>
+                    <div className="paddingtop5px">* Country: {this.state.dCountry.label}</div>
                     <div className="spacer10px" />
                   </div>
                   <div className="col-md-2" />
