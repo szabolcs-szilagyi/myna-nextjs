@@ -12,7 +12,7 @@ import SingleProductCard from '../components/SingleProductCard';
 import style from './index.module.css';
 
 export default function Index() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('home');
 
   return (
     <Container fluid>
@@ -40,7 +40,7 @@ export default function Index() {
               productImageLink="/landing/consciously_beautiful.jpg"
               productName="LEYA Wrap Dress"
             >
-              <p className="text-center">Consciously Beautiful<br />Collection</p>
+              <p className="text-center">Consciously Beautiful<br />{t('Collection')}</p>
             </SingleProductCard>
             <SingleProductCard
               className="col-md-4"
@@ -48,7 +48,7 @@ export default function Index() {
               productImageLink="/landing/love_and_light.jpg"
               productName="ASTER Green"
             >
-              <p className="text-center">Love & Light<br />Collection</p>
+              <p className="text-center">Love & Light<br />{t('Collection')}</p>
             </SingleProductCard>
             <SingleProductCard
               className="col-md-4"
@@ -56,7 +56,7 @@ export default function Index() {
               productImageLink="/landing/love_affair.jpg"
               productName="ALYSS Dress"
             >
-              <p className="text-center">Love Affair<br />Collection</p>
+              <p className="text-center">Love Affair<br />{t('Collection')}</p>
             </SingleProductCard>
           </div>
         </div>
@@ -64,8 +64,8 @@ export default function Index() {
       </div>
 
       <div className="col-md-6 mx-auto">
-        <h1 className="text-center mt-5 mb-3">New consciously beautiful collection</h1>
-        <p>We give you small capsule collections, that are timeless and work together over the seasons. We believe in creating items, that you will love for years, pieces that are unique but versatile, they can be worn together to create whole outfit, and you can easily transform from special occasion to casual look.</p>
+        <h1 className="text-center mt-5 mb-3">{t('New consciously beautiful collection')}</h1>
+        <p>{t('sustainability:we-give-you-small-capsule-collections')}</p>
       </div>
       <div className="row col-md-8 mx-auto px-0">
         <SingleProductCard
@@ -107,10 +107,10 @@ export default function Index() {
       </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">IT’S TIME FOR LINEN</h1>
+        <h1 className="text-center mt-5 mb-3">{t('IT’S TIME FOR LINEN')}</h1>
         <div className="row">
           <div className="col-md-6 my-auto order-last">
-            <p>Linen is an amazing fabric. It’s not only wonderful to wear, but is also the oldest known, as well as one of the most sustainable! This is why we love it so much and we couldn't miss it.</p>
+            <p>{t('linen-is-an-amazing-fabric')}</p>
           </div>
           <SingleProductCard
             className="col-md-3"
@@ -134,13 +134,13 @@ export default function Index() {
       </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">FEEL CONNECTED</h1>
+        <h1 className="text-center mt-5 mb-3">{t('FEEL CONNECTED')}</h1>
         <div className="row">
           <div className="col-md-9">
             <div className="row">
               <div className="row">
                 <div className="col-md-6">
-                  <p>The elegance of the tulip lies in its simplicity. We used inspiration for our TULI dress from the petal shape. This A cut pattern flutters every figure. One of the most sustainable Tencel fabric used for this design perfectly reflects the inspiration ensuring comfort & elegance.</p>
+                  <p>{t('the-elegance-of-the-tulip')}</p>
                 </div>
               </div>
               <SingleProductCard
@@ -165,10 +165,10 @@ export default function Index() {
       </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">OUR ORGANIC COTTON VOILE QUALITY, NATURAL DYE</h1>
+        <h1 className="text-center mt-5 mb-3">{t('OUR ORGANIC COTTON VOILE QUALITY, NATURAL DYE')}</h1>
         <div className="row">
           <div className="col-md-8 mx-auto order-last">
-            <p>Our passion leads us to creativity. Quite organically we met beautiful person and became very good friends. We are honored to work with very talented artist Jola Hardejewicz-Hardy who dedicate her life and passion for art & painting on silk. This time Jola hand-panited for MYNA on organic cotton voile, the finest quality in our collection. Each blouse is different and unique.</p>
+            <p>{t('our-passion-leads-us-to-creativity')}</p>
           </div>
           <SingleProductCard
             className="col-md-3"
@@ -210,13 +210,13 @@ export default function Index() {
               height={1280}
             />
             <div className={`row align-items-center ${style.verticalSpacing}`}>
-              <p className="w-100 text-center">Our LEYA dresss is honored by collaborations with two amazing artists. Jola Hardejewicz-Hardy, who hand-painted our prints and Zaritza, singer&song writer, confident liberated feminist who is dedicated to supporting other woman.</p>
+              <p className="w-100 text-center">{t('our-leya-dresss-is-honored')}</p>
             </div>
           </div>
 
           <div className="col-md-6">
             <div className={`row align-items-center ${style.verticalSpacing}`}>
-              <p className="w-100 text-center">“The biggest beauty is, when you know who you are”<br />Zaritza</p>
+              <p className="w-100 text-center">{t('the-biggest-beauty')}<br />Zaritza</p>
             </div>
             <SingleProductCard
               className="col-md-12"
@@ -232,15 +232,15 @@ export default function Index() {
       </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">OUR ORGANIC COTTON & HEMP QUALITY</h1>
+        <h1 className="text-center mt-5 mb-3">{t('OUR ORGANIC COTTON & HEMP QUALITY')}</h1>
         <div className="row">
           <div className="col-md-8 mx-auto order-last">
-            <p>Sustainability is very important and fashion is no longer only focused on comfort but also its impact on the environment. Our GEA and IVY basic tops are best examples. What do we know:</p>
+            <p>{t('sustainability-is-very-important-and-fashion')}</p>
             <ul>
-              <li>HEMP is antibacterial, which means you can wear it longer than other fabrics, before washing,</li>
-              <li>no pesticides need to be used to grow it as it is weed,</li>
-              <li>at least 50% less water is needed to grow it,</li>
-              <li>there are no waste products as the whole plant is used for different purposes.</li>
+              <li>{t('hemp-is-antibacterial')}</li>
+              <li>{t('no-pesticides-need')}</li>
+              <li>{t('less-water-is-needed')}</li>
+              <li>{t('there-are-no-waste')}</li>
             </ul>
           </div>
           <SingleProductCard
@@ -273,12 +273,11 @@ export default function Index() {
       </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">STAY INSPIRED WITH MYNA – VIEW OUR LOOKBOOK</h1>
+        <h1 className="text-center mt-5 mb-3">{t('STAY INSPIRED WITH MYNA – VIEW OUR LOOKBOOK')}</h1>
         <div className="row">
           <div className="col-md-6 order-last my-auto">
             <p className={style.quote} >
-              She's matured and grown, this time she reflects a balanced elegance of a different summer glow.
-              She's nurturing and perceptive, but every now and then she shows her romantic and spontanous side.
+              {t('common:lookbook-shes-matured')}
             </p>
           </div>
           <SingleProductCard

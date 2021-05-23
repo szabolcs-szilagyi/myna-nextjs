@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import * as reactBootstrap from 'react-bootstrap';
+import { useRouter } from 'next/router'
+import useTranslation from 'next-translate/useTranslation'
 
-const { Navbar, Nav: BSNav, NavDropdown } = reactBootstrap;
+const {
+  Navbar,
+  Nav: BSNav
+} = reactBootstrap;
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -51,6 +56,16 @@ type NavPropsType = {
 
 export default function Nav(props: NavPropsType);
 export default function Nav({ lastItemsDate }) {
+  const router = useRouter();
+  const { t, lang } = useTranslation('common');
+
+  const nextLang = lang === 'en' ? 'pl' : 'en';
+
+  function changeLang() {
+    cookies.set('NEXT_LOCALE', nextLang);
+    router.replace(router.pathname, undefined, { locale: nextLang })
+  }
+
   return (
     <div>
       <div className="desktopNav">
@@ -60,21 +75,24 @@ export default function Nav({ lastItemsDate }) {
           </div>
           <div className="col-md-7 capitalLetters">
             <ul className="navMenu">
-              <li><a href="/lookbook">Lookbook</a></li>
-              <li><a href="/shop-collections">Shop Collections</a></li>
-              <li><a href="/sustainability">Sustainability</a></li>
-              <li><a href="/our-story">Our Story</a></li>
+              <li><a href="/lookbook">{t('Lookbook')}</a></li>
+              <li><a href="/shop-collections">{t('Shop Collections')}</a></li>
+              <li><a href="/sustainability">{t('Sustainability')}</a></li>
+              <li><a href="/our-story">{t('Our Story')}</a></li>
             </ul>
           </div>
           <div className="col-md-3">
             <div className="row capitalLetters">
-              <div className="col-md-7 ce padtop50px">
-                <a className="menu" href="/my-account">My Account</a>
+              <div className="col-md-6 ce padtop50px">
+                <a className="menu" href="/my-account">{t('My Account')}</a>
               </div>
               <Cart
-                containerClass="col-md-5 ce padtop43px navCart"
+                containerClass="col-md-4 ce padtop43px navCart"
                 lastItemsDate={lastItemsDate}
               />
+              <div className="col-md-2 ce padtop50px">
+                <button onClick={changeLang}>{nextLang}</button>
+              </div>
             </div>
           </div>
         </div>
@@ -88,7 +106,7 @@ export default function Nav({ lastItemsDate }) {
           </div>
           <div className="col-md-1" />
           <div className="col-md-4 ce menu">
-            <div className="padtop50px blackFont"><a href="/my-account">My Account</a></div>
+            <div className="padtop50px blackFont"><a href="/my-account">{t('My Account')}</a></div>
           </div>
           <div className="col-md-4 ce">
             <Cart
@@ -99,16 +117,16 @@ export default function Nav({ lastItemsDate }) {
         </div>
         <div className="row">
           <div className="col-md-3 ce menu">
-            <div className="padtop43px blackFont"><a href="/lookbook">Lookbook</a></div>
+            <div className="padtop43px blackFont"><a href="/lookbook">{t('Lookbook')}</a></div>
           </div>
           <div className="col-md-3 ce menu">
-            <div className="padtop43px blackFont"><a href="/shop-collections">Shop Collections</a></div>
+            <div className="padtop43px blackFont"><a href="/shop-collections">{t('Shop Collections')}</a></div>
           </div>
           <div className="col-md-3 ce menu">
-            <div className="padtop43px blackFont"><a href="/sustainability">Sustainability</a></div>
+            <div className="padtop43px blackFont"><a href="/sustainability">{t('Sustainability')}</a></div>
           </div>
           <div className="col-md-3 ce menu">
-            <div className="padtop43px blackFont"><a href="/our-story">Our Story</a></div>
+            <div className="padtop43px blackFont"><a href="/our-story">{t('Our Story')}</a></div>
           </div>
         </div>
       </div>
@@ -127,15 +145,15 @@ export default function Nav({ lastItemsDate }) {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="text-center">
             <BSNav>
-              <BSNav.Link className="blackFont" href="/my-account">My Account</BSNav.Link>
+              <BSNav.Link className="blackFont" href="/my-account">{t('My Account')}</BSNav.Link>
               <Cart
                 containerClass="blackFont padtop10px"
                 lastItemsDate={lastItemsDate}
               />
-              <BSNav.Link className="blackFont" href="/lookbook">Lookbook</BSNav.Link>
-              <BSNav.Link className="blackFont" href="/shop-collections">Shop Collections</BSNav.Link>
-              <BSNav.Link className="blackFont" href="/sustainability">Sustainability</BSNav.Link>
-              <BSNav.Link className="blackFont" href="/our-story">Our Story</BSNav.Link>
+              <BSNav.Link className="blackFont" href="/lookbook">{t('Lookbook')}</BSNav.Link>
+              <BSNav.Link className="blackFont" href="/shop-collections">{t('Shop Collections')}</BSNav.Link>
+              <BSNav.Link className="blackFont" href="/sustainability">{t('Sustainability')}</BSNav.Link>
+              <BSNav.Link className="blackFont" href="/our-story">{t('Our Story')}</BSNav.Link>
             </BSNav>
           </Navbar.Collapse>
         </Navbar>
