@@ -5,6 +5,7 @@
     "*": ["common"],
     "/": ["home"],
     "/our-story": ["our-story"],
+    "/sustainability": ["sustainability"],
     "/[idname]": ["idname"]
   }
 }
