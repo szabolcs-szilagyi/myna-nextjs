@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import * as reactBootstrap from 'react-bootstrap';
 import { useRouter } from 'next/router'
 import useTranslation from 'next-translate/useTranslation'
@@ -36,16 +37,15 @@ function Cart({ containerClass, lastItemsDate }) {
 
   return (
     <div className={containerClass}>
-      <a
+      <Link href="/checkout"><a
         className="menu"
-        href="/checkout"
         onMouseEnter={() => setCartIcon('/cart-b.png')}
         onMouseLeave={() => setCartIcon('/cart.png')}
       ><img
          src={cartIcon}
          width="35"
          height="35"
-       />({inCart})</a>
+       />({inCart})</a></Link>
     </div>
   );
 }
@@ -71,20 +71,22 @@ export default function Nav({ lastItemsDate }) {
       <div className="desktopNav">
         <div className="row">
           <div className="col-md-2">
-            <a href="/"><img className="logoMain" src="/logo.png" alt="MYNA Logo" /></a>
+            <Link href="/">
+              <a><img className="logoMain" src="/logo.png" alt="MYNA Logo" /></a>
+            </Link>
           </div>
           <div className="col-md-7 capitalLetters">
             <ul className="navMenu">
-              <li><a href="/lookbook">{t('Lookbook')}</a></li>
-              <li><a href="/shop-collections">{t('Shop Collections')}</a></li>
-              <li><a href="/sustainability">{t('Sustainability')}</a></li>
-              <li><a href="/our-story">{t('Our Story')}</a></li>
+              <li><Link href="/lookbook"><a>{t('Lookbook')}</a></Link></li>
+              <li><Link href="/shop-collections"><a>{t('Shop Collections')}</a></Link></li>
+              <li><Link href="/sustainability"><a>{t('Sustainability')}</a></Link></li>
+              <li><Link href="/our-story"><a>{t('Our Story')}</a></Link></li>
             </ul>
           </div>
           <div className="col-md-3">
             <div className="row capitalLetters">
               <div className="col-md-6 ce padtop50px">
-                <a className="menu" href="/my-account">{t('My Account')}</a>
+                <Link href="/my-account"><a className="menu">{t('My Account')}</a></Link>
               </div>
               <Cart
                 containerClass="col-md-4 ce padtop43px navCart"
@@ -102,11 +104,13 @@ export default function Nav({ lastItemsDate }) {
         <div className="row">
           <div className="col-md-1" />
           <div className="col-md-2">
-            <a href="/"><img src="/logo.png" alt="MYNA Logo" /></a>
+            <Link href="/"><a><img src="/logo.png" alt="MYNA Logo" /></a></Link>
           </div>
           <div className="col-md-1" />
           <div className="col-md-4 ce menu">
-            <div className="padtop50px blackFont"><a href="/my-account">{t('My Account')}</a></div>
+            <div className="padtop50px blackFont">
+              <Link href="/my-account"><a>{t('My Account')}</a></Link>
+            </div>
           </div>
           <div className="col-md-4 ce">
             <Cart
@@ -117,16 +121,24 @@ export default function Nav({ lastItemsDate }) {
         </div>
         <div className="row">
           <div className="col-md-3 ce menu">
-            <div className="padtop43px blackFont"><a href="/lookbook">{t('Lookbook')}</a></div>
+            <div className="padtop43px blackFont">
+              <Link href="/lookbook"><a>{t('Lookbook')}</a></Link>
+            </div>
           </div>
           <div className="col-md-3 ce menu">
-            <div className="padtop43px blackFont"><a href="/shop-collections">{t('Shop Collections')}</a></div>
+            <div className="padtop43px blackFont">
+              <Link href="/shop-collections"><a>{t('Shop Collections')}</a></Link>
+            </div>
           </div>
           <div className="col-md-3 ce menu">
-            <div className="padtop43px blackFont"><a href="/sustainability">{t('Sustainability')}</a></div>
+            <div className="padtop43px blackFont">
+              <Link href="/sustainability"><a>{t('Sustainability')}</a></Link>
+            </div>
           </div>
           <div className="col-md-3 ce menu">
-            <div className="padtop43px blackFont"><a href="/our-story">{t('Our Story')}</a></div>
+            <div className="padtop43px blackFont">
+              <Link href="/our-story"><a>{t('Our Story')}</a></Link>
+            </div>
           </div>
         </div>
       </div>

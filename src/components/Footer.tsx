@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Link from 'next/link';
 import withTranslation from 'next-translate/withTranslation';
 import {
   API_SERVER,
@@ -120,11 +121,11 @@ class Footer extends Component {
                 <div className="row">
                   <div className="col-md-4"></div>
                   <div className="col-md-8">
-                    <p><a href="/our-story" className="blackFont">{this.t('common:Our Story')}</a></p>
-                    <p><a href="/sustainability" className="blackFont">{this.t('common:Sustainability')}</a></p>
-                    <p><a href="/shipping" className="blackFont">{this.t('common:shipping-n-returns')}</a></p>
-                    <p><a href="/size-measurement" className="blackFont">{this.t('common:size-n-measurement')}</a></p>
-                    <p><a href="/privacy-contact" className="blackFont">{this.t('common:privacy-n-contact')}</a></p>
+                    <p><Link href="/our-story"><a className="blackFont">{this.t('common:Our Story')}</a></Link></p>
+                    <p><Link href="/sustainability"><a className="blackFont">{this.t('common:Sustainability')}</a></Link></p>
+                    <p><Link href="/shipping"><a className="blackFont">{this.t('common:shipping-n-returns')}</a></Link></p>
+                    <p><Link href="/size-measurement"><a className="blackFont">{this.t('common:size-n-measurement')}</a></Link></p>
+                    <p><Link href="/privacy-contact"><a className="blackFont">{this.t('common:privacy-n-contact')}</a></Link></p>
                   </div>
                 </div>
               </div>

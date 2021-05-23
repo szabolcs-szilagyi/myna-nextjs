@@ -1,4 +1,5 @@
 import Container from 'react-bootstrap/Container';
+import Link from 'next/link';
 import Image from 'next/image';
 import useTranslation from 'next-translate/useTranslation'
 
@@ -11,7 +12,7 @@ import style from './lookbook.module.css';
 function LookbookImage({ imageSrc, height, width, alt = '', additionalClass = '' }) {
   return (
     <div className={style.imageContainer + ' ' + additionalClass} >
-      <a href="/shop-collections">
+      <Link href="/shop-collections"><a>
         <Image
           layout="responsive"
           height={height}
@@ -19,7 +20,7 @@ function LookbookImage({ imageSrc, height, width, alt = '', additionalClass = ''
           src={imageSrc}
           alt={alt}
         />
-      </a>
+      </a></Link>
     </div>
   );
 }
