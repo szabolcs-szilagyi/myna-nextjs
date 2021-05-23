@@ -1,22 +1,22 @@
-import React, { useState, Component } from 'react';
-import ReactDOM from 'react-dom';
+import { Component } from 'react';
+import Cookies from 'universal-cookie';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
+import Container from 'react-bootstrap/Container';
+
 import {
   API_SERVER,
   API_PATH,
 } from '../constants';
-import Cookies from 'universal-cookie';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Ping from '../components/Ping';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
+
 const cookies = new Cookies();
 const session = cookies.get('session');
 
-export default class Index extends React.Component {
+export default class MyAccount extends Component {
   options: any;
   state: any;
 
@@ -62,6 +62,7 @@ export default class Index extends React.Component {
     this.handleChange9 = this.handleChange9.bind(this);
     this.handleChange10 = this.handleChange10.bind(this);
     this.handleChange11 = this.handleChange11.bind(this);
+
     this.amILoggedIn = this.amILoggedIn.bind(this);
     this.sendLogin = this.sendLogin.bind(this);
     this.createToken = this.createToken.bind(this);
@@ -86,42 +87,55 @@ export default class Index extends React.Component {
     let tmp2 = tmp["label"];
     this.setState({ dCountry: tmp2 }, () => { console.log (this.state.dCountry); });
   }
+
   handleChange (event) {
     this.setState({inputEmail: event.target.value}, () => { });
   }
+
   handleChange1 (event) {
     this.setState({firstName: event.target.value}, () => { });
   }
+
   handleChange2 (event) {
     this.setState({lastName: event.target.value}, () => { });
   }
+
   handleChange3 (event) {
     this.setState({birthday: event.target.value}, () => { });
   }
+
   handleChange4 (event) {
     this.setState({dMobile: event.target.value}, () => { });
   }
+
   handleChange5 (event) {
     this.setState({dAddress1: event.target.value}, () => { });
   }
+
   handleChange6 (event) {
     this.setState({dAddress2: event.target.value}, () => { });
   }
+
   handleChange7 (event) {
     this.setState({dCity: event.target.value}, () => { });
   }
+
   handleChange8 (event) {
     this.setState({dState: event.target.value}, () => { });
   }
+
   handleChange9 (event) {
     this.setState({dZip: event.target.value}, () => { });
   }
+
   handleChange10 (event) {
     this.setState({dCountry: event.target.value}, () => { });
   }
+
   handleChange11 (event) {
     this.setState({dComment: event.target.value}, () => { });
   }
+
   amILoggedIn () {
     fetch(API_SERVER + API_PATH + '?part=amiloggedin&sessiontoken=' + session)
     .then(response => response.json())
@@ -134,10 +148,12 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
+
   sendLogin () {
     setTimeout(this.createToken, 100);
     setTimeout(this.sendMail, 500);
   }
+
   createToken () {
     fetch(API_SERVER + API_PATH + '?part=loginmail&email=' + this.state.inputEmail)
     .then(response => response.json())
@@ -149,12 +165,12 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
+
   sendMail () {
-    //fetch(API_SERVER + 'amazon-ses-smtp.php?part=login&email=' + this.state.loginEmail + '&token=' + this.state.loginToken, {mode: 'no-cors'});
-    //this.setState({ textOnLoginButton: 'SENT' });
     let url = "/autologin?part=login&token=" + this.state.loginToken + "&email=" + this.state.loginEmail;
     window.location.href = url;
   }
+
   saveDetails () {
     let crossRoad;
     crossRoad = 0;
@@ -173,6 +189,7 @@ export default class Index extends React.Component {
       setTimeout(this.redirect, 1500);
     }
   }
+
   saveUserData () {
     let email = this.state.myEmail;
     let fname = this.state.firstName;
@@ -194,6 +211,7 @@ export default class Index extends React.Component {
       .catch(error => console.log(error.message));
     }
   }
+
   loadUserData () {
     fetch(API_SERVER + API_PATH + '?part=getuserdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
     .then(response => response.json())
@@ -210,6 +228,7 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
+
   saveAddressData () {
     let address1 = this.state.dAddress1;
     let city = this.state.dCity;
@@ -229,6 +248,7 @@ export default class Index extends React.Component {
       .catch(error => console.log(error.message));
     }
   }
+
   loadAddressData () {
     fetch(API_SERVER + API_PATH + '?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
     .then(response => response.json())
@@ -250,10 +270,20 @@ export default class Index extends React.Component {
       if (city == '0') { city = ''; }
       if (country == '0') { country = ''; }
       if (zip == '0') { zip = ''; }
-      this.setState({ dMobile: mobile, dAddress1: address1, dAddress2: address2, dCity: city, dState: state, dZip: zip, dCountry: country, dComment: comment });
+      this.setState({
+        dMobile: mobile,
+        dAddress1: address1,
+        dAddress2: address2,
+        dCity: city,
+        dState: state,
+        dZip: zip,
+        dCountry: country,
+        dComment: comment,
+      });
     })
     .catch(error => console.log(error.message));
   }
+
   checkEmail () {
     fetch(API_SERVER + API_PATH + '?part=getemail&sessiontoken=' + session)
     .then(response => response.json())
@@ -264,6 +294,7 @@ export default class Index extends React.Component {
     })
     .catch(error => console.log(error.message));
   }
+
   redirect () {
     window.location.href = "/checkout";
   }
@@ -271,9 +302,8 @@ export default class Index extends React.Component {
   componentDidMount() {
     setTimeout(this.amILoggedIn, 100);
     setTimeout(this.checkEmail, 300);
-    //setTimeout(this.loadUserData, 900);
-    //setTimeout(this.loadAddressData, 1000);
   }
+
   render() {
     if (this.state.loginOrEdit == 'login') {
       return (
@@ -287,9 +317,22 @@ export default class Index extends React.Component {
                 <h1><strong>Login to your account</strong></h1>
                 <p>Please give your email address to continue</p>
                 <div className="spacer50px" />
-                <input className="loginEmail" type="text" value={this.state.inputEmail} onChange={this.handleChange} maxLength={128} placeholder="enter your email here" />
+                <input
+                  className="loginEmail"
+                  type="text"
+                  value={this.state.inputEmail}
+                  onChange={this.handleChange}
+                  maxLength={128}
+                  placeholder="enter your email here"
+                />
                 <div className="spacer50px" />
-                <div className="noBorder mediumFont"><button type="button" className="cartButton" onClick={this.sendLogin}>{this.state.textOnLoginButton}</button></div>
+                <div className="noBorder mediumFont">
+                  <button
+                    type="button"
+                    className="cartButton"
+                    onClick={this.sendLogin}
+                  >{this.state.textOnLoginButton}</button>
+                </div>
               </div>
             </div>
             <Footer />
@@ -310,15 +353,44 @@ export default class Index extends React.Component {
                   <div className="col-md-2" />
                   <div className="col-md-4">
                     <div className="spacer25px" />
-                    <input className="userDetails" type="text" value={this.state.firstName} onChange={this.handleChange1} maxLength={128} placeholder="* NAME" />
+                    <input
+                      className="userDetails"
+                      type="text"
+                      value={this.state.firstName}
+                      onChange={this.handleChange1}
+                      maxLength={128}
+                      placeholder="* NAME"
+                    />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.lastName} onChange={this.handleChange2} maxLength={128} placeholder="* SURNAME" />
+                    <input
+                      className="userDetails"
+                      type="text"
+                      value={this.state.lastName}
+                      onChange={this.handleChange2}
+                      maxLength={128}
+                      placeholder="* SURNAME"
+                    />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.birthday} onChange={this.handleChange3} maxLength={10} placeholder="* DATE OF BIRTH (YYYY-MM-DD)" />
+                    <input
+                      className="userDetails"
+                      type="text"
+                      value={this.state.birthday}
+                      onChange={this.handleChange3}
+                      maxLength={10}
+                      placeholder="* DATE OF BIRTH (YYYY-MM-DD)"
+                    />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.dMobile} onChange={this.handleChange4} maxLength={32} placeholder="* MOBILE NUMBER" />
+                    <input
+                      className="userDetails"
+                      type="text"
+                      value={this.state.dMobile}
+                      onChange={this.handleChange4}
+                      maxLength={32}
+                      placeholder="* MOBILE NUMBER"
+                    />
                     <div className="spacer10px" />
-                    <Select className="userDetails"
+                    <Select
+                      className="userDetails"
                       options={this.state.options}
                       value={this.state.value}
                       onChange={this.changeHandler}
@@ -327,13 +399,41 @@ export default class Index extends React.Component {
                   </div>
                   <div className="col-md-4">
                     <div className="spacer25px" />
-                    <input className="userDetails" type="text" value={this.state.dAddress1} onChange={this.handleChange5} maxLength={128} placeholder="* ADDRESS LINE 1" />
+                    <input
+                      className="userDetails"
+                      type="text"
+                      value={this.state.dAddress1}
+                      onChange={this.handleChange5}
+                      maxLength={128}
+                      placeholder="* ADDRESS LINE 1"
+                    />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.dAddress2} onChange={this.handleChange6} maxLength={128} placeholder="ADDRESS LINE 2" />
+                    <input
+                      className="userDetails"
+                      type="text"
+                      value={this.state.dAddress2}
+                      onChange={this.handleChange6}
+                      maxLength={128}
+                      placeholder="ADDRESS LINE 2"
+                    />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.dCity} onChange={this.handleChange7} maxLength={128} placeholder="* CITY" />
+                    <input
+                      className="userDetails"
+                      type="text"
+                      value={this.state.dCity}
+                      onChange={this.handleChange7}
+                      maxLength={128}
+                      placeholder="* CITY"
+                    />
                     <div className="spacer10px" />
-                    <input className="userDetails" type="text" value={this.state.dZip} onChange={this.handleChange9} maxLength={64} placeholder="* POSTAL CODE" />
+                    <input
+                      className="userDetails"
+                      type="text"
+                      value={this.state.dZip}
+                      onChange={this.handleChange9}
+                      maxLength={64}
+                      placeholder="* POSTAL CODE"
+                    />
                     <div className="spacer10px" />
                     <div className="paddingtop5px">* Country: {this.state.dCountry}</div>
                     <div className="spacer10px" />
@@ -343,7 +443,13 @@ export default class Index extends React.Component {
                 <div className="row">
                   <div className="col-md-12 ce">
                     <div className="spacer10px" />
-                    <div className="noBorder mediumFont"><button type="button" className="cartButton" onClick={this.saveDetails}>{this.state.textOnSaveButton}</button></div>
+                    <div className="noBorder mediumFont">
+                      <button
+                        type="button"
+                        className="cartButton"
+                        onClick={this.saveDetails}
+                      >{this.state.textOnSaveButton}</button>
+                    </div>
                   </div>
                 </div>
               </div>
