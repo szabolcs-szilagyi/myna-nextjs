@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, useState, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
@@ -16,119 +16,107 @@ import Ping from '../components/Ping';
 const cookies = new Cookies();
 const session = cookies.get('session');
 
-export default class MyAccount extends Component {
-  options: any;
-  state: any;
+export default function MyAccount(props) {
+  const options = countryList().getData();
 
-  constructor(props) {
-    super(props);
+  const [addressState, setAddressState] = useState({
+    value: null,
+    myEmail: '',
+    loginOrEdit: 'login',
+    inputEmail: '',
+    loginEmail: '',
+    loginToken: '',
+    textOnSaveButton: 'SAVE & CHECKOUT',
+    firstName: '',
+    lastName: '',
+    birthday: '',
+    dName: '',
+    dAddress1: '',
+    dAddress2: '',
+    dCity: '',
+    dState: '',
+    dZip: '',
+    dCountry: '' as any,
+    dComment: '',
+    dMobile: ''
+  });
 
-    this.options = countryList().getData();
+  useEffect(() => {
+    amILoggedIn();
+  }, []);
 
-    this.state = {
-      value: null,
-      myEmail: '',
-      loginOrEdit: 'login',
-      inputEmail: '',
-      loginEmail: '',
-      loginToken: '',
-      textOnSaveButton: 'SAVE & CHECKOUT',
-      firstName: '',
-      lastName: '',
-      birthday: '',
-      dName: '',
-      dAddress1: '',
-      dAddress2: '',
-      dCity: '',
-      dState: '',
-      dZip: '',
-      dCountry: '',
-      dComment: '',
-      dMobile: ''
-    };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-
-    this.amILoggedIn = this.amILoggedIn.bind(this);
-    this.sendLogin = this.sendLogin.bind(this);
-    this.createToken = this.createToken.bind(this);
-    this.sendMail = this.sendMail.bind(this);
-    this.saveDetails = this.saveDetails.bind(this);
-    this.saveUserData = this.saveUserData.bind(this);
-    this.saveAddressData = this.saveAddressData.bind(this);
-    this.checkEmail = this.checkEmail.bind(this);
-    this.redirect = this.redirect.bind(this);
-
+  const handleSelectChange = name => value => {
+    setAddressState({
+      ...addressState,
+      [name]: value,
+    });
   }
 
-  handleSelectChange = name => value => {
-    this.setState({ [name]: value });
+  function handleInputChange({ target: { value, name } }) {
+    setAddressState({
+      ...addressState,
+      [name]: value,
+    });
   }
 
-  handleInputChange({ target: { value, name } }) {
-    console.log(name, value);
-    this.setState({ [name]:  value });
-  }
-
-  amILoggedIn () {
+  function amILoggedIn() {
     fetch(API_SERVER + API_PATH + '?part=amiloggedin&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['email'];
-      if (tmp != "nodata") {
-        this.setState({ myEmail: tmp, loginOrEdit: 'edit' });
-      }
-    })
-    .catch(error => console.log(error.message));
+      .then(response => response.json())
+      .then(data => {
+        if (data.email != "nodata") {
+          setAddressState({
+            ...addressState,
+            myEmail: data.email,
+            loginOrEdit: 'edit'
+          });
+        }
+      })
+      .catch(error => console.log(error.message));
   }
 
-  sendLogin () {
-    setTimeout(this.createToken, 100);
-    setTimeout(this.sendMail, 500);
+  async function createToken() {
+    return fetch(API_SERVER + API_PATH + '?part=loginmail&email=' + addressState.inputEmail)
+      .then(response => response.json())
+      .then(data => {
+        setAddressState({
+          ...addressState,
+          loginEmail: data.email,
+          loginToken: data.logintoken,
+          myEmail: data.email,
+          loginOrEdit: 'edit',
+        });
+        return fetch(API_SERVER + API_PATH + '?part=login&logintoken=' + data.logintoken + '&email=' + data.email + '&sessiontoken=' + session, {mode: 'no-cors'});
+      })
+      .catch(error => console.log(error.message));
   }
 
-  createToken () {
-    fetch(API_SERVER + API_PATH + '?part=loginmail&email=' + this.state.inputEmail)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp1 = data['email'];
-      let tmp2 = data['logintoken'];
-      this.setState({ loginEmail: tmp1, loginToken: tmp2 });
-    })
-    .catch(error => console.log(error.message));
-  }
-
-  sendMail () {
-    let url = "/autologin?part=login&token=" + this.state.loginToken + "&email=" + this.state.loginEmail;
-    window.location.href = url;
-  }
-
-  saveDetails () {
+  function saveDetails () {
     let crossRoad;
     crossRoad = 0;
-    if (this.state.myEmail == '') { crossRoad = 1; }
-    if (this.state.firstName == '') { crossRoad = 1; }
-    if (this.state.lastName == '') { crossRoad = 1; }
-    if (this.state.birthday == '') { crossRoad = 1; }
-    if (this.state.dCountry?.label == '') { crossRoad = 1; }
-    if (this.state.dAddress1 == '') { crossRoad = 1; }
-    if (this.state.dCity == '') { crossRoad = 1; }
-    if (this.state.zip == '') { crossRoad = 1; }
+    if (addressState.myEmail == '') { crossRoad = 1; }
+    if (addressState.firstName == '') { crossRoad = 1; }
+    if (addressState.lastName == '') { crossRoad = 1; }
+    if (addressState.birthday == '') { crossRoad = 1; }
+    if (addressState.dCountry?.label == '') { crossRoad = 1; }
+    if (addressState.dAddress1 == '') { crossRoad = 1; }
+    if (addressState.dCity == '') { crossRoad = 1; }
+    if (addressState.dZip == '') { crossRoad = 1; }
     if (crossRoad == 0) {
-      this.saveUserData ();
-      setTimeout(this.saveAddressData, 1000);
-      this.setState({ textOnSaveButton: 'SAVED' })
-      setTimeout(this.redirect, 1500);
+      saveUserData ();
+      setTimeout(saveAddressData, 1000);
+      setAddressState({
+        ...addressState,
+        textOnSaveButton: 'SAVED',
+      })
+      setTimeout(redirect, 1500);
     }
   }
 
-  saveUserData () {
-    let email = this.state.myEmail;
-    let fname = this.state.firstName;
-    let lname = this.state.lastName;
-    let bday = this.state.birthday;
+  function saveUserData () {
+    let email = addressState.myEmail;
+    let fname = addressState.firstName;
+    let lname = addressState.lastName;
+    let bday = addressState.birthday;
     let crossRoad;
     crossRoad = 0;
     if (email == '') { crossRoad = 1; }
@@ -136,218 +124,188 @@ export default class MyAccount extends Component {
     if (lname == '') { crossRoad = 1; }
     if (bday == '') { crossRoad = 1; }
     if (crossRoad == 0) {
-      fetch(API_SERVER + API_PATH + '?part=updateuserdata&email=' + this.state.myEmail + '&firstname=' + this.state.firstName + '&lastname=' + this.state.lastName + '&birthday=' + this.state.birthday  + '&sessiontoken=' + session)
-      .then(response => response.json())
-		  .then(output => {
-        let data = output;
-        let tmp = data['success'];
-      })
-      .catch(error => console.log(error.message));
+      fetch(API_SERVER + API_PATH + '?part=updateuserdata&email=' + addressState.myEmail + '&firstname=' + addressState.firstName + '&lastname=' + addressState.lastName + '&birthday=' + addressState.birthday  + '&sessiontoken=' + session)
+        .then(response => response.json())
+        .then(output => {
+          let data = output;
+          let tmp = data['success'];
+        })
+        .catch(error => console.log(error.message));
     }
   }
 
-  saveAddressData () {
-    let address1 = this.state.dAddress1;
-    let city = this.state.dCity;
-    let zip = this.state.zip;
+  function saveAddressData () {
+    let address1 = addressState.dAddress1;
+    let city = addressState.dCity;
+    let zip = addressState.dZip;
     let crossRoad;
     crossRoad = 0;
     if (address1 == '') { crossRoad = 1; }
     if (city == '') { crossRoad = 1; }
     if (zip == '') { crossRoad = 1; }
     if (crossRoad == 0) {
-      fetch(API_SERVER + API_PATH + '?part=setaddressdata&email=' + this.state.myEmail + '&type=1&mobile=' + this.state.dMobile + '&address1=' + this.state.dAddress1 + '&address2=' + this.state.dAddress2 + '&city=' + this.state.dCity + '&state=' + this.state.dState + '&zip=' + this.state.dZip + '&country=' + this.state?.dCountry.label + '&comment=' + this.state.dComment  + '&sessiontoken=' + session)
-      .then(response => response.json())
-		  .then(output => {
-        let data = output;
-        let tmp = data['success'];
-      })
-      .catch(error => console.log(error.message));
+      fetch(API_SERVER + API_PATH + '?part=setaddressdata&email=' + addressState.myEmail + '&type=1&mobile=' + addressState.dMobile + '&address1=' + addressState.dAddress1 + '&address2=' + addressState.dAddress2 + '&city=' + addressState.dCity + '&state=' + addressState.dState + '&zip=' + addressState.dZip + '&country=' + addressState?.dCountry.label + '&comment=' + addressState.dComment  + '&sessiontoken=' + session)
+        .then(response => response.json())
+        .then(output => {
+          let data = output;
+          let tmp = data['success'];
+        })
+        .catch(error => console.log(error.message));
     }
   }
 
-  checkEmail () {
-    fetch(API_SERVER + API_PATH + '?part=getemail&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['email'];
-      this.setState({ myEmail: tmp });
-    })
-    .catch(error => console.log(error.message));
-  }
-
-  redirect () {
+  function redirect () {
     window.location.href = "/checkout";
   }
 
-  componentDidMount() {
-    setTimeout(this.amILoggedIn, 100);
-    setTimeout(this.checkEmail, 300);
-  }
+  return (
+    <Container fluid>
+      <Header />
+      <Nav />
+      <Ping />
+      <div className="spacer10px" />
+      <div className={addressState.loginOrEdit === 'login' ? 'row' : 'row d-none'}>
+        <div className="col-md-12 ce capitalLetters">
+          <h1><strong>Login to your account</strong></h1>
+          <p>Please give your email address to continue</p>
+          <div className="spacer50px" />
+          <input
+            className="loginEmail"
+            type="text"
+            value={addressState.inputEmail}
+            name="inputEmail"
+            onChange={handleInputChange}
+            maxLength={128}
+            placeholder="enter your email here"
+          />
+          <div className="spacer50px" />
+          <div className="noBorder mediumFont">
+            <button
+              type="button"
+              className="cartButton"
+              onClick={createToken}
+            >SUBMIT</button>
+          </div>
+        </div>
+      </div>
 
-  render() {
-    if (this.state.loginOrEdit == 'login') {
-      return (
-        <Container fluid>
-          <Header />
-          <Nav />
-          <Ping />
-            <div className="spacer50px" />
-            <div className="row">
-              <div className="col-md-12 ce capitalLetters">
-                <h1><strong>Login to your account</strong></h1>
-                <p>Please give your email address to continue</p>
-                <div className="spacer50px" />
-                <input
-                  className="loginEmail"
-                  type="text"
-                  value={this.state.inputEmail}
-                  name="inputEmail"
-                  onChange={this.handleInputChange}
-                  maxLength={128}
-                  placeholder="enter your email here"
-                />
-                <div className="spacer50px" />
-                <div className="noBorder mediumFont">
-                  <button
-                    type="button"
-                    className="cartButton"
-                    onClick={this.sendLogin}
-                  >SUBMIT</button>
-                </div>
+      <div className={addressState.loginOrEdit === 'edit' ? 'row' : 'row d-none'}>
+        <div className="col-md-12 ce capitalLetters">
+          <h1><strong>Your account</strong></h1>
+          <div className="row">
+            <div className="col-md-2" />
+            <div className="col-md-4">
+              <div className="spacer25px" />
+              <input
+                className="userDetails"
+                type="text"
+                value={addressState.firstName}
+                name="firstName"
+                onChange={handleInputChange}
+                maxLength={128}
+                placeholder="* NAME"
+              />
+              <div className="spacer10px" />
+              <input
+                className="userDetails"
+                type="text"
+                value={addressState.lastName}
+                name="lastName"
+                onChange={handleInputChange}
+                maxLength={128}
+                placeholder="* SURNAME"
+              />
+              <div className="spacer10px" />
+              <input
+                className="userDetails"
+                type="text"
+                value={addressState.birthday}
+                name="birthday"
+                onChange={handleInputChange}
+                maxLength={10}
+                placeholder="* DATE OF BIRTH (YYYY-MM-DD)"
+              />
+              <div className="spacer10px" />
+              <input
+                className="userDetails"
+                type="text"
+                value={addressState.dMobile}
+                name="dMobile"
+                onChange={handleInputChange}
+                maxLength={32}
+                placeholder="* MOBILE NUMBER"
+              />
+              <div className="spacer10px" />
+              <Select
+                className="userDetails"
+                options={options}
+                value={addressState.dCountry}
+                onChange={handleSelectChange('dCountry')}
+              />
+              <div className="spacer10px" />
+            </div>
+            <div className="col-md-4">
+              <div className="spacer25px" />
+              <input
+                className="userDetails"
+                type="text"
+                value={addressState.dAddress1}
+                name="dAddress1"
+                onChange={handleInputChange}
+                maxLength={128}
+                placeholder="* ADDRESS LINE 1"
+              />
+              <div className="spacer10px" />
+              <input
+                className="userDetails"
+                type="text"
+                value={addressState.dAddress2}
+                name="dAddress2"
+                onChange={handleInputChange}
+                maxLength={128}
+                placeholder="ADDRESS LINE 2"
+              />
+              <div className="spacer10px" />
+              <input
+                className="userDetails"
+                type="text"
+                value={addressState.dCity}
+                name="dCity"
+                onChange={handleInputChange}
+                maxLength={128}
+                placeholder="* CITY"
+              />
+              <div className="spacer10px" />
+              <input
+                className="userDetails"
+                type="text"
+                value={addressState.dZip}
+                name="dZip"
+                onChange={handleInputChange}
+                maxLength={64}
+                placeholder="* POSTAL CODE"
+              />
+              <div className="spacer10px" />
+              <div className="paddingtop5px">* Country: {addressState.dCountry.label}</div>
+              <div className="spacer10px" />
+            </div>
+            <div className="col-md-2" />
+          </div>
+          <div className="row">
+            <div className="col-md-12 ce">
+              <div className="spacer10px" />
+              <div className="noBorder mediumFont">
+                <button
+                  type="button"
+                  className="cartButton"
+                  onClick={saveDetails}
+                >{addressState.textOnSaveButton}</button>
               </div>
             </div>
-            <Footer />
-        </Container>
-      );
-    }
-    if (this.state.loginOrEdit == 'edit') {
-      return (
-        <Container fluid>
-          <Header />
-          <Nav />
-          <Ping />
-            <div className="spacer10px" />
-            <div className="row">
-              <div className="col-md-12 ce capitalLetters">
-                <h1><strong>Your account</strong></h1>
-                <div className="row">
-                  <div className="col-md-2" />
-                  <div className="col-md-4">
-                    <div className="spacer25px" />
-                    <input
-                      className="userDetails"
-                      type="text"
-                      value={this.state.firstName}
-                      name="firstName"
-                      onChange={this.handleInputChange}
-                      maxLength={128}
-                      placeholder="* NAME"
-                    />
-                    <div className="spacer10px" />
-                    <input
-                      className="userDetails"
-                      type="text"
-                      value={this.state.lastName}
-                      name="lastName"
-                      onChange={this.handleInputChange}
-                      maxLength={128}
-                      placeholder="* SURNAME"
-                    />
-                    <div className="spacer10px" />
-                    <input
-                      className="userDetails"
-                      type="text"
-                      value={this.state.birthday}
-                      name="birthday"
-                      onChange={this.handleInputChange}
-                      maxLength={10}
-                      placeholder="* DATE OF BIRTH (YYYY-MM-DD)"
-                    />
-                    <div className="spacer10px" />
-                    <input
-                      className="userDetails"
-                      type="text"
-                      value={this.state.dMobile}
-                      name="dMobile"
-                      onChange={this.handleInputChange}
-                      maxLength={32}
-                      placeholder="* MOBILE NUMBER"
-                    />
-                    <div className="spacer10px" />
-                    <Select
-                      className="userDetails"
-                      options={this.options}
-                      value={this.state.dCountry}
-                      onChange={this.handleSelectChange('dCountry')}
-                    />
-                    <div className="spacer10px" />
-                  </div>
-                  <div className="col-md-4">
-                    <div className="spacer25px" />
-                    <input
-                      className="userDetails"
-                      type="text"
-                      value={this.state.dAddress1}
-                      name="dAddress1"
-                      onChange={this.handleInputChange}
-                      maxLength={128}
-                      placeholder="* ADDRESS LINE 1"
-                    />
-                    <div className="spacer10px" />
-                    <input
-                      className="userDetails"
-                      type="text"
-                      value={this.state.dAddress2}
-                      name="dAddress2"
-                      onChange={this.handleInputChange}
-                      maxLength={128}
-                      placeholder="ADDRESS LINE 2"
-                    />
-                    <div className="spacer10px" />
-                    <input
-                      className="userDetails"
-                      type="text"
-                      value={this.state.dCity}
-                      name="dCity"
-                      onChange={this.handleInputChange}
-                      maxLength={128}
-                      placeholder="* CITY"
-                    />
-                    <div className="spacer10px" />
-                    <input
-                      className="userDetails"
-                      type="text"
-                      value={this.state.dZip}
-                      name="dZip"
-                      onChange={this.handleInputChange}
-                      maxLength={64}
-                      placeholder="* POSTAL CODE"
-                    />
-                    <div className="spacer10px" />
-                    <div className="paddingtop5px">* Country: {this.state.dCountry.label}</div>
-                    <div className="spacer10px" />
-                  </div>
-                  <div className="col-md-2" />
-                </div>
-                <div className="row">
-                  <div className="col-md-12 ce">
-                    <div className="spacer10px" />
-                    <div className="noBorder mediumFont">
-                      <button
-                        type="button"
-                        className="cartButton"
-                        onClick={this.saveDetails}
-                      >{this.state.textOnSaveButton}</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Footer />
-        </Container>
-      );
-    }
-	}
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </Container>
+  );
 }
