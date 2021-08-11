@@ -59,9 +59,10 @@ export default function Nav({ lastItemsDate }) {
   const router = useRouter();
   const { t, lang } = useTranslation('common');
 
-  const nextLang = lang === 'en' ? 'pl' : 'en';
+  const [nextLang, setNextLang] = useState(lang === 'en' ? 'pl' : 'en');
 
   function changeLang() {
+    setNextLang(nextLang === 'en' ? 'pl' : 'en');
     cookies.set('NEXT_LOCALE', nextLang);
     router.replace(router.pathname, undefined, { locale: nextLang })
   }
