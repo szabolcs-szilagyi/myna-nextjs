@@ -296,6 +296,7 @@ export default class Index extends React.Component {
 
     if(coupon === 'mynafriend10') priceModifier = 0.9;
     else if(coupon === 'mynagift15') priceModifier = 0.85;
+    else if(coupon === 'thespecial20') priceModifier = 0.8;
 
     this.setState({ coupon, priceModifier });
 
