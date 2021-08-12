@@ -20,6 +20,12 @@ import {
   API_PATH,
 } from '../constants';
 
+type CheckoutProduct = {
+  id: number,
+  idname: string,
+  size: string,
+}
+
 const listenRequest = requestFactory(API_SERVER + API_PATH);
 
 const productDetailHash = {
@@ -74,90 +80,73 @@ function Loading({ isLoading }) {
   );
 }
 
-class CartItems extends React.Component {
-  props: any;
-  delProductFromCart: any;
+function getProductImageLink(idName: string) {
+  if(!idName) return '';
+  return '/product_photos/' + productDetailHash[idName].imageName;
+}
 
-  constructor(props) {
-    super(props);
+function trashHover(e) {
+  e.target.src = '/trash-b.png';
+}
 
-    this.delProductFromCart = props.delProductFromCart;
-    this.trashHover = this.trashHover.bind(this);
-    this.trashNormal = this.trashNormal.bind(this);
-  }
+function trashNormal(e) {
+  e.target.src = '/trash.png';
+}
 
-  trashHover(e) {
-    e.target.src = '/trash-b.png';
-  }
-  trashNormal(e) {
-    e.target.src = '/trash.png';
-  }
-
-  getProductImageLink(idName) {
-    if(!idName) return '';
-    return '/product_photos/' + productDetailHash[idName].imageName;
-  }
-
-  render() {
-    type CheckoutProduct = {
-      id: number,
-      idname: string,
-      size: string,
-    }
-    return (
-      <div>
-        <Loading isLoading={this.props.loading} />
-        {Object.values(this.props.products).map((product: CheckoutProduct, i) =>
-          <div key={'keyID' + i}>
-            <div className="row">
-              <div className="col-md-5">
-                <Image
-                  src={this.getProductImageLink(product.idname)}
-                  layout="responsive"
-                  width={100}
-                  height={100}
-                />
-              </div>
-              <div className="col-md-7">
-                <div className="cartIconContainer">
-                  <div className="vertical-center">
-                    <table className="cartCo">
-                      <tbody>
-                        <tr>
-                          <td>{product.idname}</td>
-                          <td> </td>
-                          <td>
-                            <span className="capitalLetters">{product.size}</span>
-                          </td>
-                          <td>€{productDetailHash[product.idname].pricc}</td>
-                          <td>
-                            <a
-                              id={'t' + product.id}
-                              href="#"
-                              onClick={() => this.delProductFromCart(product.id)}
-                              onMouseEnter={this.trashHover}
-                              onMouseLeave={this.trashNormal}
-                            >
-                              <img
-                                src="/trash.png"
-                                width="35"
-                                height="35"
-                              />
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+function CartItems ({ loading, products, delProductFromCart }) {
+  return (
+    <div>
+      <Loading isLoading={loading} />
+      {Object.values(products).map((product: CheckoutProduct, i) =>
+        <div key={'keyID' + i}>
+          <div className="row">
+            <div className="col-md-5">
+              <Image
+                src={getProductImageLink(product.idname)}
+                layout="responsive"
+                width={100}
+                height={100}
+              />
+            </div>
+            <div className="col-md-7">
+              <div className="cartIconContainer">
+                <div className="vertical-center">
+                  <table className="cartCo">
+                    <tbody>
+                      <tr>
+                        <td>{product.idname}</td>
+                        <td> </td>
+                        <td>
+                          <span className="capitalLetters">{product.size}</span>
+                        </td>
+                        <td>€{productDetailHash[product.idname].pricc}</td>
+                        <td>
+                          <a
+                            id={'t' + product.id}
+                            href="#"
+                            onClick={() => delProductFromCart(product.id)}
+                            onMouseEnter={trashHover}
+                            onMouseLeave={trashNormal}
+                          >
+                            <img
+                              src="/trash.png"
+                              width="35"
+                              height="35"
+                            />
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
-            <hr />
           </div>
-        )}
-      </div>
-    );
-  }
+          <hr />
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default class Index extends React.Component {
