@@ -1,8 +1,10 @@
-import { Component, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router'
 import Cookies from 'universal-cookie';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
 import Container from 'react-bootstrap/Container';
+import useTranslation from 'next-translate/useTranslation'
 
 import {
   API_SERVER,
@@ -17,6 +19,9 @@ const cookies = new Cookies();
 const session = cookies.get('session');
 
 export default function MyAccount(props) {
+  const router = useRouter();
+  const { t } = useTranslation('my-account');
+
   const options = countryList().getData();
 
   const [addressState, setAddressState] = useState({
@@ -26,7 +31,7 @@ export default function MyAccount(props) {
     inputEmail: '',
     loginEmail: '',
     loginToken: '',
-    textOnSaveButton: 'SAVE & CHECKOUT',
+    textOnSaveButton: t('SAVE & CHECKOUT'),
     firstName: '',
     lastName: '',
     birthday: '',
@@ -91,8 +96,7 @@ export default function MyAccount(props) {
   }
 
   function saveDetails () {
-    let crossRoad;
-    crossRoad = 0;
+    let crossRoad = 0;
     if (addressState.myEmail == '') { crossRoad = 1; }
     if (addressState.firstName == '') { crossRoad = 1; }
     if (addressState.lastName == '') { crossRoad = 1; }
@@ -106,9 +110,11 @@ export default function MyAccount(props) {
       setTimeout(saveAddressData, 1000);
       setAddressState({
         ...addressState,
-        textOnSaveButton: 'SAVED',
+        textOnSaveButton: t('SAVED'),
       })
-      setTimeout(redirect, 1500);
+      setTimeout(() => {
+        router.push("/checkout");
+      }, 1500);
     }
   }
 
@@ -154,10 +160,6 @@ export default function MyAccount(props) {
     }
   }
 
-  function redirect () {
-    window.location.href = "/checkout";
-  }
-
   return (
     <Container fluid>
       <Header />
@@ -166,8 +168,8 @@ export default function MyAccount(props) {
       <div className="spacer10px" />
       <div className={addressState.loginOrEdit === 'login' ? 'row' : 'row d-none'}>
         <div className="col-md-12 ce capitalLetters">
-          <h1><strong>Login to your account</strong></h1>
-          <p>Please give your email address to continue</p>
+          <h1><strong>{t('Login to your account')}</strong></h1>
+          <p>{t('Please give your email address to continue')}</p>
           <div className="spacer50px" />
           <input
             className="loginEmail"
@@ -176,7 +178,7 @@ export default function MyAccount(props) {
             name="inputEmail"
             onChange={handleInputChange}
             maxLength={128}
-            placeholder="enter your email here"
+            placeholder={t("enter your email here")}
           />
           <div className="spacer50px" />
           <div className="noBorder mediumFont">
@@ -184,14 +186,14 @@ export default function MyAccount(props) {
               type="button"
               className="cartButton"
               onClick={createToken}
-            >SUBMIT</button>
+            >{t('SUBMIT')}</button>
           </div>
         </div>
       </div>
 
       <div className={addressState.loginOrEdit === 'edit' ? 'row' : 'row d-none'}>
         <div className="col-md-12 ce capitalLetters">
-          <h1><strong>Your account</strong></h1>
+          <h1><strong>{t('Your account')}</strong></h1>
           <div className="row">
             <div className="col-md-2" />
             <div className="col-md-4">
@@ -203,7 +205,7 @@ export default function MyAccount(props) {
                 name="firstName"
                 onChange={handleInputChange}
                 maxLength={128}
-                placeholder="* NAME"
+                placeholder={t("* NAME")}
               />
               <div className="spacer10px" />
               <input
@@ -213,7 +215,7 @@ export default function MyAccount(props) {
                 name="lastName"
                 onChange={handleInputChange}
                 maxLength={128}
-                placeholder="* SURNAME"
+                placeholder={t("* SURNAME")}
               />
               <div className="spacer10px" />
               <input
@@ -223,7 +225,7 @@ export default function MyAccount(props) {
                 name="birthday"
                 onChange={handleInputChange}
                 maxLength={10}
-                placeholder="* DATE OF BIRTH (YYYY-MM-DD)"
+                placeholder={t("* DATE OF BIRTH (YYYY-MM-DD)")}
               />
               <div className="spacer10px" />
               <input
@@ -233,7 +235,7 @@ export default function MyAccount(props) {
                 name="dMobile"
                 onChange={handleInputChange}
                 maxLength={32}
-                placeholder="* MOBILE NUMBER"
+                placeholder={t("* MOBILE NUMBER")}
               />
               <div className="spacer10px" />
               <Select
@@ -253,7 +255,7 @@ export default function MyAccount(props) {
                 name="dAddress1"
                 onChange={handleInputChange}
                 maxLength={128}
-                placeholder="* ADDRESS LINE 1"
+                placeholder={t("* ADDRESS LINE 1")}
               />
               <div className="spacer10px" />
               <input
@@ -263,7 +265,7 @@ export default function MyAccount(props) {
                 name="dAddress2"
                 onChange={handleInputChange}
                 maxLength={128}
-                placeholder="ADDRESS LINE 2"
+                placeholder={t("ADDRESS LINE 2")}
               />
               <div className="spacer10px" />
               <input
@@ -273,7 +275,7 @@ export default function MyAccount(props) {
                 name="dCity"
                 onChange={handleInputChange}
                 maxLength={128}
-                placeholder="* CITY"
+                placeholder={t("* CITY")}
               />
               <div className="spacer10px" />
               <input
@@ -283,10 +285,10 @@ export default function MyAccount(props) {
                 name="dZip"
                 onChange={handleInputChange}
                 maxLength={64}
-                placeholder="* POSTAL CODE"
+                placeholder={t("* POSTAL CODE")}
               />
               <div className="spacer10px" />
-              <div className="paddingtop5px">* Country: {addressState.dCountry.label}</div>
+              <div className="paddingtop5px">{t('* Country')}: {addressState.dCountry.label}</div>
               <div className="spacer10px" />
             </div>
             <div className="col-md-2" />
