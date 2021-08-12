@@ -18,7 +18,7 @@ import Ping from '../components/Ping';
 const cookies = new Cookies();
 const session = cookies.get('session');
 
-export default function MyAccount(props) {
+export default function MyAccount() {
   const router = useRouter();
   const { t } = useTranslation('my-account');
 
@@ -31,7 +31,7 @@ export default function MyAccount(props) {
     inputEmail: '',
     loginEmail: '',
     loginToken: '',
-    textOnSaveButton: t('SAVE & CHECKOUT'),
+    textOnSaveButton: 'SAVE & CHECKOUT',
     firstName: '',
     lastName: '',
     birthday: '',
@@ -110,7 +110,7 @@ export default function MyAccount(props) {
       setTimeout(saveAddressData, 1000);
       setAddressState({
         ...addressState,
-        textOnSaveButton: t('SAVED'),
+        textOnSaveButton: 'SAVED',
       })
       setTimeout(() => {
         router.push("/checkout");
@@ -301,7 +301,7 @@ export default function MyAccount(props) {
                   type="button"
                   className="cartButton"
                   onClick={saveDetails}
-                >{addressState.textOnSaveButton}</button>
+                >{t(addressState.textOnSaveButton)}</button>
               </div>
             </div>
           </div>

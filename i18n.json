@@ -1,11 +1,12 @@
 {
-  "locales": ["en", "pl"],
-  "defaultLocale": "en",
-  "pages": {
-    "*": ["common"],
-    "/": ["home", "sustainability", "slider"],
-    "/our-story": ["our-story"],
-    "/sustainability": ["sustainability"],
-    "/[idname]": ["idname"]
-  }
+    "locales": ["en", "pl"],
+    "defaultLocale": "en",
+    "pages": {
+        "*": ["common"],
+        "/": ["home", "sustainability", "slider"],
+        "/our-story": ["our-story"],
+        "/my-account": ["my-account"],
+        "/sustainability": ["sustainability"],
+        "/[idname]": ["idname"]
+    }
 }
