@@ -47,39 +47,31 @@ const productDetailHash = {
   'tuli-dress': { imageName: 'tuli-dress-01.jpg', pricc: '169' },
 };
 
-class Loading extends React.Component {
-  props: any;
-
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
+function Loading({ isLoading }) {
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        height: '100%',
+        'zIndex': 100,
+        'backgroundColor': 'rgba(0,0,0, 0.3)',
+      }}
+      className={isLoading ?
+                 'col-md-12 blur-divs-after visible' :
+                 'col-md-12 invisible'}
+    >
       <div
         style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          height: '100%',
-          'zIndex': 100,
-          'backgroundColor': 'rgba(0,0,0, 0.3)',
+          top: '50%',
+          left: '50%',
+          position: 'relative'
         }}
-        className={this.props.isLoading ?
-                   'col-md-12 blur-divs-after visible' :
-                   'col-md-12 invisible'}
-      >
-        <div
-          style={{
-            top: '50%',
-            left: '50%',
-            position: 'relative'
-          }}
-          className="spinner-border"
-        ></div>
-      </div>
-    );
-  }
+        className="spinner-border"
+      ></div>
+    </div>
+  );
 }
 
 class CartItems extends React.Component {
@@ -252,7 +244,7 @@ export default class Index extends React.Component {
       .catch(error => console.log(error.message));
   }
 
-  delProductFromCart(id) {
+  delProductFromCart(id: string) {
     this.setState({ loadingProducts: true });
 
     listenRequest({
