@@ -156,6 +156,50 @@ function CartItems ({ loading, products, delProductFromCart }: CartItemsProps) {
   );
 }
 
+function getProductsInCart(session: string): Promise<object> {
+  return listenRequest({
+    query: { part: 'getproductsincart', sessiontoken: session },
+    options: { json: true },
+  })
+    .then(({ products }) => {
+      return products || {};
+    })
+    .catch(error => {
+      console.log(error.message);
+      return {};
+    });
+}
+
+function getPrice(session: string, priceModifier: number): Promise<number> {
+  return listenRequest({
+    query: { part: 'totalcheckout', sessiontoken: session },
+    options: { json: true },
+  })
+    .then(({ topay }) => {
+      const modifier = priceModifier;
+      const newPrice = Math.floor(topay * modifier);
+      return newPrice;
+    })
+    .catch(error => {
+      console.log(error.message);
+      return 0;
+    });
+}
+
+function getShipping(session: string): Promise<string> {
+  return listenRequest({
+    query: { part: 'getshippinginfo', sessiontoken: session },
+    options: { json: true },
+  })
+    .then(({ shippinginfo }) => {
+      return shippinginfo;
+    })
+    .catch(error => {
+      console.log(error.message);
+      return '';
+    });
+}
+
 export default function Checkout() {
   const [state, setState] = useState({
     loadingProducts: false,
@@ -166,56 +210,12 @@ export default function Checkout() {
     products: {},
     inCart: 0,
     showPaypal: 'hidePaypal',
-    coupon: '',
-    priceModifier: 1,
     checked: 0,
   });
+  const [priceModifier, setPriceModifier] = useState(1);
+  const [coupon, setCoupon] = useState('');
 
   const router = useRouter();
-
-  function getProductsInCart(session: string): Promise<object> {
-    return listenRequest({
-      query: { part: 'getproductsincart', sessiontoken: session },
-      options: { json: true },
-    })
-      .then(({ products }) => {
-        return products || {};
-      })
-      .catch(error => {
-        console.log(error.message);
-        return {};
-      });
-  }
-
-  function getPrice(session: string): Promise<number> {
-    return listenRequest({
-      query: { part: 'totalcheckout', sessiontoken: session },
-      options: { json: true },
-    })
-      .then(({ topay }) => {
-        const modifier = state.priceModifier;
-        const newPrice = Math.floor(topay * modifier);
-        return newPrice;
-      })
-      .catch(error => {
-        console.log(error.message);
-        return 0;
-      });
-  }
-
-  function getShipping(session: string): Promise<string> {
-    return listenRequest({
-      query: { part: 'getshippinginfo', sessiontoken: session },
-      options: { json: true },
-    })
-      .then(({ shippinginfo }) => {
-        return shippinginfo;
-      })
-      .catch(error => {
-        console.log(error.message);
-        return '';
-      });
-  }
 
   function amILoggedIn() {
     listenRequest({
@@ -254,7 +254,7 @@ export default function Checkout() {
   function pressedCheckout() {
     event('begin_checkout', {
       value: state.price,
-      coupon: state.coupon,
+      coupon,
       currency: 'EUR',
     })
 
@@ -274,25 +274,20 @@ export default function Checkout() {
   }
 
   function handleCouponChange(event: ChangeEvent<HTMLInputElement>) {
-    const coupon = event.target.value.toLowerCase();
-    let priceModifier = 1;
+    const newCoupon = event.target.value.toLowerCase();
+    let newPriceModifier = 1;
 
-    if(coupon === 'mynafriend10') priceModifier = 0.9;
-    else if(coupon === 'mynagift15') priceModifier = 0.85;
-    else if(coupon === 'thespecial20') priceModifier = 0.8;
+    if(newCoupon === 'mynafriend10') newPriceModifier = 0.9;
+    else if(newCoupon === 'mynagift15') newPriceModifier = 0.85;
+    else if(newCoupon === 'thespecial20') newPriceModifier = 0.8;
 
-    setState({
-      ...state,
-      coupon,
-      priceModifier,
-    });
-
-    setTimeout(getPrice, 200);
+    setCoupon(newCoupon)
+    setPriceModifier(newPriceModifier);
   }
 
   async function intiateData() {
     const products = await getProductsInCart(session);
-    const price = await getPrice(session);
+    const price = await getPrice(session, priceModifier);
     const shipping = await getShipping(session);
 
     setState({
@@ -304,9 +299,10 @@ export default function Checkout() {
     })
   }
 
-  useEffect(() => {
-    intiateData();
-  }, [])
+  useEffect(
+    () => { intiateData() },
+    [priceModifier]
+  )
 
   return (
     <Container fluid>
@@ -352,7 +348,7 @@ export default function Checkout() {
             <div className="col-md-4 ce">
               <p className="capitalLetters">Total: €{state.price}</p>
               <p className="capitalLetters">{state.shipping ? state.shipping : 'free shipping'}</p>
-              <p><input type="text" value={state.coupon} onChange={handleCouponChange} placeholder="Coupon code" /></p>
+              <p><input type="text" value={coupon} onChange={handleCouponChange} placeholder="Coupon code" /></p>
             </div>
             <div className="col-md-4">
               <div className="noBorder mediumFont right ceMob">
