@@ -1,5 +1,5 @@
-import React from 'react';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -53,7 +53,7 @@ const productDetailHash = {
   'tuli-dress': { imageName: 'tuli-dress-01.jpg', pricc: '169' },
 };
 
-function Loading({ isLoading }) {
+function Loading({ isLoading }: { isLoading: boolean }) {
   return (
     <div
       style={{
@@ -85,15 +85,23 @@ function getProductImageLink(idName: string) {
   return '/product_photos/' + productDetailHash[idName].imageName;
 }
 
-function trashHover(e) {
-  e.target.src = '/trash-b.png';
+interface CartItemsProps {
+  loading: boolean;
+  products: object;
+  delProductFromCart: (productId: number) => void;
 }
 
-function trashNormal(e) {
-  e.target.src = '/trash.png';
-}
+function CartItems ({ loading, products, delProductFromCart }: CartItemsProps) {
+  const [trashImageSrc, setTrashImageSrc] = useState('/trash.png');
 
-function CartItems ({ loading, products, delProductFromCart }) {
+  function trashHover() {
+    setTrashImageSrc('/trash-b.png');
+  }
+
+  function trashNormal() {
+    setTrashImageSrc('/trash.png');
+  }
+
   return (
     <div>
       <Loading isLoading={loading} />
@@ -129,7 +137,7 @@ function CartItems ({ loading, products, delProductFromCart }) {
                             onMouseLeave={trashNormal}
                           >
                             <img
-                              src="/trash.png"
+                              src={trashImageSrc}
                               width="35"
                               height="35"
                             />
@@ -149,129 +157,139 @@ function CartItems ({ loading, products, delProductFromCart }) {
   );
 }
 
-export default class Index extends React.Component {
-  state: any;
+function reload() {
+  window.location.href = "/checkout";
+}
 
-  constructor(props) {
-    super(props);
+function myAccount() {
+  window.location.href = "/my-account";
+}
 
-    this.state = {
-      loadingProducts: false,
-      price: '0',
-      shipping: '0',
-      myEmail: '',
-      loggedIn: 'no',
-      products: [],
-      inCart: '0',
-      showPaypal: 'hidePaypal',
-      coupon: '',
-      priceModifier: 1,
-      checked: 0,
-      ...props,
-    };
+export default function Checkout() {
+  const [state, setState] = useState({
+    loadingProducts: false,
+    price: 0,
+    shipping: '0',
+    myEmail: '',
+    loggedIn: 'no',
+    products: {},
+    inCart: 0,
+    showPaypal: 'hidePaypal',
+    coupon: '',
+    priceModifier: 1,
+    checked: 0,
+  });
+  console.log('sdfkjsldkjfls render sldkfalskdjfalskjdfl')
 
-    this.getPrice = this.getPrice.bind(this);
-    this.getShipping = this.getShipping.bind(this);
-    this.amILoggedIn = this.amILoggedIn.bind(this);
-    this.getProductsInCart = this.getProductsInCart.bind(this);
-    this.delProductFromCart = this.delProductFromCart.bind(this);
-    this.reload = this.reload.bind(this);
-    this.myAccount = this.myAccount.bind(this);
-    this.pressedCheckout = this.pressedCheckout.bind(this);
-    this.handleCouponChange = this.handleCouponChange.bind(this);
-    this.getUserAddress = this.getUserAddress.bind(this);
+
+  function getProductsInCart(session: string): Promise<object|void> {
+    return listenRequest({
+      query: { part: 'getproductsincart', sessiontoken: session },
+      options: { json: true },
+    })
+      .then(({ products }) => {
+        return products || {};
+      })
+      .catch(error => console.log(error.message));
   }
 
-  getPrice() {
-    listenRequest({
+  function getPrice(session: string): Promise<number|void> {
+    return listenRequest({
       query: { part: 'totalcheckout', sessiontoken: session },
       options: { json: true },
     })
       .then(({ topay }) => {
-        const modifier = this.state.priceModifier;
+        const modifier = state.priceModifier;
         const newPrice = Math.floor(topay * modifier);
-        this.setState({ price: newPrice });
+        return newPrice;
       })
       .catch(error => console.log(error.message));
   }
 
-  getShipping() {
-    listenRequest({
+  function getShipping(session: string): Promise<string|void> {
+    return listenRequest({
       query: { part: 'getshippinginfo', sessiontoken: session },
       options: { json: true },
     })
       .then(({ shippinginfo }) => {
-        this.setState({ shipping: shippinginfo });
+        return shippinginfo;
       })
       .catch(error => console.log(error.message));
   }
 
-  amILoggedIn() {
+  function ensureUserData(): Promise<void> {
+    return listenRequest({
+      query: { part: 'getaddressdata', email: state.myEmail, sessiontoken: session },
+      options: { json: true },
+    })
+      .then(({ addressdata }) => {
+        const { type, address1, city, zip, country } = addressdata;
+        const neededData = [type, address1, city, zip, country];
+
+        if (state.loggedIn == 'yes' && neededData.some(value => value === '0')) {
+          myAccount();
+        }
+      })
+      .catch(error => console.log(error.message));
+  }
+
+  function amILoggedIn() {
     listenRequest({
       query: { part: 'amiloggedin', sessiontoken: session },
       options: { json: true },
     })
       .then(({ email }) => {
         if (email !== 'nodata') {
-          this.setState({ myEmail: email, loggedIn: 'yes', checked: 1 });
+          setState({
+            ...state,
+            myEmail: email,
+            loggedIn: 'yes',
+            checked: 1,
+          });
         } else {
-          this.myAccount ();
+          myAccount();
         }
       })
       .catch(error => console.log(error.message));
   }
 
-  getProductsInCart() {
-    listenRequest({
-      query: { part: 'getproductsincart', sessiontoken: session },
-      options: { json: true },
-    })
-      .then(({ products }) => {
-        if(!products) products = {};
-        this.setState({ products, inCart: Object.keys(products).length });
-      })
-      .catch(error => console.log(error.message));
-  }
-
-  delProductFromCart(id: string) {
-    this.setState({ loadingProducts: true });
+  function delProductFromCart(id: string) {
+    setState({
+      ...state,
+      loadingProducts: true,
+    });
 
     listenRequest({
       query: { part: 'delproductfromcart', id: id, sessiontoken: session },
       fetchOptions: { mode: 'no-cors' },
     })
 
-    setTimeout(this.reload, 1000);
+    setTimeout(reload, 1000);
   }
 
-  reload() {
-    window.location.href = "/checkout";
-  }
-
-  myAccount() {
-    window.location.href = "/my-account";
-  }
-
-  pressedCheckout() {
+  function pressedCheckout() {
     event('begin_checkout', {
-      value: this.state.price,
-      coupon: this.state.coupon,
+      value: state.price,
+      coupon: state.coupon,
       currency: 'EUR',
     })
 
-    if (this.state.checked == '0') {
-      this.amILoggedIn();
+    if (state.checked == '0') {
+      amILoggedIn();
     } else {
-      let loggedIn = this.state.loggedIn;
+      let loggedIn = state.loggedIn;
       if (loggedIn == 'no') {
-        this.myAccount();
+        myAccount();
       } else {
-        this.setState({ showPaypal: 'showPaypal' });
+        setState({
+          ...state,
+          showPaypal: 'showPaypal',
+        });
       }
     }
   }
 
-  handleCouponChange(event) {
+  function handleCouponChange(event) {
     let coupon = event.target.value.toLowerCase();
     let priceModifier = 1;
 
@@ -279,92 +297,90 @@ export default class Index extends React.Component {
     else if(coupon === 'mynagift15') priceModifier = 0.85;
     else if(coupon === 'thespecial20') priceModifier = 0.8;
 
-    this.setState({ coupon, priceModifier });
+    setState({
+      ...state,
+      coupon,
+      priceModifier,
+    });
 
-    setTimeout(this.getPrice, 200);
+    setTimeout(getPrice, 200);
   }
 
-  getUserAddress() {
-    listenRequest({
-      query: { part: 'getaddressdata', email: this.state.myEmail, sessiontoken: session },
-      options: { json: true },
+  async function intiateData() {
+    const products = await getProductsInCart(session);
+    const price = await getPrice(session);
+    const shipping = await getShipping(session);
+    await ensureUserData();
+
+    setState({
+      ...state,
+      products,
+      inCart: Object.keys(products).length,
+      price,
+      shipping,
     })
-      .then(({ success, addressdata }) => {
-        const { type, address1, city, zip, country } = addressdata;
-        const neededData = [type, address1, city, zip, country];
-
-        if (this.state.loggedIn == 'yes' && neededData.some(value => value === '0')) {
-          this.myAccount();
-        }
-      })
-      .catch(error => console.log(error.message));
   }
 
-  componentDidMount() {
-    this.getProductsInCart();
-    this.getPrice();
-    this.getShipping();
-    setTimeout(this.getUserAddress, 500);
-  }
+  useEffect(() => {
+    intiateData();
+  }, [])
 
-  render() {
-		return (
-			<Container fluid>
+  return (
+    <Container fluid>
       <Header />
-        <Nav />
-        <Ping />
-        <div className="spacer50px"></div>
-        <div className="row">
-          <div className="col-md-12 ce capitalLetters">
-            <h1><strong>Your Loved Pieces</strong></h1>
-            <div className={this.state.inCart ? 'd-none' : 'd-block'}>
-              <div className='spacer25px'></div>
-              <p><i>Your cart is empty.</i> <br /><br /><a href="/shop-collections"><button className="startshoppingButton">START SHOPPING HERE</button></a></p>
+      <Nav />
+      <Ping />
+      <div className="spacer50px"></div>
+      <div className="row">
+        <div className="col-md-12 ce capitalLetters">
+          <h1><strong>Your Loved Pieces</strong></h1>
+          <div className={state.inCart ? 'd-none' : 'd-block'}>
+            <div className='spacer25px'></div>
+            <p><i>Your cart is empty.</i> <br /><br /><a href="/shop-collections"><button className="startshoppingButton">START SHOPPING HERE</button></a></p>
+          </div>
+        </div>
+      </div>
+      <div className="spacer25px"></div>
+      <div className="row">
+        <div className="col-md-2"></div>
+        <div className="col-md-8">
+          Cart / {state.inCart} items
+          <hr />
+          <CartItems
+            products={state.products}
+            delProductFromCart={delProductFromCart}
+            loading={state.loadingProducts}
+          />
+          <div className="spacer50px"></div>
+          <div className="row">
+            <div className="col-md-4">
+              <div className="noBorder mediumFont ceMob">
+                <a href="/shop-collections">
+                  <button className="startshoppingButton">CONTINUE SHOPPING</button>
+                </a>
+              </div>
+            </div>
+            <div className="col-md-4 ce">
+              <p className="capitalLetters">Total: €{state.price}</p>
+              <p className="capitalLetters">{state.shipping ? state.shipping : 'free shipping'}</p>
+              <p><input type="text" value={state.coupon} onChange={handleCouponChange} placeholder="Coupon code" /></p>
+            </div>
+            <div className="col-md-4">
+              <div className="noBorder mediumFont right ceMob">
+                <button
+                  className="cartButton"
+                  onClick={pressedCheckout}
+                >CHECKOUT</button>
+              </div>
+              <div className={state.showPaypal}>
+                <PayPal dataFromParent = {state.price} />
+              </div>
             </div>
           </div>
         </div>
-        <div className="spacer25px"></div>
-        <div className="row">
-          <div className="col-md-2"></div>
-          <div className="col-md-8">
-            Cart / {this.state.inCart} items
-            <hr />
-            <CartItems
-              products={this.state.products}
-              delProductFromCart={this.delProductFromCart}
-              loading={this.state.loadingProducts}
-            />
-            <div className="spacer50px"></div>
-            <div className="row">
-              <div className="col-md-4">
-                <div className="noBorder mediumFont ceMob">
-                  <a href="/shop-collections">
-                    <button className="startshoppingButton">CONTINUE SHOPPING</button>
-                  </a>
-                </div>
-              </div>
-              <div className="col-md-4 ce">
-                <p className="capitalLetters">Total: €{this.state.price}</p>
-                <p className="capitalLetters">{this.state.shipping ? this.state.shipping : 'free shipping'}</p>
-                <p><input type="text" value={this.state.coupon} onChange={this.handleCouponChange} placeholder="Coupon code" /></p>
-              </div>
-              <div className="col-md-4">
-                <div className="noBorder mediumFont right ceMob">
-                  <button
-                    className="cartButton"
-                    onClick={this.pressedCheckout}
-                  >CHECKOUT</button>
-                </div>
-                <div className={this.state.showPaypal}>
-                  <PayPal dataFromParent = {this.state.price} />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-2"></div>
-        </div>
-        <Footer />
-      </Container>
-		);
-	}
+        <div className="col-md-2"></div>
+      </div>
+      <Footer />
+    </Container>
+  );
 }
