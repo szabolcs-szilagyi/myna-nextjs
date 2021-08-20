@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
 import SizeInfo from '../components/SizeInfo';
 
@@ -15,49 +15,40 @@ function DescButton({ id, text, onClick }) {
   );
 }
 
-export default class ProductInfo extends Component {
-  state: any;
-  props: any;
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
+export default function ProductInfo(props) {
+  const [state, setState] = useState({
       descStyle: { display: 'block' },
       compCareStyle: { display: 'none' },
       sizeInfoStyle: { display: 'none' },
       deliveryStyle: { display: 'none' },
-    };
+    });
 
-    this.productInfoHandling = this.productInfoHandling.bind(this);
-  }
-
-  productInfoHandling(e) {
+  function productInfoHandling(e) {
     const currentId = e.currentTarget.id;
 
     if (currentId === 'productDesc') {
-      this.setState({
+      setState({
         descStyle: { display: 'block' },
         compCareStyle: { display: 'none' },
         sizeInfoStyle: { display: 'none' },
         deliveryStyle: { display: 'none' },
       });
     } else if (currentId === 'productComp') {
-      this.setState({
+      setState({
         descStyle: { display: 'none' },
         compCareStyle: { display: 'block' },
         sizeInfoStyle: { display: 'none' },
         deliveryStyle: { display: 'none' },
       });
     } else if (currentId === 'productSize') {
-      this.setState({
+      setState({
         descStyle: { display: 'none' },
         compCareStyle: { display: 'none' },
         sizeInfoStyle: { display: 'block' },
         deliveryStyle: { display: 'none' },
       });
     } else if (currentId === 'productDeli') {
-      this.setState({
+      setState({
         descStyle: { display: 'none' },
         compCareStyle: { display: 'none' },
         sizeInfoStyle: { display: 'none' },
@@ -66,20 +57,19 @@ export default class ProductInfo extends Component {
     }
   }
 
-  render() {
     return (
       <div>
         <div className="row">
           <div className="col-sm-6 col-xl-3">
             <DescButton
-              onClick={this.productInfoHandling}
+              onClick={productInfoHandling}
               id="productDesc"
               text="Description"
             />
           </div>
           <div className="col-sm-6 col-xl-3">
             <DescButton
-              onClick={this.productInfoHandling}
+              onClick={productInfoHandling}
               id="productComp"
               text="Composition & Care"
             />
@@ -87,14 +77,14 @@ export default class ProductInfo extends Component {
           <div className="spacer10px d-none d-sm-block d-xl-none"></div>
           <div className="col-sm-6 col-xl-3">
             <DescButton
-              onClick={this.productInfoHandling}
+              onClick={productInfoHandling}
               id="productSize"
               text="Size"
             />
           </div>
           <div className="col-sm-6 col-xl-3">
             <DescButton
-              onClick={this.productInfoHandling}
+              onClick={productInfoHandling}
               id="productDeli"
               text="Delivery"
             />
@@ -104,21 +94,21 @@ export default class ProductInfo extends Component {
         <div className="row">
           <div className="col-md-12">
             <div
-              style={this.state.descStyle}
+              style={state.descStyle}
               className="productInfoContainer"
-              dangerouslySetInnerHTML={{ __html: this.props.description }}
+              dangerouslySetInnerHTML={{ __html: props.description }}
             ></div>
             <div
-              style={this.state.compCareStyle}
+              style={state.compCareStyle}
               className="productInfoContainer"
-              dangerouslySetInnerHTML={{ __html: this.props.compCare }}
+              dangerouslySetInnerHTML={{ __html: props.compCare }}
             ></div>
             <div
-              style={this.state.sizeInfoStyle}
+              style={state.sizeInfoStyle}
               className="productInfoContainer"
             ><SizeInfo /></div>
             <div
-              style={this.state.deliveryStyle}
+              style={state.deliveryStyle}
               className="productInfoContainer"
             >
               <div className="ju">
@@ -133,6 +123,5 @@ export default class ProductInfo extends Component {
         </div>
       </div>
     );
-  }
 }
 
