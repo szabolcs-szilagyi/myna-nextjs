@@ -205,7 +205,7 @@ export default function Checkout() {
   const [state, setState] = useState({
     loadingProducts: false,
     price: 0,
-    shipping: '0',
+    shipping: '',
     myEmail: '',
     loggedIn: 'no',
     products: {},
@@ -314,14 +314,14 @@ export default function Checkout() {
       <div className="spacer50px"></div>
       <div className="row">
         <div className="col-md-12 ce capitalLetters">
-          <h1><strong>Your Loved Pieces</strong></h1>
+          <h1><strong>{t('Your Loved Pieces')}</strong></h1>
           <div className={state.inCart ? 'd-none' : 'd-block'}>
             <div className='spacer25px'></div>
             <p>
-              <i>Your cart is empty.</i><br />
+              <i>{t('Your cart is empty')}</i><br />
               <br />
               <Link href="/shop-collections">
-                <a><button className="startshoppingButton">START SHOPPING HERE</button></a>
+                <a><button className="startshoppingButton">{t('START SHOPPING HERE')}</button></a>
               </Link>
             </p>
           </div>
@@ -331,7 +331,7 @@ export default function Checkout() {
       <div className="row">
         <div className="col-md-2"></div>
         <div className="col-md-8">
-          Cart / {state.inCart} items
+          {t('cart-counter-message', { count: state.inCart })}
           <hr />
           <CartItems
             products={state.products}
@@ -343,21 +343,28 @@ export default function Checkout() {
             <div className="col-md-4">
               <div className="noBorder mediumFont ceMob">
                 <Link href="/shop-collections">
-                  <a><button className="startshoppingButton">CONTINUE SHOPPING</button></a>
+                  <a><button className="startshoppingButton">{t('CONTINUE SHOPPING')}</button></a>
                 </Link>
               </div>
             </div>
             <div className="col-md-4 ce">
-              <p className="capitalLetters">Total: €{state.price}</p>
-              <p className="capitalLetters">{state.shipping ? state.shipping : 'free shipping'}</p>
-              <p><input type="text" value={coupon} onChange={handleCouponChange} placeholder="Coupon code" /></p>
+              <p className="capitalLetters">{t('Total')}: €{state.price}</p>
+              <p className="capitalLetters">{t(state.shipping)}</p>
+              <p>
+                <input
+                  type="text"
+                  value={coupon}
+                  onChange={handleCouponChange}
+                  placeholder={t('Coupon code')}
+                />
+              </p>
             </div>
             <div className="col-md-4">
               <div className="noBorder mediumFont right ceMob">
                 <button
                   className="cartButton"
                   onClick={pressedCheckout}
-                >CHECKOUT</button>
+                >{t('CHECKOUT')}</button>
               </div>
               <div className={state.showPaypal}>
                 <PayPal dataFromParent = {state.price} />

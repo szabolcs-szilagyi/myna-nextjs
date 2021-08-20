@@ -1,1 +1,5 @@
-{}
+{
+  "cart-counter-message_0": "Cart is empty",
+  "cart-counter-message_one": "Cart / {{count}} item",
+  "cart-counter-message_other": "Cart / {{count}} items"
+}
