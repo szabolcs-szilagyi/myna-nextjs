@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withRouter } from 'next/router';
 
 import {
   API_SERVER,
@@ -15,6 +14,7 @@ import PhotoViewer from '../components/PhotoViewer';
 import ProductInfo from '../components/ProductInfo';
 
 import Cookies from 'universal-cookie';
+import { useRouter } from 'next/router';
 const cookies = new Cookies();
 const session = cookies.get('session');
 
@@ -87,16 +87,12 @@ export async function getStaticPaths() {
 }
 
 
-class Index extends React.Component {
-  state: any;
-
-  constructor(props) {
-    super(props);
-
-    const idName = props.router.query.idname;
+export default function Index (props: any) {
+  const router = useRouter();
+    const idName = router.query.idname;
     const isOneSize = props.isOneSize;
 
-    this.state = {
+    const [state, setState] = useState({
       cartButtonVisibility: 'visible',
       addToCart: 'ADD TO CART',
       productIdToCart: '',
@@ -119,48 +115,54 @@ class Index extends React.Component {
         photo8: '',
         photo9: '',
       },
-      selectedSize: isOneSize ? 'one_size' : '0',
       lastItemsDate: null,
       ...props
-    };
+    });
+  const [selectedSize, setSelectedSize] = useState(isOneSize ? 'one_size' : '0');
 
-    this.defaultButton = this.defaultButton.bind(this);
-    this.checkAvailability = this.checkAvailability.bind(this);
-    this.addToCart = this.addToCart.bind(this);
-    this.loadData = this.loadData.bind(this);
-    this.handleSizeChange = this.handleSizeChange.bind(this);
+  function defaultButton() {
+    setState({
+      ...state,
+      addToCart: 'ADD TO CART',
+    });
+    checkAvailability(selectedSize, session, state.idName);
   }
 
-  defaultButton () {
-    this.setState({ addToCart: 'ADD TO CART' });
-    this.checkAvailability();
-  }
-
-  checkAvailability() {
-    let size = this.state.selectedSize;
+  function checkAvailability(size: string, session: string, idName: string) {
     if (size === '0') return;
 
-    let idName = this.state.idName;
     fetch(API_SERVER + API_PATH + '?part=availabilityexact&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
       const availability = output && output.availability;
       if (availability > 0) {
-        this.setState({ avby: DEFAULT_AVAILABLE, cartButtonVisibility: 'visible' });
+        setState({
+          ...state,
+          avby: DEFAULT_AVAILABLE,
+          cartButtonVisibility: 'visible',
+        });
       } else if(availability === 0) {
-        this.setState({ avby: 'Pre-Order / Contact Us', cartButtonVisibility: 'invisible' });
+        setState({
+          ...state,
+          avby: 'Pre-Order / Contact Us',
+          cartButtonVisibility: 'invisible',
+        });
       } else if(availability === null) {
-        this.setState({ avby: 'Not Available', cartButtonVisibility: 'invisible' });
+        setState({
+          ...state,
+          avby: 'Not Available',
+          cartButtonVisibility: 'invisible',
+        });
       }
     })
     .catch(error => console.log(error.message));
   }
 
-  addToCart () {
-    if (this.state.addToCart == 'ADD TO CART') {
-      let size = this.state.selectedSize;
+  function addToCart() {
+    if (state.addToCart == 'ADD TO CART') {
+      let size = selectedSize;
       if (size != '0') {
-        let idName = this.state.idName;
+        let idName = state.idName;
         fetch(API_SERVER + API_PATH + '?part=addproducttocart&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
         .then(response => response.json())
   		  .then(output => {
@@ -168,20 +170,22 @@ class Index extends React.Component {
           let tmp = data['success'];
         })
         .catch(error => console.log(error.message));
-        this.setState({
+        setState({
+          ...state,
           addToCart: 'ADDED TO CART',
           lastItemsDate: Date.now(),
         });
-        setTimeout(this.defaultButton, 3000);
+        setTimeout(defaultButton, 3000);
       }
     }
   }
 
-  loadData () {
-    fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + this.state.idName)
+  function loadData() {
+    fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + state.idName)
     .then(response => response.json())
 		.then(({ productdetails }) => {
-      this.setState({
+      setState({
+        ...state,
         productIdToCart: productdetails.id,
         productName: productdetails.productname,
         productColor: productdetails.productcolor,
@@ -205,15 +209,16 @@ class Index extends React.Component {
     .catch(error => console.log(error.message));
   }
 
-  handleSizeChange (e) {
-    this.setState({ selectedSize: e.target.value }, () => { this.checkAvailability(); });
+  function handleSizeChange(e) {
+    const newSize = e.target.value
+    setSelectedSize(newSize);
+    checkAvailability(newSize, session, state.idName);
   }
 
-  render() {
 		return (
       <Container fluid>
         <Header />
-        <Nav lastItemsDate={this.state.lastItemsDate} />
+        <Nav lastItemsDate={state.lastItemsDate} />
         <Ping />
         <div className="spacer50px"></div>
         <div className="row">
@@ -222,20 +227,20 @@ class Index extends React.Component {
             <div className="row">
 
               <PhotoViewer
-                photos={this.state.photos}
+                photos={state.photos}
               />
 
               <div className="col-md-6 ce">
                 <div className="row">
                   <div className="col-md-12">
-                    <h1 className="capitalLetters">{this.state.productName} | {this.state.productColor} | {this.state.currency}{this.state.productPrice}</h1>
+                    <h1 className="capitalLetters">{state.productName} | {state.productColor} | {state.currency}{state.productPrice}</h1>
                   </div>
                 </div>
                 <div className="spacer50px"></div>
 
                 <ProductInfo
-                  description={this.state.description}
-                  compCare={this.state.compCare}
+                  description={state.description}
+                  compCare={state.compCare}
                 />
 
                 <div className="spacer50px"></div>
@@ -244,11 +249,11 @@ class Index extends React.Component {
                   <div className="col-md-6 left">
                     <select
                       id="chooseSize"
-                      className={this.state.isOneSize ?
+                      className={state.isOneSize ?
                                  'sizeButton invisible' :
                                  'sizeButton'}
-                      value={this.state.selectedSize}
-                      onChange={this.handleSizeChange}
+                      value={selectedSize}
+                      onChange={handleSizeChange}
                     >
                       <option value="0">CHOOSE SIZE</option>
                       <option value="xs">XS</option>
@@ -258,19 +263,19 @@ class Index extends React.Component {
                       <option value="l">L</option>
 										</select>
                     <div className="spacer25px"></div>
-                    <div className={this.state.cartButtonVisibility}>
+                    <div className={state.cartButtonVisibility}>
                       <div className="noBorder mediumFont">
                         <button
                           type="button"
                           className="cartButton"
-                          onClick={this.addToCart}
-                        >{this.state.addToCart}</button>
+                          onClick={addToCart}
+                        >{state.addToCart}</button>
                       </div>
                     </div>
                   </div>
                   <div className="col-md-4">
                     <div className="capitalLetters pad8px">
-                      {this.state.avby}
+                      {state.avby}
                     </div>
                   </div>
                   <div className="col-md-1"></div>
@@ -296,7 +301,4 @@ class Index extends React.Component {
         <Footer />
       </Container>
     );
-  }
 }
-
-export default withRouter(Index)
