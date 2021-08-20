@@ -8,7 +8,7 @@
         "/my-account": ["my-account"],
         "/sustainability": ["sustainability"],
         "/[idname]": ["product"],
-      "/checkout": ["checkout"],
-      "/size-measurement": ["product"]
+        "/checkout": ["checkout"],
+        "/size-measurement": ["product"]
     }
 }

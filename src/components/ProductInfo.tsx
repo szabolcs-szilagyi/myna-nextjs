@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Trans from 'next-translate/Trans';
 
 import SizeInfo from '../components/SizeInfo';
+import useTranslation from 'next-translate/useTranslation';
 
 function DescButton({ id, text, onClick }) {
   return (
@@ -23,6 +24,7 @@ export default function ProductInfo(props) {
     sizeInfoStyle: { display: 'none' },
     deliveryStyle: { display: 'none' },
   });
+  const { t } = useTranslation('product');
 
   function productInfoHandling(e) {
     const currentId = e.currentTarget.id;
@@ -65,14 +67,14 @@ export default function ProductInfo(props) {
           <DescButton
             onClick={productInfoHandling}
             id="productDesc"
-            text="Description"
+            text={t('Description')}
           />
         </div>
         <div className="col-sm-6 col-xl-3">
           <DescButton
             onClick={productInfoHandling}
             id="productComp"
-            text="Composition & Care"
+            text={t('Composition & Care')}
           />
         </div>
         <div className="spacer10px d-none d-sm-block d-xl-none"></div>
@@ -80,14 +82,14 @@ export default function ProductInfo(props) {
           <DescButton
             onClick={productInfoHandling}
             id="productSize"
-            text="Size"
+            text={t('Size')}
           />
         </div>
         <div className="col-sm-6 col-xl-3">
           <DescButton
             onClick={productInfoHandling}
             id="productDeli"
-            text="Delivery"
+            text={t('Delivery')}
           />
         </div>
       </div>
