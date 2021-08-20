@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 
 import {
   API_SERVER,
@@ -15,10 +15,17 @@ import ProductInfo from '../components/ProductInfo';
 
 import Cookies from 'universal-cookie';
 import { useRouter } from 'next/router';
+import useTranslation from 'next-translate/useTranslation';
+import Trans from 'next-translate/Trans';
+import Link, { LinkProps } from 'next/link';
 const cookies = new Cookies();
 const session = cookies.get('session');
 
 const DEFAULT_AVAILABLE = 'Available for pre-order';
+
+function LinkComp({ href, children, ...props }: PropsWithChildren<LinkProps>) {
+  return (<Link href={href}><a {...props}>{children}</a></Link>);
+}
 
 function loadData(idName: string): Promise<unknown> {
   return fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + idName)
@@ -89,6 +96,8 @@ export async function getStaticPaths() {
 
 export default function Index (props: any) {
   const router = useRouter();
+  const { t } = useTranslation('product');
+
   const idName = router.query.idname;
   const isOneSize = props.isOneSize;
 
@@ -226,9 +235,7 @@ export default function Index (props: any) {
         <div className="col-md-10">
           <div className="row">
 
-            <PhotoViewer
-              photos={state.photos}
-            />
+            <PhotoViewer photos={state.photos} />
 
             <div className="col-md-6 ce">
               <div className="row">
@@ -255,7 +262,7 @@ export default function Index (props: any) {
                     value={selectedSize}
                     onChange={handleSizeChange}
                   >
-                    <option value="0">CHOOSE SIZE</option>
+                    <option value="0">{t('CHOOSE SIZE')}</option>
                     <option value="xs">XS</option>
                     <option value="s">S</option>
                     <option value="m">M</option>
@@ -269,13 +276,13 @@ export default function Index (props: any) {
                         type="button"
                         className="cartButton"
                         onClick={addToCart}
-                      >{state.addToCart}</button>
+                      >{t(state.addToCart)}</button>
                     </div>
                   </div>
                 </div>
                 <div className="col-md-4">
                   <div className="capitalLetters pad8px">
-                    {state.avby}
+                    {t(state.avby)}
                   </div>
                 </div>
                 <div className="col-md-1"></div>
@@ -285,9 +292,13 @@ export default function Index (props: any) {
                 <div className="col-md-12">
                   <div className="productInfoContainer noBorder mediumFont">
                     <div className="mediumFont ju">
-                      Each item is created by our talented creative director Justyna and handmade
-                      with care in Poland. If you cannot find your size, get in touch with us and
-                      we will do our best to help. Email us on <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a> or click <a className="blackFont" href="/shipping">here</a> for more information about orders.
+                      <Trans
+                        i18nKey="product:each-item"
+                        components={[
+                          <a href="mailto:connect@mynalabel.com" className="blackFont" />,
+                          <LinkComp {...{ className: 'blackFont', href: '/shipping' }} />,
+                        ]}
+                      />
                     </div>
                   </div>
                 </div>
