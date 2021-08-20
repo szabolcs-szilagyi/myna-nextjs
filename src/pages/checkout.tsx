@@ -1,24 +1,23 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
-
-import Cookies from 'universal-cookie';
-const cookies = new Cookies();
-const session = cookies.get('session');
-
-import Header from '../components/Header';
-import PayPal from '../components/Paypal';
-import Nav from '../components/Nav';
-import Footer from '../components/Footer';
-import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
+import Cookies from 'universal-cookie';
 
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import Nav from '../components/Nav';
+import PayPal from '../components/Paypal';
+import Ping from '../components/Ping';
+import {
+    API_PATH, API_SERVER
+} from '../constants';
 import event from '../lib/gtag';
 import { requestFactory } from '../lib/request';
 
-import {
-  API_SERVER,
-  API_PATH,
-} from '../constants';
+const cookies = new Cookies();
+const session = cookies.get('session');
 
 type CheckoutProduct = {
   id: number,
@@ -157,14 +156,6 @@ function CartItems ({ loading, products, delProductFromCart }: CartItemsProps) {
   );
 }
 
-function reload() {
-  window.location.href = "/checkout";
-}
-
-function myAccount() {
-  window.location.href = "/my-account";
-}
-
 export default function Checkout() {
   const [state, setState] = useState({
     loadingProducts: false,
@@ -179,8 +170,8 @@ export default function Checkout() {
     priceModifier: 1,
     checked: 0,
   });
-  console.log('sdfkjsldkjfls render sldkfalskdjfalskjdfl')
 
+  const router = useRouter();
 
   function getProductsInCart(session: string): Promise<object> {
     return listenRequest({
@@ -226,22 +217,6 @@ export default function Checkout() {
       });
   }
 
-  function ensureUserData(session: string): Promise<void> {
-    return listenRequest({
-      query: { part: 'getaddressdata', email: state.myEmail, sessiontoken: session },
-      options: { json: true },
-    })
-      .then(({ addressdata }) => {
-        const { type, address1, city, zip, country } = addressdata;
-        const neededData = [type, address1, city, zip, country];
-
-        if (state.loggedIn == 'yes' && neededData.some(value => value === '0')) {
-          myAccount();
-        }
-      })
-      .catch(error => console.log(error.message));
-  }
-
   function amILoggedIn() {
     listenRequest({
       query: { part: 'amiloggedin', sessiontoken: session },
@@ -256,7 +231,7 @@ export default function Checkout() {
             checked: 1,
           });
         } else {
-          myAccount();
+          router.push('/my-account');
         }
       })
       .catch(error => console.log(error.message));
@@ -273,7 +248,7 @@ export default function Checkout() {
       fetchOptions: { mode: 'no-cors' },
     })
 
-    setTimeout(reload, 1000);
+    setTimeout(() => router.reload(), 1000);
   }
 
   function pressedCheckout() {
@@ -288,7 +263,7 @@ export default function Checkout() {
     } else {
       const loggedIn = state.loggedIn;
       if (loggedIn == 'no') {
-        myAccount();
+        router.push('/my-account');
       } else {
         setState({
           ...state,
@@ -319,7 +294,6 @@ export default function Checkout() {
     const products = await getProductsInCart(session);
     const price = await getPrice(session);
     const shipping = await getShipping(session);
-    await ensureUserData(session);
 
     setState({
       ...state,
@@ -345,7 +319,13 @@ export default function Checkout() {
           <h1><strong>Your Loved Pieces</strong></h1>
           <div className={state.inCart ? 'd-none' : 'd-block'}>
             <div className='spacer25px'></div>
-            <p><i>Your cart is empty.</i> <br /><br /><a href="/shop-collections"><button className="startshoppingButton">START SHOPPING HERE</button></a></p>
+            <p>
+              <i>Your cart is empty.</i><br />
+              <br />
+              <Link href="/shop-collections">
+                <a><button className="startshoppingButton">START SHOPPING HERE</button></a>
+              </Link>
+            </p>
           </div>
         </div>
       </div>
@@ -364,9 +344,9 @@ export default function Checkout() {
           <div className="row">
             <div className="col-md-4">
               <div className="noBorder mediumFont ceMob">
-                <a href="/shop-collections">
-                  <button className="startshoppingButton">CONTINUE SHOPPING</button>
-                </a>
+                <Link href="/shop-collections">
+                  <a><button className="startshoppingButton">CONTINUE SHOPPING</button></a>
+                </Link>
               </div>
             </div>
             <div className="col-md-4 ce">
