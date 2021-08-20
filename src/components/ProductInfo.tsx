@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Trans from 'next-translate/Trans';
 
 import SizeInfo from '../components/SizeInfo';
 
@@ -112,11 +113,10 @@ export default function ProductInfo(props) {
             className="productInfoContainer"
           >
             <div className="ju">
-              Receive your favourite items(s) within 5 to 7 days once shipped. For countries
-              outside of Europe shipping may take longer, please enquire for specific country. All
-              items are shipped within 3 business days from placing your order, with the exception
-              of pre-ordered pieces. Pre-order pieces are made within 1 to 2 weeks. Email us at <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a>.
-              You have 14 days to change your mind. Sale orders are non refundable.
+              <Trans
+                i18nKey="product:receive-your"
+                components={[<a href="mailto:connect@mynalabel.com" className="blackFont" />]}
+              />
             </div>
           </div>
         </div>

@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import useTranslation from 'next-translate/useTranslation';
 
 type SizeInfoOptionsType = {
   tableClass?: string,
 }
 
-export default function SizeInfo(options: SizeInfoOptionsType);
-export default function SizeInfo({ tableClass }) {
+export default function SizeInfo({ tableClass }: SizeInfoOptionsType) {
+  const { t } = useTranslation('product');
+
   return (
     <div className="maxWidth">
       <table className={tableClass}>
@@ -20,25 +21,25 @@ export default function SizeInfo({ tableClass }) {
         </thead>
         <tbody>
           <tr>
-            <td>Bust: 84cm</td>
-            <td>Bust: 88cm</td>
-            <td>Bust: 92cm</td>
-            <td>Bust: 96cm</td>
-            <td>Bust: 100cm</td>
+            <td>{t('Bust')}: 84cm</td>
+            <td>{t('Bust')}: 88cm</td>
+            <td>{t('Bust')}: 92cm</td>
+            <td>{t('Bust')}: 96cm</td>
+            <td>{t('Bust')}: 100cm</td>
           </tr>
           <tr>
-            <td>Waist: 66cm</td>
-            <td>Waist: 70cm</td>
-            <td>Waist: 74cm</td>
-            <td>Waist: 78cm</td>
-            <td>Waist: 82cm</td>
+            <td>{t('Waist')}: 66cm</td>
+            <td>{t('Waist')}: 70cm</td>
+            <td>{t('Waist')}: 74cm</td>
+            <td>{t('Waist')}: 78cm</td>
+            <td>{t('Waist')}: 82cm</td>
           </tr>
           <tr>
-            <td>Hip: 90cm</td>
-            <td>Hip: 94cm</td>
-            <td>Hip: 98cm</td>
-            <td>Hip: 102cm</td>
-            <td>Hip: 106cm</td>
+            <td>{t('Hip')}: 90cm</td>
+            <td>{t('Hip')}: 94cm</td>
+            <td>{t('Hip')}: 98cm</td>
+            <td>{t('Hip')}: 102cm</td>
+            <td>{t('Hip')}: 106cm</td>
           </tr>
         </tbody>
       </table>
