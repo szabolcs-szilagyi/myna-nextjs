@@ -3,6 +3,7 @@ import Image from 'next/image';
 import useTranslation from 'next-translate/useTranslation'
 
 import styles from './Slider.module.css';
+import Link from 'next/link';
 
 const Slide = dynamic(() =>
   import('react-slideshow-image').then((slideshow) => slideshow.Slide),
@@ -59,7 +60,9 @@ export default function Slider() {
                 objectPosition="left top"
               />
               <h3>{text}</h3>
-              <a href={linkHref} className={buttonClass}>{linkText}</a>
+              <Link href={linkHref}>
+                <a className={buttonClass}>{linkText}</a>
+              </Link>
               <div className={styles.description}>
                 <p>{t('we-design-pieces-to-love')}</p>
               </div>
