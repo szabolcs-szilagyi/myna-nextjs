@@ -54,8 +54,7 @@ type NavPropsType = {
   lastItemsDate?: string,
 };
 
-export default function Nav(props: NavPropsType);
-export default function Nav({ lastItemsDate }) {
+export default function Nav({ lastItemsDate }: NavPropsType) {
   const router = useRouter();
   const { t, lang } = useTranslation('common');
 
