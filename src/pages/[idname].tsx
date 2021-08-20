@@ -101,7 +101,7 @@ class Index extends React.Component {
       addToCart: 'ADD TO CART',
       productIdToCart: '',
       idName,
-      currency: '',
+      currency: '€',
       avby: DEFAULT_AVAILABLE,
       productName: '',
       productColor: '',
@@ -127,7 +127,6 @@ class Index extends React.Component {
     this.defaultButton = this.defaultButton.bind(this);
     this.checkAvailability = this.checkAvailability.bind(this);
     this.addToCart = this.addToCart.bind(this);
-    this.loadCurrency = this.loadCurrency.bind(this);
     this.loadData = this.loadData.bind(this);
     this.handleSizeChange = this.handleSizeChange.bind(this);
   }
@@ -178,17 +177,6 @@ class Index extends React.Component {
     }
   }
 
-  loadCurrency () {
-    fetch(API_SERVER + API_PATH + '?part=getcurrency')
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['currency'];
-      this.setState({ currency: tmp });
-    })
-    .catch(error => console.log(error.message));
-  }
-
   loadData () {
     fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + this.state.idName)
     .then(response => response.json())
@@ -219,10 +207,6 @@ class Index extends React.Component {
 
   handleSizeChange (e) {
     this.setState({ selectedSize: e.target.value }, () => { this.checkAvailability(); });
-  }
-
-  componentDidMount() {
-    this.loadCurrency();
   }
 
   render() {
