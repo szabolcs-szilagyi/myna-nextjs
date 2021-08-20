@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -182,7 +182,7 @@ export default function Checkout() {
   console.log('sdfkjsldkjfls render sldkfalskdjfalskjdfl')
 
 
-  function getProductsInCart(session: string): Promise<object|void> {
+  function getProductsInCart(session: string): Promise<object> {
     return listenRequest({
       query: { part: 'getproductsincart', sessiontoken: session },
       options: { json: true },
@@ -190,10 +190,13 @@ export default function Checkout() {
       .then(({ products }) => {
         return products || {};
       })
-      .catch(error => console.log(error.message));
+      .catch(error => {
+        console.log(error.message);
+        return {};
+      });
   }
 
-  function getPrice(session: string): Promise<number|void> {
+  function getPrice(session: string): Promise<number> {
     return listenRequest({
       query: { part: 'totalcheckout', sessiontoken: session },
       options: { json: true },
@@ -203,10 +206,13 @@ export default function Checkout() {
         const newPrice = Math.floor(topay * modifier);
         return newPrice;
       })
-      .catch(error => console.log(error.message));
+      .catch(error => {
+        console.log(error.message);
+        return 0;
+      });
   }
 
-  function getShipping(session: string): Promise<string|void> {
+  function getShipping(session: string): Promise<string> {
     return listenRequest({
       query: { part: 'getshippinginfo', sessiontoken: session },
       options: { json: true },
@@ -214,10 +220,13 @@ export default function Checkout() {
       .then(({ shippinginfo }) => {
         return shippinginfo;
       })
-      .catch(error => console.log(error.message));
+      .catch(error => {
+        console.log(error.message);
+        return '';
+      });
   }
 
-  function ensureUserData(): Promise<void> {
+  function ensureUserData(session: string): Promise<void> {
     return listenRequest({
       query: { part: 'getaddressdata', email: state.myEmail, sessiontoken: session },
       options: { json: true },
@@ -253,7 +262,7 @@ export default function Checkout() {
       .catch(error => console.log(error.message));
   }
 
-  function delProductFromCart(id: string) {
+  function delProductFromCart(id: number) {
     setState({
       ...state,
       loadingProducts: true,
@@ -277,7 +286,7 @@ export default function Checkout() {
     if (state.checked == '0') {
       amILoggedIn();
     } else {
-      let loggedIn = state.loggedIn;
+      const loggedIn = state.loggedIn;
       if (loggedIn == 'no') {
         myAccount();
       } else {
@@ -289,8 +298,8 @@ export default function Checkout() {
     }
   }
 
-  function handleCouponChange(event) {
-    let coupon = event.target.value.toLowerCase();
+  function handleCouponChange(event: ChangeEvent<HTMLInputElement>) {
+    const coupon = event.target.value.toLowerCase();
     let priceModifier = 1;
 
     if(coupon === 'mynafriend10') priceModifier = 0.9;
@@ -310,7 +319,7 @@ export default function Checkout() {
     const products = await getProductsInCart(session);
     const price = await getPrice(session);
     const shipping = await getShipping(session);
-    await ensureUserData();
+    await ensureUserData(session);
 
     setState({
       ...state,
