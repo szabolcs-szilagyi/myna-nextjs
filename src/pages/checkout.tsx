@@ -1,3 +1,4 @@
+import useTranslation from 'next-translate/useTranslation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -214,6 +215,7 @@ export default function Checkout() {
   });
   const [priceModifier, setPriceModifier] = useState(1);
   const [coupon, setCoupon] = useState('');
+  const { t } = useTranslation('checkout');
 
   const router = useRouter();
 

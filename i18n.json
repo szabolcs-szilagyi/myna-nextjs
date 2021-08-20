@@ -7,6 +7,7 @@
         "/our-story": ["our-story"],
         "/my-account": ["my-account"],
         "/sustainability": ["sustainability"],
-        "/[idname]": ["idname"]
+        "/[idname]": ["idname"],
+        "/checkout": ["checkout"]
     }
 }
