@@ -11,6 +11,7 @@ import {
   API_SERVER,
 } from '../constants';
 import { request } from '../lib/request';
+import useTranslation from 'next-translate/useTranslation';
 
 type ColletcionTypes = 'consciously-beautiful' | 'love-and-light' | 'love-affair-collection';
 type Product = {
@@ -97,6 +98,7 @@ export async function getStaticProps() {
 }
 
 export default function ShopCollections({ collectionData }) {
+  const { t } = useTranslation();
   return (
     <Container fluid>
       <Header />
@@ -105,7 +107,7 @@ export default function ShopCollections({ collectionData }) {
       <div className="spacer50px" />
       <div className="row">
         <div className="col-md-12 ce capitalLetters">
-          <h1><strong>Shop Collections</strong></h1>
+          <h1><strong>{t('Shop Collections')}</strong></h1>
         </div>
       </div>
       <div className="row">

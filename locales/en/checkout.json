@@ -9,5 +9,7 @@
   "Total": "Total",
   "Coupon code": "Coupon code",
   "CHECKOUT": "CHECKOUT",
-  "incl- €10 shipping fee (EU)": "incl. €10 shipping fee (EU)"
+  "incl- €10 shipping fee (EU)": "incl. €10 shipping fee (EU)",
+  "incl- €25 shipping fee (Non-EU)": "incl. €25 shipping fee (Non-EU)",
+  "Plus shipping fee": "Plus shipping fee"
 }
