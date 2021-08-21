@@ -99,7 +99,7 @@ export async function getStaticPaths() {
 
 export default function Index (props: any) {
   const router = useRouter();
-  const { t } = useTranslation('product');
+  const { t, lang } = useTranslation('product');
 
   const idName = router.query.idname;
   const isOneSize = props.isOneSize;
@@ -227,6 +227,18 @@ export default function Index (props: any) {
     checkAvailability(newSize, session, state.idName);
   }
 
+  const {
+    productName,
+    description,
+    compCare,
+  } = lang === 'pl' ?
+      {
+        productName: state.namePl ?? state.productName,
+        description: state.descriptionPl ?? state.description,
+        compCare: state.compositionAndCarePl ?? state.compCare,
+      } :
+      state;
+
   return (
     <Container fluid>
       <Header />
@@ -243,14 +255,16 @@ export default function Index (props: any) {
             <div className="col-md-6 ce">
               <div className="row">
                 <div className="col-md-12">
-                  <h1 className="capitalLetters">{state.productName} | {state.productColor} | {state.currency}{state.productPrice}</h1>
+                <h1 className="capitalLetters">
+                  {productName} | {state.productColor} | {state.currency}{state.productPrice}
+                </h1>
                 </div>
               </div>
               <div className="spacer50px"></div>
 
               <ProductInfo
-                description={state.description}
-                compCare={state.compCare}
+                description={description}
+                compCare={compCare}
               />
 
               <div className="spacer50px"></div>
