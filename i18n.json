@@ -9,7 +9,7 @@
         "/sustainability": ["sustainability"],
         "/[idname]": ["product"],
         "/checkout": ["checkout"],
-        "/size-measurement": ["product"],
+        "/size-measurement": ["product", "size-measurement"],
         "/shipping": ["shipping"]
     }
 }
