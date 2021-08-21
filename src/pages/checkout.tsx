@@ -349,7 +349,7 @@ export default function Checkout() {
             </div>
             <div className="col-md-4 ce">
               <p className="capitalLetters">{t('Total')}: €{state.price}</p>
-              <p className="capitalLetters">{t(state.shipping)}</p>
+              <p className="capitalLetters">{t(state.shipping.replace('.', '-'))}</p>
               <p>
                 <input
                   type="text"

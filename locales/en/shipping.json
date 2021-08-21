@@ -6,5 +6,10 @@
   "if-you-are-otherwise": "If you are otherwise unsatisfied with an item, it can be returned provided you contact us within 14 days of delivery and ship the item back within 21 days of delivery. <0/> Final sale orders are exempt and cannot be returned and refunded.",
   "customers-responsible-return": "Customers are responsible for return shipping costs and for the safe receipt by MYNA of any returned items.",
   "returned-from-outside-eu": "Where an item is being returned from outside the EU, please clearly mark the package as a return to ensure no customs costs are incurred. MYNA cannot be held responsible for customs costs relating to returned items.",
-  "incase-returned-not-arrived": "In the case that a returned item is not received by MYNA in its original condition, the customer is responsible for any loss in value."
+  "incase-returned-not-arrived": "In the case that a returned item is not received by MYNA in its original condition, the customer is responsible for any loss in value.",
+  "Shipping": "Shipping",
+  "Customs and import taxes": "Customs and import taxes",
+  "Returns and Exchanges": "Returns and Exchanges",
+  "Returns and exchanges": "Returns and exchanges",
+  "Conditions of return": "Conditions of return"
 }
