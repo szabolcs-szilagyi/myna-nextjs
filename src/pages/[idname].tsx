@@ -34,10 +34,13 @@ function loadData(idName: string): Promise<unknown> {
       return {
         productIdToCart: productdetails.id,
         productName: productdetails.productname,
+        namePl: productdetails.namePl,
         productColor: productdetails.productcolor,
         productPrice: productdetails.productprice,
         description: productdetails.desclong,
+        descriptionPl: productdetails.descriptionPl,
         compCare: productdetails.compcare,
+        compositionAndCarePl: productdetails.compositionAndCarePl,
         availability: productdetails.availability,
         isOneSize: productdetails.is_one_size,
         photos: {
