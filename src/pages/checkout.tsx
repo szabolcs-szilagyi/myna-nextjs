@@ -260,7 +260,7 @@ export default function Checkout() {
       currency: 'EUR',
     })
 
-    if (state.checked == '0') {
+    if (state.checked === 0) {
       amILoggedIn();
     } else {
       const loggedIn = state.loggedIn;
