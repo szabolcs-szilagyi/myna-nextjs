@@ -8,6 +8,7 @@ import {
   API_PATH,
   API_SERVER,
 } from '../constants';
+import style from './Nav.module.css';
 import getConfig from 'next/config';
 const { publicRuntimeConfig: { i18nEnabled } } = getConfig();
 
@@ -93,8 +94,8 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
                 containerClass="col-md-4 ce padtop43px navCart"
                 lastItemsDate={lastItemsDate}
               />
-              <div className="col-md-2 ce padtop50px">
-                <button className={i18nEnabled ? '' : 'd-none'} onClick={changeLang}>{nextLang}</button>
+              <div className="col-md-2 ce padtop43px">
+                <button className={i18nEnabled ? style.i18nButton : 'd-none'} onClick={changeLang}>{nextLang}</button>
               </div>
             </div>
           </div>
@@ -113,11 +114,14 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
               <Link href="/my-account"><a>{t('My Account')}</a></Link>
             </div>
           </div>
-          <div className="col-md-4 ce">
+          <div className="col-md-2 ce">
             <Cart
               containerClass="padtop43px blackFont"
               lastItemsDate={lastItemsDate}
             />
+          </div>
+          <div className="col-md-2 ce padtop43px">
+            <button className={i18nEnabled ? style.i18nButton : 'd-none'} onClick={changeLang}>{nextLang}</button>
           </div>
         </div>
         <div className="row">
@@ -167,6 +171,7 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
               <BSNav.Link className="blackFont" href="/shop-collections">{t('Shop Collections')}</BSNav.Link>
               <BSNav.Link className="blackFont" href="/sustainability">{t('Sustainability')}</BSNav.Link>
               <BSNav.Link className="blackFont" href="/our-story">{t('Our Story')}</BSNav.Link>
+              <button className={i18nEnabled ? style.i18nButton : 'd-none'} onClick={changeLang}>{nextLang}</button>
             </BSNav>
           </Navbar.Collapse>
         </Navbar>
