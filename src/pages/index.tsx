@@ -30,10 +30,9 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-md-2"></div>
+      <div className="row justify-content-center">
         <div className="col-md-8">
-          <div className="row">
+          <div className="row justify-content-center">
             <SingleProductCard
               className="col-md-4"
               productPageLink="/shop-collections#consciously-beautiful"
@@ -50,17 +49,8 @@ export default function Index() {
             >
               <p className="text-center">Love & Light<br />{t('Collection')}</p>
             </SingleProductCard>
-            <SingleProductCard
-              className="col-md-4"
-              productPageLink="/shop-collections#love-affair-collection"
-              productImageLink="/landing/love_affair.jpg"
-              productName="ALYSS Dress"
-            >
-              <p className="text-center">Love Affair<br />{t('Collection')}</p>
-            </SingleProductCard>
           </div>
         </div>
-        <div className="col-md-2"></div>
       </div>
 
       <div className="col-md-6 mx-auto">
@@ -70,37 +60,37 @@ export default function Index() {
       <div className="row col-md-8 mx-auto px-0">
         <SingleProductCard
           className="col-md-3"
-          productPageLink="/senna-skirt"
-          productImageLink="/landing/senna_skirt.jpg"
-          productName="SENNA Skirt"
-          price="€135"
+          productPageLink="/flora-dress"
+          productImageLink="/landing/flora_dress.jpg"
+          productName="FLORA Dress"
+          price="€229"
           width={853}
           height={1280}
         />
         <SingleProductCard
           className="col-md-3"
-          productPageLink="/lisia-dress"
-          productImageLink="/landing/lisia.jpg"
-          productName="LISIA Dress"
-          price="€179"
+          productPageLink="/reeva-denim-jacket"
+          productImageLink="/landing/reeva-denim-jacket.jpg"
+          productName="REEVA Jacket"
+          price="€139"
           width={853}
           height={1280}
         />
         <SingleProductCard
           className="col-md-3"
-          productPageLink="/ivy-cream"
-          productImageLink="/landing/ivy.jpg"
-          productName="IVY Top"
-          price="€75"
+          productPageLink="/lola-top"
+          productImageLink="/landing/lola-top.jpg"
+          productName="LOLA Top"
+          price="€149"
           width={853}
           height={1280}
         />
         <SingleProductCard
           className="col-md-3"
-          productPageLink="/tuli-dress"
-          productImageLink="/landing/tuli_dress.jpg"
-          productName="TULI Dress"
-          price="€169"
+          productPageLink="/helen-blazer"
+          productImageLink="/landing/helen-blazer.jpg"
+          productName="HELEN Blazer"
+          price="€225"
           width={853}
           height={1280}
         />
@@ -114,19 +104,19 @@ export default function Index() {
           </div>
           <SingleProductCard
             className="col-md-3"
-            productPageLink="/lili-top-satin"
-            productImageLink="/landing/time-for-linen/lili.jpg"
-            productName="LILI Top Satin"
-            price="€69"
+            productPageLink="/peri-top"
+            productImageLink="/landing/peri-top.jpg"
+            productName="PERI Top"
+            price="€155"
             width={853}
             height={1280}
           />
           <SingleProductCard
             className="col-md-3"
-            productPageLink="/iris-vest"
-            productImageLink="/landing/time-for-linen/iris.jpg"
-            productName="IRIS Vest"
-            price="€75"
+            productPageLink=""
+            productImageLink="/landing/embroidery.jpg"
+            productName=""
+            price=""
             width={853}
             height={1280}
           />
@@ -145,128 +135,20 @@ export default function Index() {
               </div>
               <SingleProductCard
                 className="col-md-5 order-first"
-                productPageLink="/tuli-dress"
-                productImageLink="/landing/feel-connected/tulipan.jpg"
-                width={1280}
-                height={853}
+                productPageLink="/marigold-coat"
+                productImageLink="/landing/marigold-bread.jpg"
+                width={853}
+                height={1280}
               />
             </div>
           </div>
           <SingleProductCard
             className="col-md-3 order-first"
-            productPageLink="/tuli-dress"
-            productImageLink="/landing/feel-connected/tuli-dress.jpg"
-            productName="TULI Dress"
-            price="€169"
+            productPageLink="/marigold-coat"
+            productImageLink="/landing/marigold-coat.jpg"
+            productName="MARIGOLD Coat"
+            price="€225"
             width={853}
-            height={1280}
-          />
-        </div>
-      </div>
-
-      <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('OUR ORGANIC COTTON VOILE QUALITY, NATURAL DYE')}</h1>
-        <div className="row">
-          <div className="col-md-8 mx-auto order-last">
-            <p>{t('our-passion-leads-us-to-creativity')}</p>
-          </div>
-          <SingleProductCard
-            className="col-md-3"
-            productPageLink="/bella-blouse"
-            productImageLink="/landing/organic-cotton/bella.jpg"
-            productName="BELLA Blouse"
-            price="€79"
-            width={1280}
-            height={1280}
-          />
-          <SingleProductCard
-            className="col-md-5 mx-auto"
-            productPageLink="/shop-collections#consciously-beautiful"
-            productImageLink="/landing/organic-cotton/bella-and-dahlia.jpg"
-            productName="BELLA & DAHLIA Tops"
-            width={1290}
-            height={740}
-          />
-          <SingleProductCard
-            className="col-md-3"
-            productPageLink="/dahlia-blouse"
-            productImageLink="/landing/organic-cotton/dahlia.jpg"
-            productName="DAHLIA Blouse"
-            price="€105"
-            width={1280}
-            height={1280}
-          />
-        </div>
-
-        <div className="row">
-          <div className="col-md-6">
-            <SingleProductCard
-              className="col-md-12"
-              productPageLink="/bella-hand-painted-blouse"
-              productImageLink="/product_photos/bella-print-01.jpg"
-              productName="BELLA Hand Painted Blouse"
-              price="€129"
-              width={1280}
-              height={1280}
-            />
-            <div className={`row align-items-center ${style.verticalSpacing}`}>
-              <p className="w-100 text-center">{t('our-leya-dresss-is-honored')}</p>
-            </div>
-          </div>
-
-          <div className="col-md-6">
-            <div className={`row align-items-center ${style.verticalSpacing}`}>
-              <p className="w-100 text-center">{t('the-biggest-beauty')}<br />Zaritza</p>
-            </div>
-            <SingleProductCard
-              className="col-md-12"
-              productPageLink="/leya-wrap-dress"
-              productImageLink="/landing/leya/anastazia.jpg"
-              productName="LEYA Dress"
-              price="€319"
-              width={1280}
-              height={1280}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('OUR ORGANIC COTTON & HEMP QUALITY')}</h1>
-        <div className="row">
-          <div className="col-md-8 mx-auto order-last">
-            <p>{t('sustainability-is-very-important-and-fashion')}</p>
-            <ul>
-              <li>{t('hemp-is-antibacterial')}</li>
-              <li>{t('no-pesticides-need')}</li>
-              <li>{t('less-water-is-needed')}</li>
-              <li>{t('there-are-no-waste')}</li>
-            </ul>
-          </div>
-          <SingleProductCard
-            className="col-md-3"
-            productPageLink="/gea-cream"
-            productImageLink="/landing/hemp/MynaWebShop-WhiteTop-3.jpg"
-            productName="GEA Top"
-            price="€75"
-            width={1280}
-            height={1280}
-          />
-          <SingleProductCard
-            className="col-md-5 mx-auto"
-            productPageLink="/shop-collections#love-and-light"
-            productImageLink="/landing/hemp/gea-and-ivy.jpg"
-            productName="GEA & IVY Tops"
-            width={1290}
-            height={740}
-          />
-          <SingleProductCard
-            className="col-md-3"
-            productPageLink="/ivy-cream"
-            productImageLink="/product_photos/mynawebshop-whitetshirt-1.jpg"
-            productName="IVY Top"
-            price="€75"
-            width={1280}
             height={1280}
           />
         </div>
@@ -283,7 +165,15 @@ export default function Index() {
           <SingleProductCard
             className="col-md-6"
             productPageLink="/lookbook"
-            productImageLink="/lookbook/08.jpg"
+            productImageLink="/landing/walk.jpg"
+            productName="LOOKBOOK"
+            width={1280}
+            height={853}
+          />
+          <SingleProductCard
+            className="col-md-6"
+            productPageLink="/lookbook"
+            productImageLink="/landing/jump.jpg"
             productName="LOOKBOOK"
             width={1280}
             height={853}
