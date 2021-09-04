@@ -1,0 +1,15 @@
+{
+  "cart-counter-message_0": "Cart is empty",
+  "cart-counter-message_one": "Cart / {{count}} item",
+  "cart-counter-message_other": "Cart / {{count}} items",
+  "Your Loved Pieces": "Your Loved Pieces",
+  "Your cart is empty": "Your cart is empty",
+  "START SHOPPING HERE": "START SHOPPING HERE",
+  "CONTINUE SHOPPING": "CONTINUE SHOPPING",
+  "Total": "Total",
+  "Coupon code": "Coupon code",
+  "CHECKOUT": "CHECKOUT",
+  "incl- €10 shipping fee (EU)": "incl. €10 shipping fee (EU)",
+  "incl- €25 shipping fee (Non-EU)": "incl. €25 shipping fee (Non-EU)",
+  "Plus shipping fee": "Plus shipping fee"
+}

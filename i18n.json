@@ -1,0 +1,16 @@
+{
+    "locales": ["en", "pl"],
+    "defaultLocale": "en",
+    "pages": {
+        "*": ["common"],
+        "/": ["home", "sustainability", "slider"],
+        "/our-story": ["our-story"],
+        "/my-account": ["my-account"],
+        "/sustainability": ["sustainability"],
+        "/[idname]": ["product"],
+        "/checkout": ["checkout"],
+        "/size-measurement": ["product", "size-measurement"],
+        "/shipping": ["shipping"],
+        "/privacy-contact": ["privacy-contact"]
+    }
+}

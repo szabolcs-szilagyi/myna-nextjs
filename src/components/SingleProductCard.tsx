@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 
 import style from './SingleProductCard.module.css';
@@ -16,7 +17,7 @@ export default function SingleProductCard(props) {
   return (
     <div className={className}>
       <div className={style.cImage} >
-        <a href={props.productPageLink}>
+        <Link href={props.productPageLink}><a>
           <Image
             src={props.productImageLink}
             layout="responsive"
@@ -25,7 +26,7 @@ export default function SingleProductCard(props) {
             alt={props.productName}
           />
           {children}
-        </a>
+        </a></Link>
       </div>
       <div className={style.imageSpacer} />
     </div>

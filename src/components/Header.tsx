@@ -52,7 +52,7 @@ class HeadElement extends React.Component {
           gtag('config', 'G-8D4K06TM96');`
       }}
       />
-      </Head>
+    </Head>
   }
 }
 

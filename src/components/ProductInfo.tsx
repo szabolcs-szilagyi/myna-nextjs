@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import Trans from 'next-translate/Trans';
 
 import SizeInfo from '../components/SizeInfo';
+import useTranslation from 'next-translate/useTranslation';
 
 function DescButton({ id, text, onClick }) {
   return (
@@ -15,49 +17,41 @@ function DescButton({ id, text, onClick }) {
   );
 }
 
-export default class ProductInfo extends Component {
-  state: any;
-  props: any;
+export default function ProductInfo(props) {
+  const [state, setState] = useState({
+    descStyle: { display: 'block' },
+    compCareStyle: { display: 'none' },
+    sizeInfoStyle: { display: 'none' },
+    deliveryStyle: { display: 'none' },
+  });
+  const { t } = useTranslation('product');
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      descStyle: { display: 'block' },
-      compCareStyle: { display: 'none' },
-      sizeInfoStyle: { display: 'none' },
-      deliveryStyle: { display: 'none' },
-    };
-
-    this.productInfoHandling = this.productInfoHandling.bind(this);
-  }
-
-  productInfoHandling(e) {
+  function productInfoHandling(e) {
     const currentId = e.currentTarget.id;
 
     if (currentId === 'productDesc') {
-      this.setState({
+      setState({
         descStyle: { display: 'block' },
         compCareStyle: { display: 'none' },
         sizeInfoStyle: { display: 'none' },
         deliveryStyle: { display: 'none' },
       });
     } else if (currentId === 'productComp') {
-      this.setState({
+      setState({
         descStyle: { display: 'none' },
         compCareStyle: { display: 'block' },
         sizeInfoStyle: { display: 'none' },
         deliveryStyle: { display: 'none' },
       });
     } else if (currentId === 'productSize') {
-      this.setState({
+      setState({
         descStyle: { display: 'none' },
         compCareStyle: { display: 'none' },
         sizeInfoStyle: { display: 'block' },
         deliveryStyle: { display: 'none' },
       });
     } else if (currentId === 'productDeli') {
-      this.setState({
+      setState({
         descStyle: { display: 'none' },
         compCareStyle: { display: 'none' },
         sizeInfoStyle: { display: 'none' },
@@ -66,73 +60,70 @@ export default class ProductInfo extends Component {
     }
   }
 
-  render() {
-    return (
-      <div>
-        <div className="row">
-          <div className="col-sm-6 col-xl-3">
-            <DescButton
-              onClick={this.productInfoHandling}
-              id="productDesc"
-              text="Description"
-            />
-          </div>
-          <div className="col-sm-6 col-xl-3">
-            <DescButton
-              onClick={this.productInfoHandling}
-              id="productComp"
-              text="Composition & Care"
-            />
-          </div>
-          <div className="spacer10px d-none d-sm-block d-xl-none"></div>
-          <div className="col-sm-6 col-xl-3">
-            <DescButton
-              onClick={this.productInfoHandling}
-              id="productSize"
-              text="Size"
-            />
-          </div>
-          <div className="col-sm-6 col-xl-3">
-            <DescButton
-              onClick={this.productInfoHandling}
-              id="productDeli"
-              text="Delivery"
-            />
-          </div>
+  return (
+    <div>
+      <div className="row">
+        <div className="col-sm-6 col-xl-3">
+          <DescButton
+            onClick={productInfoHandling}
+            id="productDesc"
+            text={t('Description')}
+          />
         </div>
-        <div className="spacer50px"></div>
-        <div className="row">
-          <div className="col-md-12">
-            <div
-              style={this.state.descStyle}
-              className="productInfoContainer"
-              dangerouslySetInnerHTML={{ __html: this.props.description }}
-            ></div>
-            <div
-              style={this.state.compCareStyle}
-              className="productInfoContainer"
-              dangerouslySetInnerHTML={{ __html: this.props.compCare }}
-            ></div>
-            <div
-              style={this.state.sizeInfoStyle}
-              className="productInfoContainer"
-            ><SizeInfo /></div>
-            <div
-              style={this.state.deliveryStyle}
-              className="productInfoContainer"
-            >
-              <div className="ju">
-                Receive your favourite items(s) within 5 to 7 days once shipped. For countries
-                outside of Europe shipping may take longer, please enquire for specific country. All
-                items are shipped within 3 business days from placing your order, with the exception
-                of pre-ordered pieces. Pre-order pieces are made within 1 to 2 weeks. Email us at <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a>.
-                You have 14 days to change your mind. Sale orders are non refundable.
-              </div>
+        <div className="col-sm-6 col-xl-3">
+          <DescButton
+            onClick={productInfoHandling}
+            id="productComp"
+            text={t('Composition & Care')}
+          />
+        </div>
+        <div className="spacer10px d-none d-sm-block d-xl-none"></div>
+        <div className="col-sm-6 col-xl-3">
+          <DescButton
+            onClick={productInfoHandling}
+            id="productSize"
+            text={t('Size')}
+          />
+        </div>
+        <div className="col-sm-6 col-xl-3">
+          <DescButton
+            onClick={productInfoHandling}
+            id="productDeli"
+            text={t('Delivery')}
+          />
+        </div>
+      </div>
+      <div className="spacer50px"></div>
+      <div className="row">
+        <div className="col-md-12">
+          <div
+            style={state.descStyle}
+            className="productInfoContainer"
+            dangerouslySetInnerHTML={{ __html: props.description }}
+          ></div>
+          <div
+            style={state.compCareStyle}
+            className="productInfoContainer"
+            dangerouslySetInnerHTML={{ __html: props.compCare }}
+          ></div>
+          <div
+            style={state.sizeInfoStyle}
+            className="productInfoContainer"
+          ><SizeInfo /></div>
+          <div
+            style={state.deliveryStyle}
+            className="productInfoContainer"
+          >
+            <div className="ju">
+              <Trans
+                i18nKey="product:receive-your"
+                components={[<a href="mailto:connect@mynalabel.com" className="blackFont" />]}
+              />
             </div>
           </div>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
