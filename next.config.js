@@ -26,6 +26,9 @@ const configuration = {
 };
 
 module.exports = nextTranslate({
+  publicRuntimeConfig: {
+    i18nEnabled: process.env.I18N_ENABLED !== 'false',
+  },
 	env: configuration[NODE_ENV],
 
   i18n: {

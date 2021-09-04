@@ -1,22 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import useTranslation from 'next-translate/useTranslation';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import * as reactBootstrap from 'react-bootstrap';
-import { useRouter } from 'next/router'
-import useTranslation from 'next-translate/useTranslation'
+import Cookies from 'universal-cookie';
+import {
+  API_PATH,
+  API_SERVER,
+} from '../constants';
+import getConfig from 'next/config';
+const { publicRuntimeConfig: { i18nEnabled } } = getConfig();
 
 const {
   Navbar,
   Nav: BSNav
 } = reactBootstrap;
 
-import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 const session = cookies.get('session');
-
-import {
-  API_SERVER,
-  API_PATH,
-} from '../constants';
 
 
 function getInCart() {
@@ -93,7 +94,7 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
                 lastItemsDate={lastItemsDate}
               />
               <div className="col-md-2 ce padtop50px">
-                <button onClick={changeLang}>{nextLang}</button>
+                <button className={i18nEnabled ? '' : 'd-none'} onClick={changeLang}>{nextLang}</button>
               </div>
             </div>
           </div>
