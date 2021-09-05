@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import useTranslation from 'next-translate/useTranslation';
+import Trans from 'next-translate/Trans';
 
 import Slider from '../components/Slider';
 import Header from '../components/Header';
@@ -54,7 +55,7 @@ export default function Index() {
       </div>
 
       <div className="col-md-6 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('New consciously beautiful collection')}</h1>
+        <h1 className="text-center mt-5 mb-3">{t('New Autumn-Winter transitional & timeless collection')}</h1>
         <p>{t('sustainability:we-give-you-small-capsule-collections')}</p>
       </div>
       <div className="row col-md-8 mx-auto px-0">
@@ -97,10 +98,12 @@ export default function Index() {
       </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('IT’S TIME FOR LINEN')}</h1>
         <div className="row">
           <div className="col-md-6 my-auto order-last">
-            <p>{t('linen-is-an-amazing-fabric')}</p>
+            <Trans
+              i18nKey="home:Embroidery in MYNA"
+              components={[<p />]}
+            />
           </div>
           <SingleProductCard
             className="col-md-3"
@@ -124,26 +127,16 @@ export default function Index() {
       </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('FEEL CONNECTED')}</h1>
+        <h1 className="text-center mt-5 mb-3">{t('DIVINE TENCEL')}</h1>
         <div className="row">
-          <div className="col-md-9">
-            <div className="row">
-              <div className="row">
-                <div className="col-md-6">
-                  <p>{t('the-elegance-of-the-tulip')}</p>
-                </div>
-              </div>
-              <SingleProductCard
-                className="col-md-5 order-first"
-                productPageLink="/marigold-coat"
-                productImageLink="/landing/marigold-bread.jpg"
-                width={853}
-                height={1280}
-              />
-            </div>
+          <div className="col-md-4">
+            <Trans
+              i18nKey="home:MYNA-grand-purpose"
+              components={[<p />]}
+            />
           </div>
           <SingleProductCard
-            className="col-md-3 order-first"
+            className="col-md-4"
             productPageLink="/marigold-coat"
             productImageLink="/landing/marigold-coat.jpg"
             productName="MARIGOLD Coat"
@@ -151,15 +144,22 @@ export default function Index() {
             width={853}
             height={1280}
           />
+          <SingleProductCard
+            className="col-md-4"
+            productPageLink="/marigold-coat"
+            productImageLink="/landing/marigold-bread.jpg"
+            width={853}
+            height={1280}
+          />
         </div>
       </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('STAY INSPIRED WITH MYNA – VIEW OUR LOOKBOOK')}</h1>
         <div className="row">
-          <div className="col-md-6 order-last my-auto">
-            <p className={style.quote} >
-              {t('common:lookbook-shes-matured')}
+          <div className="text-center col-md-8 offset-md-2 order-last">
+            <h1 className="text-center mb-3">{t('FRIENDSHIP MYNA')}</h1>
+            <p>
+              {t('build-and-create-friendship')}
             </p>
           </div>
           <SingleProductCard
@@ -179,6 +179,18 @@ export default function Index() {
             height={853}
           />
         </div>
+      </div>
+
+      <div className="col-md-8 mx-auto">
+        <h1 className="text-center mt-5 mb-3">{t('STAY INSPIRED WITH MYNA – VIEW OUR LOOKBOOK')}</h1>
+        <SingleProductCard
+          className="col-md-6 mx-auto"
+          productPageLink="/lookbook"
+          productImageLink="/landing/walk.jpg"
+          productName="LOOKBOOK"
+          width={1280}
+          height={853}
+        />
       </div>
 
       <Footer />
