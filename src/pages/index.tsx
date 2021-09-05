@@ -185,12 +185,12 @@ export default function Index() {
       <div className="col-md-8 mx-auto">
         <h1 className="text-center mt-5 mb-3">{t('STAY INSPIRED WITH MYNA – VIEW OUR LOOKBOOK')}</h1>
         <SingleProductCard
-          className="col-md-6 mx-auto"
+          className="col-md-8 mx-auto"
           productPageLink="/lookbook"
-          productImageLink="/landing/walk.jpg"
+          productImageLink="/landing/view-our-lookbook.jpg"
           productName="LOOKBOOK"
           width={1280}
-          height={853}
+          height={640}
         />
       </div>
 
