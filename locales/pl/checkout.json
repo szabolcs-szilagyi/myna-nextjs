@@ -1,1 +1,15 @@
-{}
+{
+  "cart-counter-message_0": "koszyk jest pusty",
+  "cart-counter-message_one": "koszyk / {{count}} produkt",
+  "cart-counter-message_other": "koszyk / {{count}} produkty",
+  "Your Loved Pieces": "Twoje ulubione produkty",
+  "Your cart is empty": "Twój koszyk jest pusty",
+  "START SHOPPING HERE": "ROZPOCZNIJ ZAKUPY TUTAJ",
+  "CONTINUE SHOPPING": "KONTYNUUJ ZAKUPY",
+  "Total": "Razem",
+  "Coupon code": "KUPON KOD",
+  "CHECKOUT": "ZAKOŃCZ I SPRAWDŹ",
+  "incl- €10 shipping fee (EU)": "plus €10 dostawa (EU)",
+  "incl- €25 shipping fee (Non-EU)": "plus €25 dostawa (Non-EU)",
+  "Plus shipping fee": "Plus dostawa"
+}
