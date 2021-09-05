@@ -56,28 +56,18 @@ function groupProducts(products: Product[]) {
 
 export async function getStaticProps() {
   const productsToRetrieve = [
-    ['consciously-beautiful', 'lili-top-satin'],
-    ['consciously-beautiful', 'lili-top'],
-    ['consciously-beautiful', 'lisia-dress'],
+    ['consciously-beautiful', 'marigold-trench-coat'],
+    ['consciously-beautiful', 'helen-blazer'],
+    ['consciously-beautiful', 'flora-wrap-dress'],
+    ['consciously-beautiful', 'peri-blouse'],
     ['consciously-beautiful', 'senna-skirt'],
     ['consciously-beautiful', 'reeva-denim-jacket'],
-    ['consciously-beautiful', 'tuli-dress'],
-    ['consciously-beautiful', 'leya-wrap-dress'],
-    ['consciously-beautiful', 'iris-vest'],
-    ['consciously-beautiful', 'dahlia-blouse'],
-    ['consciously-beautiful', 'bella-hand-painted-blouse'],
-    ['consciously-beautiful', 'bella-blouse'],
     ['consciously-beautiful', 'delphi-culottes'],
-    ['love-and-light', 'lotus-sand'],
+    ['love-and-light', 'lola-oversized-shirt'],
     ['love-and-light', 'ivy-cream'],
     ['love-and-light', 'aster-green'],
-    ['love-and-light', 'aster-sand'],
     ['love-and-light', 'gea-cream'],
     ['love-and-light', 'nolia-dustpink'],
-    ['love-affair-collection', 'alyss-dress'],
-    ['love-affair-collection', 'calla-cream'],
-    ['love-affair-collection', 'tilja-top'],
-    ['love-affair-collection', 'magna-scarf'],
   ]
   const collectionData: TCollectionData = {};
 
@@ -146,15 +136,6 @@ export default function ShopCollections({ collectionData }: TShopCollectionsProp
       </div>
 
       {(groupProducts(collectionData['love-and-light']))}
-
-      <div className="spacer50px" />
-      <div className="row">
-        <div id="love-affair-collection" className="col-md-12 ce capitalLetters">
-          <h5><strong>Love Affair Collection</strong></h5>
-        </div>
-      </div>
-
-      {(groupProducts(collectionData['love-affair-collection']))}
 
       <Footer />
     </Container>
