@@ -192,35 +192,6 @@ export default function Index (props: any) {
     }
   }
 
-  function loadData() {
-    fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + state.idName)
-      .then(response => response.json())
-      .then(({ productdetails }) => {
-        setState({
-          ...state,
-          productIdToCart: productdetails.id,
-          productName: productdetails.productname,
-          productColor: productdetails.productcolor,
-          productPrice: productdetails.productprice,
-          description: productdetails.desclong,
-          compCare: productdetails.compcare,
-          availability: productdetails.availability,
-          photos: {
-            photo1: productdetails.pic1,
-            photo2: productdetails.pic2,
-            photo3: productdetails.pic3,
-            photo4: productdetails.pic4,
-            photo5: productdetails.pic5,
-            photo6: productdetails.pic6,
-            photo7: productdetails.pic7,
-            photo8: productdetails.pic8,
-            photo9: productdetails.pic9,
-          },
-        });
-      })
-      .catch(error => console.log(error.message));
-  }
-
   function handleSizeChange(e) {
     const newSize = e.target.value
     setSelectedSize(newSize);
