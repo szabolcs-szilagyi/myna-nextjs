@@ -21,6 +21,8 @@ type Product = {
   price: string,
 };
 
+type TCollectionData = Partial<Record<ColletcionTypes, Product[]>>;
+
 function createProductCard(product: Product) {
   if(!product) return (<></>);
   return (
@@ -77,7 +79,7 @@ export async function getStaticProps() {
     ['love-affair-collection', 'tilja-top'],
     ['love-affair-collection', 'magna-scarf'],
   ]
-  const collectionData: Partial<Record<ColletcionTypes, Product[]>> = {};
+  const collectionData: TCollectionData = {};
 
   for (const [collection, shortName] of productsToRetrieve) {
     const productDetails: any = (await request(`${API_SERVER}product`, {
@@ -97,7 +99,10 @@ export async function getStaticProps() {
   return { props: { collectionData } };
 }
 
-export default function ShopCollections({ collectionData }) {
+type TShopCollectionsProps = {
+  collectionData: TCollectionData,
+}
+export default function ShopCollections({ collectionData }: TShopCollectionsProps) {
   const { t } = useTranslation();
   return (
     <Container fluid>
