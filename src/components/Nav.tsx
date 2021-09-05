@@ -65,7 +65,7 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
   function changeLang() {
     setNextLang(nextLang === 'en' ? 'pl' : 'en');
     cookies.set('NEXT_LOCALE', nextLang);
-    router.replace(router.pathname, undefined, { locale: nextLang })
+    router.replace(router.asPath, undefined, { locale: nextLang })
   }
 
   return (
