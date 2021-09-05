@@ -98,8 +98,9 @@ export default function Index() {
       </div>
 
       <div className="col-md-8 mx-auto">
+        <h1 className="text-center mt-5 mb-3">{t('MYNA-Embroidery')}</h1>
         <div className="row">
-          <div className="col-md-6 my-auto order-last">
+          <div className="col-12 col-xl-6 my-auto order-last">
             <Trans
               i18nKey="home:Embroidery in MYNA"
               components={[<p />]}
@@ -128,30 +129,30 @@ export default function Index() {
 
       <div className="col-md-8 mx-auto">
         <h1 className="text-center mt-5 mb-3">{t('DIVINE TENCEL')}</h1>
-        <div className="row">
-          <div className="col-md-4">
+          <div className="col-12">
             <Trans
               i18nKey="home:MYNA-grand-purpose"
               components={[<p />]}
             />
           </div>
-          <SingleProductCard
-            className="col-md-4"
-            productPageLink="/marigold-coat"
-            productImageLink="/landing/marigold-coat.jpg"
-            productName="MARIGOLD Coat"
-            price="€225"
-            width={853}
-            height={1280}
-          />
-          <SingleProductCard
-            className="col-md-4"
-            productPageLink="/marigold-coat"
-            productImageLink="/landing/marigold-bread.jpg"
-            width={853}
-            height={1280}
-          />
-        </div>
+          <div className="row">
+            <SingleProductCard
+              className="col-md-4 mx-auto"
+              productPageLink="/marigold-coat"
+              productImageLink="/landing/marigold-coat.jpg"
+              productName="MARIGOLD Coat"
+              price="€225"
+              width={853}
+              height={1280}
+            />
+            <SingleProductCard
+              className="col-md-4 mx-auto"
+              productPageLink="/marigold-coat"
+              productImageLink="/landing/marigold-bread.jpg"
+              width={853}
+              height={1280}
+            />
+          </div>
       </div>
 
       <div className="col-md-8 mx-auto">
