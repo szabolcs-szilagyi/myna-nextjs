@@ -62,7 +62,7 @@ export default function Lookbook() {
               />
               <div className={' col-md-12 px-5 py-5'}>
                 <p className={style.quote} >
-                  {t('lookbook-shes-matured')}
+                  {t('lookbook-caption')}
                 </p>
               </div>
             </div>
