@@ -155,9 +155,9 @@ export default function Index() {
       </div>
 
       <div className="col-md-8 mx-auto">
+        <h1 className="text-center mb-3">{t('FRIENDSHIP MYNA')}</h1>
         <div className="row">
           <div className="text-center col-md-8 offset-md-2 order-last">
-            <h1 className="text-center mb-3">{t('FRIENDSHIP MYNA')}</h1>
             <p>
               {t('build-and-create-friendship')}
             </p>
