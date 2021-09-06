@@ -59,7 +59,7 @@ export default function Index() {
       <div className="row col-md-8 mx-auto px-0">
         <SingleProductCard
           className="col-md-3"
-          productPageLink="/flora-dress"
+          productPageLink="/flora-wrap-dress"
           productImageLink="/landing/flora_dress.jpg"
           productName="FLORA Dress"
           price="€229"
@@ -77,7 +77,7 @@ export default function Index() {
         />
         <SingleProductCard
           className="col-md-3"
-          productPageLink="/lola-top"
+          productPageLink="/lola-oversized-shirt"
           productImageLink="/landing/lola-top.jpg"
           productName="LOLA Top"
           price="€149"
@@ -106,7 +106,7 @@ export default function Index() {
           </div>
           <SingleProductCard
             className="col-md-3"
-            productPageLink="/peri-top"
+            productPageLink="/peri-blouse"
             productImageLink="/landing/peri-top.jpg"
             productName="PERI Top"
             price="€155"
@@ -136,7 +136,7 @@ export default function Index() {
           <div className="row">
             <SingleProductCard
               className="col-md-4 mx-auto"
-              productPageLink="/marigold-coat"
+              productPageLink="/marigold-trench-coat"
               productImageLink="/landing/marigold-coat.jpg"
               productName="MARIGOLD Coat"
               price="€225"
@@ -145,7 +145,7 @@ export default function Index() {
             />
             <SingleProductCard
               className="col-md-4 mx-auto"
-              productPageLink="/marigold-coat"
+              productPageLink="/marigold-trench-coat"
               productImageLink="/landing/marigold-bread.jpg"
               width={853}
               height={1280}
