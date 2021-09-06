@@ -1,15 +1,15 @@
 {
   "your-pieces": "Twoje produkty są wysyłane w 100% z offsetem węglowym, z międzynarodowym podglądem, jeśli jest to możliwe.",
-  "estimated-shipping": "Szacowane czasy wysyłki są następujące: <0/> Europa - 3 do 7 dni pracujących <0/> Reszta świata - 7 to 10 business days <0/> We ship within 3 days of placing order, with the exception of pre-ordered pieces, and you will receive email notification with your tracking number. <0/> Pre-order pieces are made within 1 to 2 weeks. Email us at <1>connect@mynalabel.com</1>.",
-  "customers-are-responsible": "Customers are responsible for any customs and import taxes that may apply. MYNA is not responsible for delays due to customs.",
-  "if-you-are-unhappy": "If you are unhappy with your order, please contact us at <0>connect@mynalabel.com</0> to let us know and we will assist you as well as we can.",
-  "if-you-are-otherwise": "If you are otherwise unsatisfied with an item, it can be returned provided you contact us within 14 days of delivery and ship the item back within 21 days of delivery. <0/> Final sale orders are exempt and cannot be returned and refunded.",
-  "customers-responsible-return": "Customers are responsible for return shipping costs and for the safe receipt by MYNA of any returned items.",
-  "returned-from-outside-eu": "Where an item is being returned from outside the EU, please clearly mark the package as a return to ensure no customs costs are incurred. MYNA cannot be held responsible for customs costs relating to returned items.",
-  "incase-returned-not-arrived": "In the case that a returned item is not received by MYNA in its original condition, the customer is responsible for any loss in value.",
-  "Shipping": "Shipping",
-  "Customs and import taxes": "Customs and import taxes",
-  "Returns and Exchanges": "Returns and Exchanges",
-  "Returns and exchanges": "Returns and exchanges",
-  "Conditions of return": "Conditions of return"
+  "estimated-shipping": "Szacowane czasy wysyłki są następujące: <0/> Europa - 3 do 7 dni pracujących <0/> Reszta świata - 7 do 10 dni pracy <0/>Wysyłamy w ciągu 3 dni od złożenia zamówienia, z wyjątkiem produktów zamówionych w przedsprzedaży, otrzymasz powiadomienie mailem z numerem śledzenia. <0/> Zamówienia w przedsprzedaży realizowane są w ciągu 1 do 2 tygodni. Napisz do nas na <1>connect@mynalabel.com</1>.",
+  "customers-are-responsible": "Klienci są odpowiedzialni za wszelkie opłaty celne i importowe, które mogą mieć zastosowanie. MYNA nie ponosi odpowiedzialności za opóźnienia spowodowane odprawą celną.",
+  "if-you-are-unhappy": "Jeśli nie jesteś zadowolony ze swojego zamówienia, skontaktuj się z nami pod adresem <0>connect@mynalabel.com</0> daj nam znać, a my pomożemy Ci najlepiej, jak potrafimy.",
+  "if-you-are-otherwise": "Jeśli nie jesteś zadowolony z innego przedmiotu, możesz go zwrócić pod warunkiem, że skontaktujesz się z nami w ciągu 14 dni od dostawy i odeślesz przedmiot w ciągu 21 dni od daty dostawy. <0/> Ostateczne zamówienia sprzedaży są zwolnione i nie mogą zostać zwrócone i zwrócone.",
+  "customers-responsible-return": "Klienci są odpowiedzialni za koszty wysyłki zwrotnej oraz za bezpieczne odbiór przez MYNA wszelkich zwracanych przedmiotów.",
+  "returned-from-outside-eu": "Jeśli produkt jest zwracany spoza UE, proszę wyraźnie oznaczyć paczkę jako zwrot, aby uniknąć poniesienia kosztów celnych. MYNA nie ponosi odpowiedzialności za koszty celne związane ze zwracanymi przedmiotami!.",
+  "incase-returned-not-arrived": "W przypadku, gdy zwracany towar nie zostanie odebrany przez MYNA w oryginalnym stanie, klient ponosi odpowiedzialność za utratę wartości.",
+  "Shipping": "Wysyłka",
+  "Customs and import taxes": "Cła i podatki importowe",
+  "Returns and Exchanges": "Zwroty i wymiany",
+  "Returns and exchanges": "Zwroty i wymiany",
+  "Conditions of return": "Warunki zwrotu"
 }
