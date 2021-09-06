@@ -36,7 +36,7 @@ export default function Index() {
               className="col-md-4"
               productPageLink="/shop-collections#consciously-beautiful"
               productImageLink="/landing/consciously_beautiful.jpg"
-              productName="LEYA Wrap Dress"
+              productName="MARIGOLD Trench Coat"
             >
               <p className="text-center">Consciously Beautiful<br />{t('Collection')}</p>
             </SingleProductCard>
@@ -44,7 +44,7 @@ export default function Index() {
               className="col-md-4"
               productPageLink="/shop-collections#love-and-light"
               productImageLink="/landing/love_and_light.jpg"
-              productName="ASTER Green"
+              productName="LOLA Shirt"
             >
               <p className="text-center">Love & Light<br />{t('Collection')}</p>
             </SingleProductCard>
@@ -61,7 +61,7 @@ export default function Index() {
           className="col-md-3"
           productPageLink="/flora-wrap-dress"
           productImageLink="/landing/flora_dress.jpg"
-          productName="FLORA Dress"
+          productName="FLORA Wrap Dress"
           price="€229"
           width={853}
           height={1280}
@@ -70,7 +70,7 @@ export default function Index() {
           className="col-md-3"
           productPageLink="/reeva-denim-jacket"
           productImageLink="/landing/reeva-denim-jacket.jpg"
-          productName="REEVA Jacket"
+          productName="REEVA Denim Jacket"
           price="€139"
           width={853}
           height={1280}
@@ -79,7 +79,7 @@ export default function Index() {
           className="col-md-3"
           productPageLink="/lola-oversized-shirt"
           productImageLink="/landing/lola-top.jpg"
-          productName="LOLA Top"
+          productName="LOLA Oversized Shirt"
           price="€149"
           width={853}
           height={1280}
@@ -108,7 +108,7 @@ export default function Index() {
             className="col-md-3"
             productPageLink="/peri-blouse"
             productImageLink="/landing/peri-top.jpg"
-            productName="PERI Top"
+            productName="PERI Blouse"
             price="€155"
             width={853}
             height={1280}
@@ -117,8 +117,8 @@ export default function Index() {
             className="col-md-3"
             productPageLink="/peri-sis-handkerchief"
             productImageLink="/landing/embroidery.jpg"
-            productName=""
-            price=""
+            productName="PERI SIS Handkerchief"
+            price="27"
             width={853}
             height={1280}
           />
@@ -138,7 +138,7 @@ export default function Index() {
               className="col-md-4 mx-auto"
               productPageLink="/marigold-trench-coat"
               productImageLink="/landing/marigold-coat.jpg"
-              productName="MARIGOLD Coat"
+              productName="MARIGOLD Trench Coat"
               price="€225"
               width={853}
               height={1280}
