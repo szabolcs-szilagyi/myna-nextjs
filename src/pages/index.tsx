@@ -115,7 +115,7 @@ export default function Index() {
           />
           <SingleProductCard
             className="col-md-3"
-            productPageLink="/magna-scarf"
+            productPageLink="/peri-sis-handkerchief"
             productImageLink="/landing/embroidery.jpg"
             productName=""
             price=""
