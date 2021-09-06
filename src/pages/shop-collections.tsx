@@ -67,6 +67,7 @@ export async function getStaticProps() {
     ['consciously-beautiful', 'senna-skirt'],
     ['consciously-beautiful', 'alyss-dress'],
     ['consciously-beautiful', 'tilia-blouse'],
+    ['consciously-beautiful', 'reeva-denim-jacket'],
     ['love-and-light', 'lola-oversized-shirt'],
     ['love-and-light', 'gea-cream'],
     ['love-and-light', 'magna-scarf'],
