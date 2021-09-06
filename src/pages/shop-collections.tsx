@@ -56,18 +56,23 @@ function groupProducts(products: Product[]) {
 
 export async function getStaticProps() {
   const productsToRetrieve = [
+    ['consciously-beautiful', 'flora-wrap-dress'],
     ['consciously-beautiful', 'marigold-trench-coat'],
     ['consciously-beautiful', 'helen-blazer'],
-    ['consciously-beautiful', 'flora-wrap-dress'],
-    ['consciously-beautiful', 'peri-blouse'],
-    ['consciously-beautiful', 'senna-skirt'],
-    ['consciously-beautiful', 'reeva-denim-jacket'],
+    ['consciously-beautiful', 'calla-cream'],
     ['consciously-beautiful', 'delphi-culottes'],
+    ['consciously-beautiful', 'peri-blouse'],
+    ['consciously-beautiful', 'peri-sis-handkerchief'],
+    ['consciously-beautiful', 'aster-sand'],
+    ['consciously-beautiful', 'senna-skirt'],
+    ['consciously-beautiful', 'alyss-dress'],
+    ['consciously-beautiful', 'tilia-blouse'],
     ['love-and-light', 'lola-oversized-shirt'],
+    ['love-and-light', 'gea-cream'],
+    ['love-and-light', 'magna-scarf'],
+    ['love-and-light', 'nolia-dustpink'],
     ['love-and-light', 'ivy-cream'],
     ['love-and-light', 'aster-green'],
-    ['love-and-light', 'gea-cream'],
-    ['love-and-light', 'nolia-dustpink'],
   ]
   const collectionData: TCollectionData = {};
 
