@@ -10,8 +10,6 @@ import Footer from '../components/Footer';
 import Ping from '../components/Ping';
 import SingleProductCard from '../components/SingleProductCard';
 
-import style from './index.module.css';
-
 export default function Index() {
   const { t } = useTranslation('home');
 
