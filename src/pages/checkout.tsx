@@ -12,7 +12,8 @@ import Nav from '../components/Nav';
 import PayPal from '../components/Paypal';
 import Ping from '../components/Ping';
 import {
-    API_PATH, API_SERVER
+  API_PATH,
+  API_SERVER,
 } from '../constants';
 import event from '../lib/gtag';
 import { requestFactory } from '../lib/request';
@@ -25,33 +26,28 @@ type CheckoutProduct = {
   idname: string,
   size: string,
 }
+type TProductBasicInfo = {
+  imageName: string,
+  price: number,
+}
+type TProductDetailsRecord = Record<string, TProductBasicInfo>;
 
 const listenRequest = requestFactory(API_SERVER + API_PATH);
 
-const productDetailHash = {
-  'alyss-dress': { imageName: 'mynawebshop-alyssdress-1.jpg', pricc: '215' },
-  'aster-green': { imageName: 'mynawebshop-greenpants-1.jpg', pricc: '139' },
-  'aster-sand': { imageName: 'mynawebshop-linenpants-1.jpg', pricc: '139' },
-  'bella-blouse': { imageName: 'bella-blouse-01.jpg', pricc: '79' },
-  'bella-hand-painted-blouse': { imageName: 'bella-print-01.jpg', pricc: '129' },
-  'calla-cream': { imageName: 'mynawebshop-whitejeans-1.jpg', pricc: '155' },
-  'dahlia-blouse': { imageName: 'dahlia-blouse-01.jpg', pricc: '105' },
-  'delphi-culottes': { imageName: 'delphi-culottes-01.jpg', pricc: '95' },
-  'gea-cream': { imageName: 'mynawebshop-whitetop-1.jpg', pricc: '75' },
-  'iris-vest': { imageName: 'iris-vest-01.jpg', pricc: '75' },
-  'ivy-cream': { imageName: 'mynawebshop-whitetshirt-1.jpg', pricc: '75' },
-  'leya-wrap-dress': { imageName: 'leya-wrap-dress-01.jpg', pricc: '319' },
-  'lili-top': { imageName: 'lili-top-shadow-01.jpg', pricc: '69' },
-  'lili-top-satin': { imageName: 'lili-top-satin-01.jpg', pricc: '69' },
-  'lisia-dress': { imageName: 'lisia-dress-01.jpg', pricc: '179' },
-  'lotus-sand': { imageName: 'mynawebshop-whitedress-1.jpg', pricc: '225' },
-  'magna-scarf': { imageName: 'mynawebshop-magnascarf-1.jpg', pricc: '99' },
-  'nolia-dustpink': { imageName: 'mynawebshop-pinkdress-1.jpg', pricc: '215' },
-  'reeva-denim-jacket': { imageName: 'reeva-denim-jacket-01.jpg', pricc: '159' },
-  'senna-skirt': { imageName: 'senna-skirt-01.jpg', pricc: '135' },
-  'tilja-top': { imageName: 'mynawebshop-tiljatop-1.jpg', pricc: '115' },
-  'tuli-dress': { imageName: 'tuli-dress-01.jpg', pricc: '169' },
-};
+export async function getStaticProps() {
+  const details: any = await requestFactory(API_SERVER + 'product/basic-infos')({
+    options: { json: true },
+  })
+  const productDetailHash: TProductDetailsRecord = details.reduce((acc, current) => {
+    acc[current.idName] = {
+      imageName: current.pic1,
+      price: current.price,
+    }
+    return acc;
+  }, {});
+
+  return { props: { productDetailHash } };
+}
 
 function Loading({ isLoading }: { isLoading: boolean }) {
   return (
@@ -80,7 +76,7 @@ function Loading({ isLoading }: { isLoading: boolean }) {
   );
 }
 
-function getProductImageLink(idName: string) {
+function getProductImageLink(productDetailHash: TProductDetailsRecord, idName: string) {
   if(!idName) return '';
   return '/product_photos/' + productDetailHash[idName].imageName;
 }
@@ -89,9 +85,11 @@ interface CartItemsProps {
   loading: boolean;
   products: object;
   delProductFromCart: (productId: number) => void;
+  productDetailHash: TProductDetailsRecord;
 }
 
-function CartItems ({ loading, products, delProductFromCart }: CartItemsProps) {
+function CartItems ({ loading, products, delProductFromCart, productDetailHash }: CartItemsProps) {
+  console.log('productDetailHash', productDetailHash);
   const [trashImageSrc, setTrashImageSrc] = useState('/trash.png');
 
   function trashHover() {
@@ -110,7 +108,7 @@ function CartItems ({ loading, products, delProductFromCart }: CartItemsProps) {
           <div className="row">
             <div className="col-md-5">
               <Image
-                src={getProductImageLink(product.idname)}
+                src={getProductImageLink(productDetailHash, product.idname)}
                 layout="responsive"
                 width={100}
                 height={100}
@@ -127,7 +125,7 @@ function CartItems ({ loading, products, delProductFromCart }: CartItemsProps) {
                         <td>
                           <span className="capitalLetters">{product.size}</span>
                         </td>
-                        <td>€{productDetailHash[product.idname].pricc}</td>
+                        <td>€{productDetailHash[product.idname].price}</td>
                         <td>
                           <a
                             id={'t' + product.id}
@@ -201,7 +199,10 @@ function getShipping(session: string): Promise<string> {
     });
 }
 
-export default function Checkout() {
+type TCheckoutProps = {
+  productDetailHash: TProductDetailsRecord,
+}
+export default function Checkout({ productDetailHash }: TCheckoutProps) {
   const [state, setState] = useState({
     loadingProducts: false,
     price: 0,
@@ -337,6 +338,7 @@ export default function Checkout() {
             products={state.products}
             delProductFromCart={delProductFromCart}
             loading={state.loadingProducts}
+            productDetailHash={productDetailHash}
           />
           <div className="spacer50px"></div>
           <div className="row">
