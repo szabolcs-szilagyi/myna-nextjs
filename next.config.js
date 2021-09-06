@@ -1,4 +1,5 @@
 const { NODE_ENV } = process.env;
+const nextTranslate = require('next-translate');
 
 const configuration = {
   development: {
@@ -24,7 +25,17 @@ const configuration = {
   },
 };
 
-module.exports = {
+module.exports = nextTranslate({
+  publicRuntimeConfig: {
+    i18nEnabled: process.env.I18N_ENABLED !== 'false',
+  },
+	env: configuration[NODE_ENV],
+
+  i18n: {
+    locales: ['en', 'pl'],
+    defaultLocale: 'en',
+  },
+
   async rewrites() {
     return [
       {
@@ -33,8 +44,8 @@ module.exports = {
       },
     ];
   },
+
 	webpack(config) {
 		return config;
 	},
-	env: configuration[NODE_ENV]
-};
+});

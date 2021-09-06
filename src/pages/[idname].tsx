@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { withRouter } from 'next/router';
+import React, { PropsWithChildren, useState } from 'react';
 
 import {
   API_SERVER,
@@ -15,10 +14,18 @@ import PhotoViewer from '../components/PhotoViewer';
 import ProductInfo from '../components/ProductInfo';
 
 import Cookies from 'universal-cookie';
+import { useRouter } from 'next/router';
+import useTranslation from 'next-translate/useTranslation';
+import Trans from 'next-translate/Trans';
+import Link, { LinkProps } from 'next/link';
 const cookies = new Cookies();
 const session = cookies.get('session');
 
 const DEFAULT_AVAILABLE = 'Available for pre-order';
+
+function LinkComp({ href, children, ...props }: PropsWithChildren<LinkProps>) {
+  return (<Link href={href}><a {...props}>{children}</a></Link>);
+}
 
 function loadData(idName: string): Promise<unknown> {
   return fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + idName)
@@ -27,10 +34,13 @@ function loadData(idName: string): Promise<unknown> {
       return {
         productIdToCart: productdetails.id,
         productName: productdetails.productname,
+        namePl: productdetails.namePl,
         productColor: productdetails.productcolor,
         productPrice: productdetails.productprice,
         description: productdetails.desclong,
+        descriptionPl: productdetails.descriptionPl,
         compCare: productdetails.compcare,
+        compositionAndCarePl: productdetails.compositionAndCarePl,
         availability: productdetails.availability,
         isOneSize: productdetails.is_one_size,
         photos: {
@@ -87,232 +97,207 @@ export async function getStaticPaths() {
 }
 
 
-class Index extends React.Component {
-  state: any;
+export default function Index (props: any) {
+  const router = useRouter();
+  const { t, lang } = useTranslation('product');
 
-  constructor(props) {
-    super(props);
+  const idName = router.query.idname;
+  const isOneSize = props.isOneSize;
 
-    const idName = props.router.query.idname;
-    const isOneSize = props.isOneSize;
+  const [state, setState] = useState({
+    cartButtonVisibility: 'visible',
+    addToCart: 'ADD TO CART',
+    productIdToCart: '',
+    idName,
+    currency: '€',
+    avby: DEFAULT_AVAILABLE,
+    productName: '',
+    productColor: '',
+    productPrice: '',
+    description: '',
+    compCare: '',
+    photos: {
+      photo1: '',
+      photo2: '',
+      photo3: '',
+      photo4: '',
+      photo5: '',
+      photo6: '',
+      photo7: '',
+      photo8: '',
+      photo9: '',
+    },
+    lastItemsDate: null,
+    ...props
+  });
+  const [selectedSize, setSelectedSize] = useState(isOneSize ? 'one_size' : '0');
 
-    this.state = {
-      cartButtonVisibility: 'visible',
+  function defaultButton() {
+    setState({
+      ...state,
       addToCart: 'ADD TO CART',
-      productIdToCart: '',
-      idName,
-      currency: '',
-      avby: DEFAULT_AVAILABLE,
-      productName: '',
-      productColor: '',
-      productPrice: '',
-      description: '',
-      compCare: '',
-      photos: {
-        photo1: '',
-        photo2: '',
-        photo3: '',
-        photo4: '',
-        photo5: '',
-        photo6: '',
-        photo7: '',
-        photo8: '',
-        photo9: '',
-      },
-      selectedSize: isOneSize ? 'one_size' : '0',
-      lastItemsDate: null,
-      ...props
-    };
-
-    this.defaultButton = this.defaultButton.bind(this);
-    this.checkAvailability = this.checkAvailability.bind(this);
-    this.addToCart = this.addToCart.bind(this);
-    this.loadCurrency = this.loadCurrency.bind(this);
-    this.loadData = this.loadData.bind(this);
-    this.handleSizeChange = this.handleSizeChange.bind(this);
+    });
+    checkAvailability(selectedSize, session, state.idName);
   }
 
-  defaultButton () {
-    this.setState({ addToCart: 'ADD TO CART' });
-    this.checkAvailability();
-  }
-
-  checkAvailability() {
-    let size = this.state.selectedSize;
+  function checkAvailability(size: string, session: string, idName: string) {
     if (size === '0') return;
 
-    let idName = this.state.idName;
     fetch(API_SERVER + API_PATH + '?part=availabilityexact&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      const availability = output && output.availability;
-      if (availability > 0) {
-        this.setState({ avby: DEFAULT_AVAILABLE, cartButtonVisibility: 'visible' });
-      } else if(availability === 0) {
-        this.setState({ avby: 'Pre-Order / Contact Us', cartButtonVisibility: 'invisible' });
-      } else if(availability === null) {
-        this.setState({ avby: 'Not Available', cartButtonVisibility: 'invisible' });
-      }
-    })
-    .catch(error => console.log(error.message));
+      .then(response => response.json())
+      .then(output => {
+        const availability = output && output.availability;
+        if (availability > 0) {
+          setState({
+            ...state,
+            avby: DEFAULT_AVAILABLE,
+            cartButtonVisibility: 'visible',
+          });
+        } else if(availability === 0) {
+          setState({
+            ...state,
+            avby: 'Pre-Order / Contact Us',
+            cartButtonVisibility: 'invisible',
+          });
+        } else if(availability === null) {
+          setState({
+            ...state,
+            avby: 'Not Available',
+            cartButtonVisibility: 'invisible',
+          });
+        }
+      })
+      .catch(error => console.log(error.message));
   }
 
-  addToCart () {
-    if (this.state.addToCart == 'ADD TO CART') {
-      let size = this.state.selectedSize;
+  function addToCart() {
+    if (state.addToCart == 'ADD TO CART') {
+      let size = selectedSize;
       if (size != '0') {
-        let idName = this.state.idName;
+        let idName = state.idName;
         fetch(API_SERVER + API_PATH + '?part=addproducttocart&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
-        .then(response => response.json())
-  		  .then(output => {
-          let data = output;
-          let tmp = data['success'];
-        })
-        .catch(error => console.log(error.message));
-        this.setState({
+          .then(response => response.json())
+          .then(output => {
+            let data = output;
+            let tmp = data['success'];
+          })
+          .catch(error => console.log(error.message));
+        setState({
+          ...state,
           addToCart: 'ADDED TO CART',
           lastItemsDate: Date.now(),
         });
-        setTimeout(this.defaultButton, 3000);
+        setTimeout(defaultButton, 3000);
       }
     }
   }
 
-  loadCurrency () {
-    fetch(API_SERVER + API_PATH + '?part=getcurrency')
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['currency'];
-      this.setState({ currency: tmp });
-    })
-    .catch(error => console.log(error.message));
+  function handleSizeChange(e) {
+    const newSize = e.target.value
+    setSelectedSize(newSize);
+    checkAvailability(newSize, session, state.idName);
   }
 
-  loadData () {
-    fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + this.state.idName)
-    .then(response => response.json())
-		.then(({ productdetails }) => {
-      this.setState({
-        productIdToCart: productdetails.id,
-        productName: productdetails.productname,
-        productColor: productdetails.productcolor,
-        productPrice: productdetails.productprice,
-        description: productdetails.desclong,
-        compCare: productdetails.compcare,
-        availability: productdetails.availability,
-        photos: {
-          photo1: productdetails.pic1,
-          photo2: productdetails.pic2,
-          photo3: productdetails.pic3,
-          photo4: productdetails.pic4,
-          photo5: productdetails.pic5,
-          photo6: productdetails.pic6,
-          photo7: productdetails.pic7,
-          photo8: productdetails.pic8,
-          photo9: productdetails.pic9,
-        },
-      });
-    })
-    .catch(error => console.log(error.message));
-  }
+  const {
+    productName,
+    description,
+    compCare,
+  } = lang === 'pl' ?
+      {
+        productName: state.namePl ?? state.productName,
+        description: state.descriptionPl ?? state.description,
+        compCare: state.compositionAndCarePl ?? state.compCare,
+      } :
+      state;
 
-  handleSizeChange (e) {
-    this.setState({ selectedSize: e.target.value }, () => { this.checkAvailability(); });
-  }
+  return (
+    <Container fluid>
+      <Header />
+      <Nav lastItemsDate={state.lastItemsDate} />
+      <Ping />
+      <div className="spacer50px"></div>
+      <div className="row">
+        <div className="col-md-1"></div>
+        <div className="col-md-10">
+          <div className="row">
 
-  componentDidMount() {
-    this.loadCurrency();
-  }
+            <PhotoViewer photos={state.photos} />
 
-  render() {
-		return (
-      <Container fluid>
-        <Header />
-        <Nav lastItemsDate={this.state.lastItemsDate} />
-        <Ping />
-        <div className="spacer50px"></div>
-        <div className="row">
-          <div className="col-md-1"></div>
-          <div className="col-md-10">
-            <div className="row">
+            <div className="col-md-6 ce">
+              <div className="row">
+                <div className="col-md-12">
+                <h1 className="capitalLetters">
+                  {productName} | {state.productColor} | {state.currency}{state.productPrice}
+                </h1>
+                </div>
+              </div>
+              <div className="spacer50px"></div>
 
-              <PhotoViewer
-                photos={this.state.photos}
+              <ProductInfo
+                description={description}
+                compCare={compCare}
               />
 
-              <div className="col-md-6 ce">
-                <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="capitalLetters">{this.state.productName} | {this.state.productColor} | {this.state.currency}{this.state.productPrice}</h1>
-                  </div>
-                </div>
-                <div className="spacer50px"></div>
-
-                <ProductInfo
-                  description={this.state.description}
-                  compCare={this.state.compCare}
-                />
-
-                <div className="spacer50px"></div>
-                <div className="row">
-                  <div className="col-md-1"></div>
-                  <div className="col-md-6 left">
-                    <select
-                      id="chooseSize"
-                      className={this.state.isOneSize ?
-                                 'sizeButton invisible' :
-                                 'sizeButton'}
-                      value={this.state.selectedSize}
-                      onChange={this.handleSizeChange}
-                    >
-                      <option value="0">CHOOSE SIZE</option>
-                      <option value="xs">XS</option>
-                      <option value="s">S</option>
-                      <option value="m">M</option>
-                      <option value="ml">ML</option>
-                      <option value="l">L</option>
-										</select>
-                    <div className="spacer25px"></div>
-                    <div className={this.state.cartButtonVisibility}>
-                      <div className="noBorder mediumFont">
-                        <button
-                          type="button"
-                          className="cartButton"
-                          onClick={this.addToCart}
-                        >{this.state.addToCart}</button>
-                      </div>
+              <div className="spacer50px"></div>
+              <div className="row">
+                <div className="col-md-1"></div>
+                <div className="col-md-6 left">
+                  <select
+                    id="chooseSize"
+                    className={state.isOneSize ?
+                               'sizeButton invisible' :
+                               'sizeButton'}
+                    value={selectedSize}
+                    onChange={handleSizeChange}
+                  >
+                    <option value="0">{t('CHOOSE SIZE')}</option>
+                    <option value="xs">XS</option>
+                    <option value="s">S</option>
+                    <option value="m">M</option>
+                    <option value="ml">ML</option>
+                    <option value="l">L</option>
+                  </select>
+                  <div className="spacer25px"></div>
+                  <div className={state.cartButtonVisibility}>
+                    <div className="noBorder mediumFont">
+                      <button
+                        type="button"
+                        className="cartButton"
+                        onClick={addToCart}
+                      >{t(state.addToCart)}</button>
                     </div>
                   </div>
-                  <div className="col-md-4">
-                    <div className="capitalLetters pad8px">
-                      {this.state.avby}
-                    </div>
-                  </div>
-                  <div className="col-md-1"></div>
                 </div>
-                <div className="spacer25px"></div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="productInfoContainer noBorder mediumFont">
-                      <div className="mediumFont ju">
-                        Each item is created by our talented creative director Justyna and handmade
-                        with care in Poland. If you cannot find your size, get in touch with us and
-                        we will do our best to help. Email us on <a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a> or click <a className="blackFont" href="/shipping">here</a> for more information about orders.
-                      </div>
+                <div className="col-md-4">
+                  <div className="capitalLetters pad8px">
+                    {t(state.avby)}
+                  </div>
+                </div>
+                <div className="col-md-1"></div>
+              </div>
+              <div className="spacer25px"></div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="productInfoContainer noBorder mediumFont">
+                    <div className="mediumFont ju">
+                      <Trans
+                        i18nKey="product:each-item"
+                        components={[
+                          <a href="mailto:connect@mynalabel.com" className="blackFont" />,
+                          <LinkComp {...{ className: 'blackFont', href: '/shipping' }} />,
+                        ]}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-md-1"></div>
         </div>
-        <div className="spacer50px"></div>
-        <Footer />
-      </Container>
-    );
-  }
+        <div className="col-md-1"></div>
+      </div>
+      <div className="spacer50px"></div>
+      <Footer />
+    </Container>
+  );
 }
-
-export default withRouter(Index)

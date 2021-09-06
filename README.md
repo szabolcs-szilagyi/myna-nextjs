@@ -15,7 +15,7 @@ function optimize_product_images {
 }
 ```
 
-For lookbook images (without any colour overlays):
+For lookbook images (without any colour overlays) also used for landing page:
 ```sh
 function optimize_lookbook_images {
   mkdir optimized;

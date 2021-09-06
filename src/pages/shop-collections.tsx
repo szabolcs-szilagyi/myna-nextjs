@@ -11,6 +11,7 @@ import {
   API_SERVER,
 } from '../constants';
 import { request } from '../lib/request';
+import useTranslation from 'next-translate/useTranslation';
 
 type ColletcionTypes = 'consciously-beautiful' | 'love-and-light' | 'love-affair-collection';
 type Product = {
@@ -19,6 +20,8 @@ type Product = {
   name: string,
   price: string,
 };
+
+type TCollectionData = Partial<Record<ColletcionTypes, Product[]>>;
 
 function createProductCard(product: Product) {
   if(!product) return (<></>);
@@ -53,30 +56,25 @@ function groupProducts(products: Product[]) {
 
 export async function getStaticProps() {
   const productsToRetrieve = [
-    ['consciously-beautiful', 'lili-top-satin'],
-    ['consciously-beautiful', 'lili-top'],
-    ['consciously-beautiful', 'lisia-dress'],
-    ['consciously-beautiful', 'senna-skirt'],
-    ['consciously-beautiful', 'reeva-denim-jacket'],
-    ['consciously-beautiful', 'tuli-dress'],
-    ['consciously-beautiful', 'leya-wrap-dress'],
-    ['consciously-beautiful', 'iris-vest'],
-    ['consciously-beautiful', 'dahlia-blouse'],
-    ['consciously-beautiful', 'bella-hand-painted-blouse'],
-    ['consciously-beautiful', 'bella-blouse'],
+    ['consciously-beautiful', 'flora-wrap-dress'],
+    ['consciously-beautiful', 'marigold-trench-coat'],
+    ['consciously-beautiful', 'helen-blazer'],
+    ['consciously-beautiful', 'calla-cream'],
     ['consciously-beautiful', 'delphi-culottes'],
-    ['love-and-light', 'lotus-sand'],
+    ['consciously-beautiful', 'peri-blouse'],
+    ['consciously-beautiful', 'peri-sis-handkerchief'],
+    ['consciously-beautiful', 'reeva-denim-jacket'],
+    ['consciously-beautiful', 'senna-skirt'],
+    ['consciously-beautiful', 'alyss-dress'],
+    ['consciously-beautiful', 'tilia-blouse'],
+    ['love-and-light', 'lola-oversized-shirt'],
+    ['love-and-light', 'gea-cream'],
+    ['love-and-light', 'magna-scarf'],
+    ['love-and-light', 'nolia-dustpink'],
     ['love-and-light', 'ivy-cream'],
     ['love-and-light', 'aster-green'],
-    ['love-and-light', 'aster-sand'],
-    ['love-and-light', 'gea-cream'],
-    ['love-and-light', 'nolia-dustpink'],
-    ['love-affair-collection', 'alyss-dress'],
-    ['love-affair-collection', 'calla-cream'],
-    ['love-affair-collection', 'tilja-top'],
-    ['love-affair-collection', 'magna-scarf'],
   ]
-  const collectionData: Partial<Record<ColletcionTypes, Product[]>> = {};
+  const collectionData: TCollectionData = {};
 
   for (const [collection, shortName] of productsToRetrieve) {
     const productDetails: any = (await request(`${API_SERVER}product`, {
@@ -96,7 +94,11 @@ export async function getStaticProps() {
   return { props: { collectionData } };
 }
 
-export default function ShopCollections({ collectionData }) {
+type TShopCollectionsProps = {
+  collectionData: TCollectionData,
+}
+export default function ShopCollections({ collectionData }: TShopCollectionsProps) {
+  const { t } = useTranslation();
   return (
     <Container fluid>
       <Header />
@@ -105,21 +107,16 @@ export default function ShopCollections({ collectionData }) {
       <div className="spacer50px" />
       <div className="row">
         <div className="col-md-12 ce capitalLetters">
-          <h1><strong>Shop Collections</strong></h1>
+          <h1><strong>{t('Shop Collections')}</strong></h1>
         </div>
       </div>
-      <div className="row">
-        <div className="col-md-3" />
+      <div className="row justify-content-md-center">
         <div className="col-md-2 ce capitalLetters">
           <a href="#consciously-beautiful" className="smallFont ce blackFont">Consciously Beautiful</a>
         </div>
         <div className="col-md-2 ce capitalLetters">
           <a href="#love-and-light" className="smallFont ce blackFont">Love and Light</a>
         </div>
-        <div className="col-md-2 ce capitalLetters">
-          <a href="#love-affair-collection" className="smallFont ce blackFont">Love Affair Collection</a>
-        </div>
-        <div className="col-md-3" />
       </div>
 
       <div className="spacer50px" />
@@ -139,15 +136,6 @@ export default function ShopCollections({ collectionData }) {
       </div>
 
       {(groupProducts(collectionData['love-and-light']))}
-
-      <div className="spacer50px" />
-      <div className="row">
-        <div id="love-affair-collection" className="col-md-12 ce capitalLetters">
-          <h5><strong>Love Affair Collection</strong></h5>
-        </div>
-      </div>
-
-      {(groupProducts(collectionData['love-affair-collection']))}
 
       <Footer />
     </Container>
