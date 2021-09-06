@@ -111,18 +111,13 @@ export default function ShopCollections({ collectionData }: TShopCollectionsProp
           <h1><strong>{t('Shop Collections')}</strong></h1>
         </div>
       </div>
-      <div className="row">
-        <div className="col-md-3" />
+      <div className="row justify-content-md-center">
         <div className="col-md-2 ce capitalLetters">
           <a href="#consciously-beautiful" className="smallFont ce blackFont">Consciously Beautiful</a>
         </div>
         <div className="col-md-2 ce capitalLetters">
           <a href="#love-and-light" className="smallFont ce blackFont">Love and Light</a>
         </div>
-        <div className="col-md-2 ce capitalLetters">
-          <a href="#love-affair-collection" className="smallFont ce blackFont">Love Affair Collection</a>
-        </div>
-        <div className="col-md-3" />
       </div>
 
       <div className="spacer50px" />
