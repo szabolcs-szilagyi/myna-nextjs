@@ -89,7 +89,6 @@ interface CartItemsProps {
 }
 
 function CartItems ({ loading, products, delProductFromCart, productDetailHash }: CartItemsProps) {
-  console.log('productDetailHash', productDetailHash);
   const [trashImageSrc, setTrashImageSrc] = useState('/trash.png');
 
   function trashHover() {
