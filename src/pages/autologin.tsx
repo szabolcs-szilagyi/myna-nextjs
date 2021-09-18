@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { useEffect } from 'react';
 import {
   API_SERVER,
   API_PATH,
@@ -8,40 +8,33 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 const session = cookies.get('session');
 
-export default class Ping extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      session: ''
-    };
-    this.handleRequest = this.handleRequest.bind(this);
-    this.redirect = this.redirect.bind(this);
-  }
-  handleRequest () {
-    let searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.has('part')) {
-      let part = searchParams.get('part');
+export default function Autologin() {
 
-      if (part == "login") {
-        if (searchParams.has('token')) {
-          let token = searchParams.get('token');
-          let email = searchParams.get('email');
-          fetch(API_SERVER + API_PATH + '?part=login&logintoken=' + token + '&email=' + email + '&sessiontoken=' + session, {mode: 'no-cors'});
-        }
-      }
+  async function handleRequest() {
+    const searchParams = new URLSearchParams(window.location.search);
+    const part = searchParams.get('part');
+    const token = searchParams.get('token');
 
+    if (part === 'login' && token !== null) {
+      const email = searchParams.get('email');
+      await fetch(
+        API_SERVER + API_PATH + '?part=login&logintoken=' + token + '&email=' + email + '&sessiontoken=' + session,
+        { mode: 'no-cors' },
+      );
     }
+
+    redirect();
   }
-  redirect () {
+
+  function redirect() {
     window.location.href = "/my-account";
   }
-  componentDidMount() {
-    setTimeout(this.handleRequest, 100);
-    setTimeout(this.redirect, 500);
-  }
-  render() {
-    return (
-      <div></div>
-    );
-  }
+
+  useEffect(() => {
+    handleRequest()
+  }, []);
+
+  return (
+    <div></div>
+  );
 }
