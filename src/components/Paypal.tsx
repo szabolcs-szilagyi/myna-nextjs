@@ -53,8 +53,8 @@ export default class Example extends Component {
     fetch(API_SERVER + API_PATH + '?part=totalcheckout&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
-      let data = output;
-      let tmp = data['topay'];
+      const data = output;
+      const tmp = data['topay'];
       this.setState({ price: tmp });
     })
     .catch(error => console.log(error.message));
@@ -63,8 +63,8 @@ export default class Example extends Component {
     fetch(API_SERVER + API_PATH + '?part=getemail&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
-      let data = output;
-      let tmp = data['email'];
+      const data = output;
+      const tmp = data['email'];
       this.setState({ myEmail: tmp });
     })
     .catch(error => console.log(error.message));
@@ -73,8 +73,8 @@ export default class Example extends Component {
     fetch(API_SERVER + API_PATH + '?part=getproducttomail&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
-      let data = output;
-      let tmp = data['products'];
+      const data = output;
+      const tmp = data['products'];
       this.setState({ dProducts: tmp });
     })
     .catch(error => console.log(error.message));
@@ -83,7 +83,7 @@ export default class Example extends Component {
     fetch(API_SERVER + API_PATH + '?part=getproductsincart&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
-      let data = output;
+      const data = output;
       this.setState({ productDetails: data });
     })
     .catch(error => console.log(error.message));
@@ -115,11 +115,11 @@ export default class Example extends Component {
     fetch(API_SERVER + API_PATH + '?part=getuserdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
-      let data = output;
-      let tmp = data['userdata'];
-      let firstNameT = tmp['firstname'];
-      let lastNameT = tmp['lastname'];
-      let birthdayT = tmp['birthday'];
+      const data = output;
+      const tmp = data['userdata'];
+      const firstNameT = tmp['firstname'];
+      const lastNameT = tmp['lastname'];
+      const birthdayT = tmp['birthday'];
       this.setState({ firstName: firstNameT, lastName: lastNameT, birthday: birthdayT });
     })
     .catch(error => console.log(error.message));
@@ -128,18 +128,18 @@ export default class Example extends Component {
     fetch(API_SERVER + API_PATH + '?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => {
-      let data = output;
-      let tmp = data['addressdata'];
-      let type = tmp['type'];
-      let name = tmp['name'];
-      let mobile = tmp['mobile'];
-      let address1 = tmp['address1'];
-      let address2 = tmp['address2'];
-      let city = tmp['city'];
-      let state = tmp['state'];
-      let zip = tmp['zip'];
-      let country = tmp['country'];
-      let comment = tmp['comment'];
+      const data = output;
+      const tmp = data['addressdata'];
+      const type = tmp['type'];
+      const name = tmp['name'];
+      const mobile = tmp['mobile'];
+      const address1 = tmp['address1'];
+      const address2 = tmp['address2'];
+      const city = tmp['city'];
+      const state = tmp['state'];
+      const zip = tmp['zip'];
+      const country = tmp['country'];
+      const comment = tmp['comment'];
       this.setState({ dName: name, dMobile: mobile, dAddress1: address1, dAddress2: address2, dCity: city, dState: state, dZip: zip, dCountry: country, dComment: comment });
     })
     .catch(error => console.log(error.message));
