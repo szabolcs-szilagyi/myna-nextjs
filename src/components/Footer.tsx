@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
 import {
   API_SERVER,
@@ -8,7 +8,7 @@ import {
 import fetch from 'isomorphic-unfetch';
 import useTranslation from 'next-translate/useTranslation';
 
-export default function Footer(props: any) {
+export default function Footer() {
   const { t } = useTranslation('common');
   const [state, setState] = useState({
     active: '',
@@ -17,7 +17,7 @@ export default function Footer(props: any) {
     placeHolder: 'EMAIL HERE',
   })
 
-  function handleChange (event) {
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setState({
       ...state,
       value: event.target.value,
