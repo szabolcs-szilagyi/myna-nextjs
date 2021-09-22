@@ -12,11 +12,15 @@ import {
 const cookies = new Cookies();
 const session = cookies.get('session');
 
+type TPayPalProps = {
+  dataFromParent: number,
+};
+
 export default class Example extends Component {
   state: any;
   props: any;
 
-  constructor(props) {
+  constructor(props: TPayPalProps) {
     super(props);
     this.state = {
       myEmail: '',
