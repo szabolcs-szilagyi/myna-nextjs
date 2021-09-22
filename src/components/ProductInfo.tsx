@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, MouseEvent } from 'react';
 import Trans from 'next-translate/Trans';
 
 import SizeInfo from '../components/SizeInfo';
 import useTranslation from 'next-translate/useTranslation';
 
-function DescButton({ id, text, onClick }) {
+type TDescButtonProps = {
+  id: string,
+  text: string,
+  onClick: {(event: MouseEvent<HTMLButtonElement>): void},
+};
+
+function DescButton({ id, text, onClick }: TDescButtonProps) {
   return (
     <button
       onClick={onClick}
@@ -17,7 +23,12 @@ function DescButton({ id, text, onClick }) {
   );
 }
 
-export default function ProductInfo(props) {
+type TProductInfoProps = {
+  description: string,
+  compCare: string,
+};
+
+export default function ProductInfo(props: TProductInfoProps) {
   const [state, setState] = useState({
     descStyle: { display: 'block' },
     compCareStyle: { display: 'none' },

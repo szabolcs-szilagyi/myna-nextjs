@@ -131,11 +131,6 @@ export default function MyAccount() {
     if (bday == '') { crossRoad = 1; }
     if (crossRoad == 0) {
       fetch(API_SERVER + API_PATH + '?part=updateuserdata&email=' + addressState.myEmail + '&firstname=' + addressState.firstName + '&lastname=' + addressState.lastName + '&birthday=' + addressState.birthday  + '&sessiontoken=' + session)
-        .then(response => response.json())
-        .then(output => {
-          const data = output;
-          const tmp = data['success'];
-        })
         .catch(error => console.log(error.message));
     }
   }
@@ -151,11 +146,6 @@ export default function MyAccount() {
     if (zip == '') { crossRoad = 1; }
     if (crossRoad == 0) {
       fetch(API_SERVER + API_PATH + '?part=setaddressdata&email=' + addressState.myEmail + '&type=1&mobile=' + addressState.dMobile + '&address1=' + addressState.dAddress1 + '&address2=' + addressState.dAddress2 + '&city=' + addressState.dCity + '&state=' + addressState.dState + '&zip=' + addressState.dZip + '&country=' + addressState?.dCountry.label + '&comment=' + addressState.dComment  + '&sessiontoken=' + session)
-        .then(response => response.json())
-        .then(output => {
-          const data = output;
-          const tmp = data['success'];
-        })
         .catch(error => console.log(error.message));
     }
   }

@@ -28,7 +28,12 @@ function getInCart() {
     .catch(error => console.log(error.message));
 }
 
-function Cart({ containerClass, lastItemsDate }) {
+type TCartProps = {
+  containerClass?: string,
+  lastItemsDate?: string,
+}
+
+function Cart({ containerClass, lastItemsDate }: TCartProps) {
   const [inCart, setInCart] = useState(0);
   const [cartIcon, setCartIcon] = useState('/cart.png');
 

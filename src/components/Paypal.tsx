@@ -130,7 +130,6 @@ export default class Example extends Component {
 		.then(output => {
       const data = output;
       const tmp = data['addressdata'];
-      const type = tmp['type'];
       const name = tmp['name'];
       const mobile = tmp['mobile'];
       const address1 = tmp['address1'];
@@ -160,7 +159,7 @@ export default class Example extends Component {
       <PayPalButton
         amount={this.props.dataFromParent}
         // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-        onSuccess={(details, data) => {
+        onSuccess={() => {
           // here to write the SUCCESS script
           this.completed();
           alert("We will contact you in email");

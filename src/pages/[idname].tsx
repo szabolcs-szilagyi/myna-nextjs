@@ -176,11 +176,6 @@ export default function Index (props: any) {
       if (size != '0') {
         const idName = state.idName;
         fetch(API_SERVER + API_PATH + '?part=addproducttocart&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
-          .then(response => response.json())
-          .then(output => {
-            const data = output;
-            const tmp = data['success'];
-          })
           .catch(error => console.log(error.message));
         setState({
           ...state,
