@@ -16,7 +16,7 @@ type TPayPalProps = {
   dataFromParent: number,
 };
 
-export default class Example extends Component {
+export default class PayPal extends Component {
   state: any;
   props: any;
 
@@ -63,6 +63,7 @@ export default class Example extends Component {
     })
     .catch(error => console.log(error.message));
   }
+
   getEmail () {
     fetch(API_SERVER + API_PATH + '?part=getemail&sessiontoken=' + session)
     .then(response => response.json())
@@ -73,6 +74,7 @@ export default class Example extends Component {
     })
     .catch(error => console.log(error.message));
   }
+
   getItToMail () {
     fetch(API_SERVER + API_PATH + '?part=getproducttomail&sessiontoken=' + session)
     .then(response => response.json())
@@ -83,6 +85,13 @@ export default class Example extends Component {
     })
     .catch(error => console.log(error.message));
   }
+
+  /**
+   * Call it when the transaction completed successfully and products needs
+   * to be marked as paid for.
+   *
+   * @return void
+   */
   completed () {
     fetch(API_SERVER + API_PATH + '?part=getproductsincart&sessiontoken=' + session)
     .then(response => response.json())
@@ -95,26 +104,29 @@ export default class Example extends Component {
     setTimeout(this.setPaid, 500);
     setTimeout(this.sendMail, 1000);
   }
+
   setPaid () {
     fetch(API_SERVER + API_PATH + '?part=setproductpaid&sessiontoken=' + session, {mode: 'no-cors'})
   }
+
   sendMail () {
-    fetch(API_SERVER + EMAIL_PATH +'?part=purchased&email=' + this.state.myEmail + '&token=' + session
-    + '&price=' + this.state.price
-    + '&firstname=' + this.state.firstName
-    + '&lastname=' + this.state.lastName
-    + '&birthday=' + this.state.birthday
-    + '&mobile=' + this.state.dMobile
-    + '&address1=' + this.state.dAddress1
-    + '&address2=' + this.state.dAddress2
-    + '&city=' + this.state.dCity
-    + '&state=' + this.state.dState
-    + '&zip=' + this.state.dZip
-    + '&country=' + this.state.dCountry
-    + '&comment=' + this.state.dComment
-    + '&products=' + this.state.dProducts
-    , {mode: 'no-cors'})
+    fetch(API_SERVER + EMAIL_PATH + '?part=purchased&email=' + this.state.myEmail + '&token=' + session
+      + '&price=' + this.state.price
+      + '&firstname=' + this.state.firstName
+      + '&lastname=' + this.state.lastName
+      + '&birthday=' + this.state.birthday
+      + '&mobile=' + this.state.dMobile
+      + '&address1=' + this.state.dAddress1
+      + '&address2=' + this.state.dAddress2
+      + '&city=' + this.state.dCity
+      + '&state=' + this.state.dState
+      + '&zip=' + this.state.dZip
+      + '&country=' + this.state.dCountry
+      + '&comment=' + this.state.dComment
+      + '&products=' + this.state.dProducts
+      , {mode: 'no-cors'})
   }
+
   getUserDetails () {
     fetch(API_SERVER + API_PATH + '?part=getuserdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
     .then(response => response.json())
@@ -128,28 +140,31 @@ export default class Example extends Component {
     })
     .catch(error => console.log(error.message));
   }
+
   getUserAddress () {
     fetch(API_SERVER + API_PATH + '?part=getaddressdata&email=' + this.state.myEmail + '&sessiontoken=' + session)
-    .then(response => response.json())
-		.then(output => {
-      const data = output;
-      const tmp = data['addressdata'];
-      const name = tmp['name'];
-      const mobile = tmp['mobile'];
-      const address1 = tmp['address1'];
-      const address2 = tmp['address2'];
-      const city = tmp['city'];
-      const state = tmp['state'];
-      const zip = tmp['zip'];
-      const country = tmp['country'];
-      const comment = tmp['comment'];
-      this.setState({ dName: name, dMobile: mobile, dAddress1: address1, dAddress2: address2, dCity: city, dState: state, dZip: zip, dCountry: country, dComment: comment });
-    })
-    .catch(error => console.log(error.message));
+      .then(response => response.json())
+      .then(output => {
+        const data = output;
+        const tmp = data['addressdata'];
+        const name = tmp['name'];
+        const mobile = tmp['mobile'];
+        const address1 = tmp['address1'];
+        const address2 = tmp['address2'];
+        const city = tmp['city'];
+        const state = tmp['state'];
+        const zip = tmp['zip'];
+        const country = tmp['country'];
+        const comment = tmp['comment'];
+        this.setState({ dName: name, dMobile: mobile, dAddress1: address1, dAddress2: address2, dCity: city, dState: state, dZip: zip, dCountry: country, dComment: comment });
+      })
+      .catch(error => console.log(error.message));
   }
+
   reload () {
     window.location.href = "/checkout";
   }
+
   componentDidMount () {
     this.getEmail ();
     this.getPrice ();
