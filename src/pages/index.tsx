@@ -147,6 +147,7 @@ export default function Index() {
               className="col-md-4 mx-auto"
               productPageLink="/marigold-trench-coat"
               productImageLink="/landing/marigold-bread.jpg"
+              productName=""
               width={853}
               height={1280}
             />
