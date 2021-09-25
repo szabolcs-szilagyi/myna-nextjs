@@ -319,7 +319,7 @@ table.cartCo {
   background-color: #ffffff;
   border: 2px solid black;
   color: #000;
-  width: 260px;
+  width: 100%;
   height: 50px;
 }
 
@@ -330,23 +330,17 @@ table.cartCo {
 .cartButton {
   font-size: 18px;
   padding: 5px;
+  margin-bottom: 5px;
   font-weight: normal;
   background-color: #b0644f;
   border: 0px;
   color: #fff;
-  width: 240px;
+  width: 100%;
   height: 50px;
 }
 
 .cartButton:hover {
-  font-size: 18px;
-  padding: 5px;
   font-weight: bold;
-  background-color: #b0644f;
-  border: 0px;
-  color: #fff;
-  width: 240px;
-  height: 50px;
 }
 
 .sizeButton {

@@ -22,7 +22,7 @@ function doPing(session?: string) {
 export default function usePing() {
   const [session, setSession] = useState(cookies.get('session'));
   const [error, setError] = useState();
-  const tDoPing = useRef(throttle(() => {
+  const throttledDoPing = useRef(throttle(() => {
     doPing(session)
       .then((sessionToken) => {
         cookies.set('session', sessionToken, { maxAge: 1800 });
@@ -32,7 +32,7 @@ export default function usePing() {
   }, 1000))
 
   useEffect(() => {
-    tDoPing.current();
+    throttledDoPing.current();
   }, []);
 
   return [session, error];

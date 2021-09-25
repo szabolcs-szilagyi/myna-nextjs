@@ -104,7 +104,7 @@ export default function MyAccount() {
     if (addressState.dCity == '') { crossRoad = 1; }
     if (addressState.dZip == '') { crossRoad = 1; }
     if (crossRoad == 0) {
-      saveUserData ();
+      saveUserData();
       setTimeout(saveAddressData, 1000);
       setAddressState({
         ...addressState,
@@ -286,7 +286,7 @@ export default function MyAccount() {
               <div className="noBorder mediumFont">
                 <button
                   type="button"
-                  className="cartButton"
+                  className="cartButton col-md-2"
                   onClick={saveDetails}
                 >{t(addressState.textOnSaveButton)}</button>
               </div>
