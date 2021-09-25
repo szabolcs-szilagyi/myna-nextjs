@@ -5,17 +5,17 @@ import useTranslation from 'next-translate/useTranslation'
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
+import usePing from '../lib/use-ping';
 
 export default function OurStory() {
   const { t } = useTranslation('our-story');
+  usePing();
 
   return (
     <Container fluid>
       <Header />
       <Nav />
-      <Ping />
       <div className="spacer50px" />
       <div className="row">
         <div className="col-md-2" />

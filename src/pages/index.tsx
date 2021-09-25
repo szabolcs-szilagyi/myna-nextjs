@@ -7,17 +7,17 @@ import Slider from '../components/Slider';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import Ping from '../components/Ping';
 import SingleProductCard from '../components/SingleProductCard';
+import usePing from '../lib/use-ping';
 
 export default function Index() {
   const { t } = useTranslation('home');
+  usePing();
 
   return (
     <Container fluid>
       <Header />
       <Nav />
-      <Ping />
       <div className="row">
         <div className="col-md-12 noPadding">
           <Slider />

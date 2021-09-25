@@ -4,22 +4,19 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import Cookies from 'universal-cookie';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import PayPal from '../components/Paypal';
-import Ping from '../components/Ping';
 import {
   API_PATH,
   API_SERVER,
 } from '../constants';
 import event from '../lib/gtag';
 import { requestFactory } from '../lib/request';
+import usePing from '../lib/use-ping';
 
-const cookies = new Cookies();
-const session = cookies.get('session');
 
 type CheckoutProduct = {
   id: number,
@@ -216,6 +213,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
   const [priceModifier, setPriceModifier] = useState(1);
   const [coupon, setCoupon] = useState('');
   const { t } = useTranslation('checkout');
+  const [session] = usePing();
 
   const router = useRouter();
 
@@ -310,7 +308,6 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
     <Container fluid>
       <Header />
       <Nav />
-      <Ping />
       <div className="spacer50px"></div>
       <div className="row">
         <div className="col-md-12 ce capitalLetters">

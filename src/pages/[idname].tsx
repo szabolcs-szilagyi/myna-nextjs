@@ -8,18 +8,15 @@ import {
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import PhotoViewer from '../components/PhotoViewer';
 import ProductInfo from '../components/ProductInfo';
 
-import Cookies from 'universal-cookie';
 import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import Link, { LinkProps } from 'next/link';
-const cookies = new Cookies();
-const session = cookies.get('session');
+import usePing from '../lib/use-ping';
 
 const DEFAULT_AVAILABLE = 'Available for pre-order';
 
@@ -100,6 +97,7 @@ export async function getStaticPaths() {
 export default function Index (props: any) {
   const router = useRouter();
   const { t, lang } = useTranslation('product');
+  const [session] = usePing();
 
   const idName = router.query.idname;
   const isOneSize = props.isOneSize;
@@ -209,7 +207,6 @@ export default function Index (props: any) {
     <Container fluid>
       <Header />
       <Nav lastItemsDate={state.lastItemsDate} />
-      <Ping />
       <div className="spacer50px"></div>
       <div className="row">
         <div className="col-md-1"></div>

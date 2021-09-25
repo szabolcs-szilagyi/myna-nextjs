@@ -5,17 +5,17 @@ import Container from 'react-bootstrap/Container';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import Ping from '../components/Ping';
 import SizeInfo from '../components/SizeInfo';
+import usePing from '../lib/use-ping';
 
 export default function SizeMeasurement() {
   const { t } = useTranslation('size-measurement');
+  usePing();
 
   return (
     <Container fluid>
       <Header />
       <Nav />
-      <Ping />
       <div className="spacer50px" />
       <div className="row">
         <div className="col-md-12 ce capitalLetters">

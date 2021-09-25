@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
-import Cookies from 'universal-cookie';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
 import Container from 'react-bootstrap/Container';
@@ -13,14 +12,13 @@ import {
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import Ping from '../components/Ping';
+import usePing from '../lib/use-ping';
 
-const cookies = new Cookies();
-const session = cookies.get('session');
 
 export default function MyAccount() {
   const router = useRouter();
   const { t } = useTranslation('my-account');
+  const [session] = usePing();
 
   const options = countryList().getData();
 
@@ -154,7 +152,6 @@ export default function MyAccount() {
     <Container fluid>
       <Header />
       <Nav />
-      <Ping />
       <div className="spacer10px" />
       <div className={addressState.loginOrEdit === 'login' ? 'row' : 'row d-none'}>
         <div className="col-md-12 ce capitalLetters">
