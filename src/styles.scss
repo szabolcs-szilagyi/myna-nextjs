@@ -320,7 +320,6 @@ table.cartCo {
   border: 2px solid black;
   color: #000;
   width: 100%;
-  height: 50px;
 }
 
 .startshoppingButton:hover {
@@ -336,7 +335,6 @@ table.cartCo {
   border: 0px;
   color: #fff;
   width: 100%;
-  height: 50px;
 }
 
 .cartButton:hover {
@@ -406,11 +404,6 @@ select.sizeButton::-ms-expand {
   .ceMob {
     text-align: center;
   }
-
-  .startshoppingButton, .cartButton {
-    width: 180px;
-    font-size: 14px;
-  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -437,11 +430,6 @@ select.sizeButton::-ms-expand {
   .inl img {
     width: 140px;
     height: 140px;
-  }
-
-  .startshoppingButton, .cartButton {
-    width: 240px;
-    font-size: 18px;
   }
 
   .cl {
