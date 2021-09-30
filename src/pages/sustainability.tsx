@@ -13,7 +13,7 @@ export default function Sustainability() {
 
   return (
     <Container fluid>
-      <Header />
+      <Header description="sustainability" />
       <Nav />
       <div className="spacer50px"></div>
       <div className="row">

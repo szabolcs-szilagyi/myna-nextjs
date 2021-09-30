@@ -16,7 +16,7 @@ export default function Index() {
 
   return (
     <Container fluid>
-      <Header />
+      <Header description="landing-and-default" />
       <Nav />
       <div className="row">
         <div className="col-md-12 noPadding">

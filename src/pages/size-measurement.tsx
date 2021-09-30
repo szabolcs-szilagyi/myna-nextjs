@@ -14,7 +14,7 @@ export default function SizeMeasurement() {
 
   return (
     <Container fluid>
-      <Header />
+      <Header description="size-measurement" />
       <Nav />
       <div className="spacer50px" />
       <div className="row">

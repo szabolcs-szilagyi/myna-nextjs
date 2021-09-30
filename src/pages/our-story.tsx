@@ -14,7 +14,7 @@ export default function OurStory() {
 
   return (
     <Container fluid>
-      <Header />
+      <Header description="our-story" />
       <Nav />
       <div className="spacer50px" />
       <div className="row">

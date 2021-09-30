@@ -1,10 +1,18 @@
+import useTranslation from 'next-translate/useTranslation';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-export default function HeadElement() {
-  const router = useRouter();
+type THeadElementProps = {
+  description?: string
+};
 
-  function pathToTitle(pathStr) {
+export default function HeadElement(
+  { description = 'landing-and-default' }: THeadElementProps,
+) {
+  const router = useRouter();
+  const { t } = useTranslation('meta-tags');
+
+  function pathToTitle(pathStr: string) {
     const kebabTitle = pathStr.split('/').pop();
     if (!kebabTitle) return 'MYNA Home';
 
@@ -18,8 +26,9 @@ export default function HeadElement() {
 
   return <Head>
     <title>{pathToTitle(router.pathname)}</title>
-    <meta charSet="utf-8" />
+    <meta httpEquiv="Content-Type" content="text/html" charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={t(description)} />
     <script src="https://unpkg.com/react/umd/react.production.min.js" crossOrigin="true"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossOrigin="true"></script>
     <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossOrigin="true"></script>

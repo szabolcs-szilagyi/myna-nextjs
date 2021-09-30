@@ -2,7 +2,7 @@
     "locales": ["en", "pl"],
     "defaultLocale": "en",
     "pages": {
-        "*": ["common"],
+        "*": ["common", "meta-tags"],
         "/": ["home", "sustainability", "slider"],
         "/our-story": ["our-story"],
         "/my-account": ["my-account"],

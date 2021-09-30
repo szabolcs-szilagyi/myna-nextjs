@@ -39,7 +39,7 @@ export default function Lookbook() {
 
   return (
     <Container fluid>
-      <Header />
+      <Header description="lookbook" />
       <Nav />
       <div className="spacer50px"></div>
       <div className="row">

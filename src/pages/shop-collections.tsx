@@ -103,7 +103,7 @@ export default function ShopCollections({ collectionData }: TShopCollectionsProp
 
   return (
     <Container fluid>
-      <Header />
+      <Header description="shop-collections" />
       <Nav />
       <div className="spacer50px" />
       <div className="row">

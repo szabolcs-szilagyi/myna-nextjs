@@ -13,7 +13,7 @@ export default function Shipping() {
 
   return (
     <Container fluid>
-      <Header />
+      <Header description="shipping" />
       <Nav />
       <div className="spacer50px" />
       <div className="row">
