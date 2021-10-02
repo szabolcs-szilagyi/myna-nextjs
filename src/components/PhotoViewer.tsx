@@ -1,156 +1,153 @@
-import React from 'react';
+import { useState } from 'react';
 import Modal from 'react-awesome-modal';
 import Image from 'next/image';
 
 import style from './PhotoViewer.module.css';
 
-export default class PhotoViewer extends React.Component {
-  state: any;
-  props: any;
+type TPhotos = {
+  photo1: string | null,
+  photo2: string | null,
+  photo3: string | null,
+  photo4: string | null,
+  photo5: string | null,
+  photo6: string | null,
+  photo7: string | null,
+  photo8: string | null,
+  photo9: string | null,
+}
 
-  constructor(props) {
-    super(props);
-    const { photos } = props;
+export default function PhotoViewer(props: { photos: TPhotos }) {
+  const { photos } = props;
 
-    this.state = {
-      fade: style.fadeIn,
-      ...photos,
-    };
+  const [fadeState, setFadeState] = useState(style.fadeIn);
+  const [modalState, setModalState] = useState(false);
+  const [mainImage, setMainImage] = useState(photos.photo1);
+  const [otherImages, setOtherImages] = useState({
+    photo2: photos.photo2,
+    photo3: photos.photo3,
+    photo4: photos.photo4,
+  })
 
-    this.productPhotoHandling = this.productPhotoHandling.bind(this);
-    this.fadeOut = this.fadeOut.bind(this);
-    this.fadeIn = this.fadeIn.bind(this);
-    this.openModal = this.openModal.bind(this);
-		this.closeModal = this.closeModal.bind(this);
+  function fadeOut() {
+    setFadeState(style.fadeNone);
   }
 
-  fadeOut() {
-    this.setState({ fade: style.fadeNone });
+  function fadeIn() {
+    setFadeState(style.fadeIn);
   }
 
-  fadeIn() {
-    this.setState({ fade: style.fadeIn });
+  function toggleModal() {
+    setModalState(!modalState);
   }
 
-  openModal() {
-		this.setState({ visible: true });
-	}
-
-	closeModal() {
-		this.setState({ visible: false });
-	}
-
-  productPhotoHandling(e) {
+  function productPhotoHandling(e) {
     const currentId = e.currentTarget.id;
-    const currentMainPhoto = this.state.photo1;
-    let newMainPhoto;
+    const currentMainPhoto = mainImage;
 
     if (currentId === 'photo1') {
-      this.openModal();
+      toggleModal();
     } else {
-      this.fadeOut();
-      setTimeout(this.fadeIn, 100);
+      fadeOut();
+      setTimeout(fadeIn, 100);
     }
 
     if (currentId === 'photo2') {
-      newMainPhoto = this.state.photo2;
-      this.setState({
-        photo1: newMainPhoto,
+      setMainImage(otherImages.photo2);
+      setOtherImages({
+        ...otherImages,
         photo2: currentMainPhoto,
       });
     }
 
     if (currentId === 'photo3') {
-      newMainPhoto = this.state.photo3;
-      this.setState({
-        photo1: newMainPhoto,
+      setMainImage(otherImages.photo3);
+      setOtherImages({
+        ...otherImages,
         photo3: currentMainPhoto,
       });
     }
 
     if (currentId === 'photo4') {
-      newMainPhoto = this.state.photo4;
-      this.setState({
-        photo1: newMainPhoto,
+      setMainImage(otherImages.photo4);
+      setOtherImages({
+        ...otherImages,
         photo4: currentMainPhoto,
       });
     }
   }
 
-  getPhotoUri(fileName) {
+  function getPhotoUri(fileName: string) {
     if (!fileName) return fileName;
 
     return '/product_photos/' + fileName;
   }
 
-  render() {
-    return (
-      <div className="col-md-6 ce">
-        <div className="row">
-          <div className="col-md-12" id={this.state.fade}>
-            <Image
-              src={this.getPhotoUri(this.state.photo1)}
-              layout="responsive"
-              width={500}
-              height={500}
-              onClick={this.productPhotoHandling}
-              className="pointer"
-              id="photo1"
-            />
-          </div>
+  return (
+    <div className="col-md-6 ce">
+      <div className="row">
+        <div className="col-md-12" id={fadeState}>
+          <Image
+            src={getPhotoUri(mainImage)}
+            layout="responsive"
+            width={500}
+            height={500}
+            onClick={productPhotoHandling}
+            className="pointer"
+            id="photo1"
+          />
         </div>
-        <div className="spacer50px"></div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="row">
-              <div className="col-4 ce">
-                <Image
-                  src={this.getPhotoUri(this.state.photo2)}
-                  layout="responsive"
-                  width={150}
-                  height={150}
-                  onClick={this.productPhotoHandling}
-                  className="pointer"
-                  id="photo2"
-                />
-              </div>
-              <div className="col-4 ce">
-                <Image
-                  src={this.getPhotoUri(this.state.photo3)}
-                  layout="responsive"
-                  width={150}
-                  height={150}
-                  onClick={this.productPhotoHandling}
-                  className="pointer"
-                  id="photo3"
-                />
-              </div>
-              <div className="col-4 ce">
-                <Image
-                  src={this.getPhotoUri(this.state.photo4)}
-                  layout="responsive"
-                  width={150}
-                  height={150}
-                  onClick={this.productPhotoHandling}
-                  className="pointer"
-                  id="photo4"
-                />
-              </div>
+      </div>
+      <div className="spacer50px"></div>
+      <div className="row">
+        <div className="col-md-12">
+          <div className="row">
+            <div className="col-4 ce">
+              <Image
+                src={getPhotoUri(otherImages.photo2)}
+                layout="responsive"
+                width={150}
+                height={150}
+                onClick={productPhotoHandling}
+                className="pointer"
+                id="photo2"
+              />
+            </div>
+            <div className="col-4 ce">
+              <Image
+                src={getPhotoUri(otherImages.photo3)}
+                layout="responsive"
+                width={150}
+                height={150}
+                onClick={productPhotoHandling}
+                className="pointer"
+                id="photo3"
+              />
+            </div>
+            <div className="col-4 ce">
+              <Image
+                src={getPhotoUri(otherImages.photo4)}
+                layout="responsive"
+                width={150}
+                height={150}
+                onClick={productPhotoHandling}
+                className="pointer"
+                id="photo4"
+              />
             </div>
           </div>
         </div>
-
-        <Modal
-          visible={this.state.visible}
-          effect="fadeInUp"
-          onClickAway={this.closeModal}
-        >
-          <div>
-            <img src={this.getPhotoUri(this.state.photo1)} className={style.maxHeight} />
-          </div>
-        </Modal>
-
       </div>
-    )
-  }
+
+      <Modal
+        visible={modalState}
+        effect="fadeInUp"
+        onClickAway={toggleModal}
+      >
+        <div>
+          <img src={getPhotoUri(mainImage)} className={style.maxHeight} />
+        </div>
+      </Modal>
+
+    </div>
+  )
 }

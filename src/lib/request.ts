@@ -22,7 +22,7 @@ export function request(url: string, { query = {}, options = {}, fetchOptions = 
   }
 
   return fetchPromise;
-};
+}
 
 export function requestFactory(url) {
   return (options) => request(url, options);

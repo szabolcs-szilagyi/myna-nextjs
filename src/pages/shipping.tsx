@@ -2,19 +2,19 @@ import React from 'react';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
+import usePing from '../lib/use-ping';
 
 export default function Shipping() {
   const { t } = useTranslation('shipping');
+  usePing()
 
   return (
     <Container fluid>
-      <Header />
+      <Header description="shipping" />
       <Nav />
-      <Ping />
       <div className="spacer50px" />
       <div className="row">
         <div className="col-md-12 ce capitalLetters">

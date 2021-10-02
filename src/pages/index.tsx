@@ -7,17 +7,17 @@ import Slider from '../components/Slider';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import Ping from '../components/Ping';
 import SingleProductCard from '../components/SingleProductCard';
+import usePing from '../lib/use-ping';
 
 export default function Index() {
   const { t } = useTranslation('home');
+  usePing();
 
   return (
     <Container fluid>
-      <Header />
+      <Header description="landing-and-default" />
       <Nav />
-      <Ping />
       <div className="row">
         <div className="col-md-12 noPadding">
           <Slider />
@@ -147,6 +147,7 @@ export default function Index() {
               className="col-md-4 mx-auto"
               productPageLink="/marigold-trench-coat"
               productImageLink="/landing/marigold-bread.jpg"
+              productName=""
               width={853}
               height={1280}
             />

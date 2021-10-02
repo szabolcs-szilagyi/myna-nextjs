@@ -3,7 +3,6 @@ import { chunk } from 'lodash';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import Ping from '../components/Ping';
 import Container from 'react-bootstrap/Container';
 import SingleProductCard from '../components/SingleProductCard';
 
@@ -12,6 +11,7 @@ import {
 } from '../constants';
 import { request } from '../lib/request';
 import useTranslation from 'next-translate/useTranslation';
+import usePing from '../lib/use-ping';
 
 type ColletcionTypes = 'consciously-beautiful' | 'love-and-light' | 'love-affair-collection';
 type Product = {
@@ -99,11 +99,12 @@ type TShopCollectionsProps = {
 }
 export default function ShopCollections({ collectionData }: TShopCollectionsProps) {
   const { t } = useTranslation();
+  usePing();
+
   return (
     <Container fluid>
-      <Header />
+      <Header description="shop-collections" />
       <Nav />
-      <Ping />
       <div className="spacer50px" />
       <div className="row">
         <div className="col-md-12 ce capitalLetters">

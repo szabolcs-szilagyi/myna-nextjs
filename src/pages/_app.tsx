@@ -1,5 +1,9 @@
 import '../styles.scss';
 
-export default function MyApp({ Component, pageProps }) {
+type TMyAppProps = {
+  Component?: any,
+  pageProps?: any,
+};
+export default function MyApp({ Component, pageProps }: TMyAppProps) {
   return <Component {...pageProps} />;
 }

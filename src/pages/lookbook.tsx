@@ -6,8 +6,8 @@ import useTranslation from 'next-translate/useTranslation'
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import Ping from '../components/Ping';
 import style from './lookbook.module.css';
+import usePing from '../lib/use-ping';
 
 type LookbookImageProps = {
   imageSrc: string,
@@ -35,12 +35,12 @@ function LookbookImage({ imageSrc, height, width, alt = '', additionalClass = ''
 
 export default function Lookbook() {
   const { t } = useTranslation('common');
+  usePing();
 
   return (
     <Container fluid>
-      <Header />
+      <Header description="lookbook" />
       <Nav />
-      <Ping />
       <div className="spacer50px"></div>
       <div className="row">
         <div className="col-md-12 ce capitalLetters">

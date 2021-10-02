@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
-import Cookies from 'universal-cookie';
 import Select from 'react-select';
 import countryList from 'react-select-country-list';
 import Container from 'react-bootstrap/Container';
@@ -13,14 +12,13 @@ import {
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
-import Ping from '../components/Ping';
+import usePing from '../lib/use-ping';
 
-const cookies = new Cookies();
-const session = cookies.get('session');
 
 export default function MyAccount() {
   const router = useRouter();
   const { t } = useTranslation('my-account');
+  const [session] = usePing();
 
   const options = countryList().getData();
 
@@ -106,7 +104,7 @@ export default function MyAccount() {
     if (addressState.dCity == '') { crossRoad = 1; }
     if (addressState.dZip == '') { crossRoad = 1; }
     if (crossRoad == 0) {
-      saveUserData ();
+      saveUserData();
       setTimeout(saveAddressData, 1000);
       setAddressState({
         ...addressState,
@@ -119,10 +117,10 @@ export default function MyAccount() {
   }
 
   function saveUserData () {
-    let email = addressState.myEmail;
-    let fname = addressState.firstName;
-    let lname = addressState.lastName;
-    let bday = addressState.birthday;
+    const email = addressState.myEmail;
+    const fname = addressState.firstName;
+    const lname = addressState.lastName;
+    const bday = addressState.birthday;
     let crossRoad;
     crossRoad = 0;
     if (email == '') { crossRoad = 1; }
@@ -131,19 +129,14 @@ export default function MyAccount() {
     if (bday == '') { crossRoad = 1; }
     if (crossRoad == 0) {
       fetch(API_SERVER + API_PATH + '?part=updateuserdata&email=' + addressState.myEmail + '&firstname=' + addressState.firstName + '&lastname=' + addressState.lastName + '&birthday=' + addressState.birthday  + '&sessiontoken=' + session)
-        .then(response => response.json())
-        .then(output => {
-          let data = output;
-          let tmp = data['success'];
-        })
         .catch(error => console.log(error.message));
     }
   }
 
   function saveAddressData () {
-    let address1 = addressState.dAddress1;
-    let city = addressState.dCity;
-    let zip = addressState.dZip;
+    const address1 = addressState.dAddress1;
+    const city = addressState.dCity;
+    const zip = addressState.dZip;
     let crossRoad;
     crossRoad = 0;
     if (address1 == '') { crossRoad = 1; }
@@ -151,11 +144,6 @@ export default function MyAccount() {
     if (zip == '') { crossRoad = 1; }
     if (crossRoad == 0) {
       fetch(API_SERVER + API_PATH + '?part=setaddressdata&email=' + addressState.myEmail + '&type=1&mobile=' + addressState.dMobile + '&address1=' + addressState.dAddress1 + '&address2=' + addressState.dAddress2 + '&city=' + addressState.dCity + '&state=' + addressState.dState + '&zip=' + addressState.dZip + '&country=' + addressState?.dCountry.label + '&comment=' + addressState.dComment  + '&sessiontoken=' + session)
-        .then(response => response.json())
-        .then(output => {
-          let data = output;
-          let tmp = data['success'];
-        })
         .catch(error => console.log(error.message));
     }
   }
@@ -164,7 +152,6 @@ export default function MyAccount() {
     <Container fluid>
       <Header />
       <Nav />
-      <Ping />
       <div className="spacer10px" />
       <div className={addressState.loginOrEdit === 'login' ? 'row' : 'row d-none'}>
         <div className="col-md-12 ce capitalLetters">
@@ -299,7 +286,7 @@ export default function MyAccount() {
               <div className="noBorder mediumFont">
                 <button
                   type="button"
-                  className="cartButton"
+                  className="cartButton col-md-2"
                   onClick={saveDetails}
                 >{t(addressState.textOnSaveButton)}</button>
               </div>

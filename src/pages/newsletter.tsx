@@ -1,54 +1,53 @@
-import React, { Component } from 'react';
+import { useEffect } from 'react';
 import {
   API_SERVER,
   API_PATH,
 } from '../constants';
 import fetch from 'isomorphic-unfetch';
 
-export default class Ping extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      session: ''
-    };
-    this.handleRequest = this.handleRequest.bind(this);
-    this.redirect = this.redirect.bind(this);
-  }
-  handleRequest () {
-    let searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.has('part')) {
-      let part = searchParams.get('part');
+enum EPart {
+  SUBSCRIBE = 'subscribenewsletter',
+  UNSUBSCRIBE = 'unsubscribe',
+}
 
-      if (part == "subscribenewsletter") {
-        if (searchParams.has('token')) {
-          let token = searchParams.get('token');
-          let email = searchParams.get('email');
-          fetch(API_SERVER + API_PATH + '?part=confirmnewslettersubscription&email=' + email + '&token=' + token, {mode: 'no-cors'});
-          fetch(API_SERVER + 'amazon-ses-smtp.php?part=confirmnewslettersubscription&email=' + email + '&token=' + token, {mode: 'no-cors'});
-        }
-      }
+enum EAction {
+  CONFIRM = 'confirmnewslettersubscription',
+  DELETE = 'delnewslettersubscription',
+}
 
-      if (part == "unsubscribe") {
-        if (searchParams.has('token')) {
-          let token = searchParams.get('token');
-          let email = searchParams.get('email');
-          fetch(API_SERVER + API_PATH + '?part=delnewslettersubscription&token=' + token + '&email=' + email, {mode: 'no-cors'});
-          fetch(API_SERVER + 'amazon-ses-smtp.php?part=delnewslettersubscription&email=' + email + '&token=' + token, {mode: 'no-cors'});
-        }
-      }
+const possibleActionsToPerform: Record<EPart, EAction> = {
+  [EPart.SUBSCRIBE]: EAction.CONFIRM,
+  [EPart.UNSUBSCRIBE]: EAction.DELETE,
+}
 
+export default function Ping() {
+
+  async function handleRequest() {
+    const searchParams = new URLSearchParams(window.location.search);
+    const part = searchParams.get('part');
+    const token: string | null = searchParams.get('token');
+    const email = searchParams.get('email');
+    const action: EAction | undefined = possibleActionsToPerform[part as EPart];
+
+    if (token !== null && action !== undefined) {
+      await fetch(
+        API_SERVER + API_PATH + '?part=' + action + '&email=' + email + '&token=' + token,
+        { mode: 'no-cors' },
+      );
     }
+
+    redirect();
   }
-  redirect () {
-    window.location.href = "/";
+
+  function redirect() {
+    window.location.href = '/';
   }
-  componentDidMount() {
-    setTimeout(this.handleRequest, 100);
-    setTimeout(this.redirect, 500);
-  }
-  render() {
-    return (
-      <div></div>
-    );
-  }
+
+  useEffect(() => {
+    handleRequest()
+  }, []);
+
+  return (
+    <div></div>
+  );
 }

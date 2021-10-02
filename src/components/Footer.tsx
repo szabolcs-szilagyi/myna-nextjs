@@ -1,142 +1,133 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
-import withTranslation from 'next-translate/withTranslation';
 import {
   API_SERVER,
   API_PATH,
   EMAIL_PATH,
 } from '../constants';
 import fetch from 'isomorphic-unfetch';
+import useTranslation from 'next-translate/useTranslation';
 
-class Footer extends Component {
-  state: any;
-  t: any;
+export default function Footer() {
+  const { t } = useTranslation('common');
+  const [state, setState] = useState({
+    active: '',
+    value: '',
+    token: '',
+    placeHolder: 'EMAIL HERE',
+  })
 
-  constructor(props) {
-    super(props);
-    const { t } = (this.props as any).i18n
-    this.t = t;
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    setState({
+      ...state,
+      value: event.target.value,
+    });
+  }
 
-    this.state = {
-      active: '',
+  function subscribePressed () {
+    setTimeout(getToken, 100);
+    setTimeout(sendMail, 500);
+  }
+
+  function getToken () {
+    fetch(API_SERVER + API_PATH + '?part=setnewslettersubscription&email=' + state.value)
+      .then(response => response.json())
+      .then(({ token }) => {
+        setState({
+          ...state,
+          token,
+        });
+      })
+      .catch(error => console.log(error.message));
+  }
+
+  function sendMail () {
+    fetch(API_SERVER + EMAIL_PATH + '?part=subscribenewsletter&email=' + state.value + '&token=' + state.token);
+    setState({
+      ...state,
+      placeHolder: 'check your mailbox',
       value: '',
-      token: '',
-      placeHolder: t('common:EMAIL HERE')
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.subscribePressed = this.subscribePressed.bind(this);
-    this.getToken = this.getToken.bind(this);
-    this.sendMail = this.sendMail.bind(this);
+    });
   }
 
-  handleChange (event) {
-    this.setState({value: event.target.value});
-  }
-
-  subscribePressed () {
-    setTimeout(this.getToken, 100);
-    setTimeout(this.sendMail, 500);
-  }
-
-  getToken () {
-    fetch(API_SERVER + API_PATH + '?part=setnewslettersubscription&email=' + this.state.value)
-    .then(response => response.json())
-		.then(output => {
-      let data = output;
-      let tmp = data['token'];
-      this.setState({ token: tmp });
-    })
-    .catch(error => console.log(error.message));
-  }
-
-  sendMail () {
-    fetch(API_SERVER + EMAIL_PATH + '?part=subscribenewsletter&email=' + this.state.value + '&token=' + this.state.token);
-    this.setState({ placeHolder: this.t('common:check your mailbox'), value: '' });
-  }
-
-  render() {
-    return (
-      <div>
-        <div className="spacer50px"></div>
-        <hr />
-        <div className="spacer25px"></div>
-        <div className="row">
-          <div className="col-md-2"></div>
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-6">
-                <div className="email_newsletter">
-                  <div className="row">
-                    <div className="col-md-8">
-                      <input
-                        type="email"
-                        name="emailNewsletter"
-                        value={this.state.value}
-                        placeholder={this.state.placeHolder}
-                        onChange={this.handleChange}
-                      />
-                    </div>
-                    <div className="col-md-4 ce">
-                      <button
-                        className="nlsb"
-                        onClick={this.subscribePressed}
-                      >{this.t('common:SUBSCRIBE')}</button>
-                    </div>
+  return (
+    <div>
+      <div className="spacer50px"></div>
+      <hr />
+      <div className="spacer25px"></div>
+      <div className="row">
+        <div className="col-md-2"></div>
+        <div className="col-md-8">
+          <div className="row">
+            <div className="col-md-6">
+              <div className="email_newsletter">
+                <div className="row">
+                  <div className="col-md-8">
+                    <input
+                      type="email"
+                      name="emailNewsletter"
+                      value={state.value}
+                      placeholder={t(state.placeHolder)}
+                      onChange={handleChange}
+                    />
                   </div>
-                  <div className="row">
-                    <div className="col-md-12 ce">
-                      <div className="spacer25px" />{this.t('common:we-respect-your-privacy')}</div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12 ce">
-                      <img className="logo" src="/logo.png" alt="MYNA logo" />
-                    </div>
-                    <div className="col-6 text-right">
-                      <a
-                        href="https://www.facebook.com/mynalabel"
-                        target="fb-mynalabel"
-                      ><img
-                         src="/facebook.svg"
-                         alt="facebook"
-                         width="30"
-                         height="30"
-                       /></a>
-                    </div>
-                    <div className="col-6">
-                      <a
-                        href="https://www.instagram.com/mynalabel/"
-                        target="insta-mynalabel"
-                      ><img
-                         src="/instagram.svg"
-                         alt="instagram"
-                         width="30"
-                         height="30"
-                       /></a>
-                    </div>
+                  <div className="col-md-4 ce">
+                    <button
+                      className="nlsb"
+                      onClick={subscribePressed}
+                    >{t('SUBSCRIBE')}</button>
                   </div>
                 </div>
-              </div>
-              <div className="col-md-6">
                 <div className="row">
-                  <div className="col-md-4"></div>
-                  <div className="col-md-8">
-                    <p><Link href="/our-story"><a className="blackFont">{this.t('common:Our Story')}</a></Link></p>
-                    <p><Link href="/sustainability"><a className="blackFont">{this.t('common:Sustainability')}</a></Link></p>
-                    <p><Link href="/shipping"><a className="blackFont">{this.t('common:shipping-n-returns')}</a></Link></p>
-                    <p><Link href="/size-measurement"><a className="blackFont">{this.t('common:size-n-measurement')}</a></Link></p>
-                    <p><Link href="/privacy-contact"><a className="blackFont">{this.t('common:privacy-n-contact')}</a></Link></p>
+                  <div className="col-md-12 ce">
+                    <div className="spacer25px" />{t('we-respect-your-privacy')}</div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12 ce">
+                    <img className="logo" src="/logo.png" alt="MYNA logo" />
+                  </div>
+                  <div className="col-6 text-right">
+                    <a
+                      href="https://www.facebook.com/mynalabel"
+                      target="fb-mynalabel"
+                    ><img
+                       src="/facebook.svg"
+                       alt="facebook"
+                       width="30"
+                       height="30"
+                      /></a>
+                  </div>
+                  <div className="col-6">
+                    <a
+                      href="https://www.instagram.com/mynalabel/"
+                      target="insta-mynalabel"
+                    ><img
+                       src="/instagram.svg"
+                       alt="instagram"
+                       width="30"
+                       height="30"
+                      /></a>
                   </div>
                 </div>
               </div>
             </div>
+            <div className="col-md-6">
+              <div className="row">
+                <div className="col-md-4"></div>
+                <div className="col-md-8">
+                  <p><Link href="/our-story"><a className="blackFont">{t('Our Story')}</a></Link></p>
+                  <p><Link href="/sustainability"><a className="blackFont">{t('Sustainability')}</a></Link></p>
+                  <p><Link href="/shipping"><a className="blackFont">{t('shipping-n-returns')}</a></Link></p>
+                  <p><Link href="/size-measurement"><a className="blackFont">{t('size-n-measurement')}</a></Link></p>
+                  <p><Link href="/privacy-contact"><a className="blackFont">{t('privacy-n-contact')}</a></Link></p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="col-md-2"></div>
-          <div className="spacer50px"></div>
         </div>
+        <div className="col-md-2"></div>
+        <div className="spacer50px"></div>
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default withTranslation(Footer)

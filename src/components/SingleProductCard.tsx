@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import style from './SingleProductCard.module.css';
 
-export default function SingleProductCard(props) {
+type TSingleProductCardProps = {
+  children?: ReactNode,
+  productName: string,
+  className?: string,
+  width?: number,
+  height?: number,
+  price?: string,
+  productPageLink: string,
+  productImageLink: string,
+};
+
+export default function SingleProductCard(props: TSingleProductCardProps) {
   const {
     className = 'col-md-6',
     width = 150,

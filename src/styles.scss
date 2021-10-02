@@ -319,8 +319,7 @@ table.cartCo {
   background-color: #ffffff;
   border: 2px solid black;
   color: #000;
-  width: 260px;
-  height: 50px;
+  width: 100%;
 }
 
 .startshoppingButton:hover {
@@ -330,23 +329,16 @@ table.cartCo {
 .cartButton {
   font-size: 18px;
   padding: 5px;
+  margin-bottom: 5px;
   font-weight: normal;
   background-color: #b0644f;
   border: 0px;
   color: #fff;
-  width: 240px;
-  height: 50px;
+  width: 100%;
 }
 
 .cartButton:hover {
-  font-size: 18px;
-  padding: 5px;
   font-weight: bold;
-  background-color: #b0644f;
-  border: 0px;
-  color: #fff;
-  width: 240px;
-  height: 50px;
 }
 
 .sizeButton {
@@ -412,11 +404,6 @@ select.sizeButton::-ms-expand {
   .ceMob {
     text-align: center;
   }
-
-  .startshoppingButton, .cartButton {
-    width: 180px;
-    font-size: 14px;
-  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -443,11 +430,6 @@ select.sizeButton::-ms-expand {
   .inl img {
     width: 140px;
     height: 140px;
-  }
-
-  .startshoppingButton, .cartButton {
-    width: 240px;
-    font-size: 18px;
   }
 
   .cl {

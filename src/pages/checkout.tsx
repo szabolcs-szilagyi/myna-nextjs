@@ -4,22 +4,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import Cookies from 'universal-cookie';
 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import PayPal from '../components/Paypal';
-import Ping from '../components/Ping';
 import {
   API_PATH,
   API_SERVER,
 } from '../constants';
 import event from '../lib/gtag';
 import { requestFactory } from '../lib/request';
+import useAmILoggedIn, { ELoggedIn } from '../lib/use-am-i-logged-in';
+import usePing from '../lib/use-ping';
 
-const cookies = new Cookies();
-const session = cookies.get('session');
 
 type CheckoutProduct = {
   id: number,
@@ -89,7 +87,6 @@ interface CartItemsProps {
 }
 
 function CartItems ({ loading, products, delProductFromCart, productDetailHash }: CartItemsProps) {
-  console.log('productDetailHash', productDetailHash);
   const [trashImageSrc, setTrashImageSrc] = useState('/trash.png');
 
   function trashHover() {
@@ -207,38 +204,17 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
     loadingProducts: false,
     price: 0,
     shipping: '',
-    myEmail: '',
-    loggedIn: 'no',
     products: {},
     inCart: 0,
     showPaypal: 'hidePaypal',
-    checked: 0,
   });
   const [priceModifier, setPriceModifier] = useState(1);
   const [coupon, setCoupon] = useState('');
   const { t } = useTranslation('checkout');
+  const [session] = usePing();
+  const [amILoggedIn] = useAmILoggedIn(session);
 
   const router = useRouter();
-
-  function amILoggedIn() {
-    listenRequest({
-      query: { part: 'amiloggedin', sessiontoken: session },
-      options: { json: true },
-    })
-      .then(({ email }) => {
-        if (email !== 'nodata') {
-          setState({
-            ...state,
-            myEmail: email,
-            loggedIn: 'yes',
-            checked: 1,
-          });
-        } else {
-          router.push('/my-account');
-        }
-      })
-      .catch(error => console.log(error.message));
-  }
 
   function delProductFromCart(id: number) {
     setState({
@@ -261,18 +237,13 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
       currency: 'EUR',
     })
 
-    if (state.checked === 0) {
-      amILoggedIn();
+    if (amILoggedIn === ELoggedIn.NO) {
+      router.push('/my-account');
     } else {
-      const loggedIn = state.loggedIn;
-      if (loggedIn == 'no') {
-        router.push('/my-account');
-      } else {
-        setState({
-          ...state,
-          showPaypal: 'showPaypal',
-        });
-      }
+      setState({
+        ...state,
+        showPaypal: 'showPaypal',
+      });
     }
   }
 
@@ -311,7 +282,6 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
     <Container fluid>
       <Header />
       <Nav />
-      <Ping />
       <div className="spacer50px"></div>
       <div className="row">
         <div className="col-md-12 ce capitalLetters">
@@ -322,7 +292,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
               <i>{t('Your cart is empty')}</i><br />
               <br />
               <Link href="/shop-collections">
-                <a><button className="startshoppingButton">{t('START SHOPPING HERE')}</button></a>
+                <a><button className="startshoppingButton col-md-2">{t('START SHOPPING HERE')}</button></a>
               </Link>
             </p>
           </div>
@@ -345,7 +315,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
             <div className="col-md-4">
               <div className="noBorder mediumFont ceMob">
                 <Link href="/shop-collections">
-                  <a><button className="startshoppingButton">{t('CONTINUE SHOPPING')}</button></a>
+                  <a><button className="startshoppingButton col-md-10">{t('CONTINUE SHOPPING')}</button></a>
                 </Link>
               </div>
             </div>
@@ -362,13 +332,11 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
               </p>
             </div>
             <div className="col-md-4">
-              <div className="noBorder mediumFont right ceMob">
-                <button
-                  className="cartButton"
-                  onClick={pressedCheckout}
-                >{t('CHECKOUT')}</button>
-              </div>
-              <div className={state.showPaypal}>
+              <button
+                className="cartButton col-md-10 float-md-right"
+                onClick={pressedCheckout}
+              >{t('CHECKOUT')}</button>
+              <div className={[state.showPaypal, 'col-md-10', 'p-md-0', 'float-md-right'].join(' ')}>
                 <PayPal dataFromParent = {state.price} />
               </div>
             </div>
