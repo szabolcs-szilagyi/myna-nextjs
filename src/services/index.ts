@@ -297,3 +297,27 @@ export async function saveAddressData(addressData: TAddressData, sessionToken: s
     },
   })
 }
+
+type TUpdateNewsletterSubscription = {
+  action: string;
+  email: string;
+  token: string;
+};
+export async function updateNewsletterSubscription(
+  updateDetails: TUpdateNewsletterSubscription,
+): Promise<void> {
+  const {
+    action,
+    email,
+    token,
+  } = updateDetails;
+
+  await requestLegacy({
+    query: {
+      part: action,
+      email,
+      token,
+    },
+    fetchOptions: { mode: 'no-cors' },
+  });
+}
