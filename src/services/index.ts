@@ -1,5 +1,6 @@
 import { API_SERVER, API_PATH } from "../constants";
 import { request, requestFactory } from "../lib/request";
+import UserDataValidationError from "../lib/UserDataValidationError";
 
 const requestLegacy = requestFactory(API_SERVER + API_PATH);
 
@@ -196,4 +197,103 @@ export async function removeProductFromCart(
     },
     fetchOptions: { mode: "no-cors" }
   });
+}
+
+export async function getLoggedinEmail(sessionToken: string): Promise<string | null> {
+  const rawResponse = await requestLegacy({
+    query: {
+      part: 'amiloggedin',
+      sessiontoken: sessionToken,
+    },
+    options: { json: true },
+  });
+
+  const { email } = rawResponse;
+
+  if (email !== 'nodata') return email;
+  else return null;
+}
+
+type TLoginBasicData = {
+  email: string,
+  loginToken: string,
+}
+export async function loginWithEmail(inputEmail: string, sessionToken: string): Promise<TLoginBasicData> {
+  const rawLoginData = await requestLegacy({
+    query: {
+      part: 'loginmail',
+      email: inputEmail,
+      session: sessionToken,
+    },
+    options: { json: true },
+  });
+
+  const toReturn: TLoginBasicData = {
+    email: rawLoginData.email,
+    loginToken: rawLoginData.logintoken,
+  }
+
+  await requestLegacy({
+    query: {
+      part: 'login',
+      logintoken: toReturn.loginToken,
+      email: toReturn.email,
+      sessiontoken: sessionToken,
+    },
+    fetchOptions: { mode: 'no-cors' },
+  });
+
+  return toReturn;
+}
+
+type TUserData = {
+  email: string,
+  firstName: string,
+  lastName: string,
+  birthday: string,
+}
+export async function saveUserData(userData: TUserData, sessionToken: string): Promise<void> {
+  const validInput = Object.values(userData).every(value => value !== '');
+
+  if(!validInput) {
+    throw new UserDataValidationError('All fields must be filled!', userData);
+  }
+
+  await requestLegacy({
+    query: {
+      part: 'updateuserdata',
+      email: userData.email,
+      firstname: userData.firstName,
+      lastname: userData.lastName,
+      birthday: userData.birthday,
+      sessiontoken: sessionToken,
+    }
+  })
+}
+
+type TAddressData = {
+  email: string;
+  mobile: string;
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  comment: string;
+};
+export async function saveAddressData(addressData: TAddressData, sessionToken: string): Promise<void> {
+  const mandatoryFields = ['email', 'address1', 'city', 'zip'];
+  const validInput = mandatoryFields.every(value => addressData[value] !== '');
+
+  if(!validInput) throw new UserDataValidationError('All mandatory fields must be filed!', addressData);
+
+  await requestLegacy({
+    query: {
+      part: 'setaddressdata',
+      'type': '1',
+      session: sessionToken,
+      ...addressData,
+    },
+  })
 }
