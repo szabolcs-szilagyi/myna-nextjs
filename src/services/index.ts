@@ -6,7 +6,32 @@ import { requestFactory } from '../lib/request';
 
 const request = requestFactory(API_SERVER + API_PATH);
 
-export async function loadProductDetails(idName: string): Promise<unknown> {
+type TProductDetails = {
+  productIdToCart: string,
+  productName: string,
+  namePl: string,
+  productColor: string,
+  productPrice: number,
+  description: string,
+  descriptionPl: string,
+  compCare: string,
+  compositionAndCarePl: string,
+  availability: string,
+  isOneSize: boolean,
+  photos: {
+    photo1: string | null,
+    photo2: string | null,
+    photo3: string | null,
+    photo4: string | null,
+    photo5: string | null,
+    photo6: string | null,
+    photo7: string | null,
+    photo8: string | null,
+    photo9: string | null,
+  },
+}
+
+export async function loadProductDetails(idName: string): Promise<TProductDetails> {
   const rawDetails = await request({
     query: {
       part: 'getproductdata',
