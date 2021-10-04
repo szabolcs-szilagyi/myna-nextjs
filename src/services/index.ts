@@ -321,3 +321,58 @@ export async function updateNewsletterSubscription(
     fetchOptions: { mode: 'no-cors' },
   });
 }
+
+export async function subscribeToNewsletter(email: string): Promise<void> {
+  const { token } = await requestLegacy({
+    query: {
+      part: 'setnewslettersubscription',
+      email,
+    },
+    options: { json: true },
+  });
+
+  await requestLegacy({
+    query: {
+      part: 'subscribenewsletter',
+      email,
+      token,
+    }
+  });
+}
+
+export async function finalizePurchase(
+  userDetails: TUserData & TAddressData,
+  price: string,
+  products: object,
+  sessionToken: string,
+): Promise<void> {
+  await requestLegacy({
+    query: {
+      part: 'setproductpaid',
+      sessiontoken: sessionToken,
+    },
+    fetchOptions: { mode: 'no-cors' },
+  });
+
+  await requestLegacy({
+    query: {
+      part: 'purchased',
+      email: userDetails.email,
+      token: sessionToken,
+      price,
+      firstname: userDetails.firstName,
+      lastname: userDetails.lastName,
+      birthday: userDetails.birthday,
+      mobile: userDetails.mobile,
+      address1: userDetails.address1,
+      address2: userDetails.address2,
+      city: userDetails.city,
+      state: userDetails.state,
+      zip: userDetails.zip,
+      country: userDetails.country,
+      comment: userDetails.comment,
+      products,
+    },
+    fetchOptions: { mode: 'no-cors' },
+  });
+}
