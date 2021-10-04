@@ -19,10 +19,50 @@ const properties = {
   pauseOnHover: true,
 };
 
+function ImageElement({
+  imageSrc,
+  imageHref,
+}) {
+  if(imageHref) {
+    return (
+      <Link href={imageHref}>
+        <a>
+          <Image
+            quality={90}
+            src={imageSrc}
+            layout="fill"
+            objectFit="cover"
+            objectPosition="left top"
+          />
+        </a>
+      </Link>
+    );
+  } else {
+    return (
+      <Image
+        quality={90}
+        src={imageSrc}
+        layout="fill"
+        objectFit="cover"
+        objectPosition="left top"
+      />
+    );
+  }
+}
+
 export default function Slider() {
   const { t } = useTranslation('slider');
 
   const slides = [
+    {
+      text: '',
+      linkText: '',
+      linkHref: '/shop-collections',
+      imageHref: '/shop-collections',
+      imageSrc: '/slides/04.jpg',
+      paragraphClass: 'd-none',
+      buttonClass: 'd-none',
+    },
     {
       text: 'Consciously Beautiful',
       linkText: t('SHOP THE LOOK'),
@@ -43,27 +83,29 @@ export default function Slider() {
       linkHref: '/our-story',
       imageSrc: '/slides/03.jpg',
       buttonClass: styles.button2,
-    }
+    },
   ];
 
   return (
     <div className={styles.slideContainer}>
       <Slide {...properties}>
-        {slides.map(({ text, linkText, linkHref, imageSrc, buttonClass }, i) => (
+        {slides.map(({
+          text,
+          linkText,
+          linkHref,
+          imageHref,
+          imageSrc,
+          buttonClass,
+          paragraphClass = styles.description,
+        }, i) => (
           <div key={`slider-${i}`} className={styles.eachSlide}>
             <div className={styles.textcontainer}>
-              <Image
-                quality={90}
-                src={imageSrc}
-                layout="fill"
-                objectFit="cover"
-                objectPosition="left top"
-              />
+              <ImageElement imageSrc={imageSrc} imageHref={imageHref} />
               <h3>{text}</h3>
               <Link href={linkHref}>
                 <a className={buttonClass}>{linkText}</a>
               </Link>
-              <div className={styles.description}>
+              <div className={paragraphClass}>
                 <p>{t('we-design-pieces-to-love')}</p>
               </div>
             </div>
