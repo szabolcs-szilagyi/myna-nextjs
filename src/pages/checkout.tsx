@@ -242,9 +242,8 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
     const newCoupon = event.target.value.toLowerCase();
     let newPriceModifier = 1;
 
-    if (newCoupon === "mynafriend10") newPriceModifier = 0.9;
-    else if (newCoupon === "mynagift15") newPriceModifier = 0.85;
-    else if (newCoupon === "thespecial20") newPriceModifier = 0.8;
+    if(newCoupon === 'mynafriend10') newPriceModifier = 0.9;
+    else if(newCoupon === 'mynagift15') newPriceModifier = 0.85;
 
     setCoupon(newCoupon);
     setPriceModifier(newPriceModifier);
