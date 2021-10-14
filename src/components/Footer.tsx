@@ -92,7 +92,7 @@ export default function Footer() {
             <div className="col-md-6">
               <div className="row">
                 <div className="col-md-4"></div>
-                <div className="col-md-8">
+                <div className="col-md-8" data-cy="navigation-links-container">
                   <p><Link href="/our-story"><a className="blackFont">{t('Our Story')}</a></Link></p>
                   <p><Link href="/sustainability"><a className="blackFont">{t('Sustainability')}</a></Link></p>
                   <p><Link href="/shipping"><a className="blackFont">{t('shipping-n-returns')}</a></Link></p>

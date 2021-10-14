@@ -67,7 +67,7 @@ export default function Slider() {
               />
               <h3>{text}</h3>
               <Link href={linkHref}>
-                <a className={buttonClass}>{linkText}</a>
+                <a data-cy="slide-link-button" className={buttonClass}>{linkText}</a>
               </Link>
               <div className={styles.description}>
                 <p>{t('we-design-pieces-to-love')}</p>

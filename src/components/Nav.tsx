@@ -84,8 +84,8 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
           </div>
           <div className="col-md-7 capitalLetters">
             <ul className="navMenu">
-              <li><Link href="/lookbook"><a>{t('Lookbook')}</a></Link></li>
-              <li><Link href="/shop-collections"><a>{t('Shop Collections')}</a></Link></li>
+              <li><Link href="/lookbook"><a data-cy="lookbook-link" >{t('Lookbook')}</a></Link></li>
+              <li><Link href="/shop-collections"><a data-cy="shop-collections-link" >{t('Shop Collections')}</a></Link></li>
               <li><Link href="/sustainability"><a>{t('Sustainability')}</a></Link></li>
               <li><Link href="/our-story"><a>{t('Our Story')}</a></Link></li>
             </ul>
@@ -100,7 +100,11 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
                 lastItemsDate={lastItemsDate}
               />
               <div className="col-md-2 ce padtop43px">
-                <button className={i18nEnabled ? style.i18nButton : 'd-none'} onClick={changeLang}>{nextLang}</button>
+                <button
+                  className={i18nEnabled ? style.i18nButton : 'd-none'}
+                  onClick={changeLang}
+                  data-cy="language-switcher"
+                >{nextLang}</button>
               </div>
             </div>
           </div>

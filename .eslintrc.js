@@ -27,7 +27,7 @@ module.exports = {
         "react",
         "@typescript-eslint",
         "jest",
-        "cypress": true
+        "cypress"
     ],
     "rules": {
       "react/react-in-jsx-scope": "off",

@@ -1,24 +1,17 @@
 /// <reference types="cypress" />
-
-// Welcome to Cypress!
-//
-// This spec file contains a variety of sample tests
-// for a todo list app that are designed to demonstrate
-// the power of writing tests in Cypress.
-//
-// To learn more about how Cypress works and
-// what makes it such an awesome testing tool,
-// please read our getting started guide:
-// https://on.cypress.io/introduction-to-cypress
+const baseUrl = Cypress.config('baseUrl');
+const apiUrl = Cypress.config('apiUrl');
+import Footer from '../pages/footer';
+import Header from '../pages/header';
+import Slider from '../pages/slider';
+const footer = new Footer();
+const header = new Header();
+const slider = new Slider();
 
 describe('landing page', () => {
   beforeEach(() => {
-    // Cypress starts out with a blank slate for each test
-    // so we must tell it to visit our website with the `cy.visit()` command.
-    // Since we want to visit the same URL at the start of all our tests,
-    // we include it in our beforeEach function so that it runs before each test
     cy.viewport('macbook-13')
-    cy.visit('http://localhost:3000');
+    cy.visit(baseUrl);
   });
 
   it('shows the navigation menu', () => {
@@ -29,110 +22,70 @@ describe('landing page', () => {
     navMenu().last().should('have.text', 'Our Story')
   })
 
-  it.skip('can add new todo items', () => {
-    // We'll store our item text in a variable so we can reuse it
-    const newItem = 'Feed the cat'
+  it('newsletter subscription works', () => {
+    footer.emailInput().type('asdf@asdf.hu')
+    cy.intercept({
+      method: 'GET',
+      url: `${apiUrl}/legacy?part=setnewslettersubscription&email=asdf%40asdf.hu`,
+    }).as('subscriptionRequest');
+    cy.get('button.nlsb').click();
+    cy.wait('@subscriptionRequest').its('response.statusCode').should('eq', 201);
 
-    // Let's get the input element and use the `type` command to
-    // input our new list item. After typing the content of our item,
-    // we need to type the enter key as well in order to submit the input.
-    // This input has a data-test attribute so we'll use that to select the
-    // element in accordance with best practices:
-    // https://on.cypress.io/selecting-elements
-    cy.get('[data-test=new-todo]').type(`${newItem}{enter}`)
+    footer.emailInput()
+      .invoke('attr', 'placeholder')
+      .should('eq', 'check your mailbox')
+  });
 
-    // Now that we've typed our new item, let's check that it actually was added to the list.
-    // Since it's the newest item, it should exist as the last element in the list.
-    // In addition, with the two default items, we should have a total of 3 elements in the list.
-    // Since assertions yield the element that was asserted on,
-    // we can chain both of these assertions together into a single statement.
-    cy.get('.todo-list li')
-      .should('have.length', 3)
-      .last()
-      .should('have.text', newItem)
+  it('can change language to polish', () => {
+    header.languageSwitcher().should('contain.text', 'pl');
+    header.shopCollectionsLink().should('have.text', 'Shop Collections')
+    header.languageSwitcher().click().should('contain.text', 'en');
+    header.shopCollectionsLink().should('have.text', 'KOLEKCJE')
   })
 
-  it.skip('can check off an item as completed', () => {
-    // In addition to using the `get` command to get an element by selector,
-    // we can also use the `contains` command to get an element by its contents.
-    // However, this will yield the <label>, which is lowest-level element that contains the text.
-    // In order to check the item, we'll find the <input> element for this <label>
-    // by traversing up the dom to the parent element. From there, we can `find`
-    // the child checkbox <input> element and use the `check` command to check it.
-    cy.contains('Pay electric bill')
-      .parent()
-      .find('input[type=checkbox]')
-      .check()
+  it('has working link in the footer', () => {
+    footer.navigationLinksContainer().find('a').eq(0).click();
+    cy.get('h1').should('contain', 'Our Mission');
+    cy.go('back');
+    cy.wait(200)
 
-    // Now that we've checked the button, we can go ahead and make sure
-    // that the list element is now marked as completed.
-    // Again we'll use `contains` to find the <label> element and then use the `parents` command
-    // to traverse multiple levels up the dom until we find the corresponding <li> element.
-    // Once we get that element, we can assert that it has the completed class.
-    cy.contains('Pay electric bill')
-      .parents('li')
-      .should('have.class', 'completed')
+    footer.navigationLinksContainer().find('a').eq(1).click();
+    cy.get('h1').should('contain', 'Sustainability');
+    cy.go('back');
+    cy.wait(200)
+
+    footer.navigationLinksContainer().find('a').eq(2).click();
+    cy.get('h1').should('contain', 'Returns and Exchanges');
+    cy.go('back');
+    cy.wait(200)
+
+    footer.navigationLinksContainer().find('a').eq(3).click();
+    cy.get('h1').should('contain', 'Size and Measurements');
+    cy.go('back');
+    cy.wait(200)
+
+    footer.navigationLinksContainer().find('a').eq(4).click();
+    cy.get('h1').should('contain', 'Privacy');
+    cy.get('h1').should('contain', 'Contact');
   })
 
-  context.skip('with a checked task', () => {
-    beforeEach(() => {
-      // We'll take the command we used above to check off an element
-      // Since we want to perform multiple tests that start with checking
-      // one element, we put it in the beforeEach hook
-      // so that it runs at the start of every test.
-      cy.contains('Pay electric bill')
-        .parent()
-        .find('input[type=checkbox]')
-        .check()
-    })
+  it('should have working links on all slides', () => {
+    slider.linkButtons().eq(0).click({ force: true })
+    cy.get('h1').should('contain', 'Our Mission');
+    cy.go('back');
+    cy.wait(200)
 
-    it('can filter for uncompleted tasks', () => {
-      // We'll click on the "active" button in order to
-      // display only incomplete items
-      cy.contains('Active').click()
+    slider.linkButtons().eq(1).click({ force: true })
+    cy.get('h1').should('contain', 'Shop Collections');
+    cy.go('back');
+    cy.wait(200)
 
-      // After filtering, we can assert that there is only the one
-      // incomplete item in the list.
-      cy.get('.todo-list li')
-        .should('have.length', 1)
-        .first()
-        .should('have.text', 'Walk the dog')
+    slider.linkButtons().eq(2).click({ force: true })
+    cy.get('h1').should('contain', 'Lookbook');
+  });
 
-      // For good measure, let's also assert that the task we checked off
-      // does not exist on the page.
-      cy.contains('Pay electric bill').should('not.exist')
-    })
-
-    it('can filter for completed tasks', () => {
-      // We can perform similar steps as the test above to ensure
-      // that only completed tasks are shown
-      cy.contains('Completed').click()
-
-      cy.get('.todo-list li')
-        .should('have.length', 1)
-        .first()
-        .should('have.text', 'Pay electric bill')
-
-      cy.contains('Walk the dog').should('not.exist')
-    })
-
-    it('can delete all completed tasks', () => {
-      // First, let's click the "Clear completed" button
-      // `contains` is actually serving two purposes here.
-      // First, it's ensuring that the button exists within the dom.
-      // This button only appears when at least one task is checked
-      // so this command is implicitly verifying that it does exist.
-      // Second, it selects the button so we can click it.
-      cy.contains('Clear completed').click()
-
-      // Then we can make sure that there is only one element
-      // in the list and our element does not exist
-      cy.get('.todo-list li')
-        .should('have.length', 1)
-        .should('not.have.text', 'Pay electric bill')
-
-      // Finally, make sure that the clear button no longer exists.
-      cy.contains('Clear completed').should('not.exist')
-    })
+  it('should have a working link to lookbook in navbar', () => {
+    header.lookbookLink().click();
+    cy.get('h1').should('contain', 'Lookbook');
   })
 })
