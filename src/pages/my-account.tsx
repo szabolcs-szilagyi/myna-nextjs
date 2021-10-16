@@ -159,7 +159,12 @@ export default function MyAccount() {
           />
           <div className="spacer50px" />
           <div className="noBorder mediumFont">
-            <button type="button" className="cartButton" onClick={createToken}>
+            <button
+              type="button"
+              className="cartButton"
+              onClick={createToken}
+              data-cy="emailSubmitButton"
+            >
               {t("SUBMIT")}
             </button>
           </div>
@@ -217,12 +222,14 @@ export default function MyAccount() {
                 placeholder={t("* MOBILE NUMBER")}
               />
               <div className="spacer10px" />
-              <Select
-                className="userDetails"
-                options={options}
-                value={addressState.dCountry}
-                onChange={handleSelectChange("dCountry")}
-              />
+              <div data-cy="countrySelector">
+                <Select
+                  className="userDetails"
+                  options={options}
+                  value={addressState.dCountry}
+                  onChange={handleSelectChange("dCountry")}
+                />
+              </div>
               <div className="spacer10px" />
             </div>
             <div className="col-md-4">
@@ -267,7 +274,7 @@ export default function MyAccount() {
                 placeholder={t("* POSTAL CODE")}
               />
               <div className="spacer10px" />
-              <div className="paddingtop5px">
+              <div className="paddingtop5px" data-cy="countryConfirmation">
                 {t("* Country")}: {addressState.dCountry.label}
               </div>
               <div className="spacer10px" />
@@ -282,6 +289,7 @@ export default function MyAccount() {
                   type="button"
                   className="cartButton col-md-2"
                   onClick={saveDetails}
+                  data-cy="saveAddressButton"
                 >
                   {t(addressState.textOnSaveButton)}
                 </button>

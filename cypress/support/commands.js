@@ -25,3 +25,5 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('getByDataCy', (value) => cy.get(`[data-cy=${value}]`));
+
+Cypress.Commands.add('getInputByName', (value) => cy.get(`input[name=${value}]`));
