@@ -282,7 +282,10 @@ type TAddressData = {
   country: string;
   comment: string;
 };
-export async function saveAddressData(addressData: TAddressData, sessionToken: string): Promise<void> {
+export async function saveAddressData(
+  addressData: TAddressData,
+  sessionToken: string
+): Promise<void> {
   const mandatoryFields = ['email', 'address1', 'city', 'zip'];
   const validInput = mandatoryFields.every(value => addressData[value] !== '');
 
@@ -292,7 +295,7 @@ export async function saveAddressData(addressData: TAddressData, sessionToken: s
     query: {
       part: 'setaddressdata',
       'type': '1',
-      session: sessionToken,
+      sessiontoken: sessionToken,
       ...addressData,
     },
   })

@@ -115,7 +115,7 @@ export default function MyAccount() {
           city: addressState.dCity,
           state: addressState.dState,
           zip: addressState.dZip,
-          country: addressState.dCountry,
+          country: addressState.dCountry.label,
           comment: addressState.dComment
         },
         session
