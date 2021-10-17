@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import * as reactBootstrap from 'react-bootstrap';
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 import {
   API_PATH,
   API_SERVER,
