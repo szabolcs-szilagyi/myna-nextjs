@@ -3,13 +3,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import * as reactBootstrap from 'react-bootstrap';
-import Cookies from 'universal-cookie';
 import {
   API_PATH,
   API_SERVER,
 } from '../constants';
 import style from './Nav.module.css';
 import getConfig from 'next/config';
+import usePing from '../lib/use-ping';
 const { publicRuntimeConfig: { i18nEnabled } } = getConfig();
 
 const {
@@ -17,11 +17,8 @@ const {
   Nav: BSNav
 } = reactBootstrap;
 
-const cookies = new Cookies();
-const session = cookies.get('session');
 
-
-function getInCart() {
+function getInCart(session) {
   return fetch(API_SERVER + API_PATH + '?part=getproductsnumberincart&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => output.nr)
@@ -36,23 +33,31 @@ type TCartProps = {
 function Cart({ containerClass, lastItemsDate }: TCartProps) {
   const [inCart, setInCart] = useState(0);
   const [cartIcon, setCartIcon] = useState('/cart.png');
+  const [session] = usePing();
 
   useEffect(() => {
-    getInCart()
+    getInCart(session)
       .then(numberOfProducts => setInCart(numberOfProducts));
   }, [inCart, lastItemsDate]);
 
   return (
     <div className={containerClass}>
-      <Link href="/checkout"><a
-        className="menu"
-        onMouseEnter={() => setCartIcon('/cart-b.png')}
-        onMouseLeave={() => setCartIcon('/cart.png')}
-      ><img
-         src={cartIcon}
-         width="35"
-         height="35"
-       />({inCart})</a></Link>
+      <Link href="/checkout">
+        <a
+          className="menu"
+          onMouseEnter={() => setCartIcon('/cart-b.png')}
+          onMouseLeave={() => setCartIcon('/cart.png')}
+        >
+          <img
+            src={cartIcon}
+            width="35"
+            height="35"
+          />
+          <span data-cy="cartCounter">
+            ({inCart})
+          </span>
+        </a>
+      </Link>
     </div>
   );
 }

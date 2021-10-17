@@ -44,7 +44,7 @@ describe('my-account', () => {
   })
 
   it('will not take partial details', () => {
-    myAccount.provideEmailAddress('asdf@asdf2.asd');
+    myAccount.provideEmailAddress('asdf@asdf3.asd');
     myAccount.fillAccountDetails({
       name: 'first lll',
       surname: '',

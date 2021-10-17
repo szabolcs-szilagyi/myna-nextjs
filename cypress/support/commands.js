@@ -27,3 +27,23 @@
 Cypress.Commands.add('getByDataCy', (value) => cy.get(`[data-cy=${value}]`));
 
 Cypress.Commands.add('getInputByName', (value) => cy.get(`input[name=${value}]`));
+
+Cypress.Commands.add('shouldRef', { prevSubject: true }, (subject, action, ref) => {
+  cy.get(ref)
+    .then(value => {
+      cy.wrap(subject).should(action, value);
+    })
+})
+
+/**
+ * @memberof Cypress.cy
+ * @method parseFloat
+ * @param {RegExp} patternRx - regexp pattern that will be used to cut everything
+ * away from the number
+ */
+Cypress.Commands.add('parseFloat', { prevSubject: true }, (subject, patternRx) => {
+  return cy.wrap(subject).invoke('text').then((priceText) => {
+    const price = parseFloat(priceText.replace(patternRx, '$1'), 10);
+    return cy.wrap(price);
+  })
+})

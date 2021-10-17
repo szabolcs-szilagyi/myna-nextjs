@@ -182,9 +182,12 @@ export default function Index (props: any) {
             <div className="col-md-6 ce">
               <div className="row">
                 <div className="col-md-12">
-                <h1 className="capitalLetters">
-                  {productName} | {state.productColor} | {state.currency}{state.productPrice}
-                </h1>
+                  <h1
+                    className="capitalLetters"
+                    data-cy="productTitle"
+                  >
+                    {productName} | {state.productColor} | {state.currency}{state.productPrice}
+                  </h1>
                 </div>
               </div>
               <div className="spacer50px"></div>
@@ -205,6 +208,7 @@ export default function Index (props: any) {
                                'sizeButton'}
                     value={selectedSize}
                     onChange={handleSizeChange}
+                    data-cy="sizeSelector"
                   >
                     <option value="0">{t('CHOOSE SIZE')}</option>
                     <option value="xs">XS</option>
@@ -220,12 +224,16 @@ export default function Index (props: any) {
                         type="button"
                         className="cartButton"
                         onClick={addToCart}
+                        data-cy="addToCartButton"
                       >{t(state.addToCart)}</button>
                     </div>
                   </div>
                 </div>
                 <div className="col-md-4">
-                  <div className="capitalLetters pad8px">
+                  <div
+                    className="capitalLetters pad8px"
+                    data-cy="availablityIndicator"
+                  >
                     {t(state.avby)}
                   </div>
                 </div>

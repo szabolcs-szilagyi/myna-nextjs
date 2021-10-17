@@ -10,4 +10,8 @@ export default class Header {
   lookbookLink() {
     return cy.getByDataCy('lookbook-link');
   }
+
+  cartCounter() {
+    return cy.getByDataCy('cartCounter');
+  }
 }

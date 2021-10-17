@@ -104,53 +104,56 @@ function CartItems({
   }
 
   return (
-    <div>
+    <>
       <Loading isLoading={loading} />
-      {Object.values(products).map((product: CheckoutProduct, i) => (
-        <div key={"keyID" + i}>
-          <div className="row">
-            <div className="col-md-5">
-              <Image
-                src={getProductImageLink(productDetailHash, product.idName)}
-                layout="responsive"
-                width={100}
-                height={100}
-              />
-            </div>
-            <div className="col-md-7">
-              <div className="cartIconContainer">
-                <div className="vertical-center">
-                  <table className="cartCo">
-                    <tbody>
-                      <tr>
-                        <td>{product.idName}</td>
-                        <td> </td>
-                        <td>
-                          <span className="capitalLetters">{product.size}</span>
-                        </td>
-                        <td>€{productDetailHash[product.idName].price}</td>
-                        <td>
-                          <a
-                            id={"t" + product.id}
-                            href="#"
-                            onClick={() => delProductFromCart(product.id)}
-                            onMouseEnter={trashHover}
-                            onMouseLeave={trashNormal}
-                          >
-                            <img src={trashImageSrc} width="35" height="35" />
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+      <div data-cy="cartItems">
+        {Object.values(products).map((product: CheckoutProduct, i) => (
+          <div key={"keyID" + i}>
+            <div className="row">
+              <div className="col-md-5">
+                <Image
+                  src={getProductImageLink(productDetailHash, product.idName)}
+                  layout="responsive"
+                  width={100}
+                  height={100}
+                />
+              </div>
+              <div className="col-md-7">
+                <div className="cartIconContainer">
+                  <div className="vertical-center">
+                    <table className="cartCo">
+                      <tbody>
+                        <tr>
+                          <td>{product.idName}</td>
+                          <td> </td>
+                          <td>
+                            <span className="capitalLetters">{product.size}</span>
+                          </td>
+                          <td>€{productDetailHash[product.idName].price}</td>
+                          <td>
+                            <a
+                              id={"t" + product.id}
+                              href="#"
+                              onClick={() => delProductFromCart(product.id)}
+                              onMouseEnter={trashHover}
+                              onMouseLeave={trashNormal}
+                              data-cy="deleteButton"
+                            >
+                              <img src={trashImageSrc} width="35" height="35" />
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
+            <hr />
           </div>
-          <hr />
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -277,7 +280,10 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
           <h1>
             <strong>{t("Your Loved Pieces")}</strong>
           </h1>
-          <div className={state.inCart ? "d-none" : "d-block"}>
+          <div
+            className={state.inCart ? "d-none" : "d-block"}
+            data-cy="emptyCartMessagePane"
+          >
             <div className="spacer25px"></div>
             <p>
               <i>{t("Your cart is empty")}</i>
@@ -320,10 +326,16 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
               </div>
             </div>
             <div className="col-md-4 ce">
-              <p className="capitalLetters">
+              <p
+                className="capitalLetters"
+                data-cy="totalPrice"
+              >
                 {t("Total")}: €{state.price}
               </p>
-              <p className="capitalLetters">
+              <p
+                className="capitalLetters"
+                data-cy="shippingPriceInfo"
+              >
                 {t(state.shipping.replace(".", "-"))}
               </p>
               <p>
@@ -332,6 +344,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
                   value={coupon}
                   onChange={handleCouponChange}
                   placeholder={t("Coupon code")}
+                  data-cy="couponInput"
                 />
               </p>
             </div>
@@ -339,6 +352,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
               <button
                 className="cartButton col-md-10 float-md-right"
                 onClick={pressedCheckout}
+                data-cy="checkoutButton"
               >
                 {t("CHECKOUT")}
               </button>
@@ -349,6 +363,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
                   "p-md-0",
                   "float-md-right"
                 ].join(" ")}
+                data-cy="payPalHolder"
               >
                 <PayPal dataFromParent={state.price} />
               </div>

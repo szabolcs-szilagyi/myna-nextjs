@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 export default class MyAccount {
   emailSubmitButton() {
     return cy.getByDataCy('emailSubmitButton');

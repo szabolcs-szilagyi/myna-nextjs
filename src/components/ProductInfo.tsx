@@ -8,18 +8,21 @@ type TDescButtonProps = {
   id: string,
   text: string,
   onClick: {(event: MouseEvent<HTMLButtonElement>): void},
+  'data-cy': string,
 };
 
-function DescButton({ id, text, onClick }: TDescButtonProps) {
+function DescButton(props: TDescButtonProps) {
+  const additionalProps = props['data-cy'] ? { 'data-cy': props['data-cy'] } : {};
   return (
     <button
-      onClick={onClick}
+      onClick={props.onClick}
       className="border-0 capitalLetters mediumFont blackFont"
       style={{
         'backgroundColor': 'inherit'
       }}
-      id={id}
-    >{text}</button>
+      id={props.id}
+      {...additionalProps}
+    >{props.text}</button>
   );
 }
 
@@ -79,6 +82,7 @@ export default function ProductInfo(props: TProductInfoProps) {
             onClick={productInfoHandling}
             id="productDesc"
             text={t('Description')}
+            data-cy="descriptionButton"
           />
         </div>
         <div className="col-sm-6 col-xl-3">
@@ -86,6 +90,7 @@ export default function ProductInfo(props: TProductInfoProps) {
             onClick={productInfoHandling}
             id="productComp"
             text={t('Composition & Care')}
+            data-cy="compositionAndCareButton"
           />
         </div>
         <div className="spacer10px d-none d-sm-block d-xl-none"></div>
@@ -94,6 +99,7 @@ export default function ProductInfo(props: TProductInfoProps) {
             onClick={productInfoHandling}
             id="productSize"
             text={t('Size')}
+            data-cy="sizeButton"
           />
         </div>
         <div className="col-sm-6 col-xl-3">
@@ -101,6 +107,7 @@ export default function ProductInfo(props: TProductInfoProps) {
             onClick={productInfoHandling}
             id="productDeli"
             text={t('Delivery')}
+            data-cy="deliveryButton"
           />
         </div>
       </div>
@@ -111,19 +118,23 @@ export default function ProductInfo(props: TProductInfoProps) {
             style={state.descStyle}
             className="productInfoContainer"
             dangerouslySetInnerHTML={{ __html: props.description }}
+            data-cy="descriptionPane"
           ></div>
           <div
             style={state.compCareStyle}
             className="productInfoContainer"
             dangerouslySetInnerHTML={{ __html: props.compCare }}
+            data-cy="compositionAndCarePane"
           ></div>
           <div
             style={state.sizeInfoStyle}
             className="productInfoContainer"
+            data-cy="sizePane"
           ><SizeInfo /></div>
           <div
             style={state.deliveryStyle}
             className="productInfoContainer"
+            data-cy="deliveryPane"
           >
             <div className="ju">
               <Trans
