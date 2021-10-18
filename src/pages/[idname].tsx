@@ -176,7 +176,7 @@ export default function Index (props: any) {
 
   return (
     <Container fluid>
-      <Header />
+      <Header path={productName} />
       <Nav lastItemsDate={state.lastItemsDate} />
       <div className="spacer50px"></div>
       <div className="row">

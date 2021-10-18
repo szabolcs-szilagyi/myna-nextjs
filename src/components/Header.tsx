@@ -4,10 +4,14 @@ import { useRouter } from 'next/router';
 
 type THeadElementProps = {
   description?: string
+  path?: string
 };
 
 export default function HeadElement(
-  { description = 'landing-and-default' }: THeadElementProps,
+  {
+    description = 'landing-and-default',
+    path,
+  }: THeadElementProps,
 ) {
   const router = useRouter();
   const { t } = useTranslation('meta-tags');
@@ -25,7 +29,7 @@ export default function HeadElement(
   }
 
   return <Head>
-    <title>{pathToTitle(router.pathname)}</title>
+    <title>{pathToTitle(path || router.pathname)}</title>
     <meta httpEquiv="Content-Type" content="text/html" charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={t(description)} />
