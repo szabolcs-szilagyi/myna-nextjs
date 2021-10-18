@@ -1,12 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
-import {
-  API_SERVER,
-  API_PATH,
-  EMAIL_PATH,
-} from '../constants';
-import fetch from 'isomorphic-unfetch';
 import useTranslation from 'next-translate/useTranslation';
+import { subscribeToNewsletter } from '../services';
 
 export default function Footer() {
   const { t } = useTranslation('common');
@@ -24,25 +19,8 @@ export default function Footer() {
     });
   }
 
-  function subscribePressed () {
-    setTimeout(getToken, 100);
-    setTimeout(sendMail, 500);
-  }
-
-  function getToken () {
-    fetch(API_SERVER + API_PATH + '?part=setnewslettersubscription&email=' + state.value)
-      .then(response => response.json())
-      .then(({ token }) => {
-        setState({
-          ...state,
-          token,
-        });
-      })
-      .catch(error => console.log(error.message));
-  }
-
-  function sendMail () {
-    fetch(API_SERVER + EMAIL_PATH + '?part=subscribenewsletter&email=' + state.value + '&token=' + state.token);
+  async function subscribePressed () {
+    await subscribeToNewsletter(state.value);
     setState({
       ...state,
       placeHolder: 'check your mailbox',
@@ -114,7 +92,7 @@ export default function Footer() {
             <div className="col-md-6">
               <div className="row">
                 <div className="col-md-4"></div>
-                <div className="col-md-8">
+                <div className="col-md-8" data-cy="navigation-links-container">
                   <p><Link href="/our-story"><a className="blackFont">{t('Our Story')}</a></Link></p>
                   <p><Link href="/sustainability"><a className="blackFont">{t('Sustainability')}</a></Link></p>
                   <p><Link href="/shipping"><a className="blackFont">{t('shipping-n-returns')}</a></Link></p>

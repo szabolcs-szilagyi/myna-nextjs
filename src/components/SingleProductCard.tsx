@@ -26,7 +26,7 @@ export default function SingleProductCard(props: TSingleProductCardProps) {
                 || (<p>{props.productName}<br /><span>{props.price}</span></p>);
 
   return (
-    <div className={className}>
+    <div data-cy="product-card" className={className}>
       <div className={style.cImage} >
         <Link href={props.productPageLink}><a>
           <Image

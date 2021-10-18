@@ -25,6 +25,8 @@ export default function usePing() {
   const throttledDoPing = useRef(throttle(() => {
     doPing(session)
       .then((sessionToken) => {
+        const priorCookie = cookies.get('session');
+        if (priorCookie) return;
         cookies.set('session', sessionToken, { maxAge: 1800 });
         setSession(sessionToken);
       })

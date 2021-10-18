@@ -1,9 +1,5 @@
 import { useEffect } from 'react';
-import {
-  API_SERVER,
-  API_PATH,
-} from '../constants';
-import fetch from 'isomorphic-unfetch';
+import { updateNewsletterSubscription } from '../services';
 
 enum EPart {
   SUBSCRIBE = 'subscribenewsletter',
@@ -20,20 +16,17 @@ const possibleActionsToPerform: Record<EPart, EAction> = {
   [EPart.UNSUBSCRIBE]: EAction.DELETE,
 }
 
-export default function Ping() {
+export default function Newsletter() {
 
   async function handleRequest() {
     const searchParams = new URLSearchParams(window.location.search);
-    const part = searchParams.get('part');
+    const part = searchParams.get('part') as EPart;
     const token: string | null = searchParams.get('token');
     const email = searchParams.get('email');
-    const action: EAction | undefined = possibleActionsToPerform[part as EPart];
+    const action: EAction | undefined = possibleActionsToPerform[part];
 
     if (token !== null && action !== undefined) {
-      await fetch(
-        API_SERVER + API_PATH + '?part=' + action + '&email=' + email + '&token=' + token,
-        { mode: 'no-cors' },
-      );
+      await updateNewsletterSubscription({ action, email, token });
     }
 
     redirect();

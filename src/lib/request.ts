@@ -1,4 +1,19 @@
-export function request(url: string, { query = {}, options = {}, fetchOptions = {} }) {
+import fetch from 'isomorphic-unfetch';
+
+type TOptions = {
+  json?: boolean,
+}
+
+type TSettings = {
+  query?: object,
+  options?: TOptions,
+  fetchOptions?: RequestInit,
+}
+
+export function request(
+  url: string,
+  { query = {}, options = {}, fetchOptions = {} }: TSettings,
+) {
   const queryString = Object.entries(query)
     .reduce((qs, [key, value]) => {
       if (value === undefined) value = '';
@@ -14,7 +29,7 @@ export function request(url: string, { query = {}, options = {}, fetchOptions = 
 
   let fetchPromise: Promise<unknown>;
 
-  if ((<any>options)?.json) {
+  if (options.json) {
     fetchPromise = fetch(uri, fetchOptions)
       .then(x => x.json());
   } else {
@@ -24,6 +39,6 @@ export function request(url: string, { query = {}, options = {}, fetchOptions = 
   return fetchPromise;
 }
 
-export function requestFactory(url) {
-  return (options) => request(url, options);
+export function requestFactory(url: string): (settings: TSettings) => Promise<any> {
+  return (settings) => request(url, settings);
 }
