@@ -161,7 +161,7 @@ export default function MyAccount() {
           <div className="noBorder mediumFont">
             <button
               type="button"
-              className="cartButton"
+              className="cartButton col-md-2"
               onClick={createToken}
               data-cy="emailSubmitButton"
             >
