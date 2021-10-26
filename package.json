@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "eslint .",
     "prepare": "husky install",
-    "cypress": "cypress open"
+    "cypress": "cypress"
   },
   "dependencies": {
     "bootstrap": "^4.5.0",
