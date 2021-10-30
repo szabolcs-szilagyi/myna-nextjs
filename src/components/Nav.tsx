@@ -92,6 +92,7 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
           <div className="col-md-7 capitalLetters">
             <ul className="navMenu">
               <li><Link href="/lookbook"><a data-cy="lookbook-link" >{t('Lookbook')}</a></Link></li>
+              <li><Link href="/gallery"><a data-cy="gallery-link" >{t('Gallery')}</a></Link></li>
               <li><Link href="/shop-collections"><a data-cy="shop-collections-link" >{t('Shop Collections')}</a></Link></li>
               <li><Link href="/sustainability"><a>{t('Sustainability')}</a></Link></li>
               <li><Link href="/our-story"><a>{t('Our Story')}</a></Link></li>
