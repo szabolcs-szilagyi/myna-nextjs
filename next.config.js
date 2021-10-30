@@ -3,8 +3,8 @@ const nextTranslate = require('next-translate');
 
 const configuration = {
   development: {
-    SERVER_ADDRESS: 'http://127.0.0.1:7000/',
-    API_ADDRESS: 'http://127.0.0.1:7000/',
+    SERVER_ADDRESS: 'http://localhost:7000/',
+    API_ADDRESS: 'http://localhost:7000/',
     API_PATH: 'legacy',
     EMAIL_PATH: 'legacy',
     PAY_PAL_CLIENT_ID: 'AWhXmi7ecVKx2DNiRBL15o-EoxX4hS52H09EB3SrdPAeSE01AvlE2dMqZa8rsDy7yeFHThNc9vULo06W',
