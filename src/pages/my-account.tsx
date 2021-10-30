@@ -1,47 +1,48 @@
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router'
-import Select from 'react-select';
-import countryList from 'react-select-country-list';
-import Container from 'react-bootstrap/Container';
-import useTranslation from 'next-translate/useTranslation'
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Select from "react-select";
+import countryList from "react-select-country-list";
+import Container from "react-bootstrap/Container";
+import useTranslation from "next-translate/useTranslation";
 
+import Header from "../components/Header";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
+import usePing from "../lib/use-ping";
 import {
-  API_SERVER,
-  API_PATH,
-} from '../constants';
-import Header from '../components/Header';
-import Nav from '../components/Nav';
-import Footer from '../components/Footer';
-import usePing from '../lib/use-ping';
-
+  getLoggedinEmail,
+  loginWithEmail,
+  saveAddressData,
+  saveUserData
+} from "../services";
 
 export default function MyAccount() {
   const router = useRouter();
-  const { t } = useTranslation('my-account');
+  const { t } = useTranslation("my-account");
   const [session] = usePing();
 
   const options = countryList().getData();
 
   const [addressState, setAddressState] = useState({
     value: null,
-    myEmail: '',
-    loginOrEdit: 'login',
-    inputEmail: '',
-    loginEmail: '',
-    loginToken: '',
-    textOnSaveButton: 'SAVE & CHECKOUT',
-    firstName: '',
-    lastName: '',
-    birthday: '',
-    dName: '',
-    dAddress1: '',
-    dAddress2: '',
-    dCity: '',
-    dState: '',
-    dZip: '',
-    dCountry: '' as any,
-    dComment: '',
-    dMobile: ''
+    myEmail: "",
+    loginOrEdit: "login",
+    inputEmail: "",
+    loginEmail: "",
+    loginToken: "",
+    textOnSaveButton: "SAVE & CHECKOUT",
+    firstName: "",
+    lastName: "",
+    birthday: "",
+    dName: "",
+    dAddress1: "",
+    dAddress2: "",
+    dCity: "",
+    dState: "",
+    dZip: "",
+    dCountry: "" as any,
+    dComment: "",
+    dMobile: ""
   });
 
   useEffect(() => {
@@ -51,100 +52,85 @@ export default function MyAccount() {
   const handleSelectChange = name => value => {
     setAddressState({
       ...addressState,
-      [name]: value,
+      [name]: value
     });
-  }
+  };
 
   function handleInputChange({ target: { value, name } }) {
     setAddressState({
       ...addressState,
-      [name]: value,
+      [name]: value
     });
   }
 
-  function amILoggedIn() {
-    fetch(API_SERVER + API_PATH + '?part=amiloggedin&sessiontoken=' + session)
-      .then(response => response.json())
-      .then(data => {
-        if (data.email != "nodata") {
-          setAddressState({
-            ...addressState,
-            myEmail: data.email,
-            loginOrEdit: 'edit'
-          });
-        }
-      })
-      .catch(error => console.log(error.message));
+  async function amILoggedIn() {
+    try {
+      const loggedInEmail = await getLoggedinEmail(session);
+
+      if (loggedInEmail !== null) {
+        setAddressState({
+          ...addressState,
+          myEmail: loggedInEmail,
+          loginOrEdit: "edit"
+        });
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async function createToken() {
-    return fetch(API_SERVER + API_PATH + '?part=loginmail&email=' + addressState.inputEmail)
-      .then(response => response.json())
-      .then(data => {
-        setAddressState({
-          ...addressState,
-          loginEmail: data.email,
-          loginToken: data.logintoken,
-          myEmail: data.email,
-          loginOrEdit: 'edit',
-        });
-        return fetch(API_SERVER + API_PATH + '?part=login&logintoken=' + data.logintoken + '&email=' + data.email + '&sessiontoken=' + session, {mode: 'no-cors'});
-      })
-      .catch(error => console.log(error.message));
-  }
-
-  function saveDetails () {
-    let crossRoad = 0;
-    if (addressState.myEmail == '') { crossRoad = 1; }
-    if (addressState.firstName == '') { crossRoad = 1; }
-    if (addressState.lastName == '') { crossRoad = 1; }
-    if (addressState.birthday == '') { crossRoad = 1; }
-    if (addressState.dCountry?.label == '') { crossRoad = 1; }
-    if (addressState.dAddress1 == '') { crossRoad = 1; }
-    if (addressState.dCity == '') { crossRoad = 1; }
-    if (addressState.dZip == '') { crossRoad = 1; }
-    if (crossRoad == 0) {
-      saveUserData();
-      setTimeout(saveAddressData, 1000);
+    try {
+      const loginData = await loginWithEmail(addressState.inputEmail, session);
       setAddressState({
         ...addressState,
-        textOnSaveButton: 'SAVED',
-      })
+        loginEmail: loginData.email,
+        loginToken: loginData.loginToken,
+        myEmail: loginData.email,
+        loginOrEdit: "edit"
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  async function saveDetails() {
+    try {
+      await saveUserData(
+        {
+          email: addressState.myEmail,
+          firstName: addressState.firstName,
+          lastName: addressState.lastName,
+          birthday: addressState.birthday
+        },
+        session
+      );
+
+      await saveAddressData(
+        {
+          email: addressState.myEmail,
+          mobile: addressState.dMobile,
+          address1: addressState.dAddress1,
+          address2: addressState.dAddress2,
+          city: addressState.dCity,
+          state: addressState.dState,
+          zip: addressState.dZip,
+          country: addressState.dCountry.label,
+          comment: addressState.dComment
+        },
+        session
+      )
+
+      setAddressState({
+        ...addressState,
+        textOnSaveButton: "SAVED"
+      });
+
       setTimeout(() => {
         router.push("/checkout");
       }, 1500);
-    }
-  }
-
-  function saveUserData () {
-    const email = addressState.myEmail;
-    const fname = addressState.firstName;
-    const lname = addressState.lastName;
-    const bday = addressState.birthday;
-    let crossRoad;
-    crossRoad = 0;
-    if (email == '') { crossRoad = 1; }
-    if (fname == '') { crossRoad = 1; }
-    if (lname == '') { crossRoad = 1; }
-    if (bday == '') { crossRoad = 1; }
-    if (crossRoad == 0) {
-      fetch(API_SERVER + API_PATH + '?part=updateuserdata&email=' + addressState.myEmail + '&firstname=' + addressState.firstName + '&lastname=' + addressState.lastName + '&birthday=' + addressState.birthday  + '&sessiontoken=' + session)
-        .catch(error => console.log(error.message));
-    }
-  }
-
-  function saveAddressData () {
-    const address1 = addressState.dAddress1;
-    const city = addressState.dCity;
-    const zip = addressState.dZip;
-    let crossRoad;
-    crossRoad = 0;
-    if (address1 == '') { crossRoad = 1; }
-    if (city == '') { crossRoad = 1; }
-    if (zip == '') { crossRoad = 1; }
-    if (crossRoad == 0) {
-      fetch(API_SERVER + API_PATH + '?part=setaddressdata&email=' + addressState.myEmail + '&type=1&mobile=' + addressState.dMobile + '&address1=' + addressState.dAddress1 + '&address2=' + addressState.dAddress2 + '&city=' + addressState.dCity + '&state=' + addressState.dState + '&zip=' + addressState.dZip + '&country=' + addressState?.dCountry.label + '&comment=' + addressState.dComment  + '&sessiontoken=' + session)
-        .catch(error => console.log(error.message));
+    } catch (error) {
+      console.log(error.message, error.data);
     }
   }
 
@@ -153,10 +139,14 @@ export default function MyAccount() {
       <Header />
       <Nav />
       <div className="spacer10px" />
-      <div className={addressState.loginOrEdit === 'login' ? 'row' : 'row d-none'}>
+      <div
+        className={addressState.loginOrEdit === "login" ? "row" : "row d-none"}
+      >
         <div className="col-md-12 ce capitalLetters">
-          <h1><strong>{t('Login to your account')}</strong></h1>
-          <p>{t('Please give your email address to continue')}</p>
+          <h1>
+            <strong>{t("Login to your account")}</strong>
+          </h1>
+          <p>{t("Please give your email address to continue")}</p>
           <div className="spacer50px" />
           <input
             className="loginEmail"
@@ -171,16 +161,23 @@ export default function MyAccount() {
           <div className="noBorder mediumFont">
             <button
               type="button"
-              className="cartButton"
+              className="cartButton col-md-2"
               onClick={createToken}
-            >{t('SUBMIT')}</button>
+              data-cy="emailSubmitButton"
+            >
+              {t("SUBMIT")}
+            </button>
           </div>
         </div>
       </div>
 
-      <div className={addressState.loginOrEdit === 'edit' ? 'row' : 'row d-none'}>
+      <div
+        className={addressState.loginOrEdit === "edit" ? "row" : "row d-none"}
+      >
         <div className="col-md-12 ce capitalLetters">
-          <h1><strong>{t('Your account')}</strong></h1>
+          <h1>
+            <strong>{t("Your account")}</strong>
+          </h1>
           <div className="row">
             <div className="col-md-2" />
             <div className="col-md-4">
@@ -225,12 +222,14 @@ export default function MyAccount() {
                 placeholder={t("* MOBILE NUMBER")}
               />
               <div className="spacer10px" />
-              <Select
-                className="userDetails"
-                options={options}
-                value={addressState.dCountry}
-                onChange={handleSelectChange('dCountry')}
-              />
+              <div data-cy="countrySelector">
+                <Select
+                  className="userDetails"
+                  options={options}
+                  value={addressState.dCountry}
+                  onChange={handleSelectChange("dCountry")}
+                />
+              </div>
               <div className="spacer10px" />
             </div>
             <div className="col-md-4">
@@ -275,7 +274,9 @@ export default function MyAccount() {
                 placeholder={t("* POSTAL CODE")}
               />
               <div className="spacer10px" />
-              <div className="paddingtop5px">{t('* Country')}: {addressState.dCountry.label}</div>
+              <div className="paddingtop5px" data-cy="countryConfirmation">
+                {t("* Country")}: {addressState.dCountry.label}
+              </div>
               <div className="spacer10px" />
             </div>
             <div className="col-md-2" />
@@ -288,7 +289,10 @@ export default function MyAccount() {
                   type="button"
                   className="cartButton col-md-2"
                   onClick={saveDetails}
-                >{t(addressState.textOnSaveButton)}</button>
+                  data-cy="saveAddressButton"
+                >
+                  {t(addressState.textOnSaveButton)}
+                </button>
               </div>
             </div>
           </div>

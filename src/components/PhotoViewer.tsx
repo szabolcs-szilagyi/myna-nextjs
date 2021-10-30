@@ -144,7 +144,11 @@ export default function PhotoViewer(props: { photos: TPhotos }) {
         onClickAway={toggleModal}
       >
         <div>
-          <img src={getPhotoUri(mainImage)} className={style.maxHeight} />
+          <img
+            src={getPhotoUri(mainImage)}
+            className={style.maxHeight}
+            data-cy="bigPhotoModal"
+          />
         </div>
       </Modal>
 

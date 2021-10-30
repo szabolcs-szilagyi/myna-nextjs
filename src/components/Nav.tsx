@@ -4,12 +4,14 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import * as reactBootstrap from 'react-bootstrap';
 import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 import {
   API_PATH,
   API_SERVER,
 } from '../constants';
 import style from './Nav.module.css';
 import getConfig from 'next/config';
+import usePing from '../lib/use-ping';
 const { publicRuntimeConfig: { i18nEnabled } } = getConfig();
 
 const {
@@ -17,11 +19,8 @@ const {
   Nav: BSNav
 } = reactBootstrap;
 
-const cookies = new Cookies();
-const session = cookies.get('session');
 
-
-function getInCart() {
+function getInCart(session) {
   return fetch(API_SERVER + API_PATH + '?part=getproductsnumberincart&sessiontoken=' + session)
     .then(response => response.json())
 		.then(output => output.nr)
@@ -36,23 +35,31 @@ type TCartProps = {
 function Cart({ containerClass, lastItemsDate }: TCartProps) {
   const [inCart, setInCart] = useState(0);
   const [cartIcon, setCartIcon] = useState('/cart.png');
+  const [session] = usePing();
 
   useEffect(() => {
-    getInCart()
+    getInCart(session)
       .then(numberOfProducts => setInCart(numberOfProducts));
   }, [inCart, lastItemsDate]);
 
   return (
     <div className={containerClass}>
-      <Link href="/checkout"><a
-        className="menu"
-        onMouseEnter={() => setCartIcon('/cart-b.png')}
-        onMouseLeave={() => setCartIcon('/cart.png')}
-      ><img
-         src={cartIcon}
-         width="35"
-         height="35"
-       />({inCart})</a></Link>
+      <Link href="/checkout">
+        <a
+          className="menu"
+          onMouseEnter={() => setCartIcon('/cart-b.png')}
+          onMouseLeave={() => setCartIcon('/cart.png')}
+        >
+          <img
+            src={cartIcon}
+            width="35"
+            height="35"
+          />
+          <span data-cy="cartCounter">
+            ({inCart})
+          </span>
+        </a>
+      </Link>
     </div>
   );
 }
@@ -84,8 +91,8 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
           </div>
           <div className="col-md-7 capitalLetters">
             <ul className="navMenu">
-              <li><Link href="/lookbook"><a>{t('Lookbook')}</a></Link></li>
-              <li><Link href="/shop-collections"><a>{t('Shop Collections')}</a></Link></li>
+              <li><Link href="/lookbook"><a data-cy="lookbook-link" >{t('Lookbook')}</a></Link></li>
+              <li><Link href="/shop-collections"><a data-cy="shop-collections-link" >{t('Shop Collections')}</a></Link></li>
               <li><Link href="/sustainability"><a>{t('Sustainability')}</a></Link></li>
               <li><Link href="/our-story"><a>{t('Our Story')}</a></Link></li>
             </ul>
@@ -100,7 +107,11 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
                 lastItemsDate={lastItemsDate}
               />
               <div className="col-md-2 ce padtop43px">
-                <button className={i18nEnabled ? style.i18nButton : 'd-none'} onClick={changeLang}>{nextLang}</button>
+                <button
+                  className={i18nEnabled ? style.i18nButton : 'd-none'}
+                  onClick={changeLang}
+                  data-cy="language-switcher"
+                >{nextLang}</button>
               </div>
             </div>
           </div>

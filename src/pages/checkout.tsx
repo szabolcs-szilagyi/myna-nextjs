@@ -1,48 +1,46 @@
-import useTranslation from 'next-translate/useTranslation';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useState } from 'react';
-import Container from 'react-bootstrap/Container';
+import useTranslation from "next-translate/useTranslation";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { ChangeEvent, useEffect, useState } from "react";
+import Container from "react-bootstrap/Container";
 
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import Nav from '../components/Nav';
-import PayPal from '../components/Paypal';
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import Nav from "../components/Nav";
+import PayPal from "../components/Paypal";
+import event from "../lib/gtag";
+import useAmILoggedIn, { ELoggedIn } from "../lib/use-am-i-logged-in";
+import usePing from "../lib/use-ping";
 import {
-  API_PATH,
-  API_SERVER,
-} from '../constants';
-import event from '../lib/gtag';
-import { requestFactory } from '../lib/request';
-import useAmILoggedIn, { ELoggedIn } from '../lib/use-am-i-logged-in';
-import usePing from '../lib/use-ping';
+  getAllProductBasicInfos,
+  getCartContent,
+  getProductsTotalPrice,
+  getShippingText,
+  removeProductFromCart,
+  TCartConentItem,
+  TCartConents
+} from "../services";
 
-
-type CheckoutProduct = {
-  id: number,
-  idname: string,
-  size: string,
-}
+type CheckoutProduct = Pick<TCartConentItem, "id" | "idName" | "size">;
 type TProductBasicInfo = {
-  imageName: string,
-  price: number,
-}
+  imageName: string;
+  price: number;
+};
 type TProductDetailsRecord = Record<string, TProductBasicInfo>;
 
-const listenRequest = requestFactory(API_SERVER + API_PATH);
-
 export async function getStaticProps() {
-  const details: any = await requestFactory(API_SERVER + 'product/basic-infos')({
-    options: { json: true },
-  })
-  const productDetailHash: TProductDetailsRecord = details.reduce((acc, current) => {
-    acc[current.idName] = {
-      imageName: current.pic1,
-      price: current.price,
-    }
-    return acc;
-  }, {});
+  const details = await getAllProductBasicInfos();
+  const productDetailHash: TProductDetailsRecord = details.reduce(
+    (acc, current) => {
+      acc[current.idName] = {
+        imageName: current.pic1,
+        price: current.price
+      };
+      return acc;
+    },
+    {}
+  );
 
   return { props: { productDetailHash } };
 }
@@ -51,22 +49,22 @@ function Loading({ isLoading }: { isLoading: boolean }) {
   return (
     <div
       style={{
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         left: 0,
-        height: '100%',
-        'zIndex': 100,
-        'backgroundColor': 'rgba(0,0,0, 0.3)',
+        height: "100%",
+        zIndex: 100,
+        backgroundColor: "rgba(0,0,0, 0.3)"
       }}
-      className={isLoading ?
-                 'col-md-12 blur-divs-after visible' :
-                 'col-md-12 invisible'}
+      className={
+        isLoading ? "col-md-12 blur-divs-after visible" : "col-md-12 invisible"
+      }
     >
       <div
         style={{
-          top: '50%',
-          left: '50%',
-          position: 'relative'
+          top: "50%",
+          left: "50%",
+          position: "relative"
         }}
         className="spinner-border"
       ></div>
@@ -74,175 +72,171 @@ function Loading({ isLoading }: { isLoading: boolean }) {
   );
 }
 
-function getProductImageLink(productDetailHash: TProductDetailsRecord, idName: string) {
-  if(!idName) return '';
-  return '/product_photos/' + productDetailHash[idName].imageName;
+function getProductImageLink(
+  productDetailHash: TProductDetailsRecord,
+  idName: string
+) {
+  if (!idName) return "";
+  return "/product_photos/" + productDetailHash[idName].imageName;
 }
 
 interface CartItemsProps {
   loading: boolean;
-  products: object;
+  products: TCartConents;
   delProductFromCart: (productId: number) => void;
   productDetailHash: TProductDetailsRecord;
 }
 
-function CartItems ({ loading, products, delProductFromCart, productDetailHash }: CartItemsProps) {
-  const [trashImageSrc, setTrashImageSrc] = useState('/trash.png');
+function CartItems({
+  loading,
+  products,
+  delProductFromCart,
+  productDetailHash
+}: CartItemsProps) {
+  const [trashImageSrc, setTrashImageSrc] = useState("/trash.png");
 
   function trashHover() {
-    setTrashImageSrc('/trash-b.png');
+    setTrashImageSrc("/trash-b.png");
   }
 
   function trashNormal() {
-    setTrashImageSrc('/trash.png');
+    setTrashImageSrc("/trash.png");
   }
 
   return (
-    <div>
+    <>
       <Loading isLoading={loading} />
-      {Object.values(products).map((product: CheckoutProduct, i) =>
-        <div key={'keyID' + i}>
-          <div className="row">
-            <div className="col-md-5">
-              <Image
-                src={getProductImageLink(productDetailHash, product.idname)}
-                layout="responsive"
-                width={100}
-                height={100}
-              />
-            </div>
-            <div className="col-md-7">
-              <div className="cartIconContainer">
-                <div className="vertical-center">
-                  <table className="cartCo">
-                    <tbody>
-                      <tr>
-                        <td>{product.idname}</td>
-                        <td> </td>
-                        <td>
-                          <span className="capitalLetters">{product.size}</span>
-                        </td>
-                        <td>€{productDetailHash[product.idname].price}</td>
-                        <td>
-                          <a
-                            id={'t' + product.id}
-                            href="#"
-                            onClick={() => delProductFromCart(product.id)}
-                            onMouseEnter={trashHover}
-                            onMouseLeave={trashNormal}
-                          >
-                            <img
-                              src={trashImageSrc}
-                              width="35"
-                              height="35"
-                            />
-                          </a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+      <div data-cy="cartItems">
+        {Object.values(products).map((product: CheckoutProduct, i) => (
+          <div key={"keyID" + i}>
+            <div className="row">
+              <div className="col-md-5">
+                <Image
+                  src={getProductImageLink(productDetailHash, product.idName)}
+                  layout="responsive"
+                  width={100}
+                  height={100}
+                />
+              </div>
+              <div className="col-md-7">
+                <div className="cartIconContainer">
+                  <div className="vertical-center">
+                    <table className="cartCo">
+                      <tbody>
+                        <tr>
+                          <td>{product.idName}</td>
+                          <td> </td>
+                          <td>
+                            <span className="capitalLetters">{product.size}</span>
+                          </td>
+                          <td>€{productDetailHash[product.idName].price}</td>
+                          <td>
+                            <a
+                              id={"t" + product.id}
+                              href="#"
+                              onClick={() => delProductFromCart(product.id)}
+                              onMouseEnter={trashHover}
+                              onMouseLeave={trashNormal}
+                              data-cy="deleteButton"
+                            >
+                              <img src={trashImageSrc} width="35" height="35" />
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
+            <hr />
           </div>
-          <hr />
-        </div>
-      )}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
 
-function getProductsInCart(session: string): Promise<object> {
-  return listenRequest({
-    query: { part: 'getproductsincart', sessiontoken: session },
-    options: { json: true },
-  })
-    .then(({ products }) => {
-      return products || {};
-    })
-    .catch(error => {
-      console.log(error.message);
-      return {};
-    });
+async function getProductsInCart(session: string): Promise<TCartConents> {
+  try {
+    const products = await getCartContent(session);
+    return products;
+  } catch (e) {
+    console.log(e.message);
+    return {};
+  }
 }
 
-function getPrice(session: string, priceModifier: number): Promise<number> {
-  return listenRequest({
-    query: { part: 'totalcheckout', sessiontoken: session },
-    options: { json: true },
-  })
-    .then(({ topay }) => {
-      const modifier = priceModifier;
-      const newPrice = Math.floor(topay * modifier);
-      return newPrice;
-    })
-    .catch(error => {
-      console.log(error.message);
-      return 0;
-    });
+async function getPrice(
+  session: string,
+  priceModifier: number
+): Promise<number> {
+  try {
+    const toPay = await getProductsTotalPrice(session);
+    const modifier = priceModifier;
+    const newPrice = Math.floor(toPay * modifier);
+    return newPrice;
+  } catch (error) {
+    console.log(error.message);
+    return 0;
+  }
 }
 
-function getShipping(session: string): Promise<string> {
-  return listenRequest({
-    query: { part: 'getshippinginfo', sessiontoken: session },
-    options: { json: true },
-  })
-    .then(({ shippinginfo }) => {
-      return shippinginfo;
-    })
-    .catch(error => {
-      console.log(error.message);
-      return '';
-    });
+async function getShipping(session: string): Promise<string> {
+  try {
+    const shippingText = await getShippingText(session);
+    return shippingText;
+  } catch (error) {
+    console.log(error.message);
+    return "";
+  }
 }
 
 type TCheckoutProps = {
-  productDetailHash: TProductDetailsRecord,
-}
+  productDetailHash: TProductDetailsRecord;
+};
+
 export default function Checkout({ productDetailHash }: TCheckoutProps) {
   const [state, setState] = useState({
     loadingProducts: false,
     price: 0,
-    shipping: '',
+    shipping: "",
     products: {},
     inCart: 0,
-    showPaypal: 'hidePaypal',
+    showPaypal: "hidePaypal"
   });
   const [priceModifier, setPriceModifier] = useState(1);
-  const [coupon, setCoupon] = useState('');
-  const { t } = useTranslation('checkout');
+  const [coupon, setCoupon] = useState("");
+  const { t } = useTranslation("checkout");
   const [session] = usePing();
   const [amILoggedIn] = useAmILoggedIn(session);
 
   const router = useRouter();
 
-  function delProductFromCart(id: number) {
+  async function delProductFromCart(id: number) {
     setState({
       ...state,
-      loadingProducts: true,
+      loadingProducts: true
     });
 
-    listenRequest({
-      query: { part: 'delproductfromcart', id: id, sessiontoken: session },
-      fetchOptions: { mode: 'no-cors' },
-    })
+    await removeProductFromCart(id, session);
 
     setTimeout(() => router.reload(), 1000);
   }
 
   function pressedCheckout() {
-    event('begin_checkout', {
+    event("begin_checkout", {
       value: state.price,
       coupon,
-      currency: 'EUR',
-    })
+      currency: "EUR"
+    });
 
     if (amILoggedIn === ELoggedIn.NO) {
-      router.push('/my-account');
+      router.push("/my-account");
     } else {
       setState({
         ...state,
-        showPaypal: 'showPaypal',
+        showPaypal: "showPaypal"
       });
     }
   }
@@ -254,7 +248,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
     if(newCoupon === 'mynafriend10') newPriceModifier = 0.9;
     else if(newCoupon === 'mynagift15') newPriceModifier = 0.85;
 
-    setCoupon(newCoupon)
+    setCoupon(newCoupon);
     setPriceModifier(newPriceModifier);
   }
 
@@ -268,14 +262,13 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
       products,
       inCart: Object.keys(products).length,
       price,
-      shipping,
-    })
+      shipping
+    });
   }
 
-  useEffect(
-    () => { intiateData() },
-    [priceModifier]
-  )
+  useEffect(() => {
+    intiateData();
+  }, [priceModifier]);
 
   return (
     <Container fluid>
@@ -284,14 +277,24 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
       <div className="spacer50px"></div>
       <div className="row">
         <div className="col-md-12 ce capitalLetters">
-          <h1><strong>{t('Your Loved Pieces')}</strong></h1>
-          <div className={state.inCart ? 'd-none' : 'd-block'}>
-            <div className='spacer25px'></div>
+          <h1>
+            <strong>{t("Your Loved Pieces")}</strong>
+          </h1>
+          <div
+            className={state.inCart ? "d-none" : "d-block"}
+            data-cy="emptyCartMessagePane"
+          >
+            <div className="spacer25px"></div>
             <p>
-              <i>{t('Your cart is empty')}</i><br />
+              <i>{t("Your cart is empty")}</i>
+              <br />
               <br />
               <Link href="/shop-collections">
-                <a><button className="startshoppingButton col-md-2">{t('START SHOPPING HERE')}</button></a>
+                <a>
+                  <button className="startshoppingButton col-md-2">
+                    {t("START SHOPPING HERE")}
+                  </button>
+                </a>
               </Link>
             </p>
           </div>
@@ -301,7 +304,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
       <div className="row">
         <div className="col-md-2"></div>
         <div className="col-md-8">
-          {t('cart-counter-message', { count: state.inCart })}
+          {t("cart-counter-message", { count: state.inCart })}
           <hr />
           <CartItems
             products={state.products}
@@ -314,19 +317,34 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
             <div className="col-md-4">
               <div className="noBorder mediumFont ceMob">
                 <Link href="/shop-collections">
-                  <a><button className="startshoppingButton col-md-10">{t('CONTINUE SHOPPING')}</button></a>
+                  <a>
+                    <button className="startshoppingButton col-md-10">
+                      {t("CONTINUE SHOPPING")}
+                    </button>
+                  </a>
                 </Link>
               </div>
             </div>
             <div className="col-md-4 ce">
-              <p className="capitalLetters">{t('Total')}: €{state.price}</p>
-              <p className="capitalLetters">{t(state.shipping.replace('.', '-'))}</p>
+              <p
+                className="capitalLetters"
+                data-cy="totalPrice"
+              >
+                {t("Total")}: €{state.price}
+              </p>
+              <p
+                className="capitalLetters"
+                data-cy="shippingPriceInfo"
+              >
+                {t(state.shipping.replace(".", "-"))}
+              </p>
               <p>
                 <input
                   type="text"
                   value={coupon}
                   onChange={handleCouponChange}
-                  placeholder={t('Coupon code')}
+                  placeholder={t("Coupon code")}
+                  data-cy="couponInput"
                 />
               </p>
             </div>
@@ -334,9 +352,20 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
               <button
                 className="cartButton col-md-10 float-md-right"
                 onClick={pressedCheckout}
-              >{t('CHECKOUT')}</button>
-              <div className={[state.showPaypal, 'col-md-10', 'p-md-0', 'float-md-right'].join(' ')}>
-                <PayPal dataFromParent = {state.price} />
+                data-cy="checkoutButton"
+              >
+                {t("CHECKOUT")}
+              </button>
+              <div
+                className={[
+                  state.showPaypal,
+                  "col-md-10",
+                  "p-md-0",
+                  "float-md-right"
+                ].join(" ")}
+                data-cy="payPalHolder"
+              >
+                <PayPal dataFromParent={state.price} />
               </div>
             </div>
           </div>

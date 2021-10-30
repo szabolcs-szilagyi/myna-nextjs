@@ -1,10 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
 
-import {
-  API_SERVER,
-  API_PATH,
-} from '../constants';
-
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
@@ -17,6 +12,7 @@ import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import Link, { LinkProps } from 'next/link';
 import usePing from '../lib/use-ping';
+import { addProductToCart, getAvailability, loadProductDetails } from '../services';
 
 const DEFAULT_AVAILABLE = 'Available for pre-order';
 
@@ -24,43 +20,9 @@ function LinkComp({ href, children, ...props }: PropsWithChildren<LinkProps>) {
   return (<Link href={href}><a {...props}>{children}</a></Link>);
 }
 
-function loadData(idName: string): Promise<unknown> {
-  return fetch(API_SERVER + API_PATH + '?part=getproductdata&productname=' + idName)
-    .then(response => response.json())
-		.then(({ productdetails }) => {
-      return {
-        productIdToCart: productdetails.id,
-        productName: productdetails.productname,
-        namePl: productdetails.namePl,
-        productColor: productdetails.productcolor,
-        productPrice: productdetails.productprice,
-        description: productdetails.desclong,
-        descriptionPl: productdetails.descriptionPl,
-        compCare: productdetails.compcare,
-        compositionAndCarePl: productdetails.compositionAndCarePl,
-        availability: productdetails.availability,
-        isOneSize: productdetails.is_one_size,
-        photos: {
-          photo1: productdetails.pic1,
-          photo2: productdetails.pic2,
-          photo3: productdetails.pic3,
-          photo4: productdetails.pic4,
-          photo5: productdetails.pic5,
-          photo6: productdetails.pic6,
-          photo7: productdetails.pic7,
-          photo8: productdetails.pic8,
-          photo9: productdetails.pic9,
-        },
-      };
-    })
-    .catch(error => console.log(error.message));
-}
-
 export async function getStaticProps({ params: { idname } }) {
-  const props = await loadData(idname);
-  return {
-    props,
-  };
+  const props = await loadProductDetails(idname);
+  return { props };
 }
 
 export async function getStaticPaths() {
@@ -74,25 +36,38 @@ export async function getStaticPaths() {
       { params: { idname: 'calla-cream' } },
       { params: { idname: 'dahlia-blouse' } },
       { params: { idname: 'delphi-culottes' } },
+      { params: { idname: 'flora-wrap-dress' } },
       { params: { idname: 'gea-cream' } },
+      { params: { idname: 'helen-blazer' } },
       { params: { idname: 'iris-vest' } },
       { params: { idname: 'ivy-cream' } },
       { params: { idname: 'leya-wrap-dress' } },
       { params: { idname: 'lili-top' } },
       { params: { idname: 'lili-top-satin' } },
       { params: { idname: 'lisia-dress' } },
+      { params: { idname: 'lola-oversized-shirt' } },
       { params: { idname: 'lotus-sand' } },
+      { params: { idname: 'magna-scarf' } },
+      { params: { idname: 'marigold-trench-coat' } },
       { params: { idname: 'nolia-dustpink' } },
+      { params: { idname: 'peri-blouse' } },
+      { params: { idname: 'peri-sis-handkerchief' } },
       { params: { idname: 'reeva-denim-jacket' } },
       { params: { idname: 'senna-skirt' } },
+      { params: { idname: 'tilia-blouse' } },
       { params: { idname: 'tilja-top' } },
       { params: { idname: 'tuli-dress' } },
-      { params: { idname: 'magna-scarf' } },
     ],
     fallback: true
   };
 }
 
+enum ECartButtonTexts {
+  ADD_TO_CART = 'ADD TO CART',
+  ADDED_TO_CART = 'ADDED TO CART',
+}
+
+const { ADD_TO_CART, ADDED_TO_CART } = ECartButtonTexts;
 
 export default function Index (props: any) {
   const router = useRouter();
@@ -104,7 +79,7 @@ export default function Index (props: any) {
 
   const [state, setState] = useState({
     cartButtonVisibility: 'visible',
-    addToCart: 'ADD TO CART',
+    addToCart: ADD_TO_CART,
     productIdToCart: '',
     idName,
     currency: '€',
@@ -133,55 +108,51 @@ export default function Index (props: any) {
   function defaultButton() {
     setState({
       ...state,
-      addToCart: 'ADD TO CART',
+      addToCart: ADD_TO_CART,
     });
     checkAvailability(selectedSize, session, state.idName);
   }
 
-  function checkAvailability(size: string, session: string, idName: string) {
+  async function checkAvailability(size: string, session: string, idName: string) {
     if (size === '0') return;
 
-    fetch(API_SERVER + API_PATH + '?part=availabilityexact&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
-      .then(response => response.json())
-      .then(output => {
-        const availability = output && output.availability;
-        if (availability > 0) {
-          setState({
-            ...state,
-            avby: DEFAULT_AVAILABLE,
-            cartButtonVisibility: 'visible',
-          });
-        } else if(availability === 0) {
-          setState({
-            ...state,
-            avby: 'Pre-Order / Contact Us',
-            cartButtonVisibility: 'invisible',
-          });
-        } else if(availability === null) {
-          setState({
-            ...state,
-            avby: 'Not Available',
-            cartButtonVisibility: 'invisible',
-          });
-        }
-      })
-      .catch(error => console.log(error.message));
+    const availability = await getAvailability(idName, size, session);
+
+    if (availability > 0) {
+      setState({
+        ...state,
+        avby: DEFAULT_AVAILABLE,
+        cartButtonVisibility: 'visible',
+      });
+    } else if(availability === 0) {
+      setState({
+        ...state,
+        avby: 'Pre-Order / Contact Us',
+        cartButtonVisibility: 'invisible',
+      });
+    } else if(availability === null) {
+      setState({
+        ...state,
+        avby: 'Not Available',
+        cartButtonVisibility: 'invisible',
+      });
+    }
   }
 
-  function addToCart() {
-    if (state.addToCart == 'ADD TO CART') {
-      const size = selectedSize;
-      if (size != '0') {
-        const idName = state.idName;
-        fetch(API_SERVER + API_PATH + '?part=addproducttocart&idname=' + idName + '&size=' + size + '&sessiontoken=' + session)
-          .catch(error => console.log(error.message));
-        setState({
-          ...state,
-          addToCart: 'ADDED TO CART',
-          lastItemsDate: Date.now(),
-        });
-        setTimeout(defaultButton, 3000);
-      }
+  async function addToCart() {
+    const size = selectedSize;
+
+    if (state.addToCart == ADD_TO_CART && size != '0') {
+      const idName = state.idName;
+
+      await addProductToCart(idName, size, session);
+
+      setState({
+        ...state,
+        addToCart: ADDED_TO_CART,
+        lastItemsDate: Date.now(),
+      });
+      setTimeout(defaultButton, 3000);
     }
   }
 
@@ -205,7 +176,7 @@ export default function Index (props: any) {
 
   return (
     <Container fluid>
-      <Header />
+      <Header path={productName} />
       <Nav lastItemsDate={state.lastItemsDate} />
       <div className="spacer50px"></div>
       <div className="row">
@@ -218,9 +189,12 @@ export default function Index (props: any) {
             <div className="col-md-6 ce">
               <div className="row">
                 <div className="col-md-12">
-                <h1 className="capitalLetters">
-                  {productName} | {state.productColor} | {state.currency}{state.productPrice}
-                </h1>
+                  <h1
+                    className="capitalLetters"
+                    data-cy="productTitle"
+                  >
+                    {productName} | {state.productColor} | {state.currency}{state.productPrice}
+                  </h1>
                 </div>
               </div>
               <div className="spacer50px"></div>
@@ -241,6 +215,7 @@ export default function Index (props: any) {
                                'sizeButton'}
                     value={selectedSize}
                     onChange={handleSizeChange}
+                    data-cy="sizeSelector"
                   >
                     <option value="0">{t('CHOOSE SIZE')}</option>
                     <option value="xs">XS</option>
@@ -256,12 +231,16 @@ export default function Index (props: any) {
                         type="button"
                         className="cartButton"
                         onClick={addToCart}
+                        data-cy="addToCartButton"
                       >{t(state.addToCart)}</button>
                     </div>
                   </div>
                 </div>
                 <div className="col-md-4">
-                  <div className="capitalLetters pad8px">
+                  <div
+                    className="capitalLetters pad8px"
+                    data-cy="availablityIndicator"
+                  >
                     {t(state.avby)}
                   </div>
                 </div>
