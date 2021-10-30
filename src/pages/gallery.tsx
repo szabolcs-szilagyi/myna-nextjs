@@ -81,7 +81,7 @@ export default function Gallery() {
 
       <div className="row">
         <div className="col-md-12 ce capitalLetters">
-          <h1><strong>{t('Gallery')}</strong></h1>
+          <h1><strong>{t('Gallery-title')}</strong></h1>
         </div>
       </div>
 
