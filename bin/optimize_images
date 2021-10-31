@@ -1,0 +1,136 @@
+#!/usr/bin/env sh
+
+optimize_product_images() {
+	directory=$1
+
+	optimized_dir="$directory/optimized"
+
+	mkdir -p "$optimized_dir"
+
+	for image in "$directory"/*.[jJ][pP][gG]; do
+		image=$(basename "$image")
+		new_image=$(echo "$image" | tr '[:upper:]' '[:lower:]')
+		convert "$directory/$image" -resize 1270x1270 "$optimized_dir/_$new_image" || exit 1
+		jpeg-recompress \
+			-m ms-ssim \
+			-a \
+			"$optimized_dir/_$new_image" \
+			"$optimized_dir/$new_image" ||
+			exit 1
+	done
+
+	rm "$optimized_dir"/_*.jpg
+	echo "optimized images are in: $optimized_dir" >&2
+}
+
+optimize_lookbook_images() {
+	directory=$1
+
+	optimized_dir="$directory/optimized"
+
+	mkdir -p "$optimized_dir"
+
+	for image in "$directory"/*.[jJ][pP][gG]; do
+		image=$(basename "$image")
+		new_image=$(echo "$image" | tr '[:upper:]' '[:lower:]')
+		convert "$directory/$image" -resize 1280x1280 "$optimized_dir/_$new_image" || exit 1
+		jpeg-recompress \
+			-q high \
+			-a \
+			"$optimized_dir/_$new_image" \
+			"$optimized_dir/$new_image" ||
+			exit 1
+	done
+
+	rm "$optimized_dir"/_*.jpg
+	echo "optimized images are in: $optimized_dir" >&2
+}
+
+optimize_slider_images() {
+	directory=$1
+
+	optimized_dir="$directory/optimized"
+
+	mkdir -p "$optimized_dir"
+
+	for image in "$directory"/*.[jJ][pP][gG]; do
+		image=$(basename "$image")
+		echo "optimizing $image file" >&2
+		new_image=$(echo "$image" | tr '[:upper:]' '[:lower:]')
+		for color in '#b6664d' '#49594e' '#efdfd7'; do
+			color_code=$(echo "$color" | cut -c2-)
+			convert "$directory/$image" \
+				-resize 1400x852 \
+				-size 1400x852 "xc:$color" +swap \
+				-gravity west \
+				-composite \
+				-fill "$color" \
+				-draw "fill-opacity 0.35 rectangle 0,0 1060,852" \
+				"$optimized_dir/$color_code-$new_image"
+		done
+	done
+
+	echo "optimized images are in: $optimized_dir" >&2
+}
+
+show_help() {
+	cat <<EOF
+Usage: $(basename "$0") <options>
+    -h, --help       Display help
+    -s, --slider     Images optimization for slider
+    -l, --lookbook   Optimize for lookbook and other content where high quality
+                     is needed
+    -p, --product    For product images - they should be square images
+Example:
+./$(basename "$0") -p
+./$(basename "$0") -l some/deeper/directory
+EOF
+}
+
+parse_command_line() {
+	ARGS=$(getopt \
+		-o hslp \
+		--long help,slider,lookbook,product -- "$@")
+	getopt_exit="$?"
+
+	if [ "$getopt_exit" -ne 0 ]; then
+		show_help
+		exit 1
+	fi
+
+	eval set -- "$ARGS"
+
+	for o; do
+		case "$o" in
+		-h | --help)
+			show_help
+			exit
+			;;
+		-s | --slider)
+			command="optimize_slider_images"
+			shift
+			;;
+		-l | --lookbook)
+			command="optimize_lookbook_images"
+			shift
+			;;
+		-p | --product)
+			command="optimize_product_images"
+			shift
+			;;
+		--)
+			shift
+			break
+			;;
+		esac
+	done
+
+	echo "$(realpath "${*:-$PWD}")"
+	eval "$command $(realpath "${*:-$PWD}")"
+}
+
+main() {
+	parse_command_line "$@"
+}
+
+main "$@"

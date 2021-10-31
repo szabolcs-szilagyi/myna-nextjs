@@ -92,6 +92,7 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
           <div className="col-md-7 capitalLetters">
             <ul className="navMenu">
               <li><Link href="/lookbook"><a data-cy="lookbook-link" >{t('Lookbook')}</a></Link></li>
+              <li><Link href="/gallery"><a data-cy="gallery-link" >{t('Gallery')}</a></Link></li>
               <li><Link href="/shop-collections"><a data-cy="shop-collections-link" >{t('Shop Collections')}</a></Link></li>
               <li><Link href="/sustainability"><a>{t('Sustainability')}</a></Link></li>
               <li><Link href="/our-story"><a>{t('Our Story')}</a></Link></li>
@@ -140,7 +141,7 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
             <button className={i18nEnabled ? style.i18nButton : 'd-none'} onClick={changeLang}>{nextLang}</button>
           </div>
         </div>
-        <div className="row">
+        <div className="row justify-content-md-center">
           <div className="col-md-3 ce menu">
             <div className="padtop43px blackFont">
               <Link href="/lookbook"><a>{t('Lookbook')}</a></Link>
@@ -148,9 +149,15 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
           </div>
           <div className="col-md-3 ce menu">
             <div className="padtop43px blackFont">
+              <Link href="/gallery"><a>{t('Gallery')}</a></Link>
+            </div>
+          </div>
+          <div className="col-md-3 ce menu">
+            <div className="padtop43px blackFont">
               <Link href="/shop-collections"><a>{t('Shop Collections')}</a></Link>
             </div>
           </div>
+          <div className="w-100"></div>
           <div className="col-md-3 ce menu">
             <div className="padtop43px blackFont">
               <Link href="/sustainability"><a>{t('Sustainability')}</a></Link>
@@ -184,6 +191,7 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
                 lastItemsDate={lastItemsDate}
               />
               <BSNav.Link className="blackFont" href="/lookbook">{t('Lookbook')}</BSNav.Link>
+              <BSNav.Link className="blackFont" href="/gallery">{t('Gallery')}</BSNav.Link>
               <BSNav.Link className="blackFont" href="/shop-collections">{t('Shop Collections')}</BSNav.Link>
               <BSNav.Link className="blackFont" href="/sustainability">{t('Sustainability')}</BSNav.Link>
               <BSNav.Link className="blackFont" href="/our-story">{t('Our Story')}</BSNav.Link>
