@@ -56,6 +56,9 @@ function groupProducts(products: Product[]) {
 
 export async function getStaticProps() {
   const productsToRetrieve = [
+    ['consciously-beautiful', 'mary-dress'],
+    ['consciously-beautiful', 'holly-bracelet'],
+    ['consciously-beautiful', 'helia-bracelet'],
     ['consciously-beautiful', 'flora-wrap-dress'],
     ['consciously-beautiful', 'marigold-trench-coat'],
     ['consciously-beautiful', 'helen-blazer'],
