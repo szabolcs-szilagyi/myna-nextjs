@@ -24,7 +24,7 @@ export default function Slider() {
 
   const slides = [
     {
-      text: 'Consciously Beautiful',
+      text: 'Consciously Beautiful this Christmas',
       linkText: t('SHOP THE LOOK'),
       linkHref: '/shop-collections',
       imageSrc: '/slides/01.jpg',
