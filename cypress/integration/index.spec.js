@@ -16,7 +16,7 @@ describe('landing page', () => {
 
   it('shows the navigation menu', () => {
     const navMenu = () => cy.get('.navMenu li');
-    navMenu().should('have.length', 4)
+    navMenu().should('have.length', 5)
 
     navMenu().first().should('have.text', 'Lookbook')
     navMenu().last().should('have.text', 'Our Story')
@@ -38,9 +38,9 @@ describe('landing page', () => {
 
   it('can change language to polish', () => {
     header.languageSwitcher().should('contain.text', 'pl');
-    header.shopCollectionsLink().should('have.text', 'Shop Collections')
+    header.shopCollectionsLink().should('have.text', 'Shop')
     header.languageSwitcher().click().should('contain.text', 'en');
-    header.shopCollectionsLink().should('have.text', 'KOLEKCJE')
+    header.shopCollectionsLink().should('have.text', 'Kolekcje')
   })
 
   it('has working link in the footer', () => {
