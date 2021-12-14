@@ -13,7 +13,7 @@ type TSettings = {
 export function request(
   url: string,
   { query = {}, options = {}, fetchOptions = {} }: TSettings,
-) {
+): Promise<Response | any> {
   const queryString = Object.entries(query)
     .reduce((qs, [key, value]) => {
       if (value === undefined) value = '';
