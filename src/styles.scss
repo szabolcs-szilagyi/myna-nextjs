@@ -369,10 +369,6 @@ select.sizeButton::-ms-expand {
   padding-top: 15px;
 }
 
-.desktopNav {
-  display: block;
-}
-
 #banner {
   display: flex;
   align-items: center;
@@ -389,10 +385,6 @@ select.sizeButton::-ms-expand {
 }
 
 @media only screen and (max-width: 1226px) {
-  .desktopNav {
-    display: none;
-  }
-
   .tabNav {
     display: block;
   }
