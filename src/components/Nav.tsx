@@ -62,114 +62,60 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
   }
 
   return (
-    <div>
-      <div className="desktopNav">
-        <div className="row">
-          <div className="col-sm-2 offset-sm-1 offset-xl-0 order-1">
-            <Link href="/">
-              <a>
-                <img className="logoMain" src="/logo.png" alt="MYNA Logo" />
-              </a>
-            </Link>
-          </div>
-          <div className="row col-xl-7 order-xl-2 justify-content-sm-center justify-content-xl-between pr-sm-0 capitalLetters order-3">
-            <div className="col-xl-2 col-sm-4 pt-sm-5 text-center blackFont">
-              <Link href="/lookbook">
-                <a data-cy="lookbook-link">{t("Lookbook")}</a>
-              </Link>
-            </div>
-            <div className="col-xl-2 col-sm-4 pt-sm-5 text-center blackFont">
-              <Link href="/gallery">
-                <a data-cy="gallery-link">{t("Gallery")}</a>
-              </Link>
-            </div>
-            <div className="col-xl-2 col-sm-4 pt-sm-5 text-center blackFont">
-              <Link href="/shop-collections">
-                <a data-cy="shop-collections-link">{t("Shop Collections")}</a>
-              </Link>
-            </div>
-            <div className="col-xl-2 col-sm-4 pt-sm-5 text-center blackFont">
-              <Link href="/sustainability">
-                <a>{t("Sustainability")}</a>
-              </Link>
-            </div>
-            <div className="col-xl-2 col-sm-4 pt-sm-5 text-center blackFont">
-              <Link href="/our-story">
-                <a>{t("Our Story")}</a>
-              </Link>
-            </div>
-          </div>
-          <div className="col-sm-8 offset-sm-1 col-xl-3 offset-xl-0 order-2 order-xl-3">
-            <div className="row capitalLetters">
-              <div className="col-md-6 ce padtop50px">
-                <Link href="/my-account">
-                  <a className="menu">{t("My Account")}</a>
-                </Link>
-              </div>
-              <Cart
-                containerClass="col-md-4 ce padtop43px navCart"
-                lastItemsDate={lastItemsDate}
-              />
-              <div className="col-md-2 ce padtop43px">
-                <button
-                  className={i18nEnabled ? style.i18nButton : "d-none"}
-                  onClick={changeLang}
-                  data-cy="language-switcher"
-                >
-                  {nextLang}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mobileNav">
-        <Navbar bg="white" expand="lg">
-          <Navbar.Brand href="/">
-            <img
-              src="/logo.png"
-              width="240"
-              height="107"
-              alt="MYNA Logo"
-              loading="lazy"
-            />
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav" className="text-center">
-            <BSNav>
-              <BSNav.Link className="blackFont" href="/my-account">
-                {t("My Account")}
-              </BSNav.Link>
-              <Cart
-                containerClass="blackFont padtop10px"
-                lastItemsDate={lastItemsDate}
-              />
-              <BSNav.Link className="blackFont" href="/lookbook">
-                {t("Lookbook")}
-              </BSNav.Link>
-              <BSNav.Link className="blackFont" href="/gallery">
-                {t("Gallery")}
-              </BSNav.Link>
-              <BSNav.Link className="blackFont" href="/shop-collections">
-                {t("Shop Collections")}
-              </BSNav.Link>
-              <BSNav.Link className="blackFont" href="/sustainability">
-                {t("Sustainability")}
-              </BSNav.Link>
-              <BSNav.Link className="blackFont" href="/our-story">
-                {t("Our Story")}
-              </BSNav.Link>
-              <button
-                className={i18nEnabled ? style.i18nButton : "d-none"}
-                onClick={changeLang}
-              >
-                {nextLang}
-              </button>
-            </BSNav>
-          </Navbar.Collapse>
-        </Navbar>
-      </div>
-    </div>
+    <Navbar
+      className="row justify-content-center no-gutters text-center blackFont capitalLetters"
+      bg="white"
+      expand="md"
+    >
+      <BSNav className="col-12 col-sm-12 col-md-4 col-xl-2">
+        <Navbar.Brand href="/">
+          <img
+            src="/logo.png"
+            width="240"
+            height="107"
+            alt="MYNA Logo"
+            loading="lazy"
+          />
+        </Navbar.Brand>
+      </BSNav>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse
+        id="basic-navbar-nav"
+        className="row no-gutters col-12 col-sm-12 col-md-8 col-xl-10 justify-content-center justify-content-xl-between"
+      >
+        <BSNav className="order-3 order-sm-4 order-xl-1 col-xl-1 col-sm-4 pt-sm-5">
+          <BSNav.Link href="/lookbook">{t("Lookbook")}</BSNav.Link>
+        </BSNav>
+        <BSNav className="order-4 order-sm-5 order-xl-2 col-xl-1 col-sm-4 pt-sm-5">
+          <BSNav.Link href="/gallery">{t("Gallery")}</BSNav.Link>
+        </BSNav>
+        <BSNav className="order-5 order-sm-6 order-xl-3 col-xl-1 col-sm-4 pt-sm-5">
+          <BSNav.Link href="/shop-collections">
+            {t("Shop Collections")}
+          </BSNav.Link>
+        </BSNav>
+        <BSNav className="order-6 order-sm-7 order-xl-4 col-xl-1 col-sm-4 pt-sm-5">
+          <BSNav.Link href="/sustainability">{t("Sustainability")}</BSNav.Link>
+        </BSNav>
+        <BSNav className="order-7 order-sm-8 order-xl-5 col-xl-1 col-sm-4 pt-sm-5">
+          <BSNav.Link href="/our-story">{t("Our Story")}</BSNav.Link>
+        </BSNav>
+        <BSNav className="order-1 order-sm-1 order-xl-6 col-xl-1 col-sm-4 pt-sm-5">
+          <BSNav.Link href="/my-account">{t("My Account")}</BSNav.Link>
+        </BSNav>
+        <Cart
+          containerClass="order-2 order-sm-2 order-xl-7 col-xl-1 col-sm-4 pt-sm-5"
+          lastItemsDate={lastItemsDate}
+        />
+        <BSNav className="order-8 order-sm-3 order-xl-8 col-xl-1 col-sm-4 pt-sm-5">
+          <button
+            className={i18nEnabled ? style.i18nButton : "d-none"}
+            onClick={changeLang}
+          >
+            {nextLang}
+          </button>
+        </BSNav>
+      </Navbar.Collapse>
+    </Navbar>
   );
 }
