@@ -76,8 +76,7 @@ export async function getAvailability(
     API_SERVER + "cart/more-accurate-availability",
     {
       query: { idName, size },
-      options: { json: true },
-      fetchOptions: { credentials: "include" }
+      options: { json: true }
     }
   );
 
@@ -91,7 +90,6 @@ export async function addProductToCart(
 ): Promise<void> {
   await request(API_SERVER + "cart", {
     fetchOptions: {
-      credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },
@@ -152,10 +150,7 @@ export function getInCart() {
   return request(`${API_SERVER}cart/products-in-cart`, {
     options: { json: true }
   })
-    .then(output => {
-      console.log(output);
-      return output.length;
-    })
+    .then(output => output.length)
     .catch(error => console.log(error.message));
 }
 

@@ -30,10 +30,10 @@ export function request(
   let fetchPromise: Promise<unknown>;
 
   if (options.json) {
-    fetchPromise = fetch(uri, { credentials: 'same-origin', ...fetchOptions })
+    fetchPromise = fetch(uri, { credentials: 'include', ...fetchOptions })
       .then(x => x.json());
   } else {
-    fetchPromise = fetch(uri, { credentials: 'same-origin', ...fetchOptions });
+    fetchPromise = fetch(uri, { credentials: 'include', ...fetchOptions });
   }
 
   return fetchPromise;
