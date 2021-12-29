@@ -40,5 +40,8 @@ export function request(
 }
 
 export function requestFactory(url: string): (settings: TSettings) => Promise<any> {
-  return (settings) => request(url, settings);
+  return (settings) => {
+    const fetchOptions = { credentials: 'omit' as RequestCredentials, ...settings.fetchOptions }
+    return request(url, { ...settings, fetchOptions });
+  }
 }

@@ -128,30 +128,30 @@ export async function getCartContent(): Promise<TCartConents> {
     options: { json: true }
   });
 
-  const results = Object.values(rawResults.products).reduce<TCartConents>(
-    (memo, value: any, i) => {
-      memo[i] = {
-        amount: parseInt(value.amount, 10),
-        id: parseInt(value.id, 10),
-        idName: value.idname,
-        paid: value.paid !== "0",
-        size: value.size
-      } as TCartConentItem;
+  const results = rawResults.reduce((memo: any, value: any, i: number) => {
+    memo[i] = {
+      amount: parseInt(value.amount, 10),
+      id: parseInt(value.id, 10),
+      idName: value.idName,
+      paid: value.paid,
+      size: value.size
+    } as TCartConentItem;
 
-      return memo;
-    },
-    {}
-  );
+    return memo;
+  }, {});
 
   return results;
 }
 
-export function getInCart() {
-  return request(`${API_SERVER}cart/products-in-cart`, {
-    options: { json: true }
-  })
-    .then(output => output.length)
-    .catch(error => console.log(error.message));
+export async function getInCart() {
+  try {
+    const output = await request(`${API_SERVER}cart/products-in-cart`, {
+      options: { json: true }
+    });
+    return output.length;
+  } catch (error) {
+    return console.log(error.message);
+  }
 }
 
 export async function getProductsTotalPrice(): Promise<number> {
@@ -174,17 +174,9 @@ export async function getShippingText(): Promise<string> {
   return shippinginfo;
 }
 
-export async function removeProductFromCart(
-  id: number,
-  sessionToken: string
-): Promise<void> {
-  await requestLegacy({
-    query: {
-      part: "delproductfromcart",
-      id,
-      sessiontoken: sessionToken
-    },
-    fetchOptions: { mode: "no-cors" }
+export async function removeProductFromCart(id: number): Promise<void> {
+  await request(API_SERVER + `cart/${id}`, {
+    fetchOptions: { method: "DELETE" }
   });
 }
 

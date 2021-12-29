@@ -12,15 +12,15 @@ import PayPal from "../components/Paypal";
 import event from "../lib/gtag";
 import useAmILoggedIn, { ELoggedIn } from "../lib/use-am-i-logged-in";
 import usePing from "../lib/use-ping";
+import { getAllProductBasicInfos } from "../services";
 import {
-  getAllProductBasicInfos,
   getCartContent,
   getProductsTotalPrice,
   getShippingText,
   removeProductFromCart,
   TCartConentItem,
   TCartConents
-} from "../services";
+} from "../services/nestjs-server";
 
 type CheckoutProduct = Pick<TCartConentItem, "id" | "idName" | "size">;
 type TProductBasicInfo = {
@@ -127,7 +127,9 @@ function CartItems({
                           <td>{product.idName}</td>
                           <td> </td>
                           <td>
-                            <span className="capitalLetters">{product.size}</span>
+                            <span className="capitalLetters">
+                              {product.size}
+                            </span>
                           </td>
                           <td>€{productDetailHash[product.idName].price}</td>
                           <td>
@@ -157,9 +159,9 @@ function CartItems({
   );
 }
 
-async function getProductsInCart(session: string): Promise<TCartConents> {
+async function getProductsInCart(): Promise<TCartConents> {
   try {
-    const products = await getCartContent(session);
+    const products = await getCartContent();
     return products;
   } catch (e) {
     console.log(e.message);
@@ -167,12 +169,9 @@ async function getProductsInCart(session: string): Promise<TCartConents> {
   }
 }
 
-async function getPrice(
-  session: string,
-  priceModifier: number
-): Promise<number> {
+async function getPrice(priceModifier: number): Promise<number> {
   try {
-    const toPay = await getProductsTotalPrice(session);
+    const toPay = await getProductsTotalPrice();
     const modifier = priceModifier;
     const newPrice = Math.floor(toPay * modifier);
     return newPrice;
@@ -182,9 +181,9 @@ async function getPrice(
   }
 }
 
-async function getShipping(session: string): Promise<string> {
+async function getShipping(): Promise<string> {
   try {
-    const shippingText = await getShippingText(session);
+    const shippingText = await getShippingText();
     return shippingText;
   } catch (error) {
     console.log(error.message);
@@ -219,7 +218,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
       loadingProducts: true
     });
 
-    await removeProductFromCart(id, session);
+    await removeProductFromCart(id);
 
     setTimeout(() => router.reload(), 1000);
   }
@@ -245,17 +244,17 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
     const newCoupon = event.target.value.toLowerCase();
     let newPriceModifier = 1;
 
-    if(newCoupon === 'mynafriend10') newPriceModifier = 0.9;
-    else if(newCoupon === 'mynagift15') newPriceModifier = 0.85;
+    if (newCoupon === "mynafriend10") newPriceModifier = 0.9;
+    else if (newCoupon === "mynagift15") newPriceModifier = 0.85;
 
     setCoupon(newCoupon);
     setPriceModifier(newPriceModifier);
   }
 
   async function intiateData() {
-    const products = await getProductsInCart(session);
-    const price = await getPrice(session, priceModifier);
-    const shipping = await getShipping(session);
+    const products = await getProductsInCart();
+    const price = await getPrice(priceModifier);
+    const shipping = await getShipping();
 
     setState({
       ...state,
@@ -326,16 +325,10 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
               </div>
             </div>
             <div className="col-md-4 ce">
-              <p
-                className="capitalLetters"
-                data-cy="totalPrice"
-              >
+              <p className="capitalLetters" data-cy="totalPrice">
                 {t("Total")}: €{state.price}
               </p>
-              <p
-                className="capitalLetters"
-                data-cy="shippingPriceInfo"
-              >
+              <p className="capitalLetters" data-cy="shippingPriceInfo">
                 {t(state.shipping.replace(".", "-"))}
               </p>
               <p>
