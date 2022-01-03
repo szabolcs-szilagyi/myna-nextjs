@@ -82,13 +82,13 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
         className="row no-gutters col-12 col-sm-12 col-md-8 col-xl-10 justify-content-center justify-content-xl-between"
       >
         <BSNav className="order-3 order-sm-4 order-xl-1 col-xl-1 col-sm-4 pt-sm-5 pt-xl-0">
-          <BSNav.Link href="/lookbook">{t("Lookbook")}</BSNav.Link>
+          <BSNav.Link href="/lookbook" data-cy="lookbook-link">{t("Lookbook")}</BSNav.Link>
         </BSNav>
         <BSNav className="order-4 order-sm-5 order-xl-2 col-xl-1 col-sm-4 pt-sm-5 pt-xl-0">
           <BSNav.Link href="/gallery">{t("Gallery")}</BSNav.Link>
         </BSNav>
         <BSNav className="order-5 order-sm-6 order-xl-3 col-xl-1 col-sm-4 pt-sm-5 pt-xl-0">
-          <BSNav.Link href="/shop-collections">
+          <BSNav.Link href="/shop-collections" data-cy="shop-collections-link">
             {t("Shop Collections")}
           </BSNav.Link>
         </BSNav>
@@ -108,6 +108,7 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
         <BSNav className="order-8 order-sm-3 order-xl-8 col-xl-1 col-sm-4 pt-sm-5 pt-xl-0">
           <button
             className={i18nEnabled ? style.i18nButton : "d-none"}
+            data-cy="language-switcher"
             onClick={changeLang}
           >
             {nextLang}

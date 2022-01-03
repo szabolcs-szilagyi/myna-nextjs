@@ -15,11 +15,11 @@ describe('landing page', () => {
   });
 
   it('shows the navigation menu', () => {
-    const navMenu = () => cy.get('.navMenu li');
-    navMenu().should('have.length', 5)
+    const navMenu = () => cy.get('#basic-navbar-nav div');
+    navMenu().should('have.length', 8)
 
     navMenu().first().should('have.text', 'Lookbook')
-    navMenu().last().should('have.text', 'Our Story')
+    navMenu().last().should('have.text', 'pl')
   })
 
   it('newsletter subscription works', () => {
