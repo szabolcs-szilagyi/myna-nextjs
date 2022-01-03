@@ -112,7 +112,7 @@ describe('product page', () => {
       cy.get('@sizeSelector').contains(/choose size/i).should('be.selected')
 
       cy.intercept(
-        { path: '*availabilityexact*' },
+        { path: '*more-accurate-availability*' },
         { body: { availability: 0 } },
       ).as('availabilityCheck');
 
@@ -127,7 +127,7 @@ describe('product page', () => {
       cy.get('@sizeSelector').contains(/choose size/i).should('be.selected')
 
       cy.intercept(
-        { path: '*availabilityexact*' },
+        { path: '*more-accurate-availability*' },
         { body: { availability: 1 } },
       ).as('availabilityCheck');
 
@@ -164,7 +164,7 @@ describe('product page', () => {
       cy.get('@cartCounter').should('include.text', '(0)');
 
       productPage.addToCartButton().click()
-      cy.intercept({ path: '*getproductsnumberincart*' }).as('cartNumberUpdate');
+      cy.intercept({ path: '*products-in-cart*' }).as('cartNumberUpdate');
       cy.wait('@cartNumberUpdate');
       cy.get('@cartCounter').should('include.text', '(1)');
     })
