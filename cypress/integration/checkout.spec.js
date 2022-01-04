@@ -27,7 +27,9 @@ describe('checkout', () => {
       checkout.emptyCartMessagePane().should('contain.text', 'START SHOPPING HERE');
 
       cy.visit('/lili-top');
+      cy.intercept({ path: '*more-accurate-availability*' }).as('availablityCall');
       productPage.sizeSelector().select('M');
+      cy.wait('@availablityCall');
       productPage.addToCartButton().click();
       productPage.getPriceAs('liliTopPrice');
       cy.go('back');

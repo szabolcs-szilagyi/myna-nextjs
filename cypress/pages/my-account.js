@@ -1,27 +1,15 @@
 /// <reference types="cypress" />
 export default class MyAccount {
-  emailSubmitButton() {
-    return cy.getByDataCy('emailSubmitButton');
-  }
-
   emailInput() {
-    return cy.getInputByName('inputEmail');
+    return cy.getInputByName('email');
   }
 
   nameInput() {
-    return cy.getInputByName('firstName');
-  }
-
-  surnameInput() {
-    return cy.getInputByName('lastName');
-  }
-
-  dobInput() {
-    return cy.getInputByName('birthday');
+    return cy.getInputByName('name');
   }
 
   mobileInput() {
-    return cy.getInputByName('dMobile');
+    return cy.getInputByName('mobile');
   }
 
   countryDropdown() {
@@ -29,19 +17,27 @@ export default class MyAccount {
   }
 
   address1Input() {
-    return cy.getInputByName('dAddress1');
+    return cy.getInputByName('addressLine1');
   }
 
   address2Input() {
-    return cy.getInputByName('dAddress2');
+    return cy.getInputByName('addressLine2');
   }
 
   cityInput() {
-    return cy.getInputByName('dCity');
+    return cy.getInputByName('city');
+  }
+
+  stateInput() {
+    return cy.getInputByName('state');
   }
 
   postcodeInput() {
-    return cy.getInputByName('dZip');
+    return cy.getInputByName('zip');
+  }
+
+  commentInput() {
+    return cy.getInputByName('comment');
   }
 
   countryConfirmation() {
@@ -52,24 +48,19 @@ export default class MyAccount {
     return cy.getByDataCy('saveAddressButton');
   }
 
-  provideEmailAddress(email) {
-    this.emailInput().type(email);
-
-    this.emailSubmitButton().click();
-  }
-
   /**
    * @typedef AccountDetails
    * @type {object}
    * @property {string} name
-   * @property {string} surname
-   * @property {string} dob - date of birth in the format: YYYY-MM-DD
+   * @property {string} email
    * @property {string} mobile
-   * @property {string} country
-   * @property {string} address1 - street and house number
-   * @property {string} address2 - floor and door number
+   * @property {string} addressLine1 - street and house number
+   * @property {string} addressLine2 - floor and door number
    * @property {string} city
-   * @property {string} postcode
+   * @property {string} state
+   * @property {string} zip
+   * @property {string} country
+   * @property {string} comment - extra comment for delivery
    */
 
   /**
@@ -78,13 +69,14 @@ export default class MyAccount {
   fillAccountDetails(details) {
     [
       [() => this.nameInput()     , 'name'],
-      [() => this.surnameInput()  , 'surname'],
-      [() => this.dobInput()      , 'dob'],
+      [() => this.emailInput()    , 'email'],
       [() => this.mobileInput()   , 'mobile'],
-      [() => this.address1Input() , 'address1'],
-      [() => this.address2Input() , 'address2'],
+      [() => this.address1Input() , 'addressLine1'],
+      [() => this.address2Input() , 'addressLine2'],
       [() => this.cityInput()     , 'city'],
-      [() => this.postcodeInput() , 'postcode'],
+      [() => this.stateInput()    , 'state'],
+      [() => this.postcodeInput() , 'zip'],
+      [() => this.commentInput()  , 'comment'],
     ].forEach(([getInput, properyName]) => {
       const value = details[properyName];
       if (value) {

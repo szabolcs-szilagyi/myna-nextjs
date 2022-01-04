@@ -1,10 +1,10 @@
 import { API_SERVER, API_PATH } from "../constants";
 import { request, requestFactory } from "../lib/request";
-import UserDataValidationError from "../lib/UserDataValidationError";
+import { UserData } from "./UserData";
 
 const requestLegacy = requestFactory(API_SERVER + API_PATH);
 
-type TProductDetails = {
+type ProductDetails = {
   productIdToCart: string;
   productName: string;
   namePl: string;
@@ -31,7 +31,7 @@ type TProductDetails = {
 
 export async function loadProductDetails(
   idName: string
-): Promise<TProductDetails> {
+): Promise<ProductDetails> {
   const rawDetails = await requestLegacy({
     query: {
       part: "getproductdata",
@@ -99,21 +99,21 @@ export async function addProductToCart(
   });
 }
 
-type TProductBasicInfo = {
+type ProductBasicInfo = {
   idName: string;
   price: number;
   pic1: string;
 };
 
-export async function getAllProductBasicInfos(): Promise<TProductBasicInfo[]> {
+export async function getAllProductBasicInfos(): Promise<ProductBasicInfo[]> {
   const rawResults = await request(API_SERVER + "product/basic-infos", {
     options: { json: true }
   });
 
-  return rawResults as TProductBasicInfo[];
+  return rawResults as ProductBasicInfo[];
 }
 
-export type TCartConentItem = {
+export type CartContentItem = {
   amount: number;
   id: number;
   idName: string;
@@ -121,9 +121,9 @@ export type TCartConentItem = {
   size: string;
 };
 
-export type TCartConents = Record<string, TCartConentItem>;
+export type CartContents = Record<string, CartContentItem>;
 
-export async function getCartContent(): Promise<TCartConents> {
+export async function getCartContent(): Promise<CartContents> {
   const rawResults = await request(API_SERVER + "cart/products-in-cart", {
     options: { json: true }
   });
@@ -135,7 +135,7 @@ export async function getCartContent(): Promise<TCartConents> {
       idName: value.idName,
       paid: value.paid,
       size: value.size
-    } as TCartConentItem;
+    } as CartContentItem;
 
     return memo;
   }, {});
@@ -143,7 +143,7 @@ export async function getCartContent(): Promise<TCartConents> {
   return results;
 }
 
-export async function getInCart() {
+export async function getInCart(): Promise<number | void> {
   try {
     const output = await request(`${API_SERVER}cart/products-in-cart`, {
       options: { json: true }
@@ -197,14 +197,15 @@ export async function getLoggedinEmail(
   else return null;
 }
 
-type TLoginBasicData = {
+type LoginBasicData = {
   email: string;
   loginToken: string;
 };
+
 export async function loginWithEmail(
   inputEmail: string,
   sessionToken: string
-): Promise<TLoginBasicData> {
+): Promise<LoginBasicData> {
   const rawLoginData = await requestLegacy({
     query: {
       part: "loginmail",
@@ -214,7 +215,7 @@ export async function loginWithEmail(
     options: { json: true }
   });
 
-  const toReturn: TLoginBasicData = {
+  const toReturn: LoginBasicData = {
     email: rawLoginData.email,
     loginToken: rawLoginData.logintoken
   };
@@ -232,75 +233,13 @@ export async function loginWithEmail(
   return toReturn;
 }
 
-type TUserData = {
-  email: string;
-  firstName: string;
-  lastName: string;
-  birthday: string;
-};
-export async function saveUserData(
-  userData: TUserData,
-  sessionToken: string
-): Promise<void> {
-  const validInput = Object.values(userData).every(value => value !== "");
-
-  if (!validInput) {
-    throw new UserDataValidationError("All fields must be filled!", userData);
-  }
-
-  await requestLegacy({
-    query: {
-      part: "updateuserdata",
-      email: userData.email,
-      firstname: userData.firstName,
-      lastname: userData.lastName,
-      birthday: userData.birthday,
-      sessiontoken: sessionToken
-    }
-  });
-}
-
-type TAddressData = {
-  email: string;
-  mobile: string;
-  address1: string;
-  address2: string;
-  city: string;
-  state: string;
-  zip: string;
-  country: string;
-  comment: string;
-};
-export async function saveAddressData(
-  addressData: TAddressData,
-  sessionToken: string
-): Promise<void> {
-  const mandatoryFields = ["email", "address1", "city", "zip"];
-  const validInput = mandatoryFields.every(value => addressData[value] !== "");
-
-  if (!validInput)
-    throw new UserDataValidationError(
-      "All mandatory fields must be filed!",
-      addressData
-    );
-
-  await requestLegacy({
-    query: {
-      part: "setaddressdata",
-      type: "1",
-      sessiontoken: sessionToken,
-      ...addressData
-    }
-  });
-}
-
-type TUpdateNewsletterSubscription = {
+type UpdateNewsletterSubscription = {
   action: string;
   email: string;
   token: string;
 };
 export async function updateNewsletterSubscription(
-  updateDetails: TUpdateNewsletterSubscription
+  updateDetails: UpdateNewsletterSubscription
 ): Promise<void> {
   const { action, email, token } = updateDetails;
 
@@ -332,8 +271,20 @@ export async function subscribeToNewsletter(email: string): Promise<void> {
   });
 }
 
+type AddressData = {
+  email: string;
+  mobile: string;
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  comment: string;
+};
+
 export async function finalizePurchase(
-  userDetails: TUserData & TAddressData,
+  userDetails: UserData & AddressData,
   price: string,
   products: object,
   sessionToken: string

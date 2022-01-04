@@ -1,4 +1,5 @@
 import '../styles.scss';
+import 'reflect-metadata';
 
 type TMyAppProps = {
   Component?: any,
