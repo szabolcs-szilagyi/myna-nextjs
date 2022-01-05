@@ -10,16 +10,17 @@ import Header from "../components/Header";
 import Nav from "../components/Nav";
 import PayPal from "../components/Paypal";
 import event from "../lib/gtag";
-import useAmILoggedIn, { ELoggedIn } from "../lib/use-am-i-logged-in";
-import usePing from "../lib/use-ping";
-import { getAllProductBasicInfos } from "../services";
+import {
+  getAllProductBasicInfos,
+  TCartConentItem,
+  TCartConents
+} from "../services";
 import {
   getCartContent,
   getProductsTotalPrice,
   getShippingText,
   removeProductFromCart,
-  TCartConentItem,
-  TCartConents
+  validateSession
 } from "../services/nestjs-server";
 
 type CheckoutProduct = Pick<TCartConentItem, "id" | "idName" | "size">;
@@ -207,8 +208,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
   const [priceModifier, setPriceModifier] = useState(1);
   const [coupon, setCoupon] = useState("");
   const { t } = useTranslation("checkout");
-  const [session] = usePing();
-  const [amILoggedIn] = useAmILoggedIn(session);
+  const [isSessionValid, setIsSessionValid] = useState(false);
 
   const router = useRouter();
 
@@ -230,7 +230,7 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
       currency: "EUR"
     });
 
-    if (amILoggedIn === ELoggedIn.NO) {
+    if (!isSessionValid) {
       router.push("/my-account");
     } else {
       setState({
@@ -252,10 +252,14 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
   }
 
   async function intiateData() {
-    const products = await getProductsInCart();
-    const price = await getPrice(priceModifier);
-    const shipping = await getShipping();
+    const [products, price, shipping, sessionValidationResult] = await Promise.all([
+      getProductsInCart(),
+      getPrice(priceModifier),
+      getShipping(),
+      validateSession(),
+    ]);
 
+    setIsSessionValid(sessionValidationResult);
     setState({
       ...state,
       products,

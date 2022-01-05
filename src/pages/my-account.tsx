@@ -36,7 +36,7 @@ export default function MyAccount() {
       setUserData({
         ...retrievedUserData,
         country: { label: retrievedUserData.country }
-      });
+      } as any);
     });
   }, []);
 

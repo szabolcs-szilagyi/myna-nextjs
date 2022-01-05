@@ -1,6 +1,5 @@
 import { API_SERVER, API_PATH } from "../constants";
 import { request, requestFactory } from "../lib/request";
-import { UserData } from "./UserData";
 
 const requestLegacy = requestFactory(API_SERVER + API_PATH);
 
@@ -180,21 +179,14 @@ export async function removeProductFromCart(id: number): Promise<void> {
   });
 }
 
-export async function getLoggedinEmail(
-  sessionToken: string
-): Promise<string | null> {
-  const rawResponse = await requestLegacy({
-    query: {
-      part: "amiloggedin",
-      sessiontoken: sessionToken
-    },
+export async function validateSession(): Promise<boolean> {
+  const rawResult = await request(API_SERVER + "session/is-valid", {
     options: { json: true }
   });
 
-  const { email } = rawResponse;
+  const { isValid } = rawResult;
 
-  if (email !== "nodata") return email;
-  else return null;
+  return isValid;
 }
 
 type LoginBasicData = {
@@ -271,51 +263,3 @@ export async function subscribeToNewsletter(email: string): Promise<void> {
   });
 }
 
-type AddressData = {
-  email: string;
-  mobile: string;
-  address1: string;
-  address2: string;
-  city: string;
-  state: string;
-  zip: string;
-  country: string;
-  comment: string;
-};
-
-export async function finalizePurchase(
-  userDetails: UserData & AddressData,
-  price: string,
-  products: object,
-  sessionToken: string
-): Promise<void> {
-  await requestLegacy({
-    query: {
-      part: "setproductpaid",
-      sessiontoken: sessionToken
-    },
-    fetchOptions: { mode: "no-cors" }
-  });
-
-  await requestLegacy({
-    query: {
-      part: "purchased",
-      email: userDetails.email,
-      token: sessionToken,
-      price,
-      firstname: userDetails.firstName,
-      lastname: userDetails.lastName,
-      birthday: userDetails.birthday,
-      mobile: userDetails.mobile,
-      address1: userDetails.address1,
-      address2: userDetails.address2,
-      city: userDetails.city,
-      state: userDetails.state,
-      zip: userDetails.zip,
-      country: userDetails.country,
-      comment: userDetails.comment,
-      products
-    },
-    fetchOptions: { mode: "no-cors" }
-  });
-}

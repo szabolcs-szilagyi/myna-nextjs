@@ -23,6 +23,9 @@ describe('checkout', () => {
     });
 
     it('can remove products from the cart and update price accordingly', () => {
+        cy.on("window:before:load", (win) => {
+          cy.spy(win.console, "log");
+        })
       cy.visit('/checkout');
       checkout.emptyCartMessagePane().should('contain.text', 'START SHOPPING HERE');
 
@@ -32,7 +35,11 @@ describe('checkout', () => {
       cy.wait('@availablityCall');
       productPage.addToCartButton().click();
       productPage.getPriceAs('liliTopPrice');
+
+      cy.intercept({ path: '*total*' }).as('gettingCartTotal');
       cy.go('back');
+
+      cy.wait('@gettingCartTotal');
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@liliTopPrice');
 
@@ -139,16 +146,15 @@ describe('checkout', () => {
       cy.visit('/checkout')
       cy.visit('/my-account');
 
-      myAccount.provideEmailAddress('fromEU@test.eu');
       myAccount.fillAccountDetails({
-        name: 'from',
-        surname: 'eu',
-        dob: '1234-12-12',
+        name: 'from eu',
+        email: 'fromEU@test.eu',
         mobile: '1234',
-        address1: 'asdf street',
+        addressLine1: 'asdf street',
         city: 'das town',
-        postcode: 'DE-1234',
-        country: 'Germany',
+        state: 'die state',
+        zip: 'DE-1234',
+        country: 'germany',
       });
       myAccount.saveAddressButton().click();
 
@@ -160,15 +166,14 @@ describe('checkout', () => {
       cy.visit('/checkout')
       cy.visit('/my-account');
 
-      myAccount.provideEmailAddress('fromUSA@test.com');
       myAccount.fillAccountDetails({
-        name: 'from',
-        surname: 'usa',
-        dob: '1234-12-12',
+        name: 'from usa',
+        email: 'fromUSA@test.com',
         mobile: '1234',
-        address1: 'yankee street',
+        addressLine1: 'yankee street',
         city: 'cowboy town',
-        postcode: 'USA-1234',
+        state: 'the state',
+        zip: 'USA-1234',
         country: 'united states',
       });
       myAccount.saveAddressButton().click();
@@ -181,15 +186,14 @@ describe('checkout', () => {
       cy.visit('/checkout')
       cy.visit('/my-account');
 
-      myAccount.provideEmailAddress('fromPoland@test.pl');
       myAccount.fillAccountDetails({
         name: 'from',
-        surname: 'poland',
-        dob: '1234-12-12',
+        email: 'fromPoland@test.pl',
         mobile: '1234',
-        address1: 'pope street',
+        addressLine1: 'pope street',
         city: 'mushroom town',
-        postcode: 'PL-1234',
+        state: 'little poland',
+        zip: 'PL-1234',
         country: 'poland',
       });
       myAccount.saveAddressButton().click();
@@ -211,15 +215,14 @@ describe('checkout', () => {
       cy.visit('/checkout')
       cy.visit('/my-account');
 
-      myAccount.provideEmailAddress('fromhungary@test.hu');
       myAccount.fillAccountDetails({
         name: 'from',
-        surname: 'hungary',
-        dob: '1234-12-12',
+        email: 'fromhungary@test.hu',
         mobile: '1234',
-        address1: 'dope street',
+        addressLine1: 'dope street',
         city: 't town',
-        postcode: 'HU-1234',
+        state: 'bács',
+        zip: 'HU-1234',
         country: 'hungary',
       });
       myAccount.saveAddressButton().click();

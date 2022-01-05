@@ -61,6 +61,7 @@ export default function PayPal(props: TPayPalProps) {
     window.location.href = "/checkout";
   }
 
+  // TODO: need to include this part in the test suite namely the call to the onSuccess method!
   return (
     <PayPalButton
       amount={props.dataFromParent}

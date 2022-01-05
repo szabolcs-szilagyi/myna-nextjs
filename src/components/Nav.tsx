@@ -24,7 +24,7 @@ function Cart({ containerClass, lastItemsDate }: TCartProps) {
   const [cartIcon, setCartIcon] = useState("/cart.png");
 
   useEffect(() => {
-    getInCart().then(numberOfProducts => setInCart(numberOfProducts));
+    getInCart().then(numberOfProducts => setInCart(numberOfProducts || 0));
   }, [inCart, lastItemsDate]);
 
   return (
