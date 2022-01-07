@@ -1,24 +1,27 @@
 import { PayPalButton } from "react-paypal-button-v2";
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 
-import {
-  PAY_PAL_CLIENT_ID,
-} from '../constants';
-import useEmail from '../lib/use-email';
-import usePrice from '../lib/use-price';
-import useUserAddress from '../lib/use-useraddress';
-import useUserDetails from '../lib/use-user-details';
-import useGetProductsToMail from '../lib/use-get-products-to-mail';
+import { PAY_PAL_CLIENT_ID } from "../constants";
+import useEmail from "../lib/use-email";
+import usePrice from "../lib/use-price";
+import useUserAddress from "../lib/use-useraddress";
+import useUserDetails from "../lib/use-user-details";
+import useGetProductsToMail from "../lib/use-get-products-to-mail";
 import { finalizePurchase } from "../services";
+import getConfig from "next/config";
+
+const {
+  publicRuntimeConfig: { mockPayPal }
+} = getConfig();
 
 const cookies = new Cookies();
-const session = cookies.get('session');
+const session = cookies.get("session");
 
-type TPayPalProps = {
-  dataFromParent: number,
-};
+interface PayPalProps {
+  dataFromParent: number;
+}
 
-export default function PayPal(props: TPayPalProps) {
+export default function PayPal(props: PayPalProps) {
   const [email] = useEmail(session);
   const [price] = usePrice(session);
   const [userDetails] = useUserDetails(email, session);
@@ -31,7 +34,7 @@ export default function PayPal(props: TPayPalProps) {
    *
    * @return void
    */
-  async function completed () {
+  async function completed() {
     try {
       await finalizePurchase(
         {
@@ -46,40 +49,41 @@ export default function PayPal(props: TPayPalProps) {
           state: userAddress.dState,
           zip: userAddress.dZip,
           country: userAddress.dCountry,
-          comment: userAddress.dComment,
+          comment: userAddress.dComment
         },
         price,
         products,
-        session,
+        session
       );
     } catch (error) {
       console.log(error.message);
     }
   }
 
-  function reload () {
+  function reload() {
     window.location.href = "/checkout";
   }
 
-  // TODO: need to include this part in the test suite namely the call to the onSuccess method!
-  return (
+  function onSuccess() {
+    // here to write the SUCCESS script
+    completed();
+    alert("We will contact you in email");
+    setTimeout(reload, 2000);
+
+    // OPTIONAL: Call your server to save the transaction
+    //    return fetch("/paypal-transaction-complete", {
+    //        method: "post",
+    //        body: JSON.stringify({
+    //            orderId: data.orderID
+    //        })
+    //    });
+  }
+
+  const realComponent = (
     <PayPalButton
       amount={props.dataFromParent}
-    // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-      onSuccess={() => {
-        // here to write the SUCCESS script
-        completed();
-        alert("We will contact you in email");
-        setTimeout(reload, 2000);
-
-        // OPTIONAL: Call your server to save the transaction
-        //    return fetch("/paypal-transaction-complete", {
-        //        method: "post",
-        //        body: JSON.stringify({
-        //            orderId: data.orderID
-        //        })
-        //    });
-      }}
+      // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+      onSuccess={() => onSuccess()}
       options={{
         disableFunding: "card",
         clientId: PAY_PAL_CLIENT_ID,
@@ -87,4 +91,12 @@ export default function PayPal(props: TPayPalProps) {
       }}
     />
   );
+
+  const mockComponent = (
+    <button data-cy="mockPayPalButton" onClick={() => onSuccess()}>
+      PayPal mock
+    </button>
+  );
+
+  return mockPayPal ? mockComponent : realComponent;
 }

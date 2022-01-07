@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p ${PORT-3000}",
+    "dev": "MOCK_PAYPAL=true next dev -p ${PORT-3000}",
     "test": "jest",
     "build": "next build",
     "tsc": "tsc",
