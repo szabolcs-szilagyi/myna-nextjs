@@ -36,10 +36,11 @@ describe('checkout', () => {
       productPage.addToCartButton().click();
       productPage.getPriceAs('liliTopPrice');
 
-      cy.intercept({ path: '*total*' }).as('gettingCartTotal');
+      cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
       cy.go('back');
 
       cy.wait('@gettingCartTotal');
+      cy.wait(1)
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@liliTopPrice');
 
@@ -59,7 +60,12 @@ describe('checkout', () => {
       productPage.sizeSelector().select('M');
       productPage.addToCartButton().click();
       productPage.getPriceAs('liliTopPrice');
+
+      cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
       cy.go('back');
+
+      cy.wait('@gettingCartTotal');
+      cy.wait(1)
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@liliTopPrice');
     });
@@ -83,15 +89,18 @@ describe('checkout', () => {
       productPage.sizeSelector().select('ML');
       productPage.addToCartButton().click();
       productPage.getPriceAs('alyssDressPrice');
+
+      cy.intercept({ pathname: '/cart/products-in-cart' }).as('gettingCartContent');
       cy.go('back');
+
+      cy.wait('@gettingCartContent');
+      cy.wait(1000)
 
       const total = { sum: 0 };
       cy.get('@liliTopPrice').then(p => { total.sum += p; });
       cy.get('@magnaScarfPrice').then(p => { total.sum += p; });
       cy.get('@alyssDressPrice').then(p => { total.sum += p; });
       cy.wrap(total).its('sum').as('totalPrice');
-
-      cy.reload(); // TODO: we shouldn't need to reload the page to see all products
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@totalPrice');
     });
@@ -105,7 +114,11 @@ describe('checkout', () => {
       productPage.sizeSelector().select('M');
       productPage.addToCartButton().click();
       productPage.getPriceAs('liliTopPrice');
+
+      cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
       cy.go('back');
+      cy.wait('@gettingCartTotal');
+      cy.wait(2000)
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@liliTopPrice');
 
@@ -125,7 +138,11 @@ describe('checkout', () => {
       productPage.sizeSelector().select('M');
       productPage.addToCartButton().click();
       productPage.getPriceAs('liliTopPrice');
+
+      cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
       cy.go('back');
+      cy.wait('@gettingCartTotal');
+      cy.wait(2000)
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@liliTopPrice');
 
@@ -227,7 +244,11 @@ describe('checkout', () => {
       });
       myAccount.saveAddressButton().click();
 
+      cy.intercept({ pathname: '/session/is-valid' }).as('sessionIsValid');
       cy.visit('/checkout');
+
+      cy.wait('@sessionIsValid');
+
       checkout.checkoutButton().click();
       checkout.payPalHolder().should('be.visible');
     })
