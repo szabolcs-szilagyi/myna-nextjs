@@ -116,7 +116,7 @@ export default function Index (props: any) {
 
     const availability = await getAvailability(idName, size);
 
-    if (availability > 0) {
+    if (availability !== null && availability > 0) {
       setState({
         ...state,
         avby: DEFAULT_AVAILABLE,

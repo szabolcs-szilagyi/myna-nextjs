@@ -35,7 +35,9 @@ function createProductCard(product: Product) {
   );
 }
 
-function groupProducts(products: Product[]) {
+function groupProducts(products: Product[] | undefined) {
+  if (!products) return (<></>);
+
   const grouped = chunk(products, 2).map(([firstProduct, secondProduct], i) => {
     return (
       <div key={`${firstProduct.name}-${i}`} className="row">

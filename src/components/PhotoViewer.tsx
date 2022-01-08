@@ -76,8 +76,8 @@ export default function PhotoViewer(props: { photos: TPhotos }) {
     }
   }
 
-  function getPhotoUri(fileName: string) {
-    if (!fileName) return fileName;
+  function getPhotoUri(fileName: string | null) {
+    if (!fileName) return '';
 
     return '/product_photos/' + fileName;
   }

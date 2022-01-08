@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Select from "react-select";
@@ -25,7 +26,7 @@ export default function MyAccount() {
     city: "",
     state: "",
     zip: "",
-    country: null,
+    country: null as any,
     comment: ""
   });
 
@@ -58,7 +59,7 @@ export default function MyAccount() {
     try {
       await saveUserData({
         ...userData,
-        country: userData.country.label
+        country: userData?.country?.label
       });
 
       setSaveButtonText("SAVED");

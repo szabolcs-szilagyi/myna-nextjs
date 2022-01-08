@@ -15,7 +15,7 @@ export function request(
   { query = {}, options = {}, fetchOptions = {} }: TSettings,
 ): Promise<Response | any> {
   const queryString = Object.entries(query)
-    .reduce((qs, [key, value]) => {
+    .reduce((qs: string[], [key, value]) => {
       if (value === undefined) value = '';
       if (!value.toString) throw new Error('.toString is needed for QS value');
 

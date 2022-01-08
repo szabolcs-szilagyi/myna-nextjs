@@ -26,13 +26,13 @@ function amILoggedIn(session: string): Promise<ELoggedIn> {
     });
 }
 
-export default function useAmILoggedIn(session: string): [ELoggedIn, Error | undefined] {
+export default function useAmILoggedIn(session: string): [ELoggedIn | null, Error | undefined] {
   const [data, setData] = useState(null);
   const [error, setError] = useState();
   const throttledRequest = useCallback(
     throttle(() => {
       amILoggedIn(session)
-        .then(setData)
+        .then(r => setData(r as any))
         .catch(setError);
     }, 5000),
     [session]
