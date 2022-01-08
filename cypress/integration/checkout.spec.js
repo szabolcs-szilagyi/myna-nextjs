@@ -252,5 +252,33 @@ describe('checkout', () => {
       checkout.checkoutButton().click();
       checkout.payPalHolder().should('be.visible');
     })
+
+    it('successful purchase will notify the server as well', () => {
+      cy.visit('/checkout')
+      cy.visit('/my-account');
+
+      myAccount.fillAccountDetails({
+        name: 'from',
+        email: 'fromhungary@test.hu',
+        mobile: '1234',
+        addressLine1: 'dope street',
+        city: 't town',
+        state: 'bács',
+        zip: 'HU-1234',
+        country: 'hungary',
+      });
+      myAccount.saveAddressButton().click();
+
+      cy.intercept({ pathname: '/session/is-valid' }).as('sessionIsValid');
+      cy.visit('/checkout');
+
+      cy.wait('@sessionIsValid');
+
+      checkout.checkoutButton().click();
+
+      cy.intercept({ pathname: '/cart/complete-purchase' }).as('completePurchase');
+      checkout.payPalHolder().click();
+      cy.wait('@completePurchase').its('response.statusCode').should('eq', 201);
+    });
   });
 });

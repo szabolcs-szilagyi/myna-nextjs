@@ -263,3 +263,13 @@ export async function subscribeToNewsletter(email: string): Promise<void> {
   });
 }
 
+export async function finalizePurchase(): Promise<void> {
+  const price = await getProductsTotalPrice();
+
+  await request(API_SERVER + "cart/complete-purchase", {
+    fetchOptions: {
+      body: JSON.stringify({ price }),
+      method: "POST"
+    }
+  });
+}
