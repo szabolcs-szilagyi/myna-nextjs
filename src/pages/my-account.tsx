@@ -8,129 +8,66 @@ import useTranslation from "next-translate/useTranslation";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
-import usePing from "../lib/use-ping";
-import {
-  getLoggedinEmail,
-  loginWithEmail,
-  saveAddressData,
-  saveUserData
-} from "../services";
+import { getUserData, saveUserData } from "../services/user-data";
 
 export default function MyAccount() {
   const router = useRouter();
   const { t } = useTranslation("my-account");
-  const [session] = usePing();
 
   const options = countryList().getData();
 
-  const [addressState, setAddressState] = useState({
-    value: null,
-    myEmail: "",
-    loginOrEdit: "login",
-    inputEmail: "",
-    loginEmail: "",
-    loginToken: "",
-    textOnSaveButton: "SAVE & CHECKOUT",
-    firstName: "",
-    lastName: "",
-    birthday: "",
-    dName: "",
-    dAddress1: "",
-    dAddress2: "",
-    dCity: "",
-    dState: "",
-    dZip: "",
-    dCountry: "" as any,
-    dComment: "",
-    dMobile: ""
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: null,
+    comment: ""
   });
 
+  const [saveButtonText, setSaveButtonText] = useState("SAVE & CHECKOUT");
+
   useEffect(() => {
-    amILoggedIn();
+    getUserData().then(retrievedUserData => {
+      setUserData({
+        ...retrievedUserData,
+        country: { label: retrievedUserData.country }
+      } as any);
+    });
   }, []);
 
-  const handleSelectChange = name => value => {
-    setAddressState({
-      ...addressState,
+  const handleSelectChange = (name: string) => (value: any) => {
+    setUserData({
+      ...userData,
       [name]: value
     });
   };
 
   function handleInputChange({ target: { value, name } }) {
-    setAddressState({
-      ...addressState,
+    setUserData({
+      ...userData,
       [name]: value
     });
   }
 
-  async function amILoggedIn() {
-    try {
-      const loggedInEmail = await getLoggedinEmail(session);
-
-      if (loggedInEmail !== null) {
-        setAddressState({
-          ...addressState,
-          myEmail: loggedInEmail,
-          loginOrEdit: "edit"
-        });
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
-  async function createToken() {
-    try {
-      const loginData = await loginWithEmail(addressState.inputEmail, session);
-      setAddressState({
-        ...addressState,
-        loginEmail: loginData.email,
-        loginToken: loginData.loginToken,
-        myEmail: loginData.email,
-        loginOrEdit: "edit"
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
-
   async function saveDetails() {
     try {
-      await saveUserData(
-        {
-          email: addressState.myEmail,
-          firstName: addressState.firstName,
-          lastName: addressState.lastName,
-          birthday: addressState.birthday
-        },
-        session
-      );
-
-      await saveAddressData(
-        {
-          email: addressState.myEmail,
-          mobile: addressState.dMobile,
-          address1: addressState.dAddress1,
-          address2: addressState.dAddress2,
-          city: addressState.dCity,
-          state: addressState.dState,
-          zip: addressState.dZip,
-          country: addressState.dCountry.label,
-          comment: addressState.dComment
-        },
-        session
-      )
-
-      setAddressState({
-        ...addressState,
-        textOnSaveButton: "SAVED"
+      await saveUserData({
+        ...userData,
+        country: userData.country.label
       });
+
+      setSaveButtonText("SAVED");
 
       setTimeout(() => {
         router.push("/checkout");
       }, 1500);
     } catch (error) {
-      console.log(error.message, error.data);
+      console.log(error.message, error.errors);
     }
   }
 
@@ -139,41 +76,7 @@ export default function MyAccount() {
       <Header />
       <Nav />
       <div className="spacer10px" />
-      <div
-        className={addressState.loginOrEdit === "login" ? "row" : "row d-none"}
-      >
-        <div className="col-md-12 ce capitalLetters">
-          <h1>
-            <strong>{t("Login to your account")}</strong>
-          </h1>
-          <p>{t("Please give your email address to continue")}</p>
-          <div className="spacer50px" />
-          <input
-            className="loginEmail"
-            type="text"
-            value={addressState.inputEmail}
-            name="inputEmail"
-            onChange={handleInputChange}
-            maxLength={128}
-            placeholder={t("enter your email here")}
-          />
-          <div className="spacer50px" />
-          <div className="noBorder mediumFont">
-            <button
-              type="button"
-              className="cartButton col-md-2"
-              onClick={createToken}
-              data-cy="emailSubmitButton"
-            >
-              {t("SUBMIT")}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div
-        className={addressState.loginOrEdit === "edit" ? "row" : "row d-none"}
-      >
+      <div className="row">
         <div className="col-md-12 ce capitalLetters">
           <h1>
             <strong>{t("Your account")}</strong>
@@ -185,8 +88,8 @@ export default function MyAccount() {
               <input
                 className="userDetails"
                 type="text"
-                value={addressState.firstName}
-                name="firstName"
+                value={userData.name}
+                name="name"
                 onChange={handleInputChange}
                 maxLength={128}
                 placeholder={t("* NAME")}
@@ -195,28 +98,18 @@ export default function MyAccount() {
               <input
                 className="userDetails"
                 type="text"
-                value={addressState.lastName}
-                name="lastName"
+                value={userData.email}
+                name="email"
                 onChange={handleInputChange}
                 maxLength={128}
-                placeholder={t("* SURNAME")}
+                placeholder={t("* EMAIL")}
               />
               <div className="spacer10px" />
               <input
                 className="userDetails"
                 type="text"
-                value={addressState.birthday}
-                name="birthday"
-                onChange={handleInputChange}
-                maxLength={10}
-                placeholder={t("* DATE OF BIRTH (YYYY-MM-DD)")}
-              />
-              <div className="spacer10px" />
-              <input
-                className="userDetails"
-                type="text"
-                value={addressState.dMobile}
-                name="dMobile"
+                value={userData.mobile}
+                name="mobile"
                 onChange={handleInputChange}
                 maxLength={32}
                 placeholder={t("* MOBILE NUMBER")}
@@ -226,9 +119,13 @@ export default function MyAccount() {
                 <Select
                   className="userDetails"
                   options={options}
-                  value={addressState.dCountry}
-                  onChange={handleSelectChange("dCountry")}
+                  value={userData.country}
+                  onChange={handleSelectChange("country")}
                 />
+              </div>
+              <div className="spacer10px" />
+              <div className="paddingtop5px" data-cy="countryConfirmation">
+                {t("* Country")}: {userData.country?.label}
               </div>
               <div className="spacer10px" />
             </div>
@@ -237,8 +134,8 @@ export default function MyAccount() {
               <input
                 className="userDetails"
                 type="text"
-                value={addressState.dAddress1}
-                name="dAddress1"
+                value={userData.addressLine1}
+                name="addressLine1"
                 onChange={handleInputChange}
                 maxLength={128}
                 placeholder={t("* ADDRESS LINE 1")}
@@ -247,8 +144,8 @@ export default function MyAccount() {
               <input
                 className="userDetails"
                 type="text"
-                value={addressState.dAddress2}
-                name="dAddress2"
+                value={userData.addressLine2}
+                name="addressLine2"
                 onChange={handleInputChange}
                 maxLength={128}
                 placeholder={t("ADDRESS LINE 2")}
@@ -257,8 +154,18 @@ export default function MyAccount() {
               <input
                 className="userDetails"
                 type="text"
-                value={addressState.dCity}
-                name="dCity"
+                value={userData.state}
+                name="state"
+                onChange={handleInputChange}
+                maxLength={128}
+                placeholder={t("* STATE")}
+              />
+              <div className="spacer10px" />
+              <input
+                className="userDetails"
+                type="text"
+                value={userData.city}
+                name="city"
                 onChange={handleInputChange}
                 maxLength={128}
                 placeholder={t("* CITY")}
@@ -267,16 +174,22 @@ export default function MyAccount() {
               <input
                 className="userDetails"
                 type="text"
-                value={addressState.dZip}
-                name="dZip"
+                value={userData.zip}
+                name="zip"
                 onChange={handleInputChange}
                 maxLength={64}
                 placeholder={t("* POSTAL CODE")}
               />
               <div className="spacer10px" />
-              <div className="paddingtop5px" data-cy="countryConfirmation">
-                {t("* Country")}: {addressState.dCountry.label}
-              </div>
+              <input
+                className="userDetails"
+                type="text"
+                value={userData.comment}
+                name="comment"
+                onChange={handleInputChange}
+                maxLength={64}
+                placeholder={t("COMMENT")}
+              />
               <div className="spacer10px" />
             </div>
             <div className="col-md-2" />
@@ -291,7 +204,7 @@ export default function MyAccount() {
                   onClick={saveDetails}
                   data-cy="saveAddressButton"
                 >
-                  {t(addressState.textOnSaveButton)}
+                  {t(saveButtonText)}
                 </button>
               </div>
             </div>

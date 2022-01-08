@@ -246,13 +246,13 @@ export async function loginWithEmail(inputEmail: string, sessionToken: string): 
   return toReturn;
 }
 
-type TUserData = {
+type UserData = {
   email: string,
   firstName: string,
   lastName: string,
   birthday: string,
 }
-export async function saveUserData(userData: TUserData, sessionToken: string): Promise<void> {
+export async function saveUserData(userData: UserData, sessionToken: string): Promise<void> {
   const validInput = Object.values(userData).every(value => value !== '');
 
   if(!validInput) {
@@ -271,7 +271,7 @@ export async function saveUserData(userData: TUserData, sessionToken: string): P
   })
 }
 
-type TAddressData = {
+type AddressData = {
   email: string;
   mobile: string;
   address1: string;
@@ -283,7 +283,7 @@ type TAddressData = {
   comment: string;
 };
 export async function saveAddressData(
-  addressData: TAddressData,
+  addressData: AddressData,
   sessionToken: string
 ): Promise<void> {
   const mandatoryFields = ['email', 'address1', 'city', 'zip'];
@@ -344,7 +344,7 @@ export async function subscribeToNewsletter(email: string): Promise<void> {
 }
 
 export async function finalizePurchase(
-  userDetails: TUserData & TAddressData,
+  userDetails: UserData & AddressData,
   price: string,
   products: object,
   sessionToken: string,

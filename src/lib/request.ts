@@ -13,7 +13,7 @@ type TSettings = {
 export function request(
   url: string,
   { query = {}, options = {}, fetchOptions = {} }: TSettings,
-) {
+): Promise<Response | any> {
   const queryString = Object.entries(query)
     .reduce((qs, [key, value]) => {
       if (value === undefined) value = '';
@@ -30,15 +30,18 @@ export function request(
   let fetchPromise: Promise<unknown>;
 
   if (options.json) {
-    fetchPromise = fetch(uri, fetchOptions)
+    fetchPromise = fetch(uri, { credentials: 'include', ...fetchOptions })
       .then(x => x.json());
   } else {
-    fetchPromise = fetch(uri, fetchOptions);
+    fetchPromise = fetch(uri, { credentials: 'include', ...fetchOptions });
   }
 
   return fetchPromise;
 }
 
 export function requestFactory(url: string): (settings: TSettings) => Promise<any> {
-  return (settings) => request(url, settings);
+  return (settings) => {
+    const fetchOptions = { credentials: 'omit' as RequestCredentials, ...settings.fetchOptions }
+    return request(url, { ...settings, fetchOptions });
+  }
 }

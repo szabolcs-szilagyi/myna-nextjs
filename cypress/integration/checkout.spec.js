@@ -23,14 +23,24 @@ describe('checkout', () => {
     });
 
     it('can remove products from the cart and update price accordingly', () => {
+        cy.on("window:before:load", (win) => {
+          cy.spy(win.console, "log");
+        })
       cy.visit('/checkout');
       checkout.emptyCartMessagePane().should('contain.text', 'START SHOPPING HERE');
 
       cy.visit('/lili-top');
+      cy.intercept({ path: '*more-accurate-availability*' }).as('availablityCall');
       productPage.sizeSelector().select('M');
+      cy.wait('@availablityCall');
       productPage.addToCartButton().click();
       productPage.getPriceAs('liliTopPrice');
+
+      cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
       cy.go('back');
+
+      cy.wait('@gettingCartTotal');
+      cy.wait(1)
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@liliTopPrice');
 
@@ -50,7 +60,12 @@ describe('checkout', () => {
       productPage.sizeSelector().select('M');
       productPage.addToCartButton().click();
       productPage.getPriceAs('liliTopPrice');
+
+      cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
       cy.go('back');
+
+      cy.wait('@gettingCartTotal');
+      cy.wait(1)
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@liliTopPrice');
     });
@@ -74,15 +89,18 @@ describe('checkout', () => {
       productPage.sizeSelector().select('ML');
       productPage.addToCartButton().click();
       productPage.getPriceAs('alyssDressPrice');
+
+      cy.intercept({ pathname: '/cart/products-in-cart' }).as('gettingCartContent');
       cy.go('back');
+
+      cy.wait('@gettingCartContent');
+      cy.wait(1000)
 
       const total = { sum: 0 };
       cy.get('@liliTopPrice').then(p => { total.sum += p; });
       cy.get('@magnaScarfPrice').then(p => { total.sum += p; });
       cy.get('@alyssDressPrice').then(p => { total.sum += p; });
       cy.wrap(total).its('sum').as('totalPrice');
-
-      cy.reload(); // TODO: we shouldn't need to reload the page to see all products
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@totalPrice');
     });
@@ -96,7 +114,11 @@ describe('checkout', () => {
       productPage.sizeSelector().select('M');
       productPage.addToCartButton().click();
       productPage.getPriceAs('liliTopPrice');
+
+      cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
       cy.go('back');
+      cy.wait('@gettingCartTotal');
+      cy.wait(2000)
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@liliTopPrice');
 
@@ -116,7 +138,11 @@ describe('checkout', () => {
       productPage.sizeSelector().select('M');
       productPage.addToCartButton().click();
       productPage.getPriceAs('liliTopPrice');
+
+      cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
       cy.go('back');
+      cy.wait('@gettingCartTotal');
+      cy.wait(2000)
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@liliTopPrice');
 
@@ -137,16 +163,15 @@ describe('checkout', () => {
       cy.visit('/checkout')
       cy.visit('/my-account');
 
-      myAccount.provideEmailAddress('fromEU@test.eu');
       myAccount.fillAccountDetails({
-        name: 'from',
-        surname: 'eu',
-        dob: '1234-12-12',
+        name: 'from eu',
+        email: 'fromEU@test.eu',
         mobile: '1234',
-        address1: 'asdf street',
+        addressLine1: 'asdf street',
         city: 'das town',
-        postcode: 'DE-1234',
-        country: 'Germany',
+        state: 'die state',
+        zip: 'DE-1234',
+        country: 'germany',
       });
       myAccount.saveAddressButton().click();
 
@@ -158,15 +183,14 @@ describe('checkout', () => {
       cy.visit('/checkout')
       cy.visit('/my-account');
 
-      myAccount.provideEmailAddress('fromUSA@test.com');
       myAccount.fillAccountDetails({
-        name: 'from',
-        surname: 'usa',
-        dob: '1234-12-12',
+        name: 'from usa',
+        email: 'fromUSA@test.com',
         mobile: '1234',
-        address1: 'yankee street',
+        addressLine1: 'yankee street',
         city: 'cowboy town',
-        postcode: 'USA-1234',
+        state: 'the state',
+        zip: 'USA-1234',
         country: 'united states',
       });
       myAccount.saveAddressButton().click();
@@ -179,15 +203,14 @@ describe('checkout', () => {
       cy.visit('/checkout')
       cy.visit('/my-account');
 
-      myAccount.provideEmailAddress('fromPoland@test.pl');
       myAccount.fillAccountDetails({
         name: 'from',
-        surname: 'poland',
-        dob: '1234-12-12',
+        email: 'fromPoland@test.pl',
         mobile: '1234',
-        address1: 'pope street',
+        addressLine1: 'pope street',
         city: 'mushroom town',
-        postcode: 'PL-1234',
+        state: 'little poland',
+        zip: 'PL-1234',
         country: 'poland',
       });
       myAccount.saveAddressButton().click();
@@ -209,22 +232,90 @@ describe('checkout', () => {
       cy.visit('/checkout')
       cy.visit('/my-account');
 
-      myAccount.provideEmailAddress('fromhungary@test.hu');
       myAccount.fillAccountDetails({
         name: 'from',
-        surname: 'hungary',
-        dob: '1234-12-12',
+        email: 'fromhungary@test.hu',
         mobile: '1234',
-        address1: 'dope street',
+        addressLine1: 'dope street',
         city: 't town',
-        postcode: 'HU-1234',
+        state: 'bács',
+        zip: 'HU-1234',
         country: 'hungary',
       });
       myAccount.saveAddressButton().click();
 
+      cy.intercept({ pathname: '/session/is-valid' }).as('sessionIsValid');
       cy.visit('/checkout');
+
+      cy.wait('@sessionIsValid');
+
       checkout.checkoutButton().click();
       checkout.payPalHolder().should('be.visible');
     })
+
+    it('successful purchase will notify the server as well', () => {
+      cy.visit('/checkout')
+      cy.visit('/my-account');
+
+      myAccount.fillAccountDetails({
+        name: 'from',
+        email: 'fromhungary@test.hu',
+        mobile: '1234',
+        addressLine1: 'dope street',
+        city: 't town',
+        state: 'bács',
+        zip: 'HU-1234',
+        country: 'hungary',
+      });
+      myAccount.saveAddressButton().click();
+
+      cy.intercept({ pathname: '/session/is-valid' }).as('sessionIsValid');
+      cy.visit('/checkout');
+
+      cy.wait('@sessionIsValid');
+
+      checkout.checkoutButton().click();
+
+      cy.intercept({ pathname: '/cart/complete-purchase' }).as('completePurchase');
+      checkout.payPalHolder().click();
+      cy.wait('@completePurchase').its('response.statusCode').should('eq', 201);
+    });
+
+    it('successful purchase will notify the server as well also add products', () => {
+      cy.visit('/checkout')
+      cy.visit('/my-account');
+
+      myAccount.fillAccountDetails({
+        name: 'shpper with products',
+        email: 'shopper@withprod.hu',
+        mobile: '1234',
+        addressLine1: 'dope street',
+        city: 't town',
+        state: 'bács',
+        zip: 'HU-1234',
+        country: 'hungary',
+      });
+      myAccount.saveAddressButton().click();
+
+      cy.visit('/lili-top');
+      productPage.sizeSelector().select('M');
+      productPage.addToCartButton().click();
+      productPage.getPriceAs('liliTopPrice');
+
+      cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
+      cy.visit('/checkout')
+      cy.wait('@gettingCartTotal');
+
+      cy.intercept({ pathname: '/session/is-valid' }).as('sessionIsValid');
+      cy.visit('/checkout');
+
+      cy.wait('@sessionIsValid');
+
+      checkout.checkoutButton().click();
+
+      cy.intercept({ pathname: '/cart/complete-purchase' }).as('completePurchase');
+      checkout.payPalHolder().click();
+      cy.wait('@completePurchase').its('response.statusCode').should('eq', 201);
+    });
   });
 });
