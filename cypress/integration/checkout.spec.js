@@ -280,5 +280,42 @@ describe('checkout', () => {
       checkout.payPalHolder().click();
       cy.wait('@completePurchase').its('response.statusCode').should('eq', 201);
     });
+
+    it('successful purchase will notify the server as well also add products', () => {
+      cy.visit('/checkout')
+      cy.visit('/my-account');
+
+      myAccount.fillAccountDetails({
+        name: 'shpper with products',
+        email: 'shopper@withprod.hu',
+        mobile: '1234',
+        addressLine1: 'dope street',
+        city: 't town',
+        state: 'bács',
+        zip: 'HU-1234',
+        country: 'hungary',
+      });
+      myAccount.saveAddressButton().click();
+
+      cy.visit('/lili-top');
+      productPage.sizeSelector().select('M');
+      productPage.addToCartButton().click();
+      productPage.getPriceAs('liliTopPrice');
+
+      cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
+      cy.visit('/checkout')
+      cy.wait('@gettingCartTotal');
+
+      cy.intercept({ pathname: '/session/is-valid' }).as('sessionIsValid');
+      cy.visit('/checkout');
+
+      cy.wait('@sessionIsValid');
+
+      checkout.checkoutButton().click();
+
+      cy.intercept({ pathname: '/cart/complete-purchase' }).as('completePurchase');
+      checkout.payPalHolder().click();
+      cy.wait('@completePurchase').its('response.statusCode').should('eq', 201);
+    });
   });
 });

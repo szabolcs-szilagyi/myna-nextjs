@@ -268,6 +268,9 @@ export async function finalizePurchase(): Promise<void> {
 
   await request(API_SERVER + "cart/complete-purchase", {
     fetchOptions: {
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ price }),
       method: "POST"
     }
