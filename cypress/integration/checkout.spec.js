@@ -49,6 +49,13 @@ describe('checkout', () => {
       checkout.cartItems().should('be.empty');
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).should('equal', 0);
     });
+
+    it('has button to my-account page, to fill out delivery details', () => {
+      cy.visit('/checkout');
+      checkout.deliveryDetailsButton().should('be.visible');
+      checkout.deliveryDetailsButton().click();
+      cy.url().should('include', 'my-account');
+    });
   });
 
   describe('correctly sums up prices', () => {

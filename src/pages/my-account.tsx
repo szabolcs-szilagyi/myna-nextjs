@@ -80,7 +80,7 @@ export default function MyAccount() {
       <div className="row">
         <div className="col-md-12 ce capitalLetters">
           <h1>
-            <strong>{t("Your account")}</strong>
+            <strong>{t("Delivery details")}</strong>
           </h1>
           <div className="row">
             <div className="col-md-2" />

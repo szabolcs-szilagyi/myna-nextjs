@@ -29,6 +29,10 @@ export default class Checkout {
     return cy.getByDataCy('payPalHolder');
   }
 
+  deliveryDetailsButton() {
+    return cy.getByDataCy('deliveryDetailsButton');
+  }
+
   checkoutButton() {
     return cy.getByDataCy('checkoutButton');
   }

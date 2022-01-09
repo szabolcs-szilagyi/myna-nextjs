@@ -346,6 +346,15 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
               </p>
             </div>
             <div className="col-md-4">
+              <Link href="/my-account">
+                <a
+                  className="cartButton col-md-10 float-md-right d-block text-center text-uppercase"
+                  data-cy="deliveryDetailsButton"
+                >
+                  {t("Delivery details")}
+                </a>
+              </Link>
+              <div className="spacer25px col-md-10 float-md-right"></div>
               <button
                 className="cartButton col-md-10 float-md-right"
                 onClick={pressedCheckout}
