@@ -253,11 +253,6 @@ select#chooseSize:hover {
   text-align: right;
 }
 
-.navCart a:hover {
-  font-weight: bold;
-  text-decoration: none;
-}
-
 .hidePaypal {
   display: none;
 }
@@ -345,19 +340,8 @@ select.sizeButton::-ms-expand {
   width: 100%;
 }
 
-.noPadLeft {
-  padding-left: 0px;
-}
-
 .paddingtop5px {
   padding-top: 15px;
-}
-
-#banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2em;
 }
 
 @media only screen and (max-width: 1226px) {

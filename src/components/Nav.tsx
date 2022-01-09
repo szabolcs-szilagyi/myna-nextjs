@@ -5,9 +5,10 @@ import React, { useEffect, useState } from "react";
 import * as reactBootstrap from "react-bootstrap";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-import style from "./Nav.module.css";
+import style from "./Nav.module.scss";
 import getConfig from "next/config";
 import { getInCart } from "../services/nestjs-server";
+import Image from 'next/image';
 const {
   publicRuntimeConfig: { i18nEnabled }
 } = getConfig();
@@ -61,13 +62,13 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
 
   return (
     <Navbar
-      className="row justify-content-center no-gutters text-center blackFont capitalLetters"
+      className={`${style.menuFontSetting} row justify-content-center no-gutters pl-0 pr-0 text-center blackFont capitalLetters`}
       bg="white"
       expand="md"
     >
       <BSNav className="col-12 col-sm-12 col-md-4 col-xl-2">
         <Navbar.Brand href="/">
-          <img
+          <Image
             src="/logo.png"
             width="240"
             height="107"
