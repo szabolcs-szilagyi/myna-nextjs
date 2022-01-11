@@ -56,5 +56,37 @@ describe('my-account', () => {
     cy.url().should('match', /my-account$/);
   })
 
-  it('loads user data for editing from session');
+  it('loads user data for editing from session', () => {
+    myAccount.fillAccountDetails({
+      name: 'test elek tra',
+      email: 'test@elek.de',
+      mobile: '0000000000000',
+      addressLine1: 'add1',
+      addressLine2: '',
+      city: 'fdsa',
+      state: 'state',
+      zip: 'PL-1234',
+      country: 'albania',
+    });
+
+    myAccount.countryConfirmation().invoke('text').should('match', /albania/i);
+
+    myAccount.saveAddressButton().click();
+    myAccount.saveAddressButton().invoke('text').should('match', /saved/i);
+
+    cy.wait(2000);
+
+    cy.url().should('match', /checkout$/);
+    cy.visit('/my-account');
+
+    myAccount.nameInput().invoke('val').should('eq', 'test elek tra');
+    myAccount.emailInput().invoke('val').should('eq', 'test@elek.de');
+    myAccount.mobileInput().invoke('val').should('eq', '0000000000000');
+    myAccount.address1Input().invoke('val').should('eq', 'add1');
+    myAccount.address2Input().invoke('val').should('be.empty');
+    myAccount.cityInput().invoke('val').should('eq', 'fdsa');
+    myAccount.stateInput().invoke('val').should('eq', 'state');
+    myAccount.postcodeInput().invoke('val').should('eq', 'PL-1234');
+    myAccount.countryConfirmation().invoke('text').should('match', /albania/i);
+  });
 });

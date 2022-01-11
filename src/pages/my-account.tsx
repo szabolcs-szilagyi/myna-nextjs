@@ -1,4 +1,4 @@
-import 'reflect-metadata';
+import "reflect-metadata";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Select from "react-select";
@@ -33,12 +33,13 @@ export default function MyAccount() {
   const [saveButtonText, setSaveButtonText] = useState("SAVE & CHECKOUT");
 
   useEffect(() => {
-    getUserData().then(retrievedUserData => {
+    const retrievedUserData = getUserData();
+    if (retrievedUserData !== null) {
       setUserData({
         ...retrievedUserData,
         country: { label: retrievedUserData.country }
       } as any);
-    });
+    }
   }, []);
 
   const handleSelectChange = (name: string) => (value: any) => {
