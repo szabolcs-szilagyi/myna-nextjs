@@ -1,0 +1,17 @@
+@import '../../node_modules/bootstrap/scss/_functions';
+@import '../../node_modules/bootstrap/scss/_variables';
+@import '../../node_modules/bootstrap/scss/mixins/_breakpoints';
+
+.i18nButton {
+  background-color: transparent;
+  border: none;
+  padding-top: 5px;
+}
+
+.menuFontSetting {
+  font-size: 1rem;
+
+  @include media-breakpoint-up(xl) {
+    font-size: 0.9rem;
+  }
+}

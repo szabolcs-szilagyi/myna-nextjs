@@ -11,8 +11,7 @@ import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import Link, { LinkProps } from 'next/link';
-import usePing from '../lib/use-ping';
-import { addProductToCart, getAvailability, loadProductDetails } from '../services';
+import { addProductToCart, getAvailability, loadProductDetails } from '../services/nestjs-server';
 
 const DEFAULT_AVAILABLE = 'Available for pre-order';
 
@@ -72,7 +71,6 @@ const { ADD_TO_CART, ADDED_TO_CART } = ECartButtonTexts;
 export default function Index (props: any) {
   const router = useRouter();
   const { t, lang } = useTranslation('product');
-  const [session] = usePing();
 
   const idName = router.query.idname;
   const isOneSize = props.isOneSize;
@@ -103,22 +101,22 @@ export default function Index (props: any) {
     lastItemsDate: null,
     ...props
   });
-  const [selectedSize, setSelectedSize] = useState(isOneSize ? 'one_size' : '0');
+  const [selectedSize, setSelectedSize] = useState(isOneSize ? 'onesize' : '0');
 
   function defaultButton() {
     setState({
       ...state,
       addToCart: ADD_TO_CART,
     });
-    checkAvailability(selectedSize, session, state.idName);
+    checkAvailability(selectedSize, state.idName);
   }
 
-  async function checkAvailability(size: string, session: string, idName: string) {
+  async function checkAvailability(size: string, idName: string) {
     if (size === '0') return;
 
-    const availability = await getAvailability(idName, size, session);
+    const availability = await getAvailability(idName, size);
 
-    if (availability > 0) {
+    if (availability !== null && availability > 0) {
       setState({
         ...state,
         avby: DEFAULT_AVAILABLE,
@@ -145,7 +143,7 @@ export default function Index (props: any) {
     if (state.addToCart == ADD_TO_CART && size != '0') {
       const idName = state.idName;
 
-      await addProductToCart(idName, size, session);
+      await addProductToCart(idName, size);
 
       setState({
         ...state,
@@ -159,7 +157,7 @@ export default function Index (props: any) {
   function handleSizeChange(e) {
     const newSize = e.target.value
     setSelectedSize(newSize);
-    checkAvailability(newSize, session, state.idName);
+    checkAvailability(newSize, state.idName);
   }
 
   const {

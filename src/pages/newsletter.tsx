@@ -25,7 +25,7 @@ export default function Newsletter() {
     const email = searchParams.get('email');
     const action: EAction | undefined = possibleActionsToPerform[part];
 
-    if (token !== null && action !== undefined) {
+    if (token !== null && action !== undefined && email !== null) {
       await updateNewsletterSubscription({ action, email, token });
     }
 

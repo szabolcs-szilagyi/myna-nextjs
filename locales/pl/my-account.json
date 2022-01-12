@@ -2,6 +2,9 @@
   "* ADDRESS LINE 1": "* ADRES",
   "ADDRESS LINE 2": "ADRES",
   "* CITY": "* MIASTO",
+  "COMMENT": "COMMENT",
+  "* STATE": "* STATE/COUNTY",
+  "* EMAIL": "* EMAIL",
   "* Country": "* KRAJ",
   "* DATE OF BIRTH (RRRR-MM-DD)": "* DATA URODZENIA (RRRR-MM-DD)",
   "enter your email here": "Wprowadź swój email tutaj",
@@ -14,5 +17,6 @@
   "SAVED": "ZAPISANE",
   "SUBMIT": "ZATWIERDŹ",
   "* SURNAME": "* NAZWISKO",
-  "Your account": "Twoje konto"
+  "Your account": "Twoje konto",
+  "Delivery details": "Dane wysyłki"
 }

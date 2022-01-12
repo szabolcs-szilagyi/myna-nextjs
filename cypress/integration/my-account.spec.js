@@ -12,25 +12,17 @@ describe('my-account', () => {
     cy.visit(`${baseUrl}/my-account`);
   });
 
-  it('first expects e-mail to be filled', () => {
-    cy.get('p').should('contain.text', 'give your email address');
-    myAccount.provideEmailAddress('asdf@asdf.asd');
-
-    myAccount.nameInput().should('have.attr', 'placeholder');
-  });
-
   it('accepts correctly filled user details', () => {
-    myAccount.provideEmailAddress('asdf@asdf2.asd');
     myAccount.fillAccountDetails({
-      name: 'first name',
-      surname: 'last name',
-      dob: '1234-12-12',
+      name: 'test elek',
+      email: 'test@elek.pl',
       mobile: '12345',
-      country: 'poland',
-      address1: 'asdf',
-      address2: 'asdf2',
+      addressLine1: 'asdf',
+      addressLine2: 'asdf2',
       city: 'fdsa',
-      postcode: 'PL-1234'
+      state: 'state',
+      zip: 'PL-1234',
+      country: 'poland',
     });
 
     myAccount.countryConfirmation().invoke('text').should('match', /poland/i);
@@ -44,17 +36,14 @@ describe('my-account', () => {
   })
 
   it('will not take partial details', () => {
-    myAccount.provideEmailAddress('asdf@asdf3.asd');
     myAccount.fillAccountDetails({
-      name: 'first lll',
-      surname: '',
-      dob: '1234-12-12',
       mobile: '12345',
-      country: 'hungary',
-      address1: '',
-      address2: 'asdf2',
+      addressLine1: '',
+      addressLine2: 'asdf2',
       city: 'fdsa',
-      postcode: 'PL-1234'
+      state: 'state2',
+      zip: 'PL-1234',
+      country: 'hungary',
     });
 
     myAccount.countryConfirmation().invoke('text').should('match', /hungary/i);
@@ -66,4 +55,38 @@ describe('my-account', () => {
 
     cy.url().should('match', /my-account$/);
   })
+
+  it('loads user data for editing from session', () => {
+    myAccount.fillAccountDetails({
+      name: 'test elek tra',
+      email: 'test@elek.de',
+      mobile: '0000000000000',
+      addressLine1: 'add1',
+      addressLine2: '',
+      city: 'fdsa',
+      state: 'state',
+      zip: 'PL-1234',
+      country: 'albania',
+    });
+
+    myAccount.countryConfirmation().invoke('text').should('match', /albania/i);
+
+    myAccount.saveAddressButton().click();
+    myAccount.saveAddressButton().invoke('text').should('match', /saved/i);
+
+    cy.wait(2000);
+
+    cy.url().should('match', /checkout$/);
+    cy.visit('/my-account');
+
+    myAccount.nameInput().invoke('val').should('eq', 'test elek tra');
+    myAccount.emailInput().invoke('val').should('eq', 'test@elek.de');
+    myAccount.mobileInput().invoke('val').should('eq', '0000000000000');
+    myAccount.address1Input().invoke('val').should('eq', 'add1');
+    myAccount.address2Input().invoke('val').should('be.empty');
+    myAccount.cityInput().invoke('val').should('eq', 'fdsa');
+    myAccount.stateInput().invoke('val').should('eq', 'state');
+    myAccount.postcodeInput().invoke('val').should('eq', 'PL-1234');
+    myAccount.countryConfirmation().invoke('text').should('match', /albania/i);
+  });
 });

@@ -76,22 +76,6 @@ table.mainMeas td {
   padding: 10px;
 }
 
-.navMenu li {
-  display: inline-block;
-  padding: 50px 20px;
-}
-
-.navMenu li a {
-  color: #000000;
-  text-decoration: none;
-}
-
-.navMenu li a:hover {
-  color: #000000;
-  /* color: #989898; */
-  text-decoration: underline;
-}
-
 .menu {
   color: #000000;
   text-decoration: none;
@@ -269,11 +253,6 @@ select#chooseSize:hover {
   text-align: right;
 }
 
-.navCart a:hover {
-  font-weight: bold;
-  text-decoration: none;
-}
-
 .hidePaypal {
   display: none;
 }
@@ -339,6 +318,8 @@ table.cartCo {
 
 .cartButton:hover {
   font-weight: bold;
+  color: #fff;
+  text-decoration: none;
 }
 
 .sizeButton {
@@ -361,81 +342,17 @@ select.sizeButton::-ms-expand {
   width: 100%;
 }
 
-.noPadLeft {
-  padding-left: 0px;
-}
-
 .paddingtop5px {
   padding-top: 15px;
 }
 
-.desktopNav {
-  display: block;
-}
-
-#banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2em;
-}
-
-.tabNav {
-  display: none;
-}
-
-.mobileNav {
-  display: none;
-}
-
 @media only screen and (max-width: 1226px) {
-  .desktopNav {
-    display: none;
-  }
-
-  .tabNav {
-    display: block;
-  }
-
-  .mobileNav {
-    display: none;
-  }
-
   .ceMob {
     text-align: center;
   }
 }
 
 @media only screen and (max-width: 768px) {
-  .desktopNav {
-    display: none;
-  }
-
-  .tabNav {
-    display: none;
-  }
-
-  .mobileNav {
-    display: block;
-  }
-
-  .nlsb {
-    margin-top: 25px;
-  }
-
-  .inl {
-    padding: 5px;
-  }
-
-  .inl img {
-    width: 140px;
-    height: 140px;
-  }
-
-  .cl {
-    clear: both;
-  }
-
   table.cartCo {
     margin: auto;
     min-width: 300px;
@@ -449,10 +366,6 @@ select.sizeButton::-ms-expand {
     padding-bottom: 30px;
   }
 
-  #banner {
-    font-size: 1em;
-    font-weight: bold;
-  }
 }
 
 .blur-divs-after ~ div {
