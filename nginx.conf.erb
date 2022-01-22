@@ -42,10 +42,10 @@ http {
         proxy_cache STATIC;
         proxy_pass http://app_server;
         proxy_ignore_headers Cache-Control;
-        proxy_cache_valid any 100d;
+        proxy_cache_valid any 1d;
 
         # For testing cache - remove before deploying to production
-        add_header Cache-Control "public, max-age=31536000, immutable";
+        add_header Cache-Control "public, max-age=86400, immutable";
         add_header X-Cache-Status $upstream_cache_status;
     }
 
@@ -53,10 +53,10 @@ http {
         proxy_cache STATIC;
         proxy_pass http://app_server;
         proxy_ignore_headers Cache-Control;
-        proxy_cache_valid any 100d;
+        proxy_cache_valid any 1d;
 
         # For testing cache - remove before deploying to production
-        add_header Cache-Control "public, max-age=31536000, immutable";
+        add_header Cache-Control "public, max-age=86400, immutable";
         add_header X-Cache-Status $upstream_cache_status;
     }
 
