@@ -127,12 +127,6 @@ export default function Index() {
 
       <div className="col-md-8 mx-auto">
           <h1 className="text-center mt-5 mb-3">{t('Conscious Woman')}</h1>
-          <div className="col-12">
-            <Trans
-              i18nKey="home:conscious-woman-long"
-              components={[<br />]}
-            />
-          </div>
           <div className="row">
             <SingleProductCard
               className="col-md-4 mx-auto"
@@ -150,6 +144,12 @@ export default function Index() {
               productName=""
               width={853}
               height={1280}
+            />
+          </div>
+          <div className="col-12">
+            <Trans
+              i18nKey="home:conscious-woman-long"
+              components={[<br />]}
             />
           </div>
       </div>
