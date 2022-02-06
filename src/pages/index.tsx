@@ -59,8 +59,26 @@ export default function Index() {
       <div className="row col-md-8 mx-auto px-0">
         <SingleProductCard
           className="col-md-3"
+          productPageLink="/helen-blazer"
+          productImageLink="/landing/helen-blazer.jpg"
+          productName="HELEN Blazer"
+          price="€225"
+          width={853}
+          height={1280}
+        />
+        <SingleProductCard
+          className="col-md-3"
+          productPageLink="/marigold-trench-coat"
+          productImageLink="/landing/marigold-trench-coat.jpg"
+          productName="MARIGOLD Trench Coat"
+          price="€215"
+          width={853}
+          height={1280}
+        />
+        <SingleProductCard
+          className="col-md-3"
           productPageLink="/flora-wrap-dress"
-          productImageLink="/landing/flora_dress.jpg"
+          productImageLink="/landing/flora-wrap-dress.jpg"
           productName="FLORA Wrap Dress"
           price="€229"
           width={853}
@@ -68,28 +86,10 @@ export default function Index() {
         />
         <SingleProductCard
           className="col-md-3"
-          productPageLink="/reeva-denim-jacket"
-          productImageLink="/landing/reeva-denim-jacket.jpg"
-          productName="REEVA Denim Jacket"
-          price="€139"
-          width={853}
-          height={1280}
-        />
-        <SingleProductCard
-          className="col-md-3"
-          productPageLink="/lola-oversized-shirt"
-          productImageLink="/landing/lola-top.jpg"
-          productName="LOLA Oversized Shirt"
-          price="€149"
-          width={853}
-          height={1280}
-        />
-        <SingleProductCard
-          className="col-md-3"
-          productPageLink="/helen-blazer"
-          productImageLink="/landing/helen-blazer.jpg"
-          productName="HELEN Blazer"
-          price="€225"
+          productPageLink="/peri-blouse"
+          productImageLink="/landing/peri-blouse.jpg"
+          productName="PERI Blouse"
+          price="€155"
           width={853}
           height={1280}
         />
@@ -118,7 +118,7 @@ export default function Index() {
             productPageLink="/peri-sis-handkerchief"
             productImageLink="/landing/embroidery.jpg"
             productName="PERI SIS Handkerchief"
-            price="27"
+            price="€27"
             width={853}
             height={1280}
           />
@@ -126,59 +126,32 @@ export default function Index() {
       </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('DIVINE TENCEL')}</h1>
+          <h1 className="text-center mt-5 mb-3">{t('Conscious Woman')}</h1>
           <div className="col-12">
             <Trans
-              i18nKey="home:MYNA-grand-purpose"
-              components={[<p />]}
+              i18nKey="home:conscious-woman-long"
+              components={[<br />]}
             />
           </div>
           <div className="row">
             <SingleProductCard
               className="col-md-4 mx-auto"
-              productPageLink="/marigold-trench-coat"
-              productImageLink="/landing/marigold-coat.jpg"
-              productName="MARIGOLD Trench Coat"
-              price="€225"
+              productPageLink="/delphi-culottes"
+              productImageLink="/landing/conscious-woman-01.jpg"
+              productName="DELPHI Culottes"
+              price="€89"
               width={853}
               height={1280}
             />
             <SingleProductCard
               className="col-md-4 mx-auto"
-              productPageLink="/marigold-trench-coat"
-              productImageLink="/landing/marigold-bread.jpg"
+              productPageLink="/delphi-culottes"
+              productImageLink="/landing/conscious-woman-02.jpg"
               productName=""
               width={853}
               height={1280}
             />
           </div>
-      </div>
-
-      <div className="col-md-8 mx-auto">
-        <h1 className="text-center mb-3">{t('FRIENDSHIP MYNA')}</h1>
-        <div className="row">
-          <div className="text-center col-md-8 offset-md-2 order-last">
-            <p>
-              {t('build-and-create-friendship')}
-            </p>
-          </div>
-          <SingleProductCard
-            className="col-md-6"
-            productPageLink="/lookbook"
-            productImageLink="/landing/walk.jpg"
-            productName="LOOKBOOK"
-            width={1280}
-            height={853}
-          />
-          <SingleProductCard
-            className="col-md-6"
-            productPageLink="/lookbook"
-            productImageLink="/landing/jump.jpg"
-            productName="LOOKBOOK"
-            width={1280}
-            height={853}
-          />
-        </div>
       </div>
 
       <div className="col-md-8 mx-auto">
