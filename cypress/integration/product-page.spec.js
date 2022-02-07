@@ -22,6 +22,7 @@ describe('product page', () => {
     });
 
     it('has three small clickable images', () => {
+      cy.wait(500);
       productPage.image(1).invoke('attr', 'src').as('photo1src');
 
       productPage.image(2).as('photo2')
@@ -47,6 +48,7 @@ describe('product page', () => {
     });
 
     it('can show main product image in big', () => {
+      cy.wait(500);
       productPage.image(1).as('mainPhoto');
 
       cy.get('@mainPhoto').invoke('attr', 'src').as('mainPhotoSrc');
