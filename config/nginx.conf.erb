@@ -17,7 +17,7 @@ http {
 
 	server_tokens off;
 
-  proxy_cache_path /app/cache/nginx levels=1:2 keys_zone=STATIC:10m inactive=7d use_temp_path=off;
+  proxy_cache_path /app/cache/nginx levels=1:2 keys_zone=STATIC:10m inactive=1d use_temp_path=off;
 	log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
 	access_log <%= ENV['NGINX_ACCESS_LOG_PATH'] || 'logs/nginx/access.log' %> l2met;
 	error_log <%= ENV['NGINX_ERROR_LOG_PATH'] || 'logs/nginx/error.log' %>;
@@ -42,10 +42,10 @@ http {
         proxy_cache STATIC;
         proxy_pass http://app_server;
         proxy_ignore_headers Cache-Control;
-        proxy_cache_valid any 100d;
+        proxy_cache_valid any 1d;
 
         # For testing cache - remove before deploying to production
-        add_header Cache-Control "public, max-age=31536000, immutable";
+        add_header Cache-Control "public, max-age=86400, immutable";
         add_header X-Cache-Status $upstream_cache_status;
     }
 
@@ -53,10 +53,10 @@ http {
         proxy_cache STATIC;
         proxy_pass http://app_server;
         proxy_ignore_headers Cache-Control;
-        proxy_cache_valid any 100d;
+        proxy_cache_valid any 1d;
 
         # For testing cache - remove before deploying to production
-        add_header Cache-Control "public, max-age=31536000, immutable";
+        add_header Cache-Control "public, max-age=86400, immutable";
         add_header X-Cache-Status $upstream_cache_status;
     }
 
