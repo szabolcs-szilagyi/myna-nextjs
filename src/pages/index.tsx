@@ -1,4 +1,3 @@
-import React from 'react';
 import Container from 'react-bootstrap/Container';
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';

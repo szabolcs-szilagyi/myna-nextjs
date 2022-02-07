@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Link from 'next/link';
 import useTranslation from 'next-translate/useTranslation';
 import { subscribeToNewsletter } from '../services';
