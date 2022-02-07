@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import { useState, MouseEvent } from 'react';
 import Trans from 'next-translate/Trans';
 
 import SizeInfo from '../components/SizeInfo';

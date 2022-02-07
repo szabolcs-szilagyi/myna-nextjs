@@ -257,6 +257,7 @@ describe('checkout', () => {
       cy.wait('@sessionIsValid');
 
       checkout.checkoutButton().click();
+      cy.wait(500);
       checkout.payPalHolder().should('be.visible');
     })
 
@@ -310,15 +311,15 @@ describe('checkout', () => {
       productPage.getPriceAs('liliTopPrice');
 
       cy.intercept({ pathname: '/cart/total' }).as('gettingCartTotal');
-      cy.visit('/checkout')
-      cy.wait('@gettingCartTotal');
-
       cy.intercept({ pathname: '/session/is-valid' }).as('sessionIsValid');
+
       cy.visit('/checkout');
 
+      cy.wait('@gettingCartTotal');
       cy.wait('@sessionIsValid');
 
       checkout.checkoutButton().click();
+      cy.wait(500);
 
       cy.intercept({ pathname: '/cart/complete-purchase' }).as('completePurchase');
       checkout.payPalHolder().click();

@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from 'next/image';
 import useTranslation from 'next-translate/useTranslation'
 
@@ -7,6 +6,10 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import Container from 'react-bootstrap/Container';
 import usePing from '../lib/use-ping';
+
+import ourStory01 from '../../public/our-story-01.jpg';
+import ourStory02 from '../../public/our-story-02.jpg';
+import ourStory03 from '../../public/our-story-03.jpg';
 
 export default function OurStory() {
   const { t } = useTranslation('our-story');
@@ -67,7 +70,7 @@ export default function OurStory() {
           <div className="row">
             <div className="col-md-4">
               <Image
-                src="/our-story-01.jpg"
+                src={ourStory01.src}
                 layout="responsive"
                 width={200}
                 height={200}
@@ -76,7 +79,7 @@ export default function OurStory() {
             </div>
             <div className="col-md-4">
               <Image
-                src="/our-story-02.jpg"
+                src={ourStory02.src}
                 layout="responsive"
                 width={200}
                 height={200}
@@ -85,7 +88,7 @@ export default function OurStory() {
             </div>
             <div className="col-md-4">
               <Image
-                src="/our-story-03.jpg"
+                src={ourStory03.src}
                 layout="responsive"
                 width={200}
                 height={200}

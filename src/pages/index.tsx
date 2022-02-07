@@ -1,4 +1,3 @@
-import React from 'react';
 import Container from 'react-bootstrap/Container';
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
@@ -9,6 +8,18 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import SingleProductCard from '../components/SingleProductCard';
 import usePing from '../lib/use-ping';
+
+import consciouslyBeautiful from '../../public/landing/consciously_beautiful.jpg';
+import loveAndLight from '../../public/landing/love_and_light.jpg';
+import helenBlazer from '../../public/landing/helen-blazer.jpg';
+import marigoldTrenchCoat from '../../public/landing/marigold-trench-coat.jpg';
+import floraWrapDress from '../../public/landing/flora-wrap-dress.jpg';
+import periBlouse from '../../public/landing/peri-blouse.jpg';
+import periTop from '../../public/landing/peri-top.jpg';
+import embroidery from '../../public/landing/embroidery.jpg';
+import consciousWoman01 from '../../public/landing/conscious-woman-01.jpg';
+import consciousWoman02 from '../../public/landing/conscious-woman-02.jpg';
+import viewOurLookbook from '../../public/landing/view-our-lookbook.jpg';
 
 export default function Index() {
   const { t } = useTranslation('home');
@@ -35,7 +46,7 @@ export default function Index() {
             <SingleProductCard
               className="col-md-4"
               productPageLink="/shop-collections#consciously-beautiful"
-              productImageLink="/landing/consciously_beautiful.jpg"
+              productImageLink={consciouslyBeautiful.src}
               productName="MARIGOLD Trench Coat"
             >
               <p className="text-center">Consciously Beautiful<br />{t('Collection')}</p>
@@ -43,7 +54,7 @@ export default function Index() {
             <SingleProductCard
               className="col-md-4"
               productPageLink="/shop-collections#love-and-light"
-              productImageLink="/landing/love_and_light.jpg"
+              productImageLink={loveAndLight.src}
               productName="LOLA Shirt"
             >
               <p className="text-center">Love & Light<br />{t('Collection')}</p>
@@ -60,7 +71,7 @@ export default function Index() {
         <SingleProductCard
           className="col-md-3"
           productPageLink="/helen-blazer"
-          productImageLink="/landing/helen-blazer.jpg"
+          productImageLink={helenBlazer.src}
           productName="HELEN Blazer"
           price="€225"
           width={853}
@@ -69,7 +80,7 @@ export default function Index() {
         <SingleProductCard
           className="col-md-3"
           productPageLink="/marigold-trench-coat"
-          productImageLink="/landing/marigold-trench-coat.jpg"
+          productImageLink={marigoldTrenchCoat.src}
           productName="MARIGOLD Trench Coat"
           price="€215"
           width={853}
@@ -78,7 +89,7 @@ export default function Index() {
         <SingleProductCard
           className="col-md-3"
           productPageLink="/flora-wrap-dress"
-          productImageLink="/landing/flora-wrap-dress.jpg"
+          productImageLink={floraWrapDress.src}
           productName="FLORA Wrap Dress"
           price="€229"
           width={853}
@@ -87,7 +98,7 @@ export default function Index() {
         <SingleProductCard
           className="col-md-3"
           productPageLink="/peri-blouse"
-          productImageLink="/landing/peri-blouse.jpg"
+          productImageLink={periBlouse.src}
           productName="PERI Blouse"
           price="€155"
           width={853}
@@ -107,7 +118,7 @@ export default function Index() {
           <SingleProductCard
             className="col-md-3"
             productPageLink="/peri-blouse"
-            productImageLink="/landing/peri-top.jpg"
+            productImageLink={periTop.src}
             productName="PERI Blouse"
             price="€155"
             width={853}
@@ -116,7 +127,7 @@ export default function Index() {
           <SingleProductCard
             className="col-md-3"
             productPageLink="/peri-sis-handkerchief"
-            productImageLink="/landing/embroidery.jpg"
+            productImageLink={embroidery.src}
             productName="PERI SIS Handkerchief"
             price="€27"
             width={853}
@@ -131,7 +142,7 @@ export default function Index() {
             <SingleProductCard
               className="col-md-4 mx-auto"
               productPageLink="/delphi-culottes"
-              productImageLink="/landing/conscious-woman-01.jpg"
+              productImageLink={consciousWoman01.src}
               productName="DELPHI Culottes"
               price="€89"
               width={853}
@@ -140,7 +151,7 @@ export default function Index() {
             <SingleProductCard
               className="col-md-4 mx-auto"
               productPageLink="/delphi-culottes"
-              productImageLink="/landing/conscious-woman-02.jpg"
+              productImageLink={consciousWoman02.src}
               productName=""
               width={853}
               height={1280}
@@ -159,7 +170,7 @@ export default function Index() {
         <SingleProductCard
           className="col-md-8 mx-auto"
           productPageLink="/lookbook"
-          productImageLink="/landing/view-our-lookbook.jpg"
+          productImageLink={viewOurLookbook.src}
           productName="LOOKBOOK"
           width={1280}
           height={640}
