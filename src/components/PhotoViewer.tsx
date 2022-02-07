@@ -3,6 +3,7 @@ import Modal from 'react-awesome-modal';
 import Image from 'next/image';
 
 import style from './PhotoViewer.module.css';
+import getProductLink from '../lib/get-product-link';
 
 type TPhotos = {
   photo1: string | null,
@@ -79,7 +80,7 @@ export default function PhotoViewer(props: { photos: TPhotos }) {
   function getPhotoUri(fileName: string | null) {
     if (!fileName) return '';
 
-    return '/product_photos/' + fileName;
+    return getProductLink(fileName);
   }
 
   return (

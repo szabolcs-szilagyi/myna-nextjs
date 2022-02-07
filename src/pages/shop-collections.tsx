@@ -12,6 +12,7 @@ import {
 import { request } from '../lib/request';
 import useTranslation from 'next-translate/useTranslation';
 import usePing from '../lib/use-ping';
+import getProductLink from '../lib/get-product-link';
 
 type ColletcionTypes = 'consciously-beautiful' | 'love-and-light' | 'love-affair-collection';
 type Product = {
@@ -90,7 +91,7 @@ export async function getStaticProps() {
     if(!collectionData[collection]) collectionData[collection] = [];
     collectionData[collection].push({
       link: `/${shortName}`,
-      mainPhoto: `/product_photos/${productDetails.pic1}`,
+      mainPhoto: getProductLink(productDetails.pic1),
       name: productDetails.name,
       price: `€${productDetails.price}`,
     });

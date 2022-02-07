@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
 import PayPal from "../components/Paypal";
+import getProductLink from "../lib/get-product-link";
 import event from "../lib/gtag";
 import {
   getAllProductBasicInfos,
@@ -78,7 +79,7 @@ function getProductImageLink(
   idName: string
 ) {
   if (!idName) return "";
-  return "/product_photos/" + productDetailHash[idName].imageName;
+  return getProductLink(productDetailHash[idName].imageName);
 }
 
 interface CartItemsProps {
