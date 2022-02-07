@@ -5,6 +5,10 @@ import useTranslation from 'next-translate/useTranslation'
 import styles from './Slider.module.css';
 import Link from 'next/link';
 
+import slide01 from '../../public/slides/01.jpg';
+import slide02 from '../../public/slides/02.jpg';
+import slide03 from '../../public/slides/03.jpg';
+
 const Slide = dynamic(() =>
   import('react-slideshow-image').then((slideshow) => slideshow.Slide),
   { ssr: false }
@@ -27,21 +31,21 @@ export default function Slider() {
       text: 'Consciously Beautiful',
       linkText: t('SHOP THE LOOK'),
       linkHref: '/shop-collections',
-      imageSrc: '/slides/01.jpg',
+      imageSrc: slide01.src,
       buttonClass: styles.button,
     },
     {
       text: 'Consciously Beautiful',
       linkText: t('LOOKBOOK'),
       linkHref: '/lookbook',
-      imageSrc: '/slides/02.jpg',
+      imageSrc: slide02.src,
       buttonClass: styles.button,
     },
     {
       text: t('Our Story'),
       linkText: t('READ MORE'),
       linkHref: '/our-story',
-      imageSrc: '/slides/03.jpg',
+      imageSrc: slide03.src,
       buttonClass: styles.button2,
     },
   ];

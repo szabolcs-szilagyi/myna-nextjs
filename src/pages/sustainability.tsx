@@ -7,6 +7,12 @@ import Footer from '../components/Footer';
 import Container from 'react-bootstrap/Container';
 import usePing from '../lib/use-ping';
 
+import whoMadeYourClouths01 from '../../public/sustainability/who-made-your-clouths-01.jpg';
+import whoMadeYourClouths02 from '../../public/sustainability/who-made-your-clouths-02.jpg';
+import timelessPieces from '../../public/sustainability/timeless-pieces.jpg';
+import packagingAndShipping01 from '../../public/sustainability/packaging-and-shipping-01.jpg';
+import packagingAndShipping02 from '../../public/sustainability/packaging-and-shipping-02.jpg';
+
 export default function Sustainability() {
   const { t } = useTranslation('sustainability');
   usePing();
@@ -29,7 +35,7 @@ export default function Sustainability() {
           <div className="row">
             <div className="col-md-4">
               <Image
-                src="/sustainability/who-made-your-clouths-01.jpg"
+                src={whoMadeYourClouths01.src}
                 width={300}
                 height={400}
                 alt={t('The creation')}
@@ -49,7 +55,7 @@ export default function Sustainability() {
             </div>
             <div className="col-md-4">
               <Image
-                src="/sustainability/timeless-pieces.jpg"
+                src={timelessPieces.src}
                 width={1066}
                 height={1025}
                 alt={t('The Design Process')}
@@ -60,7 +66,7 @@ export default function Sustainability() {
           <div className="row">
             <div className="col-md-4">
               <Image
-                src="/sustainability/who-made-your-clouths-02.jpg"
+                src={whoMadeYourClouths02.src}
                 width={300}
                 height={400}
                 alt={t('Nature Friendly Packaging')}
@@ -83,7 +89,7 @@ export default function Sustainability() {
             </div>
             <div className="col-md-4">
               <Image
-                src="/sustainability/packaging-and-shipping-01.jpg"
+                src={packagingAndShipping01.src}
                 width={3984}
                 height={2656}
                 alt={t('Nature Friendly Packaging')}
@@ -94,7 +100,7 @@ export default function Sustainability() {
           <div className="row">
             <div className="col-md-4">
               <Image
-                src="/sustainability/packaging-and-shipping-02.jpg"
+                src={packagingAndShipping02.src}
                 width={3984}
                 height={2656}
                 alt={t('Multi Purpose Packaging')}
