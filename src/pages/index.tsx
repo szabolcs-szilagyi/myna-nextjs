@@ -14,11 +14,9 @@ import loveAndLight from '../../public/landing/love_and_light.jpg';
 import helenBlazer from '../../public/landing/helen-blazer.jpg';
 import marigoldTrenchCoat from '../../public/landing/marigold-trench-coat.jpg';
 import floraWrapDress from '../../public/landing/flora-wrap-dress.jpg';
-import periBlouse from '../../public/landing/peri-blouse.jpg';
-import periTop from '../../public/landing/peri-top.jpg';
-import embroidery from '../../public/landing/embroidery.jpg';
-import consciousWoman01 from '../../public/landing/conscious-woman-01.jpg';
-import consciousWoman02 from '../../public/landing/conscious-woman-02.jpg';
+import lolaOversizedShirt from '../../public/landing/lola-oversized-shirt.jpg'
+import noliaDress from '../../public/landing/nolia-dress.jpg';
+import sennaSkirt from '../../public/landing/senna-skirt.jpg';
 import viewOurLookbook from '../../public/landing/view-our-lookbook.jpg';
 
 export default function Index() {
@@ -64,25 +62,33 @@ export default function Index() {
       </div>
 
       <div className="col-md-6 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('New Autumn-Winter transitional & timeless collection')}</h1>
-        <p>{t('sustainability:we-give-you-small-capsule-collections')}</p>
+        <h1 className="text-center mt-5 mb-3">{t('magic-text-shop-the-looks')}</h1>
       </div>
       <div className="row col-md-8 mx-auto px-0">
-        <SingleProductCard
-          className="col-md-3"
-          productPageLink="/helen-blazer"
-          productImageLink={helenBlazer.src}
-          productName="HELEN Blazer"
-          price="€225"
-          width={853}
-          height={1280}
-        />
         <SingleProductCard
           className="col-md-3"
           productPageLink="/marigold-trench-coat"
           productImageLink={marigoldTrenchCoat.src}
           productName="MARIGOLD Trench Coat"
           price="€215"
+          width={853}
+          height={1280}
+        />
+        <SingleProductCard
+          className="col-md-3"
+          productPageLink="/lola-oversized-shirt"
+          productImageLink={lolaOversizedShirt.src}
+          productName="LOLA Oversized Shirt"
+          price="€149"
+          width={853}
+          height={1280}
+        />
+        <SingleProductCard
+          className="col-md-3"
+          productPageLink="/helen-blazer"
+          productImageLink={helenBlazer.src}
+          productName="HELEN Blazer"
+          price="€225"
           width={853}
           height={1280}
         />
@@ -95,74 +101,36 @@ export default function Index() {
           width={853}
           height={1280}
         />
-        <SingleProductCard
-          className="col-md-3"
-          productPageLink="/peri-blouse"
-          productImageLink={periBlouse.src}
-          productName="PERI Blouse"
-          price="€155"
-          width={853}
-          height={1280}
-        />
       </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('MYNA-Embroidery')}</h1>
+        <h1 className="text-center mt-5 mb-3">{t('lotus-title')}</h1>
         <div className="row">
           <div className="col-12 col-xl-6 my-auto order-last">
             <Trans
-              i18nKey="home:Embroidery in MYNA"
+              i18nKey="home:lotus-text"
               components={[<p />]}
             />
           </div>
           <SingleProductCard
             className="col-md-3"
-            productPageLink="/peri-blouse"
-            productImageLink={periTop.src}
-            productName="PERI Blouse"
-            price="€155"
+            productPageLink="/senna-skirt"
+            productImageLink={sennaSkirt.src}
+            productName="SENNA Skirt"
+            price="€115"
             width={853}
             height={1280}
           />
           <SingleProductCard
             className="col-md-3"
-            productPageLink="/peri-sis-handkerchief"
-            productImageLink={embroidery.src}
-            productName="PERI SIS Handkerchief"
-            price="€27"
+            productPageLink="/nolia-dustpink"
+            productImageLink={noliaDress.src}
+            productName="NOLIA Dress"
+            price="€215"
             width={853}
             height={1280}
           />
         </div>
-      </div>
-
-      <div className="col-md-8 mx-auto">
-          <h1 className="text-center mt-5 mb-3">{t('Conscious Woman')}</h1>
-          <div className="row">
-            <SingleProductCard
-              className="col-md-4 mx-auto"
-              productPageLink="/delphi-culottes"
-              productImageLink={consciousWoman01.src}
-              productName="DELPHI Culottes"
-              price="€89"
-              width={853}
-              height={1280}
-            />
-            <SingleProductCard
-              className="col-md-4 mx-auto"
-              productPageLink="/delphi-culottes"
-              productImageLink={consciousWoman02.src}
-              productName=""
-              width={853}
-              height={1280}
-            />
-          </div>
-          <div className="col-12">
-            <Trans
-              i18nKey="home:conscious-woman-long"
-              components={[<br />]}
-            />
-          </div>
       </div>
 
       <div className="col-md-8 mx-auto">
