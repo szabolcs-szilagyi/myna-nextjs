@@ -62,7 +62,12 @@ export default function Index() {
       </div>
 
       <div className="col-md-6 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('magic-text-shop-the-looks')}</h1>
+        <h1 className="text-center mt-5 mb-3">
+          <Trans
+            i18nKey="home:magic-text-shop-the-looks"
+            components={[<br />]}
+          />
+        </h1>
       </div>
       <div className="row col-md-8 mx-auto px-0">
         <SingleProductCard
