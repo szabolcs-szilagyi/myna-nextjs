@@ -82,25 +82,25 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
         id="basic-navbar-nav"
         className="row no-gutters col-12 col-sm-12 col-md-8 col-xl-10 justify-content-center justify-content-xl-between"
       >
-        <BSNav className="order-2 order-sm-3 order-xl-1 col-xl-2 col-sm-4 pt-sm-5 pt-xl-0">
-          <BSNav.Link className="w-100" href="/lookbook" data-cy="lookbook-link">{t("Lookbook")}</BSNav.Link>
-        </BSNav>
-        <BSNav className="order-3 order-sm-4 order-xl-2 col-xl-2 col-sm-4 pt-sm-5 pt-xl-0">
-          <BSNav.Link className="w-100" href="https://blog.mynalabel.com">{t("Blog")}</BSNav.Link>
-        </BSNav>
-        <BSNav className="order-4 order-sm-5 order-xl-3 col-xl-1 col-sm-4 pt-sm-5 pt-xl-0">
+        <BSNav className="order-1 order-sm-4 order-xl-1 col-xl-1 col-sm-4 pt-sm-5 pt-xl-0">
           <BSNav.Link className="w-100" href="/shop-collections" data-cy="shop-collections-link">
             {t("Shop Collections")}
           </BSNav.Link>
         </BSNav>
-        <BSNav className="order-5 order-sm-6 order-xl-4 col-xl-2 col-sm-4 pt-sm-5 pt-xl-0">
-          <BSNav.Link className="w-100" href="/sustainability">{t("Sustainability")}</BSNav.Link>
-        </BSNav>
-        <BSNav className="order-6 order-sm-7 order-xl-5 col-xl-2 col-sm-4 pt-sm-5 pt-xl-0">
+        <BSNav className="order-2 order-sm-7 order-xl-2 col-xl-2 col-sm-4 pt-sm-5 pt-xl-0">
           <BSNav.Link className="w-100" href="/our-story">{t("Our Story")}</BSNav.Link>
         </BSNav>
+        <BSNav className="order-3 order-sm-6 order-xl-3 col-xl-2 col-sm-4 pt-sm-5 pt-xl-0">
+          <BSNav.Link className="w-100" href="/sustainability">{t("Sustainability")}</BSNav.Link>
+        </BSNav>
+        <BSNav className="order-4 order-sm-3 order-xl-4 col-xl-2 col-sm-4 pt-sm-5 pt-xl-0">
+          <BSNav.Link className="w-100" href="/lookbook" data-cy="lookbook-link">{t("Lookbook")}</BSNav.Link>
+        </BSNav>
+        <BSNav className="order-5 order-sm-5 order-xl-5 col-xl-2 col-sm-4 pt-sm-5 pt-xl-0">
+          <BSNav.Link className="w-100" href="https://blog.mynalabel.com">{t("Blog")}</BSNav.Link>
+        </BSNav>
         <Cart
-          containerClass="order-1 order-sm-1 order-xl-6 col-xl-1 col-sm-4 pt-sm-5 pt-xl-0"
+          containerClass="order-6 order-sm-1 order-xl-6 col-xl-1 col-sm-4 pt-sm-5 pt-xl-0"
           lastItemsDate={lastItemsDate}
         />
         <BSNav className="order-7 order-sm-2 order-xl-7 col-xl-1 col-sm-4 pt-sm-5 pt-xl-0">
