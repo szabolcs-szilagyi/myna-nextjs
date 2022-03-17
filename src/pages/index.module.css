@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+@font-face {
+  font-family: 'Freeland';
+  src: url('/fonts/freeland.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+  font-display: swap;
+}
+
+.inspirationalText {
+  font-family: 'Freeland', cursive;
+  font-size: 1.5em;
+}
