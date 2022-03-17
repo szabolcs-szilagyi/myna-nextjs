@@ -59,26 +59,22 @@ function groupProducts(products: Product[] | undefined) {
 
 export async function getStaticProps() {
   const productsToRetrieve = [
-    ['consciously-beautiful', 'mary-dress'],
-    ['consciously-beautiful', 'marigold-trench-coat'],
-    ['consciously-beautiful', 'helen-blazer'],
-    ['consciously-beautiful', 'holly-bracelet'],
-    ['consciously-beautiful', 'alyss-dress'],
-    ['consciously-beautiful', 'peri-sis-handkerchief'],
-    ['consciously-beautiful', 'reeva-denim-jacket'],
-    ['consciously-beautiful', 'tilia-blouse'],
-    ['consciously-beautiful', 'senna-skirt'],
-    ['consciously-beautiful', 'delphi-culottes'],
-    ['consciously-beautiful', 'peri-blouse'],
-    ['consciously-beautiful', 'flora-wrap-dress'],
-    ['consciously-beautiful', 'calla-cream'],
-    ['consciously-beautiful', 'helia-bracelet'],
-    ['love-and-light', 'lola-oversized-shirt'],
-    ['love-and-light', 'gea-cream'],
-    ['love-and-light', 'magna-scarf'],
-    ['love-and-light', 'nolia-dustpink'],
-    ['love-and-light', 'ivy-cream'],
-    ['love-and-light', 'aster-green'],
+    ['i-want-to-be-the-sea', 'susan-dress'],
+    ['i-want-to-be-the-sea', 'adel-jacket'],
+    ['i-want-to-be-the-sea', 'sari-denim-shorts'],
+    ['i-want-to-be-the-sea', 'deli-shorts'],
+    ['i-want-to-be-the-sea', 'leila-shirt'],
+    ['i-want-to-be-the-sea', 'viola-dress'],
+    ['i-want-to-be-the-sea', 'neeja-top'],
+    ['i-want-to-be-the-sea', 'lilium-trousers'],
+    ['i-want-to-be-the-sea', 'calla-cream'],
+    ['i-want-to-be-the-sea', 'raisa-dress'],
+    ['i-want-to-be-the-sea', 'marigold-trench-coat'],
+    ['i-want-to-be-the-sea', 'lola-oversized-shirt'],
+    ['i-want-to-be-the-sea', 'gea-cream'],
+    ['i-want-to-be-the-sea', 'ivy-cream'],
+    ['i-want-to-be-the-sea', 'delphi-culottes'],
+    ['i-want-to-be-the-sea', 'tilia-blouse'],
   ]
   const collectionData: TCollectionData = {};
 
@@ -119,30 +115,18 @@ export default function ShopCollections({ collectionData }: TShopCollectionsProp
       </div>
       <div className="row justify-content-md-center">
         <div className="col-md-2 ce capitalLetters">
-          <a href="#consciously-beautiful" className="smallFont ce blackFont">Consciously Beautiful</a>
-        </div>
-        <div className="col-md-2 ce capitalLetters">
-          <a href="#love-and-light" className="smallFont ce blackFont">Love and Light</a>
+          <a href="#i-want-to-be-the-sea" className="smallFont ce blackFont">I want to be the sea</a>
         </div>
       </div>
 
       <div className="spacer50px" />
       <div className="row">
         <div id="consciously-beautiful" className="col-md-12 ce capitalLetters">
-          <h5><strong>Consciously Beautiful</strong></h5>
+          <h5><strong>I want to be the sea</strong></h5>
         </div>
       </div>
 
-      {(groupProducts(collectionData['consciously-beautiful']))}
-
-      <div className="spacer50px" />
-      <div className="row">
-        <div id="love-and-light" className="col-md-12 ce capitalLetters">
-          <h5><strong>Love and Light</strong></h5>
-        </div>
-      </div>
-
-      {(groupProducts(collectionData['love-and-light']))}
+      {(groupProducts(collectionData['i-want-to-be-the-sea']))}
 
       <Footer />
     </Container>
