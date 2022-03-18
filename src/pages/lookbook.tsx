@@ -16,8 +16,6 @@ import img04 from '../../public/lookbook/04.jpg';
 import img05 from '../../public/lookbook/05.jpg';
 import img06 from '../../public/lookbook/06.jpg';
 import img07 from '../../public/lookbook/07.jpg';
-import img08 from '../../public/lookbook/08.jpg';
-import img09 from '../../public/lookbook/09.jpg';
 
 type LookbookImageProps = {
   imageSrc: string,
@@ -66,8 +64,8 @@ export default function Lookbook() {
             <div className="col-md-7 ce">
               <LookbookImage
                 imageSrc={img01.src}
-                height={853}
-                width={1280}
+                height={img01.height}
+                width={img01.width}
                 additionalClass="col-md-12 px-0"
               />
               <div className={' col-md-12 px-5 py-5'}>
@@ -78,8 +76,8 @@ export default function Lookbook() {
             </div>
             <LookbookImage
               imageSrc={img02.src}
-              height={1280}
-              width={853}
+              height={img02.height}
+              width={img02.width}
               additionalClass="col-md-5"
             />
           </div>
@@ -93,8 +91,8 @@ export default function Lookbook() {
         <div className="col-md-2"></div>
         <LookbookImage
           imageSrc={img03.src}
-          height={853}
-          width={1280}
+          height={img03.height}
+          width={img03.width}
           additionalClass="col-md-8"
         />
         <div className="col-md-2"></div>
@@ -108,22 +106,22 @@ export default function Lookbook() {
             <div className="col-md-6 ce">
               <LookbookImage
                 imageSrc={img04.src}
-                height={1280}
-                width={853}
+                height={img04.height}
+                width={img04.width}
               />
               <div className="spacer25px d-block d-md-none"></div>
             </div>
             <div className="col-md-6" >
               <LookbookImage
                 imageSrc={img05.src}
-                height={853}
-                width={1280}
+                height={img05.height}
+                width={img05.width}
               />
               <div className="spacer25px"></div>
               <LookbookImage
                 imageSrc={img06.src}
-                height={853}
-                width={1280}
+                height={img06.height}
+                width={img06.width}
               />
             </div>
           </div>
@@ -136,35 +134,11 @@ export default function Lookbook() {
         <div className="col-md-2"></div>
         <LookbookImage
           imageSrc={img07.src}
-          height={853}
-          width={1280}
+          height={img07.height}
+          width={img07.width}
           additionalClass="col-md-8"
         />
         <div className="spacer25px"></div>
-        <div className="col-md-2"></div>
-      </div>
-
-      <div className="row">
-        <div className="col-md-2"></div>
-        <div className="col-md-8">
-          <div className="row">
-            <div className="col-md-6" >
-              <LookbookImage
-                imageSrc={img08.src}
-                height={1280}
-                width={853}
-              />
-              <div className="spacer25px d-block d-md-none"></div>
-            </div>
-            <div className="col-md-6 ce">
-              <LookbookImage
-                imageSrc={img09.src}
-                height={1280}
-                width={853}
-              />
-            </div>
-          </div>
-        </div>
         <div className="col-md-2"></div>
       </div>
 
