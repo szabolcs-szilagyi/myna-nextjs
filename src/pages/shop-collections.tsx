@@ -115,14 +115,14 @@ export default function ShopCollections({ collectionData }: TShopCollectionsProp
       </div>
       <div className="row justify-content-md-center">
         <div className="col-md-2 ce capitalLetters">
-          <a href="#i-want-to-be-the-sea" className="smallFont ce blackFont">I want to be the sea</a>
+          <a href="#i-want-to-be-the-sea" className="smallFont ce blackFont">I want to be the Sea</a>
         </div>
       </div>
 
       <div className="spacer50px" />
       <div className="row">
         <div id="consciously-beautiful" className="col-md-12 ce capitalLetters">
-          <h5><strong>I want to be the sea</strong></h5>
+          <h5><strong>I want to be the Sea</strong></h5>
         </div>
       </div>
 

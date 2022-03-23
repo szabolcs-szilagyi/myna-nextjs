@@ -28,14 +28,14 @@ export default function Slider() {
 
   const slides = [
     {
-      text: 'I want to be the sea',
+      text: 'I want to be the Sea',
       linkText: t('SHOP THE LOOK'),
       linkHref: '/shop-collections',
       imageSrc: slide01.src,
       buttonClass: styles.button,
     },
     {
-      text: 'I want to be the sea',
+      text: 'I want to be the Sea',
       linkText: t('LOOKBOOK'),
       linkHref: '/lookbook',
       imageSrc: slide02.src,
