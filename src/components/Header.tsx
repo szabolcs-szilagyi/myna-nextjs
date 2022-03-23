@@ -1,6 +1,7 @@
 import useTranslation from 'next-translate/useTranslation';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { ME_ADDRESS } from '../constants';
 
 type THeadElementProps = {
   description?: string
@@ -28,11 +29,16 @@ export default function HeadElement(
     return title;
   }
 
+  const title = pathToTitle(path || router.pathname);
+
   return <Head>
-    <title>{pathToTitle(path || router.pathname)}</title>
+    <title>{title}</title>
     <meta httpEquiv="Content-Type" content="text/html" charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={t(description)} />
+    <meta property="og:description" content={t(description)} />
+    <meta property="og:title" content={title} />
+    <meta property="og:image" content={`${ME_ADDRESS}/social_media.jpg`} />
     <script src="https://unpkg.com/react/umd/react.production.min.js" crossOrigin="true"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossOrigin="true"></script>
     <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossOrigin="true"></script>

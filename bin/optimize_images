@@ -23,6 +23,35 @@ optimize_product_images() {
 	echo "optimized images are in: $optimized_dir" >&2
 }
 
+social_media_preview() {
+	directory=$1
+
+	optimized_dir="$directory/optimized"
+
+	mkdir -p "$optimized_dir"
+
+	for image in "$directory"/*.[jJ][pP][gG]; do
+		image=$(basename "$image")
+		new_image=$(echo "$image" | tr '[:upper:]' '[:lower:]')
+
+		convert "$directory/$image" \
+			-resize 1200x630^ \
+			-gravity north \
+			-extent 1200x630 \
+			"$optimized_dir/_$new_image" || exit 1
+
+		jpeg-recompress \
+			-q high \
+			-a \
+			"$optimized_dir/_$new_image" \
+			"$optimized_dir/$new_image" ||
+			exit 1
+	done
+
+	rm "$optimized_dir"/_*.jpg
+	echo "optimized images are in: $optimized_dir" >&2
+}
+
 optimize_lookbook_images() {
 	directory=$1
 
@@ -89,8 +118,8 @@ EOF
 
 parse_command_line() {
 	ARGS=$(getopt \
-		-o hslp \
-		--long help,slider,lookbook,product -- "$@")
+		-o hslpm \
+		--long help,slider,lookbook,product,social-media -- "$@")
 	getopt_exit="$?"
 
 	if [ "$getopt_exit" -ne 0 ]; then
@@ -112,6 +141,10 @@ parse_command_line() {
 			;;
 		-l | --lookbook)
 			command="optimize_lookbook_images"
+			shift
+			;;
+		-m | --social-media)
+			command="social_media_preview"
 			shift
 			;;
 		-p | --product)

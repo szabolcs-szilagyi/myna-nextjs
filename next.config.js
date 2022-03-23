@@ -5,6 +5,7 @@ const configuration = {
   development: {
     SERVER_ADDRESS: "http://localhost:7000/",
     API_ADDRESS: "http://localhost:7000/",
+    ME_ADDRESS: "http://localhost:3000",
     API_PATH: "legacy",
     EMAIL_PATH: "legacy",
     PAY_PAL_CLIENT_ID:
@@ -13,6 +14,7 @@ const configuration = {
   staging: {
     SERVER_ADDRESS: "https://api-staging.mynalabel.com/",
     API_ADDRESS: "https://api-staging.mynalabel.com/",
+    ME_ADDRESS: "https://staging.mynalabel.com",
     API_PATH: "legacy",
     EMAIL_PATH: "legacy",
     PAY_PAL_CLIENT_ID:
@@ -21,6 +23,7 @@ const configuration = {
   production: {
     SERVER_ADDRESS: "https://api.mynalabel.com/",
     API_ADDRESS: "https://api.mynalabel.com/",
+    ME_ADDRESS: "https://mynalabel.com",
     API_PATH: "legacy",
     EMAIL_PATH: "legacy",
     PAY_PAL_CLIENT_ID:
