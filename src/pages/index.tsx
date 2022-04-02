@@ -91,7 +91,7 @@ export default function Index() {
         <div className="row">
           <SingleProductCard
             className="col-md-12"
-            productPageLink="/shop-collection"
+            productPageLink="/shop-collections"
             productImageLink={thirdImage.src}
             productName="SHOP COLLECTION"
             width={thirdImage.width}
@@ -99,7 +99,7 @@ export default function Index() {
           />
           <SingleProductCard
             className="col-md-12"
-            productPageLink="/shop-collection"
+            productPageLink="/shop-collections"
             productImageLink={fourthImage.src}
             productName=""
             width={fourthImage.width}
