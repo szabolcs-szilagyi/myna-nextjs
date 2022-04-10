@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 import Link, { LinkProps } from 'next/link';
-import { addProductToCart, getAvailability, loadProductDetails } from '../services/nestjs-server';
+import { addProductToCart, getAvailability, getListOfAvailableProducts, loadProductDetails } from '../services/nestjs-server';
 
 const DEFAULT_AVAILABLE = 'Available for pre-order';
 
@@ -25,51 +25,11 @@ export async function getStaticProps({ params: { idname } }) {
 }
 
 export async function getStaticPaths() {
+  const products = await getListOfAvailableProducts();
+  const paths = products.map(productName => ({ params: { idname: productName } }));
   return {
-    paths: [
-      { params: { idname: 'adel-jacket' } },
-      { params: { idname: 'alyss-dress' } },
-      { params: { idname: 'aster-green' } },
-      { params: { idname: 'aster-sand' } },
-      { params: { idname: 'bella-blouse' } },
-      { params: { idname: 'bella-hand-painted-blouse' } },
-      { params: { idname: 'calla-cream' } },
-      { params: { idname: 'dahlia-blouse' } },
-      { params: { idname: 'deli-shorts' } },
-      { params: { idname: 'delphi-culottes' } },
-      { params: { idname: 'flora-wrap-dress' } },
-      { params: { idname: 'gea-cream' } },
-      { params: { idname: 'helen-blazer' } },
-      { params: { idname: 'helia-bracelet' } },
-      { params: { idname: 'holly-bracelet' } },
-      { params: { idname: 'iris-vest' } },
-      { params: { idname: 'ivy-cream' } },
-      { params: { idname: 'leila-shirt' } },
-      { params: { idname: 'leya-wrap-dress' } },
-      { params: { idname: 'lili-top' } },
-      { params: { idname: 'lili-top-satin' } },
-      { params: { idname: 'lilium-trousers' } },
-      { params: { idname: 'lisia-dress' } },
-      { params: { idname: 'lola-oversized-shirt' } },
-      { params: { idname: 'lotus-sand' } },
-      { params: { idname: 'magna-scarf' } },
-      { params: { idname: 'marigold-trench-coat' } },
-      { params: { idname: 'mary-dress' } },
-      { params: { idname: 'neeja-top' } },
-      { params: { idname: 'nolia-dustpink' } },
-      { params: { idname: 'peri-blouse' } },
-      { params: { idname: 'peri-sis-handkerchief' } },
-      { params: { idname: 'raisa-dress' } },
-      { params: { idname: 'reeva-denim-jacket' } },
-      { params: { idname: 'sari-denim-shorts' } },
-      { params: { idname: 'senna-skirt' } },
-      { params: { idname: 'susan-dress' } },
-      { params: { idname: 'tilia-blouse' } },
-      { params: { idname: 'tilja-top' } },
-      { params: { idname: 'tuli-dress' } },
-      { params: { idname: 'viola-dress' } },
-    ],
-    fallback: true
+    paths,
+    fallback: false
   };
 }
 

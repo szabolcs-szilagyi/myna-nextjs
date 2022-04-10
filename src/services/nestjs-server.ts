@@ -28,6 +28,20 @@ type ProductDetails = {
   };
 };
 
+export async function getListOfAvailableProducts(
+): Promise<string[]> {
+  const rawResult: unknown = await request(
+    API_SERVER + "product/available",
+    { options: { json: true } }
+  );
+
+  if(rawResult instanceof Array) {
+    return rawResult;
+  } else {
+    throw new Error('Unknown data received when getting available products.');
+  }
+}
+
 export async function loadProductDetails(
   idName: string
 ): Promise<ProductDetails> {

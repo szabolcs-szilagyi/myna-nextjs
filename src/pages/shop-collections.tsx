@@ -59,22 +59,28 @@ function groupProducts(products: Product[] | undefined) {
 
 export async function getStaticProps() {
   const productsToRetrieve = [
-    ['i-want-to-be-the-sea', 'susan-dress'],
-    ['i-want-to-be-the-sea', 'adel-jacket'],
-    ['i-want-to-be-the-sea', 'sari-denim-shorts'],
+    ['i-want-to-be-the-sea', 'rosa-dress'],
     ['i-want-to-be-the-sea', 'deli-shorts'],
-    ['i-want-to-be-the-sea', 'leila-shirt'],
-    ['i-want-to-be-the-sea', 'viola-dress'],
-    ['i-want-to-be-the-sea', 'neeja-top'],
+    ['i-want-to-be-the-sea', 'adel-jacket'],
+    ['i-want-to-be-the-sea', 'zinia-skirt'],
+    ['i-want-to-be-the-sea', 'leya-dress'],
+    ['i-want-to-be-the-sea', 'susan-dress'],
     ['i-want-to-be-the-sea', 'lilium-trousers'],
-    ['i-want-to-be-the-sea', 'calla-cream'],
+    ['i-want-to-be-the-sea', 'neeja-top'],
+    ['i-want-to-be-the-sea', 'viola-dress'],
+    ['i-want-to-be-the-sea', 'leila-shirt'],
+    ['i-want-to-be-the-sea', 'erica-sweatshirt'],
+    ['i-want-to-be-the-sea', 'sari-denim-shorts'],
+    ['i-want-to-be-the-sea', 'hana-oversized-shirt'],
+    ['i-want-to-be-the-sea', 'aster-frill'],
     ['i-want-to-be-the-sea', 'raisa-dress'],
-    ['i-want-to-be-the-sea', 'marigold-trench-coat'],
     ['i-want-to-be-the-sea', 'lola-oversized-shirt'],
+    ['i-want-to-be-the-sea', 'marigold-trench-coat'],
+    ['i-want-to-be-the-sea', 'delphi-culottes'],
     ['i-want-to-be-the-sea', 'gea-cream'],
     ['i-want-to-be-the-sea', 'ivy-cream'],
-    ['i-want-to-be-the-sea', 'delphi-culottes'],
     ['i-want-to-be-the-sea', 'tilia-blouse'],
+    ['i-want-to-be-the-sea', 'calla-cream'],
   ]
   const collectionData: TCollectionData = {};
 
