@@ -11,11 +11,11 @@ import usePing from '../lib/use-ping';
 
 import styles from './index.module.css';
 
-import firstImage from '../../public/landing/01-viola-dress.jpg';
-import secondImage from '../../public/landing/02-susan-dress.jpg';
-import thirdImage from '../../public/landing/03-shop-collection.jpg';
-import fourthImage from '../../public/landing/04-img_7629.jpg';
-import viewOurLookbook from '../../public/landing/05-view-our-lookbook.jpg';
+import firstImage from '../../public/landing/01-liana-hand-painted-blouse.jpg';
+import secondImage from '../../public/landing/02-narci-skirt.jpg';
+import thirdImage from '../../public/landing/03-raisa-dress.jpg';
+import fourthImage from '../../public/landing/04-shop-collection.jpg';
+import viewOurLookbook from '../../public/landing/05-lookbook.jpg';
 
 export default function Index() {
   const { t } = useTranslation('home');
@@ -59,19 +59,19 @@ export default function Index() {
         <div className="row">
           <SingleProductCard
             className="col-md-6"
-            productPageLink="/viola-dress"
+            productPageLink="/liana-blouse-sunrise"
             productImageLink={firstImage.src}
-            productName="VIOLA Dress"
-            price="€180"
+            productName="LIANA Blouse Sunrise"
+            price="€135"
             width={firstImage.width}
             height={firstImage.height}
           />
           <SingleProductCard
             className="col-md-6"
-            productPageLink="/susan-dress"
+            productPageLink="/narci-skirt"
             productImageLink={secondImage.src}
-            productName="SUSAN Dress"
-            price="€250"
+            productName="NARCI Skirt"
+            price="€160"
             width={secondImage.width}
             height={secondImage.height}
           />
