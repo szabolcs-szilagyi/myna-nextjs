@@ -18,7 +18,7 @@ describe('landing page', () => {
     const navMenu = () => cy.get('#basic-navbar-nav div');
     navMenu().should('have.length', 7)
 
-    navMenu().first().should('have.text', 'Lookbook')
+    navMenu().first().should('have.text', 'Shop')
     navMenu().last().should('have.text', 'pl')
   })
 

@@ -40,7 +40,7 @@ describe('checkout', () => {
       cy.go('back');
 
       cy.wait('@gettingCartTotal');
-      cy.wait(1)
+      cy.wait(100)
 
       checkout.totalPrice().parseFloat(/.*€(\d+).*/).shouldRef('equal', '@liliTopPrice');
 
