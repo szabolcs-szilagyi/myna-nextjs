@@ -124,13 +124,11 @@ export default function ShopCollections({ collectionData }: TShopCollectionsProp
       <Nav />
       <div className="spacer50px" />
       <div className="row">
-        <div className="col-md-12 ce capitalLetters">
-          <h1><strong>{t('Shop Collections')}</strong></h1>
-        </div>
-      </div>
-      <div className="row justify-content-md-center">
-        <div className="col-md-2 ce capitalLetters">
-          <a href="#i-want-to-be-the-sea" className="smallFont ce blackFont">I want to be the Sea</a>
+        <div className="col-md-12 ce">
+          <h1 className="capitalLetters"><strong>{t('Shop Collections')}</strong></h1>
+          <p>A picture is worth a thosand words, but you can also touch and try
+            on our pieces in <a href="https://www.facebook.com/zoesalonbudapest" target="zoe-boutique">ZOÉ Boutique</a>.
+          </p>
         </div>
       </div>
 
