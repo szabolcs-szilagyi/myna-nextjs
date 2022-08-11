@@ -126,9 +126,7 @@ export default function ShopCollections({ collectionData }: TShopCollectionsProp
       <div className="row">
         <div className="col-md-12 ce">
           <h1 className="capitalLetters"><strong>{t('Shop Collections')}</strong></h1>
-          <p>A picture is worth a thosand words, but you can also touch and try
-            on our pieces in <a href="https://www.facebook.com/zoesalonbudapest" target="zoe-boutique">ZOÉ Boutique</a>.
-          </p>
+          <p>Summer sale 20% off on all items. Use discount code <pre>summersale20</pre>.</p>
         </div>
       </div>
 
