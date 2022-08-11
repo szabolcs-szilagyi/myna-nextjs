@@ -28,8 +28,7 @@ export default function Index() {
       <div className="col-12">
         <p className="text-center" style={{
           fontSize: '1.5em',
-          backgroundColor: 'black',
-          color: 'white',
+          color: 'red',
         }}>20% Summer sale! Use promo code summersale20</p>
       </div>
       <div className="row">
