@@ -25,6 +25,13 @@ export default function Index() {
     <Container fluid>
       <Header description="landing-and-default" />
       <Nav />
+      <div className="col-12">
+        <p className="text-center" style={{
+          fontSize: '1.5em',
+          backgroundColor: 'black',
+          color: 'white',
+        }}>20% Summer sale! Use promo code summersale20</p>
+      </div>
       <div className="row">
         <div className="col-md-12 noPadding">
           <Slider />
