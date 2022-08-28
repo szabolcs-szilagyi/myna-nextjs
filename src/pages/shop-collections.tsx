@@ -126,7 +126,6 @@ export default function ShopCollections({ collectionData }: TShopCollectionsProp
       <div className="row">
         <div className="col-md-12 ce">
           <h1 className="capitalLetters"><strong>{t('Shop Collections')}</strong></h1>
-          <p>Summer sale 20% off on all items. Use discount code <i>summersale20</i>.</p>
         </div>
       </div>
 
