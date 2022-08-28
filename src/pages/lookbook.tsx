@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Link from 'next/link';
 import Image from 'next/image';
-import useTranslation from 'next-translate/useTranslation'
+import Trans from 'next-translate/Trans';
 
 import Header from '../components/Header';
 import Nav from '../components/Nav';
@@ -42,7 +42,6 @@ function LookbookImage({ imageSrc, height, width, alt = '', additionalClass = ''
 }
 
 export default function Lookbook() {
-  const { t } = useTranslation('common');
   usePing();
 
   return (
@@ -62,17 +61,18 @@ export default function Lookbook() {
         <div className="col-md-8">
           <div className="row">
             <div className="col-md-7 ce">
+              <div className={' col-md-12 px-5 py-5'}>
+                <Trans
+                  i18nKey="common:lookbook-caption"
+                  components={[<p className={style.quote} />]}
+                />
+              </div>
               <LookbookImage
                 imageSrc={img01.src}
                 height={img01.height}
                 width={img01.width}
                 additionalClass="col-md-12 px-0"
               />
-              <div className={' col-md-12 px-5 py-5'}>
-                <p className={style.quote} >
-                  {t('lookbook-caption')}
-                </p>
-              </div>
             </div>
             <LookbookImage
               imageSrc={img02.src}
