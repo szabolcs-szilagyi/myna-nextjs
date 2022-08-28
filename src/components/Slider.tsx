@@ -28,14 +28,14 @@ export default function Slider() {
 
   const slides = [
     {
-      text: 'Flowing with nature',
+      text: 'Modern Day Queen',
       linkText: t('SHOP THE LOOK'),
       linkHref: '/shop-collections',
       imageSrc: slide01.src,
       buttonClass: styles.button,
     },
     {
-      text: 'Flowing with nature',
+      text: 'Modern Day Queen',
       linkText: t('LOOKBOOK'),
       linkHref: '/lookbook',
       imageSrc: slide02.src,
