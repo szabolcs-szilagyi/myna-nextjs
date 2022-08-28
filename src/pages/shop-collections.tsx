@@ -58,38 +58,24 @@ function groupProducts(products: Product[] | undefined) {
 }
 
 export async function getStaticProps() {
+  const title = 'modern-day-queen';
   const productsToRetrieve = [
-    ['i-want-to-be-the-sea', 'liana-blouse-sunrise'],
-    ['i-want-to-be-the-sea', 'liliana-overall'],
-    ['i-want-to-be-the-sea', 'lilium-trousers'],
-    ['i-want-to-be-the-sea', 'liana-blouse-ocean'],
-    ['i-want-to-be-the-sea', 'neeja-top'],
-    ['i-want-to-be-the-sea', 'hana-oversized-shirt'],
-    ['i-want-to-be-the-sea', 'irisa-top'],
-    ['i-want-to-be-the-sea', 'narci-skirt'],
-    ['i-want-to-be-the-sea', 'aster-trousers-satin'],
-    ['i-want-to-be-the-sea', 'aster-shorts-satin'],
-    ['i-want-to-be-the-sea', 'aster-trousers-sand'],
-    ['i-want-to-be-the-sea', 'aster-shorts-sand'],
-    ['i-want-to-be-the-sea', 'viola-dress'],
-    ['i-want-to-be-the-sea', 'leila-shirt'],
-    ['i-want-to-be-the-sea', 'raisa-dress'],
-    ['i-want-to-be-the-sea', 'adel-jacket'],
-    ['i-want-to-be-the-sea', 'erica-sweatshirt'],
-    ['i-want-to-be-the-sea', 'aster-frill'],
-    ['i-want-to-be-the-sea', 'sari-denim-shorts'],
-    ['i-want-to-be-the-sea', 'deli-shorts'],
-    ['i-want-to-be-the-sea', 'susan-dress'],
-    ['i-want-to-be-the-sea', 'rosa-dress'],
-    ['i-want-to-be-the-sea', 'leya-dress'],
-    ['i-want-to-be-the-sea', 'zinia-skirt'],
-    ['i-want-to-be-the-sea', 'lola-oversized-shirt'],
-    ['i-want-to-be-the-sea', 'marigold-trench-coat'],
-    ['i-want-to-be-the-sea', 'delphi-culottes'],
-    ['i-want-to-be-the-sea', 'gea-cream'],
-    ['i-want-to-be-the-sea', 'ivy-cream'],
-    ['i-want-to-be-the-sea', 'tilia-blouse'],
-    ['i-want-to-be-the-sea', 'calla-cream'],
+    [title, 'daphne-cardigan'],
+    [title, 'hanna-oversize-shirt'],
+    [title, 'lilium-trousers'],
+    [title, 'zephyra-vest'],
+    [title, 'lola-oversized-shirt'],
+    [title, 'adel-jacket'],
+    [title, 'erica-sweatshirt'],
+    [title, 'aster-frill'],
+    [title, 'susan-dress'],
+    [title, 'raisa-dress'],
+    [title, 'gea-cream'],
+    [title, 'ivy-cream'],
+    [title, 'sari-denim-shorts'],
+    [title, 'marigold-trench-coat'],
+    [title, 'delphi-culottes'],
+    [title, 'calla-cream'],
   ]
   const collectionData: TCollectionData = {};
 
@@ -132,11 +118,11 @@ export default function ShopCollections({ collectionData }: TShopCollectionsProp
       <div className="spacer50px" />
       <div className="row">
         <div id="consciously-beautiful" className="col-md-12 ce capitalLetters">
-          <h5><strong>I want to be the Sea</strong></h5>
+          <h5><strong>Modern Day Queen</strong></h5>
         </div>
       </div>
 
-      {(groupProducts(collectionData['i-want-to-be-the-sea']))}
+          {(groupProducts(collectionData['modern-day-queen']))}
 
       <Footer />
     </Container>
