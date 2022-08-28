@@ -11,11 +11,11 @@ import usePing from '../lib/use-ping';
 
 import styles from './index.module.css';
 
-import firstImage from '../../public/landing/01-liana-hand-painted-blouse.jpg';
-import secondImage from '../../public/landing/02-narci-skirt.jpg';
-import thirdImage from '../../public/landing/03-raisa-dress.jpg';
-import fourthImage from '../../public/landing/04-shop-collection.jpg';
-import viewOurLookbook from '../../public/landing/05-lookbook.jpg';
+import firstImage from '../../public/landing/01.jpg';
+import secondImage from '../../public/landing/02.jpg';
+import thirdImage from '../../public/landing/03.jpg';
+import fourthImage from '../../public/landing/04.jpg';
+import fifthImage from '../../public/landing/05.jpg';
 
 export default function Index() {
   const { t } = useTranslation('home');
@@ -58,22 +58,31 @@ export default function Index() {
       <div className="col-md-8 mx-auto">
         <div className="row">
           <SingleProductCard
-            className="col-md-6"
-            productPageLink="/liana-blouse-sunrise"
+            className="col-md-4"
+            productPageLink="/daphne-cardigan"
             productImageLink={firstImage.src}
-            productName="LIANA Blouse Sunrise"
-            price="€135"
+            productName="DAPHNE Cardigan"
+            price="€290"
             width={firstImage.width}
             height={firstImage.height}
           />
           <SingleProductCard
-            className="col-md-6"
-            productPageLink="/narci-skirt"
+            className="col-md-4"
+            productPageLink="/zephyra-vest"
             productImageLink={secondImage.src}
-            productName="NARCI Skirt"
-            price="€160"
+            productName="ZEPHYRA Vest"
+            price="€210"
             width={secondImage.width}
             height={secondImage.height}
+          />
+          <SingleProductCard
+            className="col-md-4"
+            productPageLink="/zephyra-vest"
+            productImageLink={thirdImage.src}
+            productName="ZEPHYRA Vest"
+            price="€210"
+            width={thirdImage.width}
+            height={thirdImage.height}
           />
         </div>
       </div>
@@ -92,31 +101,32 @@ export default function Index() {
           <SingleProductCard
             className="col-md-12"
             productPageLink="/shop-collections"
-            productImageLink={thirdImage.src}
-            productName="SHOP COLLECTION"
-            width={thirdImage.width}
-            height={thirdImage.height}
-          />
-          <SingleProductCard
-            className="col-md-12"
-            productPageLink="/shop-collections"
             productImageLink={fourthImage.src}
-            productName=""
+            productName="SHOP COLLECTION"
             width={fourthImage.width}
             height={fourthImage.height}
           />
         </div>
       </div>
 
+     <div className="col-md-6 mx-auto">
+       <h1 className="text-center mt-5 mb-3">
+         <Trans
+           i18nKey="home:believe-text-two"
+           components={[<p />]}
+         />
+       </h1>
+     </div>
+
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('STAY INSPIRED WITH MYNA – VIEW OUR LOOKBOOK')}</h1>
+        <h1 className="text-center mt-5 mb-3">{t('lookbook-title-caption')}</h1>
         <SingleProductCard
           className="col-md-12 mx-auto"
           productPageLink="/lookbook"
-          productImageLink={viewOurLookbook.src}
+          productImageLink={fifthImage.src}
           productName="LOOKBOOK"
-          width={viewOurLookbook.width}
-          height={viewOurLookbook.height}
+          width={fifthImage.width}
+          height={fifthImage.height}
         />
       </div>
 
