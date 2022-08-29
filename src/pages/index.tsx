@@ -49,6 +49,15 @@ export default function Index() {
       <div className="col-md-6 mx-auto">
         <h1 className="text-center mt-5 mb-3">
           <Trans
+            i18nKey="home:laning-inspiration-two"
+            components={[]}
+          />
+        </h1>
+      </div>
+
+      <div className="col-md-6 mx-auto">
+        <h1 className="text-center mt-5 mb-3">
+          <Trans
             i18nKey="home:magic-text-shop-the-looks"
             components={[<br />]}
           />
@@ -120,6 +129,7 @@ export default function Index() {
 
       <div className="col-md-8 mx-auto">
         <h1 className="text-center mt-5 mb-3">{t('lookbook-title-caption')}</h1>
+
         <SingleProductCard
           className="col-md-12 mx-auto"
           productPageLink="/lookbook"
