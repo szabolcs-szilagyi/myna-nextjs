@@ -60,22 +60,27 @@ function groupProducts(products: Product[] | undefined) {
 export async function getStaticProps() {
   const title = 'modern-day-queen';
   const productsToRetrieve = [
-    [title, 'daphne-cardigan'],
-    [title, 'hanna-oversize-shirt'],
-    [title, 'lilium-trousers'],
+    [title, 'kamala-trench-coat'],
     [title, 'zephyra-vest'],
-    [title, 'lola-oversized-shirt'],
-    [title, 'adel-jacket'],
+    [title, 'daphne-cardigan'],
+    [title, 'zinia-long-skirt'],
+    [title, 'nolia-blouse'],
+    [title, 'narci-midi-skirt'],
+    [title, 'silene-long-coat'],
+    [title, 'marigold-trench-coat'],
+    [title, 'susan-dress'],
+    [title, 'hebe-socks'],
     [title, 'erica-sweatshirt'],
     [title, 'aster-frill'],
-    [title, 'susan-dress'],
+    [title, 'lola-oversized-shirt'],
+    [title, 'delphi-culottes'],
+    [title, 'hanna-oversize-shirt'],
+    [title, 'lilium-trousers'],
+    [title, 'adel-jacket'],
+    [title, 'calla-cream'],
     [title, 'raisa-dress'],
     [title, 'gea-cream'],
     [title, 'ivy-cream'],
-    [title, 'sari-denim-shorts'],
-    [title, 'marigold-trench-coat'],
-    [title, 'delphi-culottes'],
-    [title, 'calla-cream'],
   ]
   const collectionData: TCollectionData = {};
 
