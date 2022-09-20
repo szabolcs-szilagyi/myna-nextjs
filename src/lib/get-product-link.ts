@@ -1,3 +1,3 @@
 export default function getProductLink(path: string) {
-  return '/product_photos_2/' + path;
+  return '/product_photos_3/' + path;
 }
