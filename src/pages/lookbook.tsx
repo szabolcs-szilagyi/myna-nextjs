@@ -1,7 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import Link from 'next/link';
 import Image from 'next/image';
-import Trans from 'next-translate/Trans';
 
 import Header from '../components/Header';
 import Nav from '../components/Nav';

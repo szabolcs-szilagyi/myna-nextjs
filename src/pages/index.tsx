@@ -1,5 +1,4 @@
 import Container from 'react-bootstrap/Container';
-import useTranslation from 'next-translate/useTranslation';
 import Trans from 'next-translate/Trans';
 
 import Slider from '../components/Slider';
@@ -22,7 +21,6 @@ import eigthImage from '../../public/landing/08.jpg';
 import ninthImage from '../../public/landing/09.jpg';
 
 export default function Index() {
-  const { t } = useTranslation('home');
   usePing();
 
   return (
