@@ -41,7 +41,7 @@ export default function PrivacyContact() {
             <strong>{t('if-you-need-to-speak')}:</strong> <br /><a href="mailto:connect@mynalabel.com" className="blackFont">connect@mynalabel.com</a>
           </p>
           <p>
-            <strong>{t('Social media')}:</strong> <br /><a href="https://instagram.com/mynalabel" target="_blank" className="blackFont" rel="noreferrer">instagram.com/mynalabel</a>
+            <strong>{t('Social media')}:</strong> <br /><a href="https://instagram.com/myna.label" target="_blank" className="blackFont" rel="noreferrer">instagram.com/myna.label</a>
           </p>
         </div>
         <div className="col-md-2" />
