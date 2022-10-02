@@ -6,26 +6,27 @@ import Footer from '../components/Footer';
 import Container from 'react-bootstrap/Container';
 import SingleProductCard from '../components/SingleProductCard';
 
-import {
-  API_SERVER,
-} from '../constants';
+import { API_SERVER } from '../constants';
 import { request } from '../lib/request';
 import useTranslation from 'next-translate/useTranslation';
 import usePing from '../lib/use-ping';
 import getProductLink from '../lib/get-product-link';
 
-type ColletcionTypes = 'consciously-beautiful' | 'love-and-light' | 'love-affair-collection';
+type ColletcionTypes =
+  | 'consciously-beautiful'
+  | 'love-and-light'
+  | 'love-affair-collection';
 type Product = {
-  link: string,
-  mainPhoto: string,
-  name: string,
-  price: string,
+  link: string;
+  mainPhoto: string;
+  name: string;
+  price: string;
 };
 
 type TCollectionData = Partial<Record<ColletcionTypes, Product[]>>;
 
 function createProductCard(product: Product) {
-  if(!product) return (<></>);
+  if (!product) return <></>;
   return (
     <SingleProductCard
       productPageLink={product.link}
@@ -37,7 +38,7 @@ function createProductCard(product: Product) {
 }
 
 function groupProducts(products: Product[] | undefined) {
-  if (!products) return (<></>);
+  if (!products) return <></>;
 
   const grouped = chunk(products, 2).map(([firstProduct, secondProduct], i) => {
     return (
@@ -54,43 +55,46 @@ function groupProducts(products: Product[] | undefined) {
     );
   });
 
-  return (<>{grouped}</>);
+  return <>{grouped}</>;
 }
 
 export async function getStaticProps() {
   const title = 'modern-day-queen';
   const productsToRetrieve = [
-    [title, 'kamala-trench-coat'],
-    [title, 'zephyra-vest'],
     [title, 'daphne-cardigan'],
     [title, 'zinia-long-skirt'],
     [title, 'nolia-blouse'],
     [title, 'narci-midi-skirt'],
     [title, 'silene-long-coat'],
-    [title, 'marigold-trench-coat'],
-    [title, 'susan-dress'],
-    [title, 'hebe-socks'],
-    [title, 'erica-sweatshirt'],
-    [title, 'aster-frill'],
+    [title, 'zephyra-vest'],
+    [title, 'kamala-trench-coat'],
     [title, 'lola-oversized-shirt'],
-    [title, 'delphi-culottes'],
     [title, 'hanna-oversize-shirt'],
     [title, 'lilium-trousers'],
-    [title, 'adel-jacket'],
-    [title, 'calla-cream'],
-    [title, 'raisa-dress'],
+    [title, 'susan-dress'],
+    [title, 'lina-hand-painted-scarf'],
+    [title, 'erica-sweatshirt'],
+    [title, 'aster-frill'],
     [title, 'gea-cream'],
     [title, 'ivy-cream'],
-  ]
+    [title, 'raisa-dress'],
+    [title, 'hebe-socks'],
+    [title, 'adel-jacket'],
+    [title, 'calla-cream'],
+    [title, 'delphi-culottes'],
+    [title, 'marigold-trench-coat'],
+  ];
   const collectionData: TCollectionData = {};
 
   for (const [collection, shortName] of productsToRetrieve) {
-    const productDetails: any = (await request(`${API_SERVER}product`, {
-      query: { idName: shortName },
-      options: { json: true },
-    }))[0];
+    const productDetails: any = (
+      await request(`${API_SERVER}product`, {
+        query: { idName: shortName },
+        options: { json: true },
+      })
+    )[0];
 
-    if(!collectionData[collection]) collectionData[collection] = [];
+    if (!collectionData[collection]) collectionData[collection] = [];
     collectionData[collection].push({
       link: `/${shortName}`,
       mainPhoto: getProductLink(productDetails.pic1),
@@ -103,9 +107,11 @@ export async function getStaticProps() {
 }
 
 type TShopCollectionsProps = {
-  collectionData: TCollectionData,
-}
-export default function ShopCollections({ collectionData }: TShopCollectionsProps) {
+  collectionData: TCollectionData;
+};
+export default function ShopCollections({
+  collectionData,
+}: TShopCollectionsProps) {
   const { t } = useTranslation();
   usePing();
 
@@ -116,18 +122,22 @@ export default function ShopCollections({ collectionData }: TShopCollectionsProp
       <div className="spacer50px" />
       <div className="row">
         <div className="col-md-12 ce">
-          <h1 className="capitalLetters"><strong>{t('Shop Collections')}</strong></h1>
+          <h1 className="capitalLetters">
+            <strong>{t('Shop Collections')}</strong>
+          </h1>
         </div>
       </div>
 
       <div className="spacer50px" />
       <div className="row">
         <div id="consciously-beautiful" className="col-md-12 ce capitalLetters">
-          <h5><strong>Modern Day Queen</strong></h5>
+          <h5>
+            <strong>Modern Day Queen</strong>
+          </h5>
         </div>
       </div>
 
-          {(groupProducts(collectionData['modern-day-queen']))}
+      {groupProducts(collectionData['modern-day-queen'])}
 
       <Footer />
     </Container>
