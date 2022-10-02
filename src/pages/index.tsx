@@ -16,6 +16,10 @@ import secondImage from '../../public/landing/02.jpg';
 import thirdImage from '../../public/landing/03.jpg';
 import fourthImage from '../../public/landing/04.jpg';
 import fifthImage from '../../public/landing/05.jpg';
+import sixthImage from '../../public/landing/06.jpg';
+import seventhImage from '../../public/landing/07.jpg';
+import eigthImage from '../../public/landing/08.jpg';
+import ninthImage from '../../public/landing/09.jpg';
 
 export default function Index() {
   const { t } = useTranslation('home');
@@ -38,58 +42,50 @@ export default function Index() {
               i18nKey="home:landing-inspiration"
               components={[
                 <p className={styles.inspirationalText} />,
-                <p className={[styles.inspirationalText, 'text-right'].join(' ')} />,
-                <br />
+                <p
+                  className={[styles.inspirationalText, 'text-right'].join(' ')}
+                />,
+                <br />,
               ]}
             />
           </div>
         </div>
       </div>
 
-      <div className="col-md-6 mx-auto">
-        <h1 className="text-center mt-5 mb-3">
-          <Trans
-            i18nKey="home:laning-inspiration-two"
-            components={[]}
-          />
-        </h1>
-      </div>
-
-      <div className="col-md-6 mx-auto">
-        <h1 className="text-center mt-5 mb-3">
-          <Trans
-            i18nKey="home:magic-text-shop-the-looks"
-            components={[<br />]}
-          />
-        </h1>
-      </div>
-
+      {/* <div className="col-md-6 mx-auto">
+              <h1 className="text-center mt-5 mb-3">
+                  <Trans
+                      i18nKey="home:magic-text-shop-the-looks"
+                      components={[<br />]}
+                  />
+              </h1>
+          </div> */}
       <div className="col-md-8 mx-auto">
         <div className="row">
           <SingleProductCard
             className="col-md-4"
-            productPageLink="/daphne-cardigan"
+            productPageLink="/nolia-blouse"
             productImageLink={firstImage.src}
-            productName="DAPHNE Cardigan"
-            price="€290"
+            productName="NOLIA Blouse"
+            price="€119"
             width={firstImage.width}
             height={firstImage.height}
           />
           <SingleProductCard
             className="col-md-4"
-            productPageLink="/zephyra-vest"
+            productPageLink="/susan-dress"
             productImageLink={secondImage.src}
-            productName="ZEPHYRA Vest"
-            price="€210"
+            productName="SUSAN Dress"
+            price="€249"
             width={secondImage.width}
             height={secondImage.height}
           />
           <SingleProductCard
             className="col-md-4"
-            productPageLink="/zephyra-vest"
+            productPageLink="/kamala-trench-coat"
             productImageLink={thirdImage.src}
-            productName="ZEPHYRA Vest"
-            price="€210"
+            productName="KAMALA Trench Coat"
+            price="€299"
             width={thirdImage.width}
             height={thirdImage.height}
           />
@@ -98,10 +94,7 @@ export default function Index() {
 
       <div className="col-md-6 mx-auto">
         <h1 className="text-center mt-5 mb-3">
-          <Trans
-              i18nKey="home:believe-text"
-              components={[<p />]}
-          />
+          <Trans i18nKey="home:believe-text" components={[<p />]} />
         </h1>
       </div>
 
@@ -109,35 +102,74 @@ export default function Index() {
         <div className="row">
           <SingleProductCard
             className="col-md-12"
-            productPageLink="/shop-collections"
+            productPageLink="/lina-hand-painted-scarf"
             productImageLink={fourthImage.src}
-            productName="SHOP COLLECTION"
+            productName="LINA Scarf"
+            price="€115"
             width={fourthImage.width}
             height={fourthImage.height}
+          />
+          <SingleProductCard
+            className="col-md-6"
+            productPageLink="/lina-hand-painted-scarf"
+            productImageLink={fifthImage.src}
+            productName=""
+            width={fifthImage.width}
+            height={fifthImage.height}
+          />
+          <SingleProductCard
+            className="col-md-6"
+            productPageLink="/silene-long-coat"
+            productImageLink={sixthImage.src}
+            productName="SILENE Long Coat"
+            price="€260"
+            width={sixthImage.width}
+            height={sixthImage.height}
           />
         </div>
       </div>
 
-     <div className="col-md-6 mx-auto">
-       <h1 className="text-center mt-5 mb-3">
-         <Trans
-           i18nKey="home:believe-text-two"
-           components={[<p />]}
-         />
-       </h1>
-     </div>
+      <div className="col-md-6 mx-auto">
+        <h1 className="text-center mt-5 mb-3">
+          <Trans i18nKey="home:believe-text-two" components={[<p />]} />
+        </h1>
+      </div>
 
       <div className="col-md-8 mx-auto">
-        <h1 className="text-center mt-5 mb-3">{t('lookbook-title-caption')}</h1>
+        {/* <h1 className="text-center mt-5 mb-3">{t('lookbook-title-caption')}</h1> */}
+        <div className="row">
+          <SingleProductCard
+            className="col-md-12 mx-auto"
+            productPageLink="/lookbook"
+            productImageLink={seventhImage.src}
+            productName="LOOKBOOK"
+            width={seventhImage.width}
+            height={seventhImage.height}
+          />
+          <SingleProductCard
+            className="col-md-6"
+            productPageLink="/shop-collections"
+            productImageLink={eigthImage.src}
+            productName="Shop The Look"
+            width={eigthImage.width}
+            height={eigthImage.height}
+          />
+          <SingleProductCard
+            className="col-md-6"
+            productPageLink="/zinia-long-skirt"
+            productImageLink={ninthImage.src}
+            productName="ZINIA Long Skirt"
+            price="€149"
+            width={ninthImage.width}
+            height={ninthImage.height}
+          />
+        </div>
+      </div>
 
-        <SingleProductCard
-          className="col-md-12 mx-auto"
-          productPageLink="/lookbook"
-          productImageLink={fifthImage.src}
-          productName="LOOKBOOK"
-          width={fifthImage.width}
-          height={fifthImage.height}
-        />
+      <div className="col-md-6 mx-auto">
+        <h1 className="text-center mt-5 mb-3">
+          <Trans i18nKey="home:laning-inspiration-two" components={[<br />]} />
+        </h1>
       </div>
 
       <Footer />
