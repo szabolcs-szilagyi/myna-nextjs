@@ -161,7 +161,9 @@ export default function Index() {
       </div>
 
       <div className="col-md-6 mx-auto">
-        <Trans i18nKey="home:laning-inspiration-two" components={[<br />]} />
+        <p>
+          <Trans i18nKey="home:laning-inspiration-two" components={[<br />]} />
+        </p>
       </div>
 
       <Footer />
