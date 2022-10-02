@@ -66,7 +66,7 @@ export default function Footer() {
                   </div>
                   <div className="col-6 text-right">
                     <a
-                      href="https://www.facebook.com/myna.label"
+                      href="https://www.facebook.com/Mynalabel.Facebook/"
                       target="fb-mynalabel"
                     ><img
                        src="/facebook.svg"

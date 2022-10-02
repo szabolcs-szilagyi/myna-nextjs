@@ -38,7 +38,7 @@ export default function HeadElement(
     <meta name="description" content={t(description)} />
     <meta property="og:description" content={t(description)} />
     <meta property="og:title" content={title} />
-    <meta property="og:image" content={`${ME_ADDRESS}/social_media.jpg`} />
+    <meta property="og:image" content={`${ME_ADDRESS}/social_media_1.jpg`} />
     <script src="https://unpkg.com/react/umd/react.production.min.js" crossOrigin="true"></script>
     <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossOrigin="true"></script>
     <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossOrigin="true"></script>
