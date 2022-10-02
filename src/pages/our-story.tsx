@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import useTranslation from 'next-translate/useTranslation'
+import useTranslation from 'next-translate/useTranslation';
 
 import Header from '../components/Header';
 import Nav from '../components/Nav';
@@ -23,9 +23,10 @@ export default function OurStory() {
       <div className="row">
         <div className="col-md-2" />
         <div className="col-md-8">
-
           <div className="col-md-12 mt-5 ce capitalLetters">
-            <h1><strong>{t('Our Story')}</strong></h1>
+            <h1>
+              <strong>{t('Our Story')}</strong>
+            </h1>
           </div>
           <div className="spacer50px"></div>
           <p>{t('fashion-was-always-deep')}</p>
@@ -45,6 +46,7 @@ export default function OurStory() {
                 alt={t('Designer')}
               />
             </div>
+            <div className="spacer25px d-block d-md-none"></div>
             <div className="col-md-4">
               <Image
                 src={ourStory02.src}
@@ -54,6 +56,7 @@ export default function OurStory() {
                 alt={t('Inspiration')}
               />
             </div>
+            <div className="spacer25px d-block d-md-none"></div>
             <div className="col-md-4">
               <Image
                 src={ourStory03.src}
@@ -68,38 +71,60 @@ export default function OurStory() {
           <div className="spacer25px" />
 
           <div className="col-md-12 ce capitalLetters">
-            <h1><strong>{t('Our Mission')}</strong></h1>
+            <h1>
+              <strong>{t('Our Mission')}</strong>
+            </h1>
           </div>
           <div className="spacer50px"></div>
           <p>{t('We are more than just ethical and sustainable brand')}</p>
           <p>{t('We create feminine and effortless design')}</p>
-          <p>{t('We design pieces to love forever, create and promote timeless fashion')}</p>
+          <p>
+            {t(
+              'We design pieces to love forever, create and promote timeless fashion',
+            )}
+          </p>
           <p>{t('We are conscious label')}</p>
           <p>{t('We promote authentic connection')}</p>
           <p>{t('we-design-pieces-that-are-beautiful')}</p>
           <p>{t('We design long lasting and quality designs and products')}</p>
           <p>{t('We are not setting new, but long lasting trends')}</p>
-          <p>{t('We create so you can feel amazing, beautiful and have free conscious')}</p>
+          <p>
+            {t(
+              'We create so you can feel amazing, beautiful and have free conscious',
+            )}
+          </p>
           <p>{t('We give you attention to details and personal attention')}</p>
           <p>{t('We aim to inspire your life!')}</p>
           <p>{t('we-use-eco-friendly-fabrics')}</p>
 
           <div className="col-md-12 mt-5 ce capitalLetters">
-            <h1><strong>{t('Our Values')}</strong></h1>
+            <h1>
+              <strong>{t('Our Values')}</strong>
+            </h1>
           </div>
           <div className="spacer50px"></div>
-          <p><i>{t('Body Positivity')}</i>{' '}| {t('we-bring-a-trusted-and-beautiful')}</p>
-          <p><i>{t('Positive Impact')}</i>{' '}| {t('we-are-dreamers-and-believers')}</p>
-          <p><i>{t('Humanity')}</i>{' '}| {t('we-are-not-willing-to-compromise')}</p>
-          <p><i>{t('Environment')}</i>{' '}| {t('we-promote-slow-fashion-movement')}</p>
+          <p>
+            <i>{t('Body Positivity')}</i> |{' '}
+            {t('we-bring-a-trusted-and-beautiful')}
+          </p>
+          <p>
+            <i>{t('Positive Impact')}</i> | {t('we-are-dreamers-and-believers')}
+          </p>
+          <p>
+            <i>{t('Humanity')}</i> | {t('we-are-not-willing-to-compromise')}
+          </p>
+          <p>
+            <i>{t('Environment')}</i> | {t('we-promote-slow-fashion-movement')}
+          </p>
 
           <div className="col-md-12 mt-5 ce capitalLetters">
-            <h1><strong>{t('Our Vision')}</strong></h1>
+            <h1>
+              <strong>{t('Our Vision')}</strong>
+            </h1>
           </div>
           <div className="spacer50px"></div>
           <p>{t('our-vision-is-a-world-dedicated')}</p>
           <p>{t('we-would-like-our-brand-to-be-classic')}</p>
-
         </div>
         <div className="col-md-2" />
       </div>

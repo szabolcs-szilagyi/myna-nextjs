@@ -91,9 +91,7 @@ export default function Index() {
       </div>
 
       <div className="col-md-6 mx-auto">
-        <h1 className="text-center mt-5 mb-3">
-          <Trans i18nKey="home:believe-text" components={[<p />]} />
-        </h1>
+        <Trans i18nKey="home:believe-text" components={[<p />]} />
       </div>
 
       <div className="col-md-8 mx-auto">
@@ -128,9 +126,7 @@ export default function Index() {
       </div>
 
       <div className="col-md-6 mx-auto">
-        <h1 className="text-center mt-5 mb-3">
-          <Trans i18nKey="home:believe-text-two" components={[<p />]} />
-        </h1>
+        <Trans i18nKey="home:believe-text-two" components={[<p />]} />
       </div>
 
       <div className="col-md-8 mx-auto">
@@ -165,9 +161,7 @@ export default function Index() {
       </div>
 
       <div className="col-md-6 mx-auto">
-        <h1 className="text-center mt-5 mb-3">
-          <Trans i18nKey="home:laning-inspiration-two" components={[<br />]} />
-        </h1>
+        <Trans i18nKey="home:laning-inspiration-two" components={[<br />]} />
       </div>
 
       <Footer />
