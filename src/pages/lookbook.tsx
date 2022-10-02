@@ -16,27 +16,39 @@ import img04 from '../../public/lookbook/04.jpg';
 import img05 from '../../public/lookbook/05.jpg';
 import img06 from '../../public/lookbook/06.jpg';
 import img07 from '../../public/lookbook/07.jpg';
+import img08 from '../../public/lookbook/08.jpg';
+import img09 from '../../public/lookbook/09.jpg';
+import img10 from '../../public/lookbook/10.jpg';
+import img11 from '../../public/lookbook/11.jpg';
 
 type LookbookImageProps = {
-  imageSrc: string,
-  height: number,
-  width: number,
-  alt?: string,
-  additionalClass?: string,
-}
+  imageSrc: string;
+  height: number;
+  width: number;
+  alt?: string;
+  additionalClass?: string;
+};
 
-function LookbookImage({ imageSrc, height, width, alt = '', additionalClass = '' }: LookbookImageProps) {
+function LookbookImage({
+  imageSrc,
+  height,
+  width,
+  alt = '',
+  additionalClass = '',
+}: LookbookImageProps) {
   return (
-    <div className={style.imageContainer + ' ' + additionalClass} >
-      <Link href="/shop-collections"><a>
-        <Image
-          layout="responsive"
-          height={height}
-          width={width}
-          src={imageSrc}
-          alt={alt}
-        />
-      </a></Link>
+    <div className={style.imageContainer + ' ' + additionalClass}>
+      <Link href="/shop-collections">
+        <a>
+          <Image
+            layout="responsive"
+            height={height}
+            width={width}
+            src={imageSrc}
+            alt={alt}
+          />
+        </a>
+      </Link>
     </div>
   );
 }
@@ -51,22 +63,17 @@ export default function Lookbook() {
       <div className="spacer50px"></div>
       <div className="row">
         <div className="col-md-12 ce capitalLetters">
-          <h1><strong>Lookbook</strong></h1>
+          <h1>
+            <strong>Lookbook</strong>
+          </h1>
         </div>
       </div>
       <div className="spacer50px"></div>
 
       <div className="row">
-        <div className="col-md-2"></div>
-        <div className="col-md-8">
+        <div className="col-md-8 mx-auto">
           <div className="row">
-            <div className="col-md-7 ce">
-              <div className={' col-md-12 px-5 py-5'}>
-                <Trans
-                  i18nKey="common:lookbook-caption"
-                  components={[<p className={style.quote} />]}
-                />
-              </div>
+            <div className="col-md-6 ce">
               <LookbookImage
                 imageSrc={img01.src}
                 height={img01.height}
@@ -74,44 +81,44 @@ export default function Lookbook() {
                 additionalClass="col-md-12 px-0"
               />
             </div>
-            <LookbookImage
-              imageSrc={img02.src}
-              height={img02.height}
-              width={img02.width}
-              additionalClass="col-md-5"
-            />
-          </div>
-          <div className="col-md-1 ce"></div>
-        </div>
-        <div className="col-md-2"></div>
-        <div className="spacer25px"></div>
-      </div>
-
-      <div className="row">
-        <div className="col-md-2"></div>
-        <LookbookImage
-          imageSrc={img03.src}
-          height={img03.height}
-          width={img03.width}
-          additionalClass="col-md-8"
-        />
-        <div className="col-md-2"></div>
-        <div className="spacer25px"></div>
-      </div>
-
-      <div className="row">
-        <div className="col-md-2"></div>
-        <div className="col-md-8">
-          <div className="row">
+            <div className="spacer25px d-block d-md-none"></div>
             <div className="col-md-6 ce">
+              <LookbookImage
+                imageSrc={img02.src}
+                height={img02.height}
+                width={img02.width}
+              />
+              <div className="spacer25px"></div>
+              <LookbookImage
+                imageSrc={img03.src}
+                height={img03.height}
+                width={img03.width}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="spacer25px"></div>
+
+      <div className="row">
+        <div className="col-md-8 mx-auto">
+          <div className="row">
+            <div className="col-md-12">
               <LookbookImage
                 imageSrc={img04.src}
                 height={img04.height}
                 width={img04.width}
               />
-              <div className="spacer25px d-block d-md-none"></div>
             </div>
-            <div className="col-md-6" >
+          </div>
+        </div>
+      </div>
+      <div className="spacer25px"></div>
+
+      <div className="row">
+        <div className="col-md-8 mx-auto">
+          <div className="row">
+            <div className="col-md-6">
               <LookbookImage
                 imageSrc={img05.src}
                 height={img05.height}
@@ -124,22 +131,56 @@ export default function Lookbook() {
                 width={img06.width}
               />
             </div>
+            <div className="spacer25px d-block d-md-none"></div>
+            <LookbookImage
+              imageSrc={img07.src}
+              height={img07.height}
+              width={img07.width}
+              additionalClass="col-md-6"
+            />
           </div>
         </div>
-        <div className="col-md-2"></div>
-        <div className="spacer25px"></div>
       </div>
+      <div className="spacer25px"></div>
 
       <div className="row">
-        <div className="col-md-2"></div>
-        <LookbookImage
-          imageSrc={img07.src}
-          height={img07.height}
-          width={img07.width}
-          additionalClass="col-md-8"
-        />
-        <div className="spacer25px"></div>
-        <div className="col-md-2"></div>
+        <div className="col-md-8 mx-auto">
+          <LookbookImage
+            imageSrc={img08.src}
+            height={img08.height}
+            width={img08.width}
+          />
+        </div>
+      </div>
+      <div className="spacer25px"></div>
+
+      <div className="row">
+        <div className="col-md-8 mx-auto">
+          <div className="row">
+            <div className="col-md-6 ce">
+              <LookbookImage
+                imageSrc={img09.src}
+                height={img09.height}
+                width={img09.width}
+                additionalClass="col-md-12 px-0"
+              />
+            </div>
+            <div className="spacer25px d-block d-md-none"></div>
+            <div className="col-md-6 ce">
+              <LookbookImage
+                imageSrc={img10.src}
+                height={img10.height}
+                width={img10.width}
+              />
+              <div className="spacer25px"></div>
+              <LookbookImage
+                imageSrc={img11.src}
+                height={img11.height}
+                width={img11.width}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
       <Footer />
