@@ -88,7 +88,7 @@ export default function Nav({ lastItemsDate }: NavPropsType) {
           </BSNav.Link>
         </BSNav>
         <BSNav className="order-2 order-sm-5 order-xl-2 col-xl-2 col-sm-4 pt-sm-5 pt-xl-0">
-          <BSNav.Link className="w-100" href="/our-story">Your Design</BSNav.Link>
+          <BSNav.Link className="w-100" href="/your-desing">Your Design</BSNav.Link>
         </BSNav>
         <BSNav className="order-3 order-sm-8 order-xl-3 col-xl-2 col-sm-4 pt-sm-5 pt-xl-0">
           <BSNav.Link className="w-100" href="/our-story">{t("Our Story")}</BSNav.Link>
