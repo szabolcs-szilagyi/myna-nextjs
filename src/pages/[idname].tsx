@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 
 import Header from '../components/Header';
 import Nav from '../components/Nav';
@@ -73,7 +73,10 @@ export default function Index (props: any) {
     lastItemsDate: null,
     ...props
   });
-  const [selectedSize, setSelectedSize] = useState(isOneSize ? 'onesize' : '0');
+  const [selectedSize, setSelectedSize] = useState(isOneSize ? 'oneSize' : '0');
+  useEffect(() => {
+    if (isOneSize) checkAvailability(selectedSize, state.idName);
+  }, []);
 
   function defaultButton() {
     setState({
@@ -94,7 +97,7 @@ export default function Index (props: any) {
         avby: DEFAULT_AVAILABLE,
         cartButtonVisibility: 'visible',
       });
-    } else if(availability === 0) {
+    } else if(availability <= 0) {
       setState({
         ...state,
         avby: 'Pre-Order / Contact Us',
