@@ -75,7 +75,6 @@ export default function Slider() {
               </Link>
               <div className={styles.description}>
                 <p>{t('we-design-pieces-to-love')}</p>
-                <p>Use <i>amazingdeal</i> as coupon code for 40% off on your purchase!</p>
               </div>
             </div>
           </div>

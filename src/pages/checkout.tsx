@@ -248,7 +248,6 @@ export default function Checkout({ productDetailHash }: TCheckoutProps) {
     if (newCoupon === "mynafriend10") newPriceModifier = 0.9;
     else if (newCoupon === "mynagift15") newPriceModifier = 0.85;
     else if (newCoupon === "summersale20") newPriceModifier = 0.8;
-    else if (newCoupon === "amazingdeal") newPriceModifier = 0.6;
 
     setCoupon(newCoupon);
     setPriceModifier(newPriceModifier);
