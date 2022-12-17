@@ -74,7 +74,7 @@ export default function Index() {
             productPageLink="/susan-dress"
             productImageLink={secondImage.src}
             productName="SUSAN Dress"
-            price="€249"
+            price="€139"
             width={secondImage.width}
             height={secondImage.height}
           />
@@ -83,7 +83,7 @@ export default function Index() {
             productPageLink="/kamala-trench-coat"
             productImageLink={thirdImage.src}
             productName="KAMALA Trench Coat"
-            price="€299"
+            price="€159"
             width={thirdImage.width}
             height={thirdImage.height}
           />
@@ -118,7 +118,7 @@ export default function Index() {
             productPageLink="/silene-long-coat"
             productImageLink={sixthImage.src}
             productName="SILENE Long Coat"
-            price="€260"
+            price="€169"
             width={sixthImage.width}
             height={sixthImage.height}
           />
